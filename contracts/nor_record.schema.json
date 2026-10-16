@@ -1,0 +1,1501 @@
+{
+  "$defs": {
+    "Biomarker": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Biomarker",
+      "type": "object"
+    },
+    "Coding": {
+      "properties": {
+        "system": {
+          "title": "System",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "display": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display"
+        }
+      },
+      "required": [
+        "system",
+        "code"
+      ],
+      "title": "Coding",
+      "type": "object"
+    },
+    "DiagnosisBasis": {
+      "description": "NOR 'K dg. vedla tato vyšetření' (bitmask, form shows the sum).",
+      "enum": [
+        0,
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "title": "DiagnosisBasis",
+      "type": "integer"
+    },
+    "Document": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "filename": {
+          "title": "Filename",
+          "type": "string"
+        },
+        "kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kind"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "filename",
+        "text"
+      ],
+      "title": "Document",
+      "type": "object"
+    },
+    "Evidence": {
+      "properties": {
+        "doc_id": {
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        },
+        "start": {
+          "description": "Character offset in Document.text",
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "doc_id",
+        "quote",
+        "start",
+        "end"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Extracted_Laterality_": {
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Laterality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "coding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Coding"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "status": {
+          "$ref": "#/$defs/FieldStatus",
+          "default": "missing"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "alternatives": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Laterality"
+          },
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/Review",
+          "default": {
+            "state": "pending",
+            "by": null,
+            "at": null,
+            "note": null
+          }
+        }
+      },
+      "title": "Extracted[Laterality]",
+      "type": "object"
+    },
+    "Extracted_PartialDate_": {
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PartialDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "coding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Coding"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "status": {
+          "$ref": "#/$defs/FieldStatus",
+          "default": "missing"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "alternatives": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PartialDate"
+          },
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/Review",
+          "default": {
+            "state": "pending",
+            "by": null,
+            "at": null,
+            "note": null
+          }
+        }
+      },
+      "title": "Extracted[PartialDate]",
+      "type": "object"
+    },
+    "Extracted_list_DiagnosisBasis__": {
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DiagnosisBasis"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "coding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Coding"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "status": {
+          "$ref": "#/$defs/FieldStatus",
+          "default": "missing"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "alternatives": {
+          "default": [],
+          "items": {
+            "items": {
+              "$ref": "#/$defs/DiagnosisBasis"
+            },
+            "type": "array"
+          },
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/Review",
+          "default": {
+            "state": "pending",
+            "by": null,
+            "at": null,
+            "note": null
+          }
+        }
+      },
+      "title": "Extracted[list[DiagnosisBasis]]",
+      "type": "object"
+    },
+    "Extracted_list_MetastasisSite__": {
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/MetastasisSite"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "coding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Coding"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "status": {
+          "$ref": "#/$defs/FieldStatus",
+          "default": "missing"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "alternatives": {
+          "default": [],
+          "items": {
+            "items": {
+              "$ref": "#/$defs/MetastasisSite"
+            },
+            "type": "array"
+          },
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/Review",
+          "default": {
+            "state": "pending",
+            "by": null,
+            "at": null,
+            "note": null
+          }
+        }
+      },
+      "title": "Extracted[list[MetastasisSite]]",
+      "type": "object"
+    },
+    "Extracted_str_": {
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "coding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Coding"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "status": {
+          "$ref": "#/$defs/FieldStatus",
+          "default": "missing"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "alternatives": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/Review",
+          "default": {
+            "state": "pending",
+            "by": null,
+            "at": null,
+            "note": null
+          }
+        }
+      },
+      "title": "Extracted[str]",
+      "type": "object"
+    },
+    "FieldStatus": {
+      "enum": [
+        "found",
+        "missing",
+        "conflict",
+        "not_applicable"
+      ],
+      "title": "FieldStatus",
+      "type": "string"
+    },
+    "Laterality": {
+      "enum": [
+        "left",
+        "right",
+        "bilateral",
+        "midline",
+        "not_applicable",
+        "unknown"
+      ],
+      "title": "Laterality",
+      "type": "string"
+    },
+    "MetastasisSite": {
+      "description": "NOR 'Lokalizace vzdálených metastáz' (bitmask).",
+      "enum": [
+        0,
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024
+      ],
+      "title": "MetastasisSite",
+      "type": "integer"
+    },
+    "NorReport": {
+      "description": "Fields of the NOR form 'Incidence zhoubného novotvaru'.",
+      "properties": {
+        "diagnosis_date": {
+          "$ref": "#/$defs/Extracted_PartialDate_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "icd10": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "topography": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "laterality": {
+          "$ref": "#/$defs/Extracted_Laterality_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "diagnosis_basis": {
+          "$ref": "#/$defs/Extracted_list_DiagnosisBasis__",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "morphology_code": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "morphology_name": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "grade": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "tnm_clinical": {
+          "$ref": "#/$defs/TNM",
+          "default": {
+            "y_prefix": false,
+            "t": {
+              "alternatives": [],
+              "coding": null,
+              "confidence": null,
+              "evidence": [],
+              "review": {
+                "at": null,
+                "by": null,
+                "note": null,
+                "state": "pending"
+              },
+              "status": "missing",
+              "value": null
+            },
+            "n": {
+              "alternatives": [],
+              "coding": null,
+              "confidence": null,
+              "evidence": [],
+              "review": {
+                "at": null,
+                "by": null,
+                "note": null,
+                "state": "pending"
+              },
+              "status": "missing",
+              "value": null
+            },
+            "m": {
+              "alternatives": [],
+              "coding": null,
+              "confidence": null,
+              "evidence": [],
+              "review": {
+                "at": null,
+                "by": null,
+                "note": null,
+                "state": "pending"
+              },
+              "status": "missing",
+              "value": null
+            }
+          }
+        },
+        "tnm_pathological": {
+          "$ref": "#/$defs/TNM",
+          "default": {
+            "y_prefix": false,
+            "t": {
+              "alternatives": [],
+              "coding": null,
+              "confidence": null,
+              "evidence": [],
+              "review": {
+                "at": null,
+                "by": null,
+                "note": null,
+                "state": "pending"
+              },
+              "status": "missing",
+              "value": null
+            },
+            "n": {
+              "alternatives": [],
+              "coding": null,
+              "confidence": null,
+              "evidence": [],
+              "review": {
+                "at": null,
+                "by": null,
+                "note": null,
+                "state": "pending"
+              },
+              "status": "missing",
+              "value": null
+            },
+            "m": {
+              "alternatives": [],
+              "coding": null,
+              "confidence": null,
+              "evidence": [],
+              "review": {
+                "at": null,
+                "by": null,
+                "note": null,
+                "state": "pending"
+              },
+              "status": "missing",
+              "value": null
+            }
+          }
+        },
+        "sentinel_node": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "clinical_stage": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "metastasis_sites": {
+          "$ref": "#/$defs/Extracted_list_MetastasisSite__",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "disease_extent": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "biomarkers": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Biomarker"
+          },
+          "title": "Biomarkers",
+          "type": "array"
+        },
+        "treatments": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/TreatmentEvent"
+          },
+          "title": "Treatments",
+          "type": "array"
+        },
+        "progression": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ProgressionEvent"
+          },
+          "title": "Progression",
+          "type": "array"
+        }
+      },
+      "title": "NorReport",
+      "type": "object"
+    },
+    "PartialDate": {
+      "description": "Anonymised documents often keep only the year or month.",
+      "properties": {
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        },
+        "month": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Month"
+        },
+        "day": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Day"
+        }
+      },
+      "required": [
+        "year"
+      ],
+      "title": "PartialDate",
+      "type": "object"
+    },
+    "ProgressionEvent": {
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "date": {
+          "$ref": "#/$defs/Extracted_PartialDate_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "sites": {
+          "$ref": "#/$defs/Extracted_list_MetastasisSite__",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        }
+      },
+      "title": "ProgressionEvent",
+      "type": "object"
+    },
+    "Review": {
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/ReviewState",
+          "default": "pending"
+        },
+        "by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "By"
+        },
+        "at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "At"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "title": "Review",
+      "type": "object"
+    },
+    "ReviewState": {
+      "enum": [
+        "pending",
+        "confirmed",
+        "edited",
+        "rejected"
+      ],
+      "title": "ReviewState",
+      "type": "string"
+    },
+    "TNM": {
+      "properties": {
+        "y_prefix": {
+          "default": false,
+          "title": "Y Prefix",
+          "type": "boolean"
+        },
+        "t": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "n": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "m": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        }
+      },
+      "title": "TNM",
+      "type": "object"
+    },
+    "TreatmentEvent": {
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "start": {
+          "$ref": "#/$defs/Extracted_PartialDate_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "end": {
+          "$ref": "#/$defs/Extracted_PartialDate_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "intent": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "TreatmentEvent",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "patient_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Patient Ref"
+    },
+    "documents": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Document"
+      },
+      "title": "Documents",
+      "type": "array"
+    },
+    "report": {
+      "$ref": "#/$defs/NorReport",
+      "default": {
+        "diagnosis_date": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "icd10": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "topography": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "laterality": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "diagnosis_basis": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "morphology_code": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "morphology_name": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "grade": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "tnm_clinical": {
+          "m": {
+            "alternatives": [],
+            "coding": null,
+            "confidence": null,
+            "evidence": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            },
+            "status": "missing",
+            "value": null
+          },
+          "n": {
+            "alternatives": [],
+            "coding": null,
+            "confidence": null,
+            "evidence": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            },
+            "status": "missing",
+            "value": null
+          },
+          "t": {
+            "alternatives": [],
+            "coding": null,
+            "confidence": null,
+            "evidence": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            },
+            "status": "missing",
+            "value": null
+          },
+          "y_prefix": false
+        },
+        "tnm_pathological": {
+          "m": {
+            "alternatives": [],
+            "coding": null,
+            "confidence": null,
+            "evidence": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            },
+            "status": "missing",
+            "value": null
+          },
+          "n": {
+            "alternatives": [],
+            "coding": null,
+            "confidence": null,
+            "evidence": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            },
+            "status": "missing",
+            "value": null
+          },
+          "t": {
+            "alternatives": [],
+            "coding": null,
+            "confidence": null,
+            "evidence": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            },
+            "status": "missing",
+            "value": null
+          },
+          "y_prefix": false
+        },
+        "sentinel_node": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "clinical_stage": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "metastasis_sites": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "disease_extent": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "evidence": [],
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "biomarkers": [],
+        "treatments": [],
+        "progression": []
+      }
+    },
+    "fhir_bundle_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Fhir Bundle Id"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "Case",
+  "type": "object"
+}
