@@ -1,191 +1,330 @@
+// Simple working UI (PLAN.md §6): upload -> AI extraction -> review queue -> preview -> confirm -> ÚZIS / FHIR.
+// The polished UI comes later; keep this one boring and correct.
 import { useEffect, useMemo, useState } from 'react'
 import { api, type Case, type Evidence, type Extracted, type NorReport } from './api'
 
-// Fields shown in the review panel, in NOR form order. Path = key in NorReport (dot for TNM parts).
-const FIELDS: [string, string][] = [
-  ['diagnosis_date', 'Datum stanovení dg.'],
-  ['icd10', 'Dg. MKN-10'],
-  ['topography', 'Topografie'],
-  ['laterality', 'Lateralita'],
-  ['morphology_code', 'Kód morfologie'],
-  ['morphology_name', 'Název morfologie'],
-  ['grade', 'Grading'],
-  ['tnm_clinical.t', 'cT'],
-  ['tnm_clinical.n', 'cN'],
-  ['tnm_clinical.m', 'cM'],
-  ['tnm_pathological.t', 'pT'],
-  ['tnm_pathological.n', 'pN'],
-  ['tnm_pathological.m', 'pM'],
-  ['clinical_stage', 'Klinické stádium'],
-  ['disease_extent', 'Onemocnění'],
+const SECTIONS: [string, [string, string][]][] = [
+  ['Diagnóza', [
+    ['diagnosis_date', 'Datum stanovení diagnózy'],
+    ['diagnosis_basis', 'K dg. vedla vyšetření'],
+    ['laterality', 'Lateralita'],
+    ['icd10', 'Dg. MKN'],
+    ['topography', 'Topografie'],
+  ]],
+  ['Morfologie', [
+    ['morphology_type', 'Typ morfologie'],
+    ['morphology_code', 'Kód morfologie'],
+    ['grade', 'Grading'],
+    ['morphology_name', 'Název morfologie'],
+  ]],
+  ['TNM', [
+    ['tnm_clinical.t', 'T'], ['tnm_clinical.n', 'N'], ['tnm_clinical.m', 'M'],
+    ['tnm_pathological.t', 'pT'], ['tnm_pathological.n', 'pN'], ['tnm_pathological.m', 'pM'],
+    ['pn_examined', 'pN vyš.'], ['pn_positive', 'pN poz.'], ['sentinel_node', 'sn'],
+    ['metastasis_sites', 'Lokalizace vzdálených metastáz'], ['clinical_stage', 'Klinické stádium'],
+  ]],
+  ['Ostatní', [['disease_extent', 'Onemocnění']]],
 ]
+const ALL_FIELDS = SECTIONS.flatMap(([, f]) => f)
+const LATERALITY: Record<string, string> = {
+  right: '1 - vpravo', left: '2 - vlevo', bilateral: '3 - oboustranně', not_applicable: '4 - odpadá', midline: '4 - odpadá', unknown: '9 - neznámo',
+}
 
 function getField(report: NorReport, path: string): Extracted {
   const [a, b] = path.split('.')
-  const top = report[a as keyof NorReport] as unknown as Record<string, Extracted>
+  const top = report[a] as unknown as Record<string, unknown>
   return (b ? top[b] : top) as Extracted
 }
 
-function show(v: unknown): string {
+function show(path: string, v: unknown): string {
   if (v == null) return '—'
-  if (typeof v === 'object' && 'year' in (v as object)) {
+  if (path === 'laterality') return LATERALITY[String(v)] ?? String(v)
+  if (typeof v === 'object' && !Array.isArray(v) && 'year' in (v as object)) {
     const d = v as { year: number; month?: number; day?: number }
     return [d.day, d.month, d.year].filter(Boolean).join('. ')
   }
-  return Array.isArray(v) ? v.join(', ') : String(v)
+  if (Array.isArray(v)) return v.length ? `${v.reduce((s: number, x) => s + Number(x), 0)} (${v.join(' + ')})` : 'žádné'
+  return String(v)
 }
+
+function badge(f: Extracted): string {
+  if (f.status === 'conflict') return 'bg-purple-100 text-purple-800'
+  const c = f.confidence ?? 0
+  return c >= 85 ? 'bg-green-100 text-green-800' : c >= 60 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800'
+}
+
+const needsHuman = (f: Extracted) => f.needs_review && f.review.state === 'pending'
 
 export default function App() {
   const [health, setHealth] = useState<{ llm_mode: string; fhir: boolean } | null>(null)
+  const [cases, setCases] = useState<Case[]>([])
   const [kase, setCase] = useState<Case | null>(null)
   const [active, setActive] = useState<Evidence | null>(null)
-  const [busy, setBusy] = useState(false)
+  const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [preview, setPreview] = useState<Record<string, unknown> | null>(null)
+  const [doctor, setDoctor] = useState('')
+  const [fhirResult, setFhirResult] = useState<string | null>(null)
 
   useEffect(() => {
     api.health().then(setHealth).catch(() => setHealth(null))
+    api.cases().then(setCases).catch(() => {})
   }, [])
 
-  async function run<T>(fn: () => Promise<T>) {
-    setBusy(true)
+  async function run<T>(label: string, fn: () => Promise<T>): Promise<T | undefined> {
+    setBusy(label)
     setError(null)
     try {
       return await fn()
     } catch (e) {
-      setError(String(e))
+      setError(String(e instanceof Error ? e.message : e))
     } finally {
-      setBusy(false)
+      setBusy(null)
     }
+  }
+
+  function open(c: Case) {
+    setCase(c)
+    setActive(null)
+    setPreview(null)
+    setFhirResult(null)
   }
 
   async function onUpload(files: FileList | null) {
     if (!files?.length) return
-    const created = await run(() => api.createCase([...files]))
-    if (created) setCase((await run(() => api.extract(created.id))) ?? created)
+    const created = await run('Nahrávám dokumenty…', () => api.createCase([...files]))
+    if (!created) return
+    open(created)
+    const extracted = await run('AI vytěžuje hlášení… (obvykle 20–40 s)', () => api.extract(created.id))
+    if (extracted) open(extracted)
+    api.cases().then(setCases)
   }
 
-  async function setReview(path: string, state: 'confirmed' | 'rejected') {
+  async function update(path: string, change: (f: Extracted) => void) {
     if (!kase) return
     const report = structuredClone(kase.report)
-    getField(report, path).review.state = state
-    const saved = await run(() => api.saveReport(kase.id, report))
-    if (saved) setCase(saved)
+    change(getField(report, path))
+    const saved = await run('Ukládám…', () => api.saveReport(kase.id, report))
+    if (saved) {
+      setCase(saved)
+      setPreview(null)
+    }
   }
+
+  const queue = useMemo(() => {
+    if (!kase) return []
+    return ALL_FIELDS.map(([p, l]) => ({ path: p, label: l, f: getField(kase.report, p) }))
+      .filter(({ f }) => needsHuman(f))
+      .sort((a, b) => Number(b.f.status === 'conflict') - Number(a.f.status === 'conflict') || (a.f.confidence ?? 0) - (b.f.confidence ?? 0))
+  }, [kase])
 
   const doc = useMemo(
     () => kase?.documents.find((d) => d.id === active?.doc_id) ?? kase?.documents[0],
     [kase, active],
   )
 
+  function FieldActions({ path, f }: { path: string; f: Extracted }) {
+    return (
+      <span className="whitespace-nowrap">
+        {f.status !== 'conflict' && f.alternatives.length > 0 && <span className="mr-1 text-xs text-slate-500">návrh:</span>}
+        {f.status !== 'conflict' &&
+          f.alternatives.slice(0, 3).map((alt, i) => (
+            <button key={`a${i}`} className="mr-1 rounded border border-blue-300 px-1.5 text-xs text-blue-800 hover:bg-blue-50"
+              onClick={() => update(path, (x) => { x.value = alt; x.review.state = 'edited' })}>
+              {show(path, alt)}
+            </button>
+          ))}
+        {f.status === 'conflict' &&
+          [f.value, ...f.alternatives].map((alt, i) => (
+            <button key={i} className="mr-1 rounded border px-1.5 text-xs hover:bg-slate-100"
+              onClick={() => update(path, (x) => { x.value = alt; x.status = 'found'; x.review.state = 'edited' })}>
+              {show(path, alt)}
+            </button>
+          ))}
+        {f.status !== 'conflict' && (
+          <button className="mr-1 rounded bg-green-600 px-2 text-xs text-white" onClick={() => update(path, (x) => { x.review.state = 'confirmed' })}>✓ Potvrdit</button>
+        )}
+        <button className="mr-1 rounded bg-slate-100 px-2 text-xs"
+          onClick={() => {
+            const v = window.prompt('Nová hodnota', typeof f.value === 'string' || typeof f.value === 'number' ? String(f.value) : '')
+            if (v != null) update(path, (x) => { x.value = typeof f.value === 'number' ? Number(v) : v; x.status = 'found'; x.review.state = 'edited' })
+          }}>✎</button>
+        <button className="rounded bg-slate-100 px-2 text-xs" onClick={() => update(path, (x) => { x.review.state = 'rejected' })}>✗</button>
+      </span>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <header className="flex items-center justify-between border-b bg-white px-6 py-3">
         <h1 className="text-lg font-semibold">AI NOR · hlášení novotvaru</h1>
-        <div className="text-sm text-slate-500">
-          LLM: {health?.llm_mode ?? '?'} · IRIS FHIR: {health?.fhir ? 'online' : 'offline'}
-        </div>
+        <div className="text-sm text-slate-500">LLM: {health?.llm_mode ?? '?'} · IRIS FHIR: {health?.fhir ? 'online' : 'offline'}</div>
       </header>
 
-      <main className="grid gap-4 p-6 lg:grid-cols-2">
-        <section className="rounded-lg border bg-white p-4">
-          <label className="mb-3 block text-sm font-medium">
-            Zdravotnická dokumentace (PDF, TXT, XLSX)
-            <input
-              type="file"
-              multiple
-              accept=".pdf,.txt,.md,.xlsx"
-              className="mt-1 block w-full text-sm"
-              onChange={(e) => onUpload(e.target.files)}
-              disabled={busy}
-            />
+      <div className="grid grid-cols-[220px_1fr] gap-4 p-4">
+        <aside className="space-y-3">
+          <label className="block rounded-lg border bg-white p-3 text-sm font-medium">
+            Nahrát dokumenty pacienta (PDF, TXT, XLSX)
+            <input type="file" multiple accept=".pdf,.txt,.md,.xlsx" className="mt-2 block w-full text-xs"
+              onChange={(e) => { onUpload(e.target.files); e.target.value = '' }} disabled={!!busy} />
           </label>
+          <div className="rounded-lg border bg-white p-2 text-sm">
+            <div className="mb-1 px-1 text-xs font-medium text-slate-500">Případy</div>
+            {cases.map((c) => (
+              <button key={c.id} onClick={() => api.getCase(c.id).then(open)}
+                className={`block w-full truncate rounded px-2 py-1 text-left ${c.id === kase?.id ? 'bg-slate-800 text-white' : 'hover:bg-slate-100'}`}>
+                {c.patient_ref ?? c.documents[0]?.filename ?? c.id.slice(0, 8)} {c.confirmed_at ? '✓' : ''}
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <main className="space-y-4">
+          {busy && <div className="rounded border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-800">{busy}</div>}
+          {error && <div className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{error}</div>}
+          {!kase && <p className="text-sm text-slate-500">Nahrajte dokumenty pacienta nebo vyberte případ.</p>}
+
           {kase && (
             <>
-              <div className="mb-2 flex flex-wrap gap-2">
-                {kase.documents.map((d) => (
-                  <button
-                    key={d.id}
-                    onClick={() => setActive({ doc_id: d.id, quote: '', start: 0, end: 0 })}
-                    className={`rounded px-2 py-1 text-xs ${d.id === doc?.id ? 'bg-slate-800 text-white' : 'bg-slate-100'}`}
-                  >
-                    {d.kind} · {d.filename}
-                  </button>
-                ))}
+              <div className="flex flex-wrap items-center gap-3 rounded-lg border bg-white px-4 py-2 text-sm">
+                <b>{kase.patient_ref ?? 'Pacient'}</b>
+                <span>{kase.documents.length} dokumenty</span>
+                <span>ke kontrole: <b>{queue.length}</b></span>
+                {kase.confirmed_at && <span className="text-green-700">✓ potvrdil {kase.confirmed_by}</span>}
+                <span className="flex-1" />
+                <button className="rounded border px-3 py-1" onClick={() => run('AI vytěžuje hlášení…', () => api.extract(kase.id)).then((c) => c && open(c))} disabled={!!busy}>Vytěžit znovu</button>
+                <button className="rounded bg-slate-900 px-3 py-1 text-white disabled:opacity-40" disabled={queue.length > 0 || !!busy}
+                  title={queue.length ? 'Nejdřív vyřešte pole ke kontrole' : ''}
+                  onClick={() => run('Připravuji náhled…', () => api.uzisPreview(kase.id)).then((p) => p && setPreview(p))}>
+                  Náhled a potvrzení →
+                </button>
               </div>
-              {doc && (
-                <pre className="max-h-[70vh] overflow-auto whitespace-pre-wrap text-sm leading-relaxed">
-                  {active && active.doc_id === doc.id && active.end > active.start ? (
-                    <>
-                      {doc.text.slice(0, active.start)}
-                      <mark className="bg-amber-200">{doc.text.slice(active.start, active.end)}</mark>
-                      {doc.text.slice(active.end)}
-                    </>
-                  ) : (
-                    doc.text
+
+              {kase.warnings.length > 0 && (
+                <div className="rounded border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+                  {kase.warnings.map((w) => <div key={w}>⚠ {w}</div>)}
+                </div>
+              )}
+
+              {queue.length > 0 && (
+                <section className="rounded-lg border-2 border-amber-300 bg-white p-3">
+                  <h2 className="mb-2 text-sm font-semibold">Ke kontrole ({queue.length}): rozpory a nejistá pole</h2>
+                  {queue.map(({ path, label, f }) => (
+                    <div key={path} className="flex flex-wrap items-center gap-2 border-t py-1.5 text-sm first:border-0">
+                      <span className={`rounded px-1.5 text-xs font-semibold ${badge(f)}`} title={f.confidence_reasons.join('\n')}>
+                        {f.status === 'conflict' ? '⚠ ' : ''}{f.confidence}
+                      </span>
+                      <span className="w-48 text-slate-500">{label}</span>
+                      <b className="w-48">{show(path, f.value)}</b>
+                      {f.evidence.map((e, i) => (
+                        <button key={i} className="text-xs text-blue-700 underline" onClick={() => setActive(e)}>citace {i + 1}</button>
+                      ))}
+                      <span className="flex-1" />
+                      <FieldActions path={path} f={f} />
+                    </div>
+                  ))}
+                </section>
+              )}
+
+              <div className="grid gap-4 lg:grid-cols-2">
+                <section className="rounded-lg border bg-white p-3">
+                  <div className="mb-2 flex flex-wrap gap-1">
+                    {kase.documents.map((d) => (
+                      <button key={d.id} onClick={() => setActive({ doc_id: d.id, quote: '', start: 0, end: 0, verified: false })}
+                        className={`rounded px-2 py-0.5 text-xs ${d.id === doc?.id ? 'bg-slate-800 text-white' : 'bg-slate-100'}`}>
+                        {d.kind} · {d.filename.replace(/^Rakathon_2026_/, '')}
+                      </button>
+                    ))}
+                  </div>
+                  {doc && (
+                    <pre className="max-h-[65vh] overflow-auto whitespace-pre-wrap text-xs leading-relaxed">
+                      {active && active.doc_id === doc.id && active.end > active.start ? (
+                        <>
+                          {doc.text.slice(0, active.start)}
+                          <mark className="bg-amber-200" ref={(el) => el?.scrollIntoView({ block: 'center' })}>{doc.text.slice(active.start, active.end)}</mark>
+                          {doc.text.slice(active.end)}
+                        </>
+                      ) : doc.text}
+                    </pre>
                   )}
-                </pre>
+                </section>
+
+                <section className="rounded-lg border bg-white p-3 text-sm">
+                  {SECTIONS.map(([title, fields]) => (
+                    <div key={title} className="mb-3">
+                      <h3 className="mb-1 text-xs font-semibold uppercase text-slate-500">{title}</h3>
+                      {fields.map(([path, label]) => {
+                        const f = getField(kase.report, path)
+                        const missing = f.status === 'missing'
+                        return (
+                          <div key={path} className="flex items-center gap-2 border-b py-1 last:border-0">
+                            <span className="w-48 text-slate-500">{label}</span>
+                            <span className={`flex-1 ${missing || f.review.state === 'rejected' ? 'text-slate-400' : 'font-medium'}`}>
+                              {missing ? 'chybí v dokumentaci' : f.review.state === 'rejected' ? 'zamítnuto' : show(path, f.value)}
+                            </span>
+                            {!missing && (
+                              <span className={`rounded px-1.5 text-xs font-semibold ${badge(f)}`} title={f.confidence_reasons.join('\n')}>{f.confidence}</span>
+                            )}
+                            <span className="w-16 text-xs text-slate-500">
+                              {f.review.state === 'auto_accepted' ? '✓ AI' : f.review.state === 'confirmed' ? '✓ lékař' : f.review.state === 'edited' ? '✎ lékař' : needsHuman(f) ? 'ke kontrole' : ''}
+                            </span>
+                            {f.evidence[0] && <button className="text-xs text-blue-700 underline" onClick={() => setActive(f.evidence[0])}>zdroj</button>}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  ))}
+                </section>
+              </div>
+
+              {preview && (
+                <section className="rounded-lg border-2 border-slate-900 bg-white p-4 text-sm">
+                  <h2 className="mb-2 font-semibold">Náhled hlášení · {String(preview.formular)} · stav: {String(preview.stav)}</h2>
+                  {(preview.chybi_povinne as string[]).length > 0 && (
+                    <p className="mb-2 text-amber-800">Chybí povinná pole: {(preview.chybi_povinne as string[]).join(', ')}</p>
+                  )}
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {['diagnosticka_cast', 'diagnoza', 'morfologie', 'tnm', 'ostatni', 'hlaseni'].map((k) => (
+                      <div key={k}>
+                        <h3 className="text-xs font-semibold uppercase text-slate-500">{k.replace('_', ' ')}</h3>
+                        {Object.entries(preview[k] as Record<string, unknown>).map(([key, v]) => (
+                          <div key={key} className="flex gap-2 border-b py-0.5">
+                            <span className="w-52 text-slate-500">{key.replace(/_/g, ' ')}</span>
+                            <span>{v == null || v === '' ? '—' : String(v)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    {!kase.confirmed_at ? (
+                      <>
+                        <input className="rounded border px-2 py-1" placeholder="Jméno lékaře" value={doctor} onChange={(e) => setDoctor(e.target.value)} />
+                        <button className="rounded bg-green-700 px-4 py-1.5 text-white disabled:opacity-40" disabled={!doctor || !!busy}
+                          onClick={() => run('Potvrzuji…', () => api.confirm(kase.id, doctor)).then(async (c) => {
+                            if (c) { open(c); setPreview(await api.uzisPreview(c.id)) }
+                          })}>
+                          Potvrdit hlášení
+                        </button>
+                        <span className="text-xs text-slate-500">Bez potvrzení se nic neexportuje do ÚZIS ani nezapíše do FHIR.</span>
+                      </>
+                    ) : (
+                      <>
+                        <a className="rounded border px-3 py-1.5" href={api.uzisExportUrl(kase.id)} target="_blank" rel="noreferrer">Export pro ÚZIS (JSON)</a>
+                        <button className="rounded bg-slate-900 px-3 py-1.5 text-white disabled:opacity-40" disabled={!health?.fhir || !!busy}
+                          onClick={() => run('Zapisuji do IRIS FHIR…', () => api.submit(kase.id)).then((r) => r && setFhirResult(`Zapsáno do FHIR: ${r.entry?.length ?? 0} zdrojů`))}>
+                          Uložit do IRIS FHIR
+                        </button>
+                        {fhirResult && <span className="text-green-700">{fhirResult}</span>}
+                      </>
+                    )}
+                  </div>
+                </section>
               )}
             </>
           )}
-        </section>
-
-        <section className="rounded-lg border bg-white p-4">
-          <h2 className="mb-3 font-medium">Pole hlášení NOR</h2>
-          {!kase && <p className="text-sm text-slate-500">Nahrajte dokumenty pacienta.</p>}
-          {kase && (
-            <table className="w-full text-sm">
-              <tbody>
-                {FIELDS.map(([path, label]) => {
-                  const f = getField(kase.report, path)
-                  return (
-                    <tr key={path} className="border-b last:border-0">
-                      <td className="py-2 pr-2 text-slate-500">{label}</td>
-                      <td className="py-2 pr-2 font-medium">
-                        {f.status === 'missing' ? <span className="text-slate-400">chybí</span> : show(f.value)}
-                      </td>
-                      <td className="py-2 pr-2">
-                        {f.evidence[0] && (
-                          <button className="text-xs text-blue-700 underline" onClick={() => setActive(f.evidence[0])}>
-                            zdroj
-                          </button>
-                        )}
-                      </td>
-                      <td className="py-2 text-right whitespace-nowrap">
-                        {f.status !== 'missing' && (
-                          <>
-                            <button
-                              className={`mr-1 rounded px-2 text-xs ${f.review.state === 'confirmed' ? 'bg-green-600 text-white' : 'bg-slate-100'}`}
-                              onClick={() => setReview(path, 'confirmed')}
-                            >
-                              ✓
-                            </button>
-                            <button
-                              className={`rounded px-2 text-xs ${f.review.state === 'rejected' ? 'bg-red-600 text-white' : 'bg-slate-100'}`}
-                              onClick={() => setReview(path, 'rejected')}
-                            >
-                              ✗
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          )}
-          {kase && (
-            <button
-              className="mt-4 rounded bg-slate-900 px-4 py-2 text-sm text-white disabled:opacity-50"
-              disabled={busy || !health?.fhir}
-              onClick={() => run(() => api.submit(kase.id))}
-            >
-              Odeslat potvrzené do IRIS FHIR
-            </button>
-          )}
-          {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
-        </section>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }

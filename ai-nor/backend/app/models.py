@@ -27,6 +27,7 @@ class ReviewState(str, Enum):
     confirmed = "confirmed"
     edited = "edited"
     rejected = "rejected"
+    auto_accepted = "auto_accepted"  # confidence >= threshold, no conflict: nobody has to review it
 
 
 class Evidence(BaseModel):
@@ -34,6 +35,7 @@ class Evidence(BaseModel):
     quote: str
     start: int = Field(ge=0, description="Character offset in Document.text")
     end: int = Field(ge=0)
+    verified: bool = False  # quote found verbatim at [start:end] of the document
 
 
 class Coding(BaseModel):
@@ -53,7 +55,9 @@ class Extracted(BaseModel, Generic[T]):
     value: T | None = None
     coding: Coding | None = None
     status: FieldStatus = FieldStatus.missing
-    confidence: float | None = Field(default=None, ge=0, le=1)
+    confidence: int | None = Field(default=None, ge=0, le=100)  # 0-100, see app/confidence.py
+    confidence_reasons: list[str] = []  # human-readable signals behind the score
+    needs_review: bool = False  # conflict or confidence below AUTO_ACCEPT_THRESHOLD
     evidence: list[Evidence] = []
     alternatives: list[T] = []  # other values seen in the documents (for conflicts)
     review: Review = Review()
@@ -138,15 +142,18 @@ class NorReport(BaseModel):
     topography: Extracted[str] = Extracted()  # ICD-O-3 topography
     laterality: Extracted[Laterality] = Extracted()
     diagnosis_basis: Extracted[list[DiagnosisBasis]] = Extracted()
+    morphology_type: Extracted[str] = Extracted()  # NOR: "Histologie" | "Cytologie"
     morphology_code: Extracted[str] = Extracted()  # ICD-O-3, e.g. 8140/3
     morphology_name: Extracted[str] = Extracted()
-    grade: Extracted[str] = Extracted()  # 1-4, 9 (neurčen) or Gleason etc.
+    grade: Extracted[str] = Extracted()  # NOR code 1-9 (1 dobře … 4 nediferencovaný, 9 neurčen)
     tnm_clinical: TNM = TNM()
     tnm_pathological: TNM = TNM()
+    pn_examined: Extracted[int] = Extracted()  # NOR "pN vyš." - lymph nodes examined
+    pn_positive: Extracted[int] = Extracted()  # NOR "pN poz." - positive lymph nodes
     sentinel_node: Extracted[str] = Extracted()  # NOR 'sn'
     clinical_stage: Extracted[str] = Extracted()  # I-IV / FIGO
     metastasis_sites: Extracted[list[MetastasisSite]] = Extracted()
-    disease_extent: Extracted[str] = Extracted()  # NOR 'Onemocnění' (1 - lokalizované, ...)
+    disease_extent: Extracted[str] = Extracted()  # NOR 'Onemocnění': 1 lokalizované, 2 pokročilé, 9 neznámo
     biomarkers: list[Biomarker] = []
     treatments: list[TreatmentEvent] = []
     progression: list[ProgressionEvent] = []
@@ -164,6 +171,9 @@ class Case(BaseModel):
     patient_ref: str | None = None  # anonymised id from the source system
     documents: list[Document] = []
     report: NorReport = NorReport()
+    warnings: list[str] = []  # case-level validation (identity mismatch, sex vs. diagnosis, ...)
+    confirmed_by: str | None = None  # clinician who confirmed the whole report preview
+    confirmed_at: datetime | None = None
     fhir_bundle_id: str | None = None
     created_at: datetime
     updated_at: datetime

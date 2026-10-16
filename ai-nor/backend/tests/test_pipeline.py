@@ -35,23 +35,57 @@ def test_mock_extraction_has_evidence_pointing_into_the_document():
         assert doc.text[ev.start : ev.end] == ev.quote
 
 
-def test_bundle_contains_only_confirmed_fields():
+def test_review_policy_auto_accepts_only_confident_fields():
+    from app.confidence import apply_review_policy, review_queue
+
     case = _demo_case()
+    r = apply_review_policy(case.report)
+    assert r.morphology_code.confidence == 95
+    assert r.morphology_code.review.state == ReviewState.auto_accepted and not r.morphology_code.needs_review
+    # ICD-10 from histology scores 70 (80 with the MKN-10 table loaded) < 85 -> review
+    assert r.icd10.needs_review and r.icd10.review.state == ReviewState.pending
+    assert not r.grade.needs_review  # missing fields are never queued
+    queue = review_queue(r)
+    assert {p for p, _ in queue} == {"icd10", "tnm_pathological.t", "tnm_pathological.n"}
+    scores = [f.confidence for _, f in queue]
+    assert scores == sorted(scores)  # lowest confidence first
+
+
+def test_conflict_always_goes_to_review():
+    from app.confidence import apply_review_policy
+    from app.models import FieldStatus
+
+    case = _demo_case()
+    case.report.morphology_code.status = FieldStatus.conflict
+    r = apply_review_policy(case.report)
+    assert r.morphology_code.needs_review  # even with confidence 95
+
+
+def test_bundle_writes_auto_accepted_and_human_confirmed_fields():
+    from app.confidence import apply_review_policy
+
+    case = _demo_case()
+    apply_review_policy(case.report)
     bundle = build_bundle(case)
     condition = next(e["resource"] for e in bundle["entry"] if e["resource"]["resourceType"] == "Condition")
-    assert "code" not in condition  # nothing confirmed yet
+    assert "code" not in condition  # ICD-10 still waits for review
+    assert condition["extension"][0]["valueCodeableConcept"]["coding"][0]["code"] == "8500/3"  # auto-accepted
 
     case.report.icd10.review.state = ReviewState.confirmed
     case.report.tnm_pathological.t.review.state = ReviewState.confirmed
+    case.confirmed_by = "MUDr. Test"
     bundle = build_bundle(case)
     types = [e["resource"]["resourceType"] for e in bundle["entry"]]
     assert bundle["type"] == "transaction"
     assert types.count("Observation") == 1 and "Provenance" in types
     condition = next(e["resource"] for e in bundle["entry"] if e["resource"]["resourceType"] == "Condition")
     assert condition["code"]["coding"][0]["code"] == "C50.4"
+    assert condition["meta"]["tag"][0]["code"] == "confirmed"
     obs = next(e["resource"] for e in bundle["entry"] if e["resource"]["resourceType"] == "Observation")
     assert obs["code"]["coding"][0]["code"] == "384625004"  # pT category
     assert obs["valueCodeableConcept"]["text"] == "pT1c"
+    prov = next(e["resource"] for e in bundle["entry"] if e["resource"]["resourceType"] == "Provenance")
+    assert any(a["type"]["coding"][0]["code"] == "verifier" for a in prov["agent"])
 
 
 def test_api_create_and_extract(tmp_path, monkeypatch):

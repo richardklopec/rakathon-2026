@@ -1,7 +1,7 @@
 """Build a FHIR R4 transaction Bundle from a confirmed NOR report.
 
 Profiles: mCODE STU4 (structure), HL7 EU Common Cancer Model (concepts), HL7 CZ Core (identifiers, MKN-10).
-Only fields the clinician confirmed or edited are written. See contracts/fhir_mapping.md.
+Written: fields auto-accepted (confidence >= threshold, no conflict) or confirmed / edited by a human. See contracts/fhir_mapping.md.
 """
 
 import base64
@@ -9,11 +9,13 @@ import uuid
 from datetime import datetime, timezone
 
 from app.models import Case, Extracted, Laterality, PartialDate, ReviewState, TNM
+from app.validate import mkn10
 
 MCODE = "http://hl7.org/fhir/us/mcode/StructureDefinition/"
 SCT = "http://snomed.info/sct"
 ICDO3 = "http://terminology.hl7.org/CodeSystem/icd-o-3"
 ICD10_CZ = "https://uzis.cz/terminology/CodeSystem/mkn-10"
+REVIEW_TAG_SYSTEM = "urn:ai-nor:review"  # meta.tag: auto_accepted | confirmed | edited (+ score in display)
 PATIENT_ID_SYSTEM = "urn:ai-nor:source-patient-id"  # TODO real FNO system; RČ would be https://ncez.mzcr.cz/fhir/sid/rcis
 
 LATERALITY_SCT = {
@@ -32,7 +34,15 @@ TNM_CODES = {
 
 
 def _ok(field: Extracted) -> bool:
-    return field.value is not None and field.review.state in (ReviewState.confirmed, ReviewState.edited)
+    return field.value is not None and field.review.state in (
+        ReviewState.confirmed,
+        ReviewState.edited,
+        ReviewState.auto_accepted,
+    )
+
+
+def _review_tag(field: Extracted) -> dict:
+    return {"system": REVIEW_TAG_SYSTEM, "code": field.review.state.value, "display": f"jistota {field.confidence}"}
 
 
 def _date(d: PartialDate) -> str:
@@ -98,7 +108,7 @@ def build_bundle(case: Case) -> dict:
         "category": [_cc("http://terminology.hl7.org/CodeSystem/condition-category", "problem-list-item")],
     }
     if _ok(r.icd10):
-        condition["code"] = _cc(ICD10_CZ, r.icd10.value, r.icd10.coding.display if r.icd10.coding else None)
+        condition["code"] = _cc(ICD10_CZ, r.icd10.value, mkn10.lookup(r.icd10.value))  # value may be edited by the clinician
     if _ok(r.diagnosis_date):
         condition["onsetDateTime"] = _date(r.diagnosis_date.value)
     if _ok(r.topography):
@@ -116,15 +126,17 @@ def build_bundle(case: Case) -> dict:
                 "valueCodeableConcept": _cc(ICDO3, r.morphology_code.value, r.morphology_name.value),
             }
         ]
+    condition["meta"]["tag"] = [_review_tag(r.icd10)]
     condition_entry = _entry(condition)
     entries.append(condition_entry)
+    human_reviewed = {condition_entry["fullUrl"]} if r.icd10.review.state != ReviewState.auto_accepted else set()
     focus = {"reference": condition_entry["fullUrl"]}
 
     def observation(profile: str, code: dict, value: str, field: Extracted) -> dict:
-        return _entry(
+        entry = _entry(
             {
                 "resourceType": "Observation",
-                "meta": {"profile": [MCODE + profile]},
+                "meta": {"profile": [MCODE + profile], "tag": [_review_tag(field)]},
                 "status": "final",
                 "category": [_cc("http://terminology.hl7.org/CodeSystem/observation-category", "laboratory")],
                 "code": code,
@@ -134,6 +146,9 @@ def build_bundle(case: Case) -> dict:
                 "derivedFrom": [{"reference": doc_refs[e.doc_id]} for e in field.evidence if e.doc_id in doc_refs],
             }
         )
+        if field.review.state != ReviewState.auto_accepted:
+            human_reviewed.add(entry["fullUrl"])
+        return entry
 
     for tnm, idx, prefix in ((r.tnm_clinical, 0, "c"), (r.tnm_pathological, 1, "p")):
         for part in ("t", "n", "m"):
@@ -153,23 +168,37 @@ def build_bundle(case: Case) -> dict:
             )
         )
 
-    # Provenance: which documents each written resource was derived from, and who confirmed it
-    targets = [{"reference": e["fullUrl"]} for e in entries if e["resource"]["resourceType"] not in ("Patient", "DocumentReference")]
-    entries.append(
-        _entry(
-            {
-                "resourceType": "Provenance",
-                "target": targets,
-                "recorded": datetime.now(timezone.utc).isoformat(),
-                "activity": _cc("http://terminology.hl7.org/CodeSystem/v3-DataOperation", "CREATE"),
-                "agent": [
-                    {"type": _cc("http://terminology.hl7.org/CodeSystem/provenance-participant-type", "assembler"),
-                     "who": {"display": "AI NOR extractor"}},
-                    {"type": _cc("http://terminology.hl7.org/CodeSystem/provenance-participant-type", "verifier"),
-                     "who": {"display": r.icd10.review.by or "clinician"}},
-                ],
-                "entity": [{"role": "source", "what": {"reference": ref}} for ref in doc_refs.values()],
-            }
+    # Provenance: which documents the written resources came from, whether the clinician resolved the field
+    # by hand or took over the AI prefill, and who confirmed the whole report (one Provenance per group).
+    written = [e["fullUrl"] for e in entries if e["resource"]["resourceType"] not in ("Patient", "DocumentReference")]
+    groups = [
+        ([u for u in written if u not in human_reviewed], False),
+        ([u for u in written if u in human_reviewed], True),
+    ]
+    for targets, u_human in groups:
+        if not targets:
+            continue
+        verifier = case.confirmed_by
+        agents = [
+            {"type": _cc("http://terminology.hl7.org/CodeSystem/provenance-participant-type", "assembler"),
+             "who": {"display": "AI NOR extractor"}},
+        ]
+        if verifier:
+            agents.append(
+                {"type": _cc("http://terminology.hl7.org/CodeSystem/provenance-participant-type", "verifier"),
+                 "who": {"display": verifier}}
+            )
+        entries.append(
+            _entry(
+                {
+                    "resourceType": "Provenance",
+                    "target": [{"reference": u} for u in targets],
+                    "recorded": datetime.now(timezone.utc).isoformat(),
+                    "activity": _cc("http://terminology.hl7.org/CodeSystem/v3-DataOperation", "CREATE"),
+                    "reason": [{"text": "pole řešil lékař ručně" if u_human else "předvyplněno AI (jistota nad prahem, bez rozporu), potvrzeno v náhledu hlášení"}],
+                    "agent": agents,
+                    "entity": [{"role": "source", "what": {"reference": ref}} for ref in doc_refs.values()],
+                }
+            )
         )
-    )
     return {"resourceType": "Bundle", "type": "transaction", "entry": entries}

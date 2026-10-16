@@ -1,6 +1,6 @@
 # AI NOR — strukturované onkologické hlášení z volného textu
 
-Rakathon 2026 Ostrava · výzva **AI NOR (FN Ostrava)** + výzva **InterSystems (AI & interoperabilita)**.
+Rakathon 2026 Ostrava · výzva **AI NOR (FN Ostrava)** + výzva **InterSystems (AI & interoperabilita)**. Plán, cíle a návrh UI: [PLAN.md](PLAN.md).
 
 AI z klinické dokumentace (ambulantní a propouštěcí zprávy, histologie, MDT) vytěží pole hlášení do
 Národního onkologického registru **s citací zdroje**. Lékař každé pole potvrdí nebo opraví a potvrzené
@@ -22,15 +22,18 @@ dokumenty (PDF/TXT/XLSX z NIS)
 Potřeba: Python 3.12, Node 20+, Docker Desktop (běžící).
 
 ```powershell
-copy .env.example .env          # doplnit LLM_API_KEY; LLM_MODE=mock jede bez klíče
+copy .env.example .env          # doplnit LLM_API_KEY a MKN10_CSV; LLM_MODE=live (mock jede bez klíče)
 cd backend; python -m venv .venv; .\.venv\Scripts\pip install -e ".[dev]"; cd ..
-.\start-iris.ps1                # IRIS + prázdný FHIR server /fhir/r4 + tabulky
-cd backend; .\.venv\Scripts\uvicorn app.main:app --reload --port 8000
+.\start-iris.ps1                # IRIS + prázdný FHIR server /fhir/r4 + tabulky Nor.Chunk, Nor.Code
+cd backend; .\.venv\Scripts\python -m scripts.index_codes     # číselníky MKN-10 + morfologie do IRIS (~1,5 min)
+.\.venv\Scripts\uvicorn app.main:app --port 8000
 cd frontend; npm install; npm run dev     # http://localhost:5173
 ```
 
-- FHIR: `http://localhost:52773/fhir/r4/metadata` (SuperUser / SYS — jen dev)
-- Management Portal: `http://localhost:52773/csp/sys/UtilHome.csp`
+- Syntetičtí pacienti k nahrání: `data/synthetic/PAC001` … `PAC010` (vytvoří `python -m scripts.export_synthetic <složka s XLSX>`).
+- LLM: `gpt-6-luna-dz-eu` (EU Data Zone), `reasoning_effort=low`, odpovědi se cachují v `backend/var/llm-cache`.
+- Embeddingy běží **lokálně** (`paraphrase-multilingual-MiniLM-L12-v2`, 384 dim, model se stáhne do `backend/var/models`), text zpráv neopouští počítač.
+- FHIR: `http://localhost:52773/fhir/r4/metadata` (SuperUser / SYS — jen dev) · Management Portal: `http://localhost:52773/csp/sys/UtilHome.csp`
 - Testy: `cd backend; .\.venv\Scripts\pytest -q` · build: `cd frontend; npm run build`
 
 ## Struktura

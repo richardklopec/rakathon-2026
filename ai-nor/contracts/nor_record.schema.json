@@ -13,6 +13,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -128,6 +130,11 @@
           "minimum": 0,
           "title": "End",
           "type": "integer"
+        },
+        "verified": {
+          "default": false,
+          "title": "Verified",
+          "type": "boolean"
         }
       },
       "required": [
@@ -170,9 +177,9 @@
         "confidence": {
           "anyOf": [
             {
-              "maximum": 1,
+              "maximum": 100,
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             {
               "type": "null"
@@ -180,6 +187,19 @@
           ],
           "default": null,
           "title": "Confidence"
+        },
+        "confidence_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Confidence Reasons",
+          "type": "array"
+        },
+        "needs_review": {
+          "default": false,
+          "title": "Needs Review",
+          "type": "boolean"
         },
         "evidence": {
           "default": [],
@@ -241,9 +261,9 @@
         "confidence": {
           "anyOf": [
             {
-              "maximum": 1,
+              "maximum": 100,
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             {
               "type": "null"
@@ -251,6 +271,19 @@
           ],
           "default": null,
           "title": "Confidence"
+        },
+        "confidence_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Confidence Reasons",
+          "type": "array"
+        },
+        "needs_review": {
+          "default": false,
+          "title": "Needs Review",
+          "type": "boolean"
         },
         "evidence": {
           "default": [],
@@ -279,6 +312,91 @@
         }
       },
       "title": "Extracted[PartialDate]",
+      "type": "object"
+    },
+    "Extracted_int_": {
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "coding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Coding"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "status": {
+          "$ref": "#/$defs/FieldStatus",
+          "default": "missing"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "confidence_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Confidence Reasons",
+          "type": "array"
+        },
+        "needs_review": {
+          "default": false,
+          "title": "Needs Review",
+          "type": "boolean"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "alternatives": {
+          "default": [],
+          "items": {
+            "type": "integer"
+          },
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/Review",
+          "default": {
+            "state": "pending",
+            "by": null,
+            "at": null,
+            "note": null
+          }
+        }
+      },
+      "title": "Extracted[int]",
       "type": "object"
     },
     "Extracted_list_DiagnosisBasis__": {
@@ -316,9 +434,9 @@
         "confidence": {
           "anyOf": [
             {
-              "maximum": 1,
+              "maximum": 100,
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             {
               "type": "null"
@@ -326,6 +444,19 @@
           ],
           "default": null,
           "title": "Confidence"
+        },
+        "confidence_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Confidence Reasons",
+          "type": "array"
+        },
+        "needs_review": {
+          "default": false,
+          "title": "Needs Review",
+          "type": "boolean"
         },
         "evidence": {
           "default": [],
@@ -394,9 +525,9 @@
         "confidence": {
           "anyOf": [
             {
-              "maximum": 1,
+              "maximum": 100,
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             {
               "type": "null"
@@ -404,6 +535,19 @@
           ],
           "default": null,
           "title": "Confidence"
+        },
+        "confidence_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Confidence Reasons",
+          "type": "array"
+        },
+        "needs_review": {
+          "default": false,
+          "title": "Needs Review",
+          "type": "boolean"
         },
         "evidence": {
           "default": [],
@@ -469,9 +613,9 @@
         "confidence": {
           "anyOf": [
             {
-              "maximum": 1,
+              "maximum": 100,
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             {
               "type": "null"
@@ -479,6 +623,19 @@
           ],
           "default": null,
           "title": "Confidence"
+        },
+        "confidence_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Confidence Reasons",
+          "type": "array"
+        },
+        "needs_review": {
+          "default": false,
+          "title": "Needs Review",
+          "type": "boolean"
         },
         "evidence": {
           "default": [],
@@ -560,6 +717,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -577,6 +736,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -594,6 +755,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -611,6 +774,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -628,6 +793,27 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "morphology_type": {
+          "$ref": "#/$defs/Extracted_str_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -645,6 +831,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -662,6 +850,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -679,6 +869,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -697,7 +889,9 @@
               "alternatives": [],
               "coding": null,
               "confidence": null,
+              "confidence_reasons": [],
               "evidence": [],
+              "needs_review": false,
               "review": {
                 "at": null,
                 "by": null,
@@ -711,7 +905,9 @@
               "alternatives": [],
               "coding": null,
               "confidence": null,
+              "confidence_reasons": [],
               "evidence": [],
+              "needs_review": false,
               "review": {
                 "at": null,
                 "by": null,
@@ -725,7 +921,9 @@
               "alternatives": [],
               "coding": null,
               "confidence": null,
+              "confidence_reasons": [],
               "evidence": [],
+              "needs_review": false,
               "review": {
                 "at": null,
                 "by": null,
@@ -745,7 +943,9 @@
               "alternatives": [],
               "coding": null,
               "confidence": null,
+              "confidence_reasons": [],
               "evidence": [],
+              "needs_review": false,
               "review": {
                 "at": null,
                 "by": null,
@@ -759,7 +959,9 @@
               "alternatives": [],
               "coding": null,
               "confidence": null,
+              "confidence_reasons": [],
               "evidence": [],
+              "needs_review": false,
               "review": {
                 "at": null,
                 "by": null,
@@ -773,7 +975,9 @@
               "alternatives": [],
               "coding": null,
               "confidence": null,
+              "confidence_reasons": [],
               "evidence": [],
+              "needs_review": false,
               "review": {
                 "at": null,
                 "by": null,
@@ -785,6 +989,44 @@
             }
           }
         },
+        "pn_examined": {
+          "$ref": "#/$defs/Extracted_int_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
+        "pn_positive": {
+          "$ref": "#/$defs/Extracted_int_",
+          "default": {
+            "value": null,
+            "coding": null,
+            "status": "missing",
+            "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
+            "evidence": [],
+            "alternatives": [],
+            "review": {
+              "at": null,
+              "by": null,
+              "note": null,
+              "state": "pending"
+            }
+          }
+        },
         "sentinel_node": {
           "$ref": "#/$defs/Extracted_str_",
           "default": {
@@ -792,6 +1034,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -809,6 +1053,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -826,6 +1072,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -843,6 +1091,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -928,6 +1178,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -945,6 +1197,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -962,6 +1216,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1028,7 +1284,8 @@
         "pending",
         "confirmed",
         "edited",
-        "rejected"
+        "rejected",
+        "auto_accepted"
       ],
       "title": "ReviewState",
       "type": "string"
@@ -1047,6 +1304,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1064,6 +1323,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1081,6 +1342,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1108,6 +1371,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1125,6 +1390,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1142,6 +1409,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1159,6 +1428,8 @@
             "coding": null,
             "status": "missing",
             "confidence": null,
+            "confidence_reasons": [],
+            "needs_review": false,
             "evidence": [],
             "alternatives": [],
             "review": {
@@ -1209,7 +1480,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1223,7 +1496,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1237,7 +1512,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1251,7 +1528,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1265,7 +1544,25 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "morphology_type": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "confidence_reasons": [],
+          "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1279,7 +1576,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1293,7 +1592,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1307,7 +1608,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1322,7 +1625,9 @@
             "alternatives": [],
             "coding": null,
             "confidence": null,
+            "confidence_reasons": [],
             "evidence": [],
+            "needs_review": false,
             "review": {
               "at": null,
               "by": null,
@@ -1336,7 +1641,9 @@
             "alternatives": [],
             "coding": null,
             "confidence": null,
+            "confidence_reasons": [],
             "evidence": [],
+            "needs_review": false,
             "review": {
               "at": null,
               "by": null,
@@ -1350,7 +1657,9 @@
             "alternatives": [],
             "coding": null,
             "confidence": null,
+            "confidence_reasons": [],
             "evidence": [],
+            "needs_review": false,
             "review": {
               "at": null,
               "by": null,
@@ -1367,7 +1676,9 @@
             "alternatives": [],
             "coding": null,
             "confidence": null,
+            "confidence_reasons": [],
             "evidence": [],
+            "needs_review": false,
             "review": {
               "at": null,
               "by": null,
@@ -1381,7 +1692,9 @@
             "alternatives": [],
             "coding": null,
             "confidence": null,
+            "confidence_reasons": [],
             "evidence": [],
+            "needs_review": false,
             "review": {
               "at": null,
               "by": null,
@@ -1395,7 +1708,9 @@
             "alternatives": [],
             "coding": null,
             "confidence": null,
+            "confidence_reasons": [],
             "evidence": [],
+            "needs_review": false,
             "review": {
               "at": null,
               "by": null,
@@ -1407,11 +1722,45 @@
           },
           "y_prefix": false
         },
+        "pn_examined": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "confidence_reasons": [],
+          "evidence": [],
+          "needs_review": false,
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
+        "pn_positive": {
+          "alternatives": [],
+          "coding": null,
+          "confidence": null,
+          "confidence_reasons": [],
+          "evidence": [],
+          "needs_review": false,
+          "review": {
+            "at": null,
+            "by": null,
+            "note": null,
+            "state": "pending"
+          },
+          "status": "missing",
+          "value": null
+        },
         "sentinel_node": {
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1425,7 +1774,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1439,7 +1790,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1453,7 +1806,9 @@
           "alternatives": [],
           "coding": null,
           "confidence": null,
+          "confidence_reasons": [],
           "evidence": [],
+          "needs_review": false,
           "review": {
             "at": null,
             "by": null,
@@ -1467,6 +1822,39 @@
         "treatments": [],
         "progression": []
       }
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "confirmed_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confirmed By"
+    },
+    "confirmed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confirmed At"
     },
     "fhir_bundle_id": {
       "anyOf": [

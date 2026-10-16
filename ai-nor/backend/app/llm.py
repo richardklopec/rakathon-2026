@@ -27,7 +27,7 @@ def _cache_path(key: str):
 def structured(system: str, user: str, schema: type[BaseModel]) -> BaseModel:
     """Call the chat model and parse its answer into `schema`. Answers are cached by input hash."""
     s = get_settings()
-    key = hashlib.sha256(json.dumps([s.llm_model, system, user, schema.__name__]).encode()).hexdigest()
+    key = hashlib.sha256(json.dumps([s.llm_model, s.llm_reasoning_effort, system, user, schema.__name__]).encode()).hexdigest()
     cached = _cache_path(key)
     if cached.exists():
         return schema.model_validate_json(cached.read_text(encoding="utf-8"))
@@ -39,6 +39,7 @@ def structured(system: str, user: str, schema: type[BaseModel]) -> BaseModel:
                 model=s.llm_model,
                 messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
                 response_format=schema,
+                **({"reasoning_effort": s.llm_reasoning_effort} if s.llm_reasoning_effort else {}),
             )
             break
         except APIStatusError as e:

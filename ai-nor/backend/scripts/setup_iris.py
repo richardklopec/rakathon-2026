@@ -1,11 +1,15 @@
 """Create the FHIRSERVER namespace, an empty FHIR R4 endpoint /fhir/r4 and the app SQL tables.
 
-Run once after `docker compose up -d` (from backend/): .venv/Scripts/python -m scripts.setup_iris
+Run once after `docker compose up -d` (from backend/): .venv/Scripts/python -m scripts.setup_iris [--reset]
+--reset drops and recreates the app tables (needed after changing EMBEDDING_DIM).
 Adapted from FHIR-AI-Hackathon-Kit fhir_server_setup_native.py (MIT), see PREEXISTING.md.
 """
 
+import sys
+
 import iris
 
+from app import iris_db
 from app.config import get_settings
 
 ENDPOINT = "/fhir/r4"
@@ -45,23 +49,26 @@ def create_fhir_server() -> None:
         conn.close()
 
 
-def create_tables() -> None:
-    s = get_settings()
-    conn = iris.connect(s.iris_host, s.iris_port, s.iris_namespace, s.iris_user, s.iris_password)
-    cur = conn.cursor()
-    try:
-        # document chunks for vector search (citations); dimension must match EMBEDDING_MODEL
-        cur.execute(
-            "CREATE TABLE IF NOT EXISTS Nor.Chunk ("
-            " CaseId VARCHAR(64), DocId VARCHAR(64), StartPos INTEGER, EndPos INTEGER,"
-            f" Text VARCHAR(8000), Embedding VECTOR(DOUBLE, {s.embedding_dim}))"
-        )
-        print("table Nor.Chunk ready")
-    finally:
-        cur.close()
-        conn.close()
+TABLES = {
+    # document chunks for vector search (citations); offsets point into Document.text
+    "Nor.Chunk": "CaseId VARCHAR(64), DocId VARCHAR(64), StartPos INTEGER, EndPos INTEGER, Text VARCHAR(8000)",
+    # code lists (MKN-10, ICD-O-3 morphology) for semantic code lookup, see app/retrieval/codes.py
+    "Nor.Code": "System VARCHAR(20), Code VARCHAR(20), Name VARCHAR(500)",
+}
+
+
+def create_tables(reset: bool = False) -> None:
+    """Create app tables. Vector dimension = EMBEDDING_DIM; after changing the model run with --reset."""
+    dim = get_settings().embedding_dim
+    with iris_db.cursor() as cur:
+        for table, cols in TABLES.items():
+            if reset:
+                cur.execute(f"DROP TABLE IF EXISTS {table}")
+            cur.execute(f"CREATE TABLE IF NOT EXISTS {table} ({cols}, Embedding VECTOR(DOUBLE, {dim}))")
+            print(f"table {table} ready (VECTOR {dim})")
 
 
 if __name__ == "__main__":
+    reset = "--reset" in sys.argv
     create_fhir_server()
-    create_tables()
+    create_tables(reset=reset)

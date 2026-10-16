@@ -1,6 +1,7 @@
 # API kontrakt (backend FastAPI, `http://localhost:8000`)
 
 Typy = `nor_record.schema.json` (generuje `backend/scripts/export_schema.py` z `backend/app/models.py`).
+Pole hlášení: `Extracted` s `value`, `confidence` 0–100, `confidence_reasons`, `needs_review`, `evidence` (citace + offsety), `alternatives`, `review.state`.
 
 | Metoda | Cesta | Vstup | Výstup | Pozn. |
 |---|---|---|---|---|
@@ -8,9 +9,16 @@ Typy = `nor_record.schema.json` (generuje `backend/scripts/export_schema.py` z `
 | GET | `/api/cases` | — | `Case[]` | |
 | POST | `/api/cases` | multipart `files[]` (PDF/TXT/MD/XLSX), query `patient_ref?` | `Case` | ingest → `Document.text` (offsety citací se vztahují k tomuto textu) |
 | GET | `/api/cases/{id}` | — | `Case` | |
-| POST | `/api/cases/{id}/extract` | — | `Case` s vyplněným `report` | `LLM_MODE=mock` → regexy, `live` → LLM |
-| PUT | `/api/cases/{id}/report` | `NorReport` | `Case` | lékař opravuje / potvrzuje (`field.review.state`) |
-| GET | `/api/cases/{id}/fhir-bundle` | — | FHIR `Bundle` (transaction) | náhled; jen potvrzená/editovaná pole |
-| POST | `/api/cases/{id}/submit` | — | FHIR `transaction-response` | zápis do IRIS FHIR |
+| POST | `/api/cases/{id}/extract` | — | `Case` | `LLM_MODE=live`: jeden LLM dotaz → ověřené citace → kódy NOR → rozpory → jistota. Pole ≥ `AUTO_ACCEPT_THRESHOLD` (85) bez rozporu = předvyplněná (`auto_accepted`), ostatní `needs_review`. Ruší potvrzení. |
+| GET | `/api/cases/{id}/review-queue` | — | `[{path, field}]` | jen rozpory a pole pod prahem; nejdřív rozpory, pak nejnižší jistota |
+| PUT | `/api/cases/{id}/report` | `NorReport` | `Case` | lékař řeší frontu (`review.state` = confirmed / edited / rejected). Ruší potvrzení. |
+| GET | `/api/cases/{id}/uzis-preview` | — | hlášení ve struktuře formuláře ÚZIS + `stav` Úplné / Neúplné + `chybi_povinne` | náhled, který lékař potvrzuje |
+| POST | `/api/cases/{id}/confirm` | `{by}` | `Case` | **potvrzení celého hlášení**; 409, dokud není fronta prázdná |
+| GET | `/api/cases/{id}/uzis-export` | — | JSON hlášení pro ÚZIS | 409 bez potvrzení |
+| GET | `/api/cases/{id}/fhir-bundle` | — | FHIR `Bundle` (transaction) | náhled |
+| POST | `/api/cases/{id}/submit` | — | FHIR `transaction-response` | zápis do IRIS FHIR; 409 bez potvrzení |
+| POST | `/api/cases/{id}/index` | — | `{chunks}` | dokumenty → lokální embeddingy → IRIS `Nor.Chunk` |
+| GET | `/api/cases/{id}/search?q=&k=` | — | úseky s offsety a skóre | IRIS Vector Search nad dokumenty případu |
+| GET | `/api/codes/search?q=&system=&k=` | — | kandidáti kódů | `system` = `mkn10` / `icdo3-morph`; přesná shoda názvu, jinak hybrid vektor + slova (IRIS `Nor.Code`) |
 
-TODO během hackathonu: `GET /api/cases/{id}/nor-export.csv` (přes FHIR SQL Builder nebo přímé mapování), audit log.
+TODO: `POST /api/cases/{id}/events` (čas a opravy z UI), CSV dávka přes FHIR SQL Builder, `GET /api/eval`.

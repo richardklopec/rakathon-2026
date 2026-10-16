@@ -1,7 +1,7 @@
 # Mapování hlášení NOR → FHIR R4 (IRIS for Health)
 
 Struktura podle **mCODE STU4**, pojmy podle **HL7 EU Common Cancer Model** (zatím jen logické modely), identifikátory a MKN-10 podle **HL7 CZ Core**.
-Implementace: `backend/app/fhir/mapping.py`. Zapisují se jen pole s `review.state ∈ {confirmed, edited}`, vše v jedné **transaction Bundle**.
+Implementace: `backend/app/fhir/mapping.py`. Zapisují se pole s `review.state ∈ {auto_accepted, confirmed, edited}`, vše v jedné **transaction Bundle**. Každý zdroj nese `meta.tag` (`urn:ai-nor:review`: stav + jistota) a Provenance je zvlášť pro „přijato automaticky“ (agent AI) a „zkontrolováno člověkem“ (agent AI + verifier).
 
 | Pole NOR | FHIR | Kód / hodnota | Stav |
 |---|---|---|---|

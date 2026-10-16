@@ -2,7 +2,7 @@
 
 ## Cíl
 Z české onkologické dokumentace (ambulantní/propouštěcí zprávy, histologie, MDT, operační protokoly) vytěžit
-pole hlášení do **Národního onkologického registru (NOR)** s **citací zdroje**. Lékař každé pole potvrdí/opraví.
+pole hlášení do **Národního onkologického registru (NOR)** s **citací zdroje**. Pole s jistotou ≥ 85 (0–100) bez rozporu se přijmou automaticky; lékař kontroluje jen rozpory mezi dokumenty a nejistá pole.
 Potvrzené hlášení se uloží jako **FHIR R4** do **InterSystems IRIS for Health** (výzva AI NOR + výzva InterSystems).
 
 ## Zdroj pravdy
@@ -18,7 +18,7 @@ Potvrzené hlášení se uloží jako **FHIR R4** do **InterSystems IRIS for Hea
 - LLM se volá **výhradně** přes `backend/app/llm.py` (EU deployment `-dz-eu`, hlavička `api-key`, backoff na 429). Žádné klíče v kódu ani ve frontendu.
 - FHIR se volá **výhradně** přes `backend/app/fhir/client.py`; Bundle staví `backend/app/fhir/mapping.py`.
 - Každé vytěžené pole MUSÍ mít `evidence` (citace + offsety v dokumentu), nebo mít stav `missing`. Chybějící ≠ negativní.
-- Nic se neodesílá do FHIR bez potvrzení lékařem.
-- **Žádná pacientská data v gitu, testech ani promptech nástrojů.** Data FNO leží mimo repo (`../Rakathon_DATA_NOR`, `../Rakathon_DATA`); v repu jen `data/synthetic/`.
+- Do FHIR jdou jen pole `auto_accepted`, `confirmed` nebo `edited`; rozpory a pole pod prahem nikdy bez člověka. Rozhodnutí o kontrole dělá **výhradně** `backend/app/confidence.py`. Hlášení jako celek odesílá člověk.
+- **Žádná pacientská data v gitu, testech ani promptech nástrojů.** Data FNO leží mimo repo (`../../Rakathon_DATA_NOR`, `../../Rakathon_DATA` vedle repa rakathon-2026); v repu jen `data/synthetic/`.
 - Před commitem: `pytest -q` (backend) a `npm run build` (frontend) musí projít.
 - Malé commity, zpráva česky v rozkazovacím způsobu.
