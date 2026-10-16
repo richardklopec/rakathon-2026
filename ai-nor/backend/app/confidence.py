@@ -3,12 +3,26 @@
 Rule (PLAN.md §4): a field goes to review only when the documents conflict or the confidence is below
 AUTO_ACCEPT_THRESHOLD (default 85). Everything else with verified evidence is auto-accepted.
 Missing fields are not reviewed; they make the report incomplete instead.
+
+Caps: when the documents disagree, the field's confidence is at most CONFLICT_CAP, whatever the winning value scored
+(several sources agreeing on one value does not make it certain while another source says something else).
 """
 
 from collections.abc import Iterator
 
 from app.config import get_settings
 from app.models import AiConfidence, Extracted, FieldStatus, NorReport, ReviewState
+
+CONFLICT_CAP = 60
+_CONFLICT_REASON = f"⚠ dokumenty si odporují: jistota max. {CONFLICT_CAP}"
+
+
+def cap(field: Extracted, limit: int, reason: str) -> None:
+    """Lower the field's confidence to `limit` (never raise it) and say why, once."""
+    if field.confidence is None or field.confidence > limit:
+        field.confidence = limit
+    if reason not in field.confidence_reasons:
+        field.confidence_reasons.append(reason)
 
 
 def iter_fields(report: NorReport) -> Iterator[tuple[str, Extracted]]:
@@ -37,6 +51,8 @@ def apply_review_policy(report: NorReport) -> NorReport:
             continue  # a human already decided; never override
         verified = any(e.verified for e in field.evidence)
         conflict = field.status == FieldStatus.conflict
+        if conflict:
+            cap(field, CONFLICT_CAP, _CONFLICT_REASON)
         low = field.confidence is None or field.confidence < threshold
         field.needs_review = conflict or low or not verified
         field.review.state = ReviewState.pending if field.needs_review else ReviewState.auto_accepted

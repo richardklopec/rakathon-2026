@@ -16,6 +16,7 @@ Values use the NOR form codes: laterality "2", grade "2", diagnosis_basis 17 (su
 
 Usage (from backend/):
   .venv/Scripts/python -m scripts.evaluate [--runs 2] [--fresh-cache] [--gold DIR] [--only PAC001] [--out DIR]
+  .venv/Scripts/python -m scripts.evaluate --reuse-cache STAMP     (same LLM answers as run STAMP: code changes only)
   .venv/Scripts/python -m scripts.evaluate --compare before.json after.json
   .venv/Scripts/python -m scripts.evaluate --render result.json      (metrics + report again, without the LLM)
   .venv/Scripts/python -m scripts.evaluate --template PATIENT_DIR OUT.json
@@ -213,16 +214,29 @@ def documents(gold_path: Path, gold: dict):
     return docs
 
 
-def evaluate(golds: list[tuple[Path, dict]], runs: int, fresh_cache: bool, out_dir: Path, stamp: str) -> dict:
+def evaluate(golds: list[tuple[Path, dict]], runs: int, fresh_cache: bool, out_dir: Path, stamp: str,
+             reuse_cache: str | None = None) -> dict:
+    """reuse_cache = stamp of an earlier run: each run starts from a copy of that run's LLM cache, so code changes
+    that keep the prompts are compared on exactly the same LLM answers (no noise, no LLM calls)."""
+    import shutil
+
     from app import extract
     from app.config import get_settings
 
     settings = get_settings()
+    if reuse_cache:
+        sources = sorted(out_dir.glob(f"cache-{reuse_cache}-run*"))
+        if not sources:
+            sys.exit(f"no cache-{reuse_cache}-run* in {out_dir}")
+        runs = len(sources)
     result = {"stamp": stamp, "llm_mode": settings.llm_mode, "llm_model": settings.llm_model, "runs": runs,
-              "fresh_cache": fresh_cache, "patients": [g.get("patient") for _, g in golds], "rows": [], "warnings": []}
+              "fresh_cache": fresh_cache, "reuse_cache": reuse_cache, "patients": [g.get("patient") for _, g in golds],
+              "rows": [], "warnings": []}
     for run in range(1, runs + 1):
-        if fresh_cache:
+        if fresh_cache or reuse_cache:
             settings.llm_cache_dir = str(out_dir / f"cache-{stamp}-run{run}")
+        if reuse_cache:
+            shutil.copytree(sources[run - 1], settings.llm_cache_dir)
         for path, gold in golds:
             patient = gold.get("patient", path.stem)
             print(f"run {run}: {patient} …", file=sys.stderr, flush=True)
@@ -251,7 +265,8 @@ def markdown(result: dict) -> str:
     out = [
         f"# Evaluace AI NOR – {result['stamp']}",
         f"LLM: {result['llm_mode']} `{result['llm_model']}` · běhů: {result['runs']} · "
-        f"{'každý běh bez cache' if result['fresh_cache'] else 'sdílená LLM cache'} · pacienti: {', '.join(result['patients'])}",
+        f"{'odpovědi LLM z běhu ' + result['reuse_cache'] if result.get('reuse_cache') else 'každý běh bez cache' if result['fresh_cache'] else 'sdílená LLM cache'}"
+        f" · pacienti: {', '.join(result['patients'])}",
         "",
         "## Souhrn (všechny běhy dohromady)",
         "| metrika | hodnota |", "|---|---|",
@@ -296,6 +311,11 @@ def markdown(result: dict) -> str:
     return "\n".join(out) + "\n"
 
 
+def _found(result: dict) -> str:
+    expected = [e for w in result["warnings"] for e in w["expected"]]
+    return _pct(sum(e["found"] == "varování" for e in expected), len(expected))
+
+
 def compare(before: dict, after: dict) -> str:
     a, b = before["metrics"], after["metrics"]
 
@@ -311,6 +331,11 @@ def compare(before: dict, after: dict) -> str:
            f"| záchyt chyb | {_pct(a['errors_flagged'], a['errors'])} | {_pct(b['errors_flagged'], b['errors'])} |",
            f"| přijato automaticky | {_pct(a['auto'], a['scored'])} | {_pct(b['auto'], b['scored'])} |",
            f"| přesnost automaticky přijatých | {_pct(a['auto_correct'], a['auto'])} | {_pct(b['auto_correct'], b['auto'])} |",
+           *[f"| přesnost v pásmu {x['band']} | {_pct(x['correct'], x['n'])} | {_pct(y['correct'], y['n'])} |"
+             for x, y in zip(a["bands"], b["bands"])],
+           f"| polí s jinou jistotou / stavem mezi běhy | {sum(v['kind'] == 'score' for v in before.get('variance', []))} | "
+           f"{sum(v['kind'] == 'score' for v in after.get('variance', []))} |",
+           f"| očekávaná varování nalezena | {_found(before)} | {_found(after)} |",
            "", "| pole | před (správně/hodnoceno) | po |", "|---|---|---|"]
     for path, label in FIELDS:
         pa, pb = a["per_field"].get(path), b["per_field"].get(path)
@@ -337,6 +362,7 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--only", nargs="*", help="patients to evaluate")
     ap.add_argument("--runs", type=int, default=1)
     ap.add_argument("--fresh-cache", action="store_true", help="every run with its own empty LLM cache (measures variance)")
+    ap.add_argument("--reuse-cache", metavar="STAMP", help="replay the LLM answers of an earlier run (compare code changes)")
     ap.add_argument("--out", type=Path, default=None, help="output folder (default backend/var/eval)")
     ap.add_argument("--compare", nargs=2, type=Path, metavar=("BEFORE", "AFTER"))
     ap.add_argument("--template", nargs=2, type=Path, metavar=("PATIENT_DIR", "OUT_JSON"))
@@ -368,7 +394,7 @@ def main(argv: list[str] | None = None) -> None:
     out_dir = args.out or settings.data_dir / "eval"
     out_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    result = evaluate(golds, args.runs, args.fresh_cache, out_dir, stamp)
+    result = evaluate(golds, args.runs, args.fresh_cache, out_dir, stamp, args.reuse_cache)
     report = markdown(result)
     (out_dir / f"eval-{stamp}.json").write_text(json.dumps(result, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
     (out_dir / f"eval-{stamp}.md").write_text(report, encoding="utf-8")

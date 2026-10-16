@@ -18,7 +18,8 @@ def test_weighted_score_and_counts():
     )
     r = apply_review_policy(r)
     o = overall(r)
-    assert o.score == round((2 * 90 + 60 + 2 * 70) / 5)  # 76
+    assert r.grade.confidence == 60  # conflict cap (CONFLICT_CAP)
+    assert o.score == round((2 * 90 + 60 + 2 * 60) / 5)  # 72
     assert o.level == "střední"
     assert (o.fields_ai, o.auto_accepted, o.to_review, o.conflicts) == (3, 1, 2, 1)
     assert o.missing_required == 7  # 9 mandatory fields, icd10 + grade filled
@@ -38,3 +39,11 @@ def test_case_exposes_score():
     dumped = case.model_dump()
     assert dumped["ai_confidence"]["score"] == 90
     assert Case.model_validate(dumped).ai_confidence.score == 90  # stored JSON with the computed field loads back
+
+
+def test_conflict_cap_is_applied_once_and_never_raises():
+    r = apply_review_policy(NorReport(icd10=_f("C34.9", 100, FieldStatus.conflict), grade=_f("2", 40, FieldStatus.conflict)))
+    assert r.icd10.confidence == 60 and r.icd10.needs_review
+    assert r.grade.confidence == 40  # already below the cap
+    r = apply_review_policy(r)  # PUT /report applies the policy again
+    assert sum("odporují" in x for x in r.icd10.confidence_reasons) == 1
