@@ -31,6 +31,18 @@ class CoderResult(BaseModel):
     rule: RuleRef | None
     reasoning: str
     certain: bool
+    supports: bool | None = None  # does the quoted rule lead to this code? (None = the quote does not say)
+
+
+def rule_supports(quote: str, code: str) -> bool | None:
+    """A rule quote naming sub-codes must name the chosen one; a note about overlapping lesions (.8) supports only .8.
+    Existence of the quote in the rules is checked separately (RuleRef.verified)."""
+    named = re.findall(r"\b([A-Z]\d{2}\.\d)\b", quote)
+    if named:
+        return code in named
+    if re.search(r"\.8\b|podpoložk\w* \.8|přesahuj", quote, re.IGNORECASE):
+        return code.endswith(".8")
+    return None
 
 
 SYSTEM = """Jsi zkušený kódovač Národního onkologického registru. Podle pravidel MKN-10 (Tabelární část) přiřadíš
@@ -68,16 +80,23 @@ def choose_icd10(
     quotes: list[str],
     literal: str | None,
     candidates: Callable | None = None,  # (query, literal) -> (categories, notes); default: IRIS
+    codes_in_docs: list[str] | None = None,  # every code written in the documents with its source, when they differ
 ) -> CoderResult | None:
     query = " ".join([primary_tumour, *quotes])[:600]
+    disagree = bool(codes_in_docs and len(codes_in_docs) > 1)
+    # when the documents disagree there is no single written code to lean on: all of them are equal hints
+    # (a code on a biopsy requisition is the clinician's guess before histology); candidates still include its category
     cats, notes = (candidates or _default_candidates)(query, literal)
     if not cats:
         return None
     rules_text = "\n\n".join(f"### {c.code} (str. {c.page})\n{c.text}" for c in cats)
     notes_text = "\n".join(n.text for n in notes)
+    codes_line = ""
+    if disagree:
+        codes_line = "Dokumenty uvádějí různé kódy (žádný není závazný, rozhoduj podle popisu lokalizace): " + "; ".join(codes_in_docs) + "\n"
     user = (
         f"Hlášený nádor: {primary_tumour}\n"
-        f"Kód MKN-10 uvedený v dokumentaci: {literal or 'není'}\n"
+        f"Kód MKN-10 uvedený v dokumentaci: {'různé, viz níže' if disagree else literal or 'není'}\n" + codes_line +
         "Citace z dokumentace:\n" + "\n".join(f"- {q}" for q in quotes[:12]) +
         f"\n\n## Kandidátní kategorie MKN-10\n{rules_text}\n\n## Poznámky kapitoly II (Novotvary)\n{notes_text}"
     )
@@ -105,6 +124,7 @@ def choose_icd10(
         rule=rule,
         reasoning=choice.reasoning,
         certain=choice.certain,
+        supports=rule_supports(choice.rule_quote, code) if choice.rule_quote else None,
     )
 
 

@@ -44,3 +44,13 @@ def test_code_outside_candidates_or_invented_quote_is_not_trusted(monkeypatch):
 def test_undecided(monkeypatch):
     res = run(monkeypatch, CodeChoice(code="", rule_code="", rule_quote="", reasoning="Nelze určit.", certain=False))
     assert res.code == "" and not res.valid
+
+
+def test_rule_must_support_the_code(monkeypatch):
+    assert coder.rule_supports("C50.4 Horní zevní kvadrant prsu", "C50.4") is True
+    assert coder.rule_supports("C50.9 Prs NS", "C50.8") is False
+    assert coder.rule_supports("musí být zařazen do podpoložky .8", "C50.8") is True
+    assert coder.rule_supports("musí být zařazen do podpoložky .8", "C50.9") is False
+    assert coder.rule_supports("Zhoubný novotvar prsu", "C50.4") is None  # the title alone says nothing
+    res = run(monkeypatch, CodeChoice(code="C50.4", rule_code="C50", rule_quote="C50.8 Léze přesahující prs", reasoning="", certain=True))
+    assert res.supports is False

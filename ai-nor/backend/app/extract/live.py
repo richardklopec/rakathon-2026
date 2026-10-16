@@ -25,7 +25,8 @@ from app.models import (
     NorReport,
     PartialDate,
 )
-from app.validate import mkn10, normalize
+from app.confidence import cap
+from app.validate import mkn10, normalize, site
 
 FieldName = Literal[
     "diagnosis_date", "icd10", "laterality", "morphology_type", "morphology", "grade",
@@ -81,7 +82,29 @@ Pravidla:
 6. Nic si nevymýšlej. Údaj, který v dokumentaci není, vynech (pole bez zmínek nevracej).
 7. Klinická diagnóza na žádance před histologií (např. J38.3) není diagnóza nádoru."""
 
-SOURCE_RANK = {"histology": 70, "MDT": 60, "operation": 55, "PZ": 50, "AZ": 50, "other": 45}
+SOURCE_RANK = {"histology": 70, "MDT": 60, "operation": 55, "PZ": 50, "AZ": 50, "other": 45, "requisition": 45}
+SOURCE_LABEL = {"requisition": "žádanka k histologii (klinická dg.)"}
+
+# Histology reports start with the requisition (průvodní list: "Klinická diagnóza", "KLIN. DIAG.", "DIAGNÓZA: C509")
+# written by the clinician before the biopsy; the pathologist's findings start at the first of these headings.
+_FINDINGS = re.compile(r"(?im)^\s*(?:NÁLEZ|Makropopis|Mikropopis|Závěr|ZÁVĚR|Bioptick\w* nález|Histologick\w* nález)\b")
+_REQUISITION_LINE = re.compile(r"(?i)klinick\w*\s+(?:dg|diag)|klin\.\s*diag|žádank|průvodní list")
+
+
+def _is_requisition(doc: Document, ev: Evidence | None, quote: str) -> bool:
+    """Is this mention from the requisition part of a histology report (the clinician's text, not the pathologist's)?"""
+    if doc.kind != "histology":
+        return False
+    if _REQUISITION_LINE.search(quote):
+        return True
+    if not (ev and ev.verified):
+        return False
+    line_start = doc.text.rfind("\n", 0, ev.start) + 1
+    line_end = doc.text.find("\n", ev.end)
+    if _REQUISITION_LINE.search(doc.text[line_start:line_end if line_end >= 0 else None]):
+        return True
+    findings = _FINDINGS.search(doc.text)
+    return bool(findings) and ev.start < findings.start()
 
 _SITES = [
     (r"plic", MetastasisSite.lung), (r"kostn[íi] d[řr]e[ňn]", MetastasisSite.bone_marrow), (r"kost|skelet|obratl", MetastasisSite.bone),
@@ -99,8 +122,18 @@ def _prompt(docs: list[Document]) -> str:
 class _M:
     """A verified, normalised mention."""
 
-    def __init__(self, doc: Document, ev: Evidence | None, raw: Mention, value):
+    def __init__(self, doc: Document, ev: Evidence | None, raw: Mention, value, kind: str | None = None):
         self.doc, self.ev, self.raw, self.value = doc, ev, raw, value
+        self.kind = kind or doc.kind or "other"
+
+    @property
+    def rank(self) -> int:
+        return SOURCE_RANK.get(self.kind, 45)
+
+    @property
+    def source(self) -> str:
+        """Agreement counts independent sources: all requisitions are one (the clinician's pre-biopsy diagnosis)."""
+        return "requisition" if self.kind == "requisition" else self.doc.id
 
 
 def _collect(out: LlmExtraction, docs: list[Document]) -> dict[str, list[tuple[Document, Evidence | None, Mention]]]:
@@ -116,14 +149,14 @@ def _collect(out: LlmExtraction, docs: list[Document]) -> dict[str, list[tuple[D
 def _score(winners: list[_M], *, code_valid: bool | None = None, code_path: str | None = None) -> tuple[int, list[str]]:
     reasons = []
     verified = [w for w in winners if w.ev and w.ev.verified]
-    best = max(winners, key=lambda w: SOURCE_RANK.get(w.doc.kind or "other", 45))
-    score = SOURCE_RANK.get(best.doc.kind or "other", 45)
-    reasons.append(f"zdroj: {best.doc.kind}")
-    docs = {w.doc.id for w in verified}
-    if len(docs) > 1:
-        bonus = min(10 * (len(docs) - 1), 20)
+    best = max(winners, key=lambda w: w.rank)
+    score = best.rank
+    reasons.append(f"zdroj: {SOURCE_LABEL.get(best.kind, best.kind)}")
+    sources = {w.source for w in verified}
+    if len(sources) > 1:
+        bonus = min(10 * (len(sources) - 1), 20)
         score += bonus
-        reasons.append(f"✓ {len(docs)} dokumenty se shodují (+{bonus})")
+        reasons.append(f"✓ {len(sources)} nezávislé zdroje se shodují (+{bonus})")
     if code_path == "literal":
         score += 10
         reasons.append("✓ kód přímo v textu (+10)")
@@ -165,11 +198,7 @@ def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, **
             low = key.lower()
             key = next((k for k in groups if low in k.lower() or k.lower() in low), key)
         groups[key].append(m)
-    ranked = sorted(
-        groups.values(),
-        key=lambda g: (max(SOURCE_RANK.get(m.doc.kind or "other", 45) for m in g), len({m.doc.id for m in g})),
-        reverse=True,
-    )
+    ranked = sorted(groups.values(), key=lambda g: (max(m.rank for m in g), len({m.source for m in g})), reverse=True)
     winners = ranked[0]
     score, reasons = _score(winners, **score_kw)
     verified_groups = [g for g in ranked if any(m.ev and m.ev.verified for m in g)]
@@ -200,7 +229,38 @@ def _normalised(items, fn) -> list[_M]:
 _SITE_SENTENCE = re.compile(r"[^.\n]{0,80}(?:\b(?:kvadrant\w*|lalok\w*|lokalizac\w*|ulo[žz]en\w*|rozhran\w*)|(?-i:\b(?:[HD][ZVK]|[ZV][HDK])K\b))[^.\n]{0,80}", re.IGNORECASE)  # breast quadrant abbreviations (HZK, DKK…), not "dkk" = lower limbs
 
 
-def _apply_coder(r: NorReport, out: "LlmExtraction", f) -> None:
+def _codes_in_docs(mentions: list[_M]) -> list[str]:
+    """Distinct MKN-10 codes written in the documents with their sources: ["C50.4 (AZ.pdf)", "C50.9 (H1.pdf – žádanka)"]."""
+    by_code: dict[str, list[str]] = {}
+    for m in mentions:
+        if m.value and m.ev and m.ev.verified:
+            src = m.doc.filename + (" – žádanka" if m.kind == "requisition" else "")
+            if src not in by_code.setdefault(m.value, []):
+                by_code[m.value].append(src)
+    return [f"{code} ({', '.join(srcs)})" for code, srcs in by_code.items()]
+
+
+def _check_site(r: NorReport, docs: list[Document], warnings: list[str]) -> None:
+    """Deterministic second opinion on the subsite (validate/site.py): the code must match the described site."""
+    if not r.icd10.value:
+        return
+    code = r.icd10.value
+    cat = code[:3]
+    fit, found = site.check(code, docs)
+    if len(found) > 1:
+        warnings.append("Popis lokalizace nádoru se v dokumentech liší: "
+                        + "; ".join(f"{site.label(cat, s)} → {cat}{s} ({', '.join(files)})" for s, files in found.items()) + ".")
+    if fit is False:
+        described = [f"{cat}{s}" for s in found if mkn10.is_valid(f"{cat}{s}") is not False]
+        cap(r.icd10, 60, f"✗ popis lokalizace v dokumentech ({', '.join(f'{c} {site.label(cat, c[3:])}' for c in described)}) "
+                         f"neodpovídá kódu {code}")
+        r.icd10.alternatives = described + [a for a in r.icd10.alternatives if a not in described and a != code]
+    elif fit:
+        sub = code[3:]
+        r.icd10.confidence_reasons.append(f"✓ popis lokalizace odpovídá: {site.label(cat, sub)} ({', '.join(found[sub])})")
+
+
+def _apply_coder(r: NorReport, out: "LlmExtraction", f, docs_all: list[Document], codes_in_docs: list[str]) -> None:
     """Second step: MKN-10 code chosen with the coding rules (app/extract/coder.py)."""
     from app.extract.coder import choose_icd10
 
@@ -216,7 +276,7 @@ def _apply_coder(r: NorReport, out: "LlmExtraction", f) -> None:
                 quotes.append(q)
     literal = r.icd10.value if (r.icd10.value and r.icd10.confidence_reasons and any("přímo v textu" in x for x in r.icd10.confidence_reasons)) else None
     try:
-        res = choose_icd10(out.primary_tumour, quotes, literal)
+        res = choose_icd10(out.primary_tumour, quotes, literal, codes_in_docs=codes_in_docs)
     except Exception as e:  # IRIS / LLM down: keep the first-step result, say so
         r.icd10.confidence_reasons.append(f"pravidla MKN-10 nepoužita ({type(e).__name__})")
         return
@@ -228,9 +288,28 @@ def _apply_coder(r: NorReport, out: "LlmExtraction", f) -> None:
     if not res.valid:
         r.icd10.confidence_reasons.append(f"pravidla MKN-10 navrhla {res.code}, kód ale nelze ověřit")
         return
+    unsupported = f"✗ citované pravidlo kód {res.code} nepodporuje {rule_txt}"
     if r.icd10.value == res.code:
-        r.icd10.confidence = min(100, (r.icd10.confidence or 0) + 10)
-        r.icd10.confidence_reasons.append(f"✓ kód potvrzen pravidly MKN-10 (+10) {rule_txt}")
+        if res.supports is False:  # the code is right only if the rule says so, not because the rule exists
+            cap(r.icd10, 60, unsupported)
+        else:
+            r.icd10.confidence = min(100, (r.icd10.confidence or 0) + 10)
+            r.icd10.confidence_reasons.append(f"✓ kód potvrzen pravidly MKN-10 (+10) {rule_txt}")
+    elif (literal and mkn10.is_valid(literal) and len(codes_in_docs) > 1 and res.supports is not False
+          and site.check(res.code, docs_all)[0] is True and site.check(literal, docs_all)[0] is not True):
+        # the documents disagree among themselves and only the rules' code matches the described site: it leads,
+        # the written codes stay as alternatives and the field goes to review (conflict)
+        previous = r.icd10.value
+        r.icd10.value = res.code
+        r.icd10.status = FieldStatus.conflict
+        r.icd10.evidence = site.evidence(res.code, docs_all) + r.icd10.evidence
+        r.icd10.alternatives = [previous] + [a for a in r.icd10.alternatives if a not in (previous, res.code)]
+        r.icd10.confidence = min(r.icd10.confidence or 0, 60)
+        r.icd10.confidence_reasons = [
+            "✓ citace ověřena",
+            f"⚠ dokumenty uvádějí různé kódy: {'; '.join(codes_in_docs)}",
+            f"kód zvolen podle pravidel MKN-10 a popisu lokalizace: {res.reasoning} {rule_txt}",
+        ]
     elif literal and mkn10.is_valid(literal):
         # documents say one code, the rules another -> the clinician decides
         r.icd10.alternatives = [res.code] + [a for a in r.icd10.alternatives if a != res.code]
@@ -252,6 +331,8 @@ def _apply_coder(r: NorReport, out: "LlmExtraction", f) -> None:
         if previous and previous != res.code:
             r.icd10.alternatives = [previous]
         r.icd10.confidence_reasons.append(f"{res.reasoning} {rule_txt}")
+    if res.supports is False and r.icd10.value != res.code:
+        r.icd10.confidence_reasons.append(f"(návrh pravidel {res.code} se o citované pravidlo neopírá)")
     if res.rule:
         r.icd10.rules = [res.rule]
     if not res.certain:
@@ -266,8 +347,16 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     warnings: list[str] = []
 
     # --- diagnosis (MKN-10), topography
-    icd_ms = _normalised(f["icd10"], normalize.icd10)
+    # a code counts as written in the documents only when the quote contains it; a code the model put in `value` for
+    # a diagnosis in words ("Ca prsu vlevo" -> C50.9) is its own guess and goes through the name / rules path instead
+    icd_ms = [_M(doc, ev, m, normalize.icd10(m.quote)) for doc, ev, m in f["icd10"]]
+    for m in icd_ms:  # a code on a biopsy requisition is the clinician's diagnosis before histology, not the pathologist's
+        if _is_requisition(m.doc, m.ev, m.raw.quote):
+            m.kind = "requisition"
     literal = [m for m in icd_ms if m.value]
+    codes_in_docs = _codes_in_docs(literal)
+    if len(codes_in_docs) > 1:
+        warnings.append("Rozpor kódů diagnózy v dokumentech: " + "; ".join(codes_in_docs) + ".")
     if literal:
         r.icd10 = _field(literal, code_valid=all(mkn10.is_valid(m.value) is not False for m in literal) or False, code_path="literal")
     elif f["icd10"]:
@@ -277,12 +366,13 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
         hits = search_codes(MKN10, m.value, 1)
         if hits:
             r.icd10 = _field([_M(doc, ev, m, hits[0].code)], code_valid=True, code_path="semantic")
-    _apply_coder(r, out, f)
+    _apply_coder(r, out, f, docs, codes_in_docs)
     if r.icd10.value and mkn10.is_valid(r.icd10.value) is False:
         parent = r.icd10.value[:-1].rstrip(".")
         if mkn10.is_valid(parent):
             r.icd10.alternatives = [parent] + [a for a in r.icd10.alternatives if a != parent]
             r.icd10.confidence_reasons.append(f"návrh: {parent} ({r.icd10.value} v MKN-10-CZ neexistuje)")
+    _check_site(r, docs, warnings)
     if r.icd10.value:
         r.icd10.coding = Coding(system=mkn10.ICD10_SYSTEM, code=r.icd10.value, display=mkn10.lookup(r.icd10.value))
         if re.match(r"C[0-7]\d", r.icd10.value):  # ICD-O topography C00-C80 mirrors MKN-10
