@@ -1,0 +1,25 @@
+# secrets
+.env
+*.key
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# node
+node_modules/
+dist/
+
+# data (FNO data never in git; only data/synthetic is tracked)
+data/*
+!data/synthetic/
+backend/var/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

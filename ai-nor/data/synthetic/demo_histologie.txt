@@ -1,0 +1,11 @@
+Laboratorní vyšetření – Histologie (FIKTIVNÍ DEMO, žádný reálný pacient)
+Klinická diagnóza: C50.4
+TOPOGRAFIE ODBĚRU: prs vlevo, horní zevní kvadrant
+Mikropopis: invazivní karcinom NST, G2. Lymfangioinvaze nezastižena.
+Závěr:
+1. typ nádoru - invazivní karcinom NST
+2. grading nádoru - G2
+3. sentinelová uzlina - 0/2
+4. pTNM - pT1c pN0(sn)
+M1: M85003 KARCINOM INVAZIVNI NOS, DUKTALNI INFILTR G:2 P:1
+TOP: T0403 PRS SIN
