@@ -22,7 +22,7 @@ dokumenty (PDF/TXT/XLSX z NIS)
 Potřeba: Python 3.12, Node 20+, Docker Desktop (běžící).
 
 ```powershell
-copy .env.example .env          # doplnit LLM_API_KEY a MKN10_CSV; LLM_MODE=live (mock jede bez klíče)
+copy .env.example .env          # doplnit LLM_API_KEY; LLM_MODE=live (mock jede bez klíče). Data FNO (Rakathon_DATA_NOR) patří vedle složky rakathon-2026
 cd backend; python -m venv .venv; .\.venv\Scripts\pip install -e ".[dev]"; cd ..
 .\start-iris.ps1                # IRIS + prázdný FHIR server /fhir/r4 + tabulky Nor.Chunk, Nor.Code
 cd backend; .\.venv\Scripts\python -m scripts.index_codes     # číselníky MKN-10 + morfologie do IRIS (~1,5 min)

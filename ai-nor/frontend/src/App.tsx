@@ -2,6 +2,7 @@
 // The polished UI comes later; keep this one boring and correct.
 import { useEffect, useMemo, useState } from 'react'
 import { api, type Case, type Evidence, type Extracted, type NorReport } from './api'
+import NorFormPreview from './NorFormPreview'
 
 const SECTIONS: [string, [string, string][]][] = [
   ['Diagnóza', [
@@ -283,19 +284,7 @@ export default function App() {
                   {(preview.chybi_povinne as string[]).length > 0 && (
                     <p className="mb-2 text-amber-800">Chybí povinná pole: {(preview.chybi_povinne as string[]).join(', ')}</p>
                   )}
-                  <div className="grid gap-3 md:grid-cols-2">
-                    {['diagnosticka_cast', 'diagnoza', 'morfologie', 'tnm', 'ostatni', 'hlaseni'].map((k) => (
-                      <div key={k}>
-                        <h3 className="text-xs font-semibold uppercase text-slate-500">{k.replace('_', ' ')}</h3>
-                        {Object.entries(preview[k] as Record<string, unknown>).map(([key, v]) => (
-                          <div key={key} className="flex gap-2 border-b py-0.5">
-                            <span className="w-52 text-slate-500">{key.replace(/_/g, ' ')}</span>
-                            <span>{v == null || v === '' ? '—' : String(v)}</span>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
+                  <NorFormPreview data={preview} />
                   <div className="mt-4 flex flex-wrap items-center gap-2">
                     {!kase.confirmed_at ? (
                       <>

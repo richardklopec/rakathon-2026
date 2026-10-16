@@ -38,3 +38,12 @@ def is_valid(code: str) -> bool | None:
     """True/False when the table is loaded, None when it is not configured."""
     rows = _rows()
     return (code in rows) if rows else None
+
+
+def topography_label(code: str) -> str | None:
+    """'C34.1' -> 'C34.1 - Horní lalok, průduška nebo plíce' (form style: site name without 'Zhoubný novotvar –')."""
+    row = _rows().get(code)
+    if not row:
+        return None
+    name = (row.get("NazevPlny") or row["Nazev"]).split("–", 1)[-1].strip()
+    return f"{code} - {name[:1].upper()}{name[1:]}"

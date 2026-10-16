@@ -50,7 +50,7 @@ def build(case: Case) -> dict:
             "lateralita": LATERALITY_LABEL[LATERALITY_NOR[lat]] if lat else None,
             "dg_mkn": icd,
             "dg_slovne": mkn10.lookup(icd) if icd else None,
-            "topografie": _v(r.topography),
+            "topografie": (mkn10.topography_label(_v(r.topography)) or _v(r.topography)) if _v(r.topography) else None,
         },
         "morfologie": {
             "typ_morfologie": _v(r.morphology_type),
