@@ -11,6 +11,14 @@ export interface Evidence {
   verified: boolean
 }
 
+export interface RuleRef {
+  source: string // MKN-10, Tabelární část (ÚZIS, 2014)
+  code: string // category or note range, e.g. C50 or C00–D48
+  page: number | null // printed page in the PDF
+  quote: string
+  verified: boolean // quote found in the rule texts
+}
+
 export interface Extracted<T = unknown> {
   value: T | null
   coding: { system: string; code: string; display?: string | null } | null
@@ -20,6 +28,7 @@ export interface Extracted<T = unknown> {
   needs_review: boolean // conflict or confidence below threshold
   evidence: Evidence[]
   alternatives: T[]
+  rules?: RuleRef[] // coding rules behind the value (MKN-10 Tabelární část)
   review: { state: ReviewState; by?: string | null; at?: string | null; note?: string | null }
 }
 

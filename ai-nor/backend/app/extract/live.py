@@ -130,6 +130,9 @@ def _score(winners: list[_M], *, code_valid: bool | None = None, code_path: str 
     elif code_path == "semantic":
         score -= 15
         reasons.append("kód dohledán v číselníku podle názvu (−15)")
+    elif code_path == "rules":
+        score -= 5
+        reasons.append("kód zvolen podle pravidel MKN-10, v textu není (−5)")
     if code_valid:
         score += 10
         reasons.append("✓ kód platný v číselníku (+10)")
@@ -194,6 +197,68 @@ def _normalised(items, fn) -> list[_M]:
     return out
 
 
+_SITE_SENTENCE = re.compile(r"[^.\n]{0,80}(?:\b(?:kvadrant\w*|lalok\w*|lokalizac\w*|ulo[žz]en\w*|rozhran\w*)|(?-i:\b(?:[HD][ZVK]|[ZV][HDK])K\b))[^.\n]{0,80}", re.IGNORECASE)  # breast quadrant abbreviations (HZK, DKK…), not "dkk" = lower limbs
+
+
+def _apply_coder(r: NorReport, out: "LlmExtraction", f) -> None:
+    """Second step: MKN-10 code chosen with the coding rules (app/extract/coder.py)."""
+    from app.extract.coder import choose_icd10
+
+    if not f["icd10"] and not r.icd10.value:
+        return
+    quotes = [m.quote for _, _, m in f["icd10"]] + [m.quote for _, _, m in f["morphology"]][:3]
+    quotes += [m.quote for _, _, m in f["laterality"]][:2]
+    # the sub-code depends on the exact site (quadrant, lobe...), which the code quotes often leave out
+    docs = list({id(d): d for items in f.values() for d, _, _ in items}.values())
+    for d in docs:
+        for m in _SITE_SENTENCE.finditer(d.text):
+            if (q := " ".join(m.group(0).split())) not in quotes and len(quotes) < 12:
+                quotes.append(q)
+    literal = r.icd10.value if (r.icd10.value and r.icd10.confidence_reasons and any("přímo v textu" in x for x in r.icd10.confidence_reasons)) else None
+    try:
+        res = choose_icd10(out.primary_tumour, quotes, literal)
+    except Exception as e:  # IRIS / LLM down: keep the first-step result, say so
+        r.icd10.confidence_reasons.append(f"pravidla MKN-10 nepoužita ({type(e).__name__})")
+        return
+    if not res or not res.code:
+        if r.icd10.value:
+            r.icd10.confidence_reasons.append("pravidla MKN-10: kód nelze jednoznačně určit")
+        return
+    rule_txt = f"„{res.rule.quote}“ (MKN-10 {res.rule.code}, str. {res.rule.page})" if res.rule else ""
+    if not res.valid:
+        r.icd10.confidence_reasons.append(f"pravidla MKN-10 navrhla {res.code}, kód ale nelze ověřit")
+        return
+    if r.icd10.value == res.code:
+        r.icd10.confidence = min(100, (r.icd10.confidence or 0) + 10)
+        r.icd10.confidence_reasons.append(f"✓ kód potvrzen pravidly MKN-10 (+10) {rule_txt}")
+    elif literal and mkn10.is_valid(literal):
+        # documents say one code, the rules another -> the clinician decides
+        r.icd10.alternatives = [res.code] + [a for a in r.icd10.alternatives if a != res.code]
+        r.icd10.confidence = min(r.icd10.confidence or 0, 70)
+        r.icd10.confidence_reasons.append(f"⚠ pravidla MKN-10 navrhují {res.code}: {res.reasoning} {rule_txt}")
+    elif literal:  # code from the documents does not exist in MKN-10-CZ
+        r.icd10.alternatives = [res.code] + [a for a in r.icd10.alternatives if a != res.code]
+        r.icd10.confidence_reasons.append(f"návrh podle pravidel MKN-10: {res.code} – {res.reasoning} {rule_txt}")
+    else:
+        # no code written in the documents (the first step only matched a name in the code list):
+        # the rules-based code wins, the name match stays as an alternative (goes to review via the score)
+        source = f["icd10"] or f["morphology"]
+        if not source:
+            r.icd10.confidence_reasons.append(f"pravidla MKN-10 navrhují {res.code}, chybí citace z dokumentace")
+            return
+        previous = r.icd10.value
+        doc, ev, m = source[0]
+        r.icd10 = _field([_M(doc, ev, m, res.code)], code_valid=True, code_path="rules")
+        if previous and previous != res.code:
+            r.icd10.alternatives = [previous]
+        r.icd10.confidence_reasons.append(f"{res.reasoning} {rule_txt}")
+    if res.rule:
+        r.icd10.rules = [res.rule]
+    if not res.certain:
+        r.icd10.confidence = min(r.icd10.confidence or 0, 70)
+        r.icd10.confidence_reasons.append("pravidla MKN-10: model si volbou není jistý")
+
+
 def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtraction]:
     out = llm.structured(SYSTEM, _prompt(docs), LlmExtraction)
     f = _collect(out, docs)
@@ -212,6 +277,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
         hits = search_codes(MKN10, m.value, 1)
         if hits:
             r.icd10 = _field([_M(doc, ev, m, hits[0].code)], code_valid=True, code_path="semantic")
+    _apply_coder(r, out, f)
     if r.icd10.value and mkn10.is_valid(r.icd10.value) is False:
         parent = r.icd10.value[:-1].rstrip(".")
         if mkn10.is_valid(parent):

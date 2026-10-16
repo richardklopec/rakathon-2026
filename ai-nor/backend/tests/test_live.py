@@ -5,7 +5,9 @@ from datetime import datetime, timezone
 from fastapi.testclient import TestClient
 
 from app.extract import live
+from app.extract.coder import CodeChoice
 from app.extract.live import FieldMentions, LlmExtraction, Mention
+from app.retrieval.rules import RuleHit
 from app.models import Case, Document, FieldStatus
 
 HIST = Document(
@@ -16,6 +18,9 @@ MDT = Document(id="m", filename="MDT.pdf", kind="MDT", text="Ca mammae l.sin., c
 
 
 def fake_llm(system, user, schema):
+    if schema is CodeChoice:  # second step: MKN-10 coder
+        return CodeChoice(code="C50.4", rule_code="C50", rule_quote="C50.4 Horní zevní kvadrant prsu", reasoning="Horní zevní kvadrant.", certain=True)
+
     def m(doc, quote, value, explicit=True, hedged=False):
         return Mention(doc=doc, quote=quote, value=value, explicit=explicit, hedged=hedged)
 
@@ -36,8 +41,15 @@ def fake_llm(system, user, schema):
     )
 
 
+C50_RULE = RuleHit(kind="category", code="C50", title="Zhoubný novotvar prsu", page=108, score=1.0,
+                   text="C50 Zhoubný novotvar prsu\nC50.4 Horní zevní kvadrant prsu")
+
+
 def _report(monkeypatch):
+    from app.extract import coder
+
     monkeypatch.setattr(live.llm, "structured", fake_llm)
+    monkeypatch.setattr(coder, "_default_candidates", lambda q, lit: ([C50_RULE], []))  # no IRIS in tests
     report, warnings, _ = live.extract_live([HIST, MDT])
     return report, warnings
 
@@ -54,6 +66,8 @@ def test_live_extraction_verifies_normalises_and_flags_conflicts(monkeypatch):
     assert r.tnm_clinical.m.confidence <= 30  # quote not found in the document
     assert r.topography.value == "C50.4"
     assert warnings == []
+    assert r.icd10.rules and r.icd10.rules[0].verified and r.icd10.rules[0].page == 108  # confirmed by MKN-10 rules
+    assert any("potvrzen pravidly" in x for x in r.icd10.confidence_reasons)
 
 
 def test_confirm_requires_empty_review_queue(monkeypatch, tmp_path):

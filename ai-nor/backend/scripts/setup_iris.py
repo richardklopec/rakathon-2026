@@ -54,6 +54,8 @@ TABLES = {
     "Nor.Chunk": "CaseId VARCHAR(64), DocId VARCHAR(64), StartPos INTEGER, EndPos INTEGER, Text VARCHAR(8000)",
     # code lists (MKN-10, ICD-O-3 morphology) for semantic code lookup, see app/retrieval/codes.py
     "Nor.Code": "System VARCHAR(20), Code VARCHAR(20), Name VARCHAR(500)",
+    # MKN-10 coding rules from the PDF Tabelární část (categories + notes), see app/retrieval/rules.py
+    "Nor.Rule": "Kind VARCHAR(20), Code VARCHAR(20), Title VARCHAR(500), Text VARCHAR(8000), Page INTEGER",
 }
 
 

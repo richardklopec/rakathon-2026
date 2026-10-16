@@ -17,6 +17,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -217,6 +218,14 @@
           "title": "Alternatives",
           "type": "array"
         },
+        "rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RuleRef"
+          },
+          "title": "Rules",
+          "type": "array"
+        },
         "review": {
           "$ref": "#/$defs/Review",
           "default": {
@@ -299,6 +308,14 @@
             "$ref": "#/$defs/PartialDate"
           },
           "title": "Alternatives",
+          "type": "array"
+        },
+        "rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RuleRef"
+          },
+          "title": "Rules",
           "type": "array"
         },
         "review": {
@@ -384,6 +401,14 @@
             "type": "integer"
           },
           "title": "Alternatives",
+          "type": "array"
+        },
+        "rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RuleRef"
+          },
+          "title": "Rules",
           "type": "array"
         },
         "review": {
@@ -477,6 +502,14 @@
           "title": "Alternatives",
           "type": "array"
         },
+        "rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RuleRef"
+          },
+          "title": "Rules",
+          "type": "array"
+        },
         "review": {
           "$ref": "#/$defs/Review",
           "default": {
@@ -568,6 +601,14 @@
           "title": "Alternatives",
           "type": "array"
         },
+        "rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RuleRef"
+          },
+          "title": "Rules",
+          "type": "array"
+        },
         "review": {
           "$ref": "#/$defs/Review",
           "default": {
@@ -653,6 +694,14 @@
           "title": "Alternatives",
           "type": "array"
         },
+        "rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RuleRef"
+          },
+          "title": "Rules",
+          "type": "array"
+        },
         "review": {
           "$ref": "#/$defs/Review",
           "default": {
@@ -721,6 +770,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -740,6 +790,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -759,6 +810,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -778,6 +830,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -797,6 +850,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -816,6 +870,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -835,6 +890,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -854,6 +910,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -873,6 +930,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -898,6 +956,7 @@
                 "note": null,
                 "state": "pending"
               },
+              "rules": [],
               "status": "missing",
               "value": null
             },
@@ -914,6 +973,7 @@
                 "note": null,
                 "state": "pending"
               },
+              "rules": [],
               "status": "missing",
               "value": null
             },
@@ -930,6 +990,7 @@
                 "note": null,
                 "state": "pending"
               },
+              "rules": [],
               "status": "missing",
               "value": null
             }
@@ -952,6 +1013,7 @@
                 "note": null,
                 "state": "pending"
               },
+              "rules": [],
               "status": "missing",
               "value": null
             },
@@ -968,6 +1030,7 @@
                 "note": null,
                 "state": "pending"
               },
+              "rules": [],
               "status": "missing",
               "value": null
             },
@@ -984,6 +1047,7 @@
                 "note": null,
                 "state": "pending"
               },
+              "rules": [],
               "status": "missing",
               "value": null
             }
@@ -1000,6 +1064,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1019,6 +1084,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1038,6 +1104,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1057,6 +1124,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1076,6 +1144,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1095,6 +1164,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1182,6 +1252,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1201,6 +1272,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1220,6 +1292,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1290,6 +1363,47 @@
       "title": "ReviewState",
       "type": "string"
     },
+    "RuleRef": {
+      "description": "A coding rule the value relies on (MKN-10 Tabelární část), quoted and located in the PDF.",
+      "properties": {
+        "source": {
+          "default": "MKN-10, Tabelární část (ÚZIS, 2014)",
+          "title": "Source",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        },
+        "verified": {
+          "default": false,
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "quote"
+      ],
+      "title": "RuleRef",
+      "type": "object"
+    },
     "TNM": {
       "properties": {
         "y_prefix": {
@@ -1308,6 +1422,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1327,6 +1442,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1346,6 +1462,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1375,6 +1492,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1394,6 +1512,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1413,6 +1532,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1432,6 +1552,7 @@
             "needs_review": false,
             "evidence": [],
             "alternatives": [],
+            "rules": [],
             "review": {
               "at": null,
               "by": null,
@@ -1489,6 +1610,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1505,6 +1627,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1521,6 +1644,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1537,6 +1661,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1553,6 +1678,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1569,6 +1695,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1585,6 +1712,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1601,6 +1729,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1617,6 +1746,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1634,6 +1764,7 @@
               "note": null,
               "state": "pending"
             },
+            "rules": [],
             "status": "missing",
             "value": null
           },
@@ -1650,6 +1781,7 @@
               "note": null,
               "state": "pending"
             },
+            "rules": [],
             "status": "missing",
             "value": null
           },
@@ -1666,6 +1798,7 @@
               "note": null,
               "state": "pending"
             },
+            "rules": [],
             "status": "missing",
             "value": null
           },
@@ -1685,6 +1818,7 @@
               "note": null,
               "state": "pending"
             },
+            "rules": [],
             "status": "missing",
             "value": null
           },
@@ -1701,6 +1835,7 @@
               "note": null,
               "state": "pending"
             },
+            "rules": [],
             "status": "missing",
             "value": null
           },
@@ -1717,6 +1852,7 @@
               "note": null,
               "state": "pending"
             },
+            "rules": [],
             "status": "missing",
             "value": null
           },
@@ -1735,6 +1871,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1751,6 +1888,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1767,6 +1905,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1783,6 +1922,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1799,6 +1939,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },
@@ -1815,6 +1956,7 @@
             "note": null,
             "state": "pending"
           },
+          "rules": [],
           "status": "missing",
           "value": null
         },

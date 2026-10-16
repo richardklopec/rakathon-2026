@@ -179,6 +179,20 @@ export default function App() {
     [kase, active],
   )
 
+  function RuleCite({ f }: { f: Extracted }) {
+    if (!f.rules?.length) return null
+    return (
+      <div className="w-full pl-2 text-xs text-slate-600">
+        {f.rules.map((r, i) => (
+          <div key={i} title={r.source}>
+            📖 MKN-10 {r.code}{r.page ? `, str. ${r.page}` : ''}: „{r.quote}“{' '}
+            {r.verified ? <span className="text-green-700">✓ citace v pravidlech</span> : <span className="text-amber-700">citace neověřena</span>}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   function FieldActions({ path, f }: { path: string; f: Extracted }) {
     return (
       <span className="whitespace-nowrap">
@@ -277,6 +291,7 @@ export default function App() {
                       ))}
                       <span className="flex-1" />
                       <FieldActions path={path} f={f} />
+                      <RuleCite f={f} />
                     </div>
                   ))}
                 </section>
@@ -313,7 +328,7 @@ export default function App() {
                         const f = getField(kase.report, path)
                         const missing = f.status === 'missing'
                         return (
-                          <div key={path} className="flex items-center gap-2 border-b py-1 last:border-0">
+                          <div key={path} className="flex flex-wrap items-center gap-2 border-b py-1 last:border-0">
                             <span className="w-48 text-slate-500">{label}</span>
                             <span className={`flex-1 ${missing || f.review.state === 'rejected' ? 'text-slate-400' : 'font-medium'}`}>
                               {missing ? 'chybí v dokumentaci' : f.review.state === 'rejected' ? 'zamítnuto' : show(path, f.value)}
@@ -325,6 +340,7 @@ export default function App() {
                               {f.review.state === 'auto_accepted' ? '✓ AI' : f.review.state === 'confirmed' ? '✓ lékař' : f.review.state === 'edited' ? '✎ lékař' : needsHuman(f) ? 'ke kontrole' : ''}
                             </span>
                             {f.evidence[0] && <button className="text-xs text-blue-700 underline" onClick={() => setActive(f.evidence[0])}>zdroj</button>}
+                            <RuleCite f={f} />
                           </div>
                         )
                       })}

@@ -32,13 +32,15 @@ class Settings(BaseSettings):
     mkn10_csv: str = "../../Rakathon_DATA_NOR/Rakathon_DATA_NOR/mkn-10-strukturovane-podklady-20260101/mkn10_strukturovane_podklady_20260101/cp_utf8/01_MKN10_5E_2026_utf8.csv"
     # ÚZIS MKN-10 package (CSV in UTF-8 or Windows-1250) for the form's code lists; searched before the MKN10_CSV folder
     codelists_dir: str = "uploads"
+    # MKN-10 Tabelární část (PDF, ÚZIS 2014): coding rules for the second LLM step (app/retrieval/rules.py)
+    mkn10_rules_pdf: str = "../../Rakathon_DATA_NOR/Rakathon_DATA_NOR/mkn-tabelarni-cast_1-4-2014_2.pdf"
     reporting_facility: str = "00843989000000 - Fakultní nemocnice Ostrava"  # NOR "Zařízení (pracoviště)"
     reporting_department: str = ""  # NOR "Oddělení" (číselník NOR), e.g. "20 - Chirurgie"
     auto_accept_threshold: int = 85  # fields at/above this score without conflict skip review
     data_dir: Path = REPO_ROOT / "backend" / "var"
 
 
-    @field_validator("mkn10_csv", "codelists_dir", "data_dir", mode="after")
+    @field_validator("mkn10_csv", "codelists_dir", "mkn10_rules_pdf", "data_dir", mode="after")
     @classmethod
     def _relative_to_repo(cls, v):
         """Relative paths in .env work on any machine: resolve them against the ai-nor folder."""

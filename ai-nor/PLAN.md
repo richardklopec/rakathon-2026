@@ -125,6 +125,14 @@ Vyžádat export přes Ing. Najbrtovou (otázka §10.6). Do té doby pokryjeme b
 4. **Kontrola vztahu Diagnóza / Topografie / Morfologie** (jako tlačítko ve formuláři ÚZIS): C50.4 ↔ topografie C50.x, chování `/3` u ZN, BCC `8090/3` ↔ kůže C44.
 5. **Kontrola pohlaví a věku** podle `NepripustnePohlavi` / `NepripustnyVekOd/Do` z `01_MKN10_5E` (C61 u ženy → chyba, jde ke kontrole).
 
+6. **Druhý krok LLM nad pravidly MKN-10 (varianta B, jen Dg. MKN).** PDF `mkn-tabelarni-cast_1-4-2014_2.pdf` (Tabelární část, ÚZIS 2014)
+   je rozparsované celé (`retrieval/rules.py`: 1 971 kategorií s podpoložkami, Patří sem / Nepatří sem, a 391 poznámek kapitol)
+   a uložené v IRIS (`Nor.Rule`, vektory 384 dim). Kandidátní kategorie = kód z textu + hledání v `Nor.Code` + hledání v `Nor.Rule`;
+   k nim vždy celé poznámky kapitoly II (např. „léze přesahující… → .8“). LLM (`extract/coder.py`) vybere **jen z podpoložek kandidátů**
+   a musí **doslovně citovat pravidlo**. Backend ověří kód v CSV 2026 a citaci v textu pravidel (stránka PDF).
+   Shoda s kódem z textu → +10; jiný kód než v textu → oba kódy k výběru, jistota max. 70 → ke kontrole;
+   kód v textu chybí → kód z pravidel (−5). Citace pravidla se zobrazí u pole (`Extracted.rules`).
+
 Cesta, kterou kód vznikl, se promítá do skóre jistoty (§4): krok 1 > krok 2 > krok 3. Kódy z kroku 3 obvykle skončí pod prahem a jdou ke kontrole.
 Číselníky v IRIS jsou zároveň další smysluplné použití InterSystems (SQL tabulky + Vector Search nad číselníkem, nejen nad zprávami).
 
@@ -153,7 +161,8 @@ Práh 85 je nastavitelný (`AUTO_ACCEPT_THRESHOLD`) a doladí se kalibrací na g
 | **Typ zdroje**: histologický závěr nebo patička M-kódu / MDT zápis / ambulantní či propouštěcí zpráva | základ **70 / 60 / 50** |
 | **Shoda více dokumentů** se stejnou normalizovanou hodnotou | **+10** za každý další zdroj (max +20) |
 | **Kód platný** v číselníku (MKN-10, MKN-O-3, číselník NOR) | **+10**; neplatný kód → max **40** |
-| **Cesta ke kódu** (§3.1): kód přímo v textu / přesná shoda s rejstříkem / sémantický výběr z kandidátů | **+10 / 0 / −15** |
+| **Cesta ke kódu** (§3.1): kód přímo v textu / přesná shoda s rejstříkem / sémantický výběr z kandidátů / zvolen podle pravidel MKN-10 | **+10 / 0 / −15 / −5** |
+| **Pravidla MKN-10** (§3.1 krok 6): potvrzují kód z textu / navrhují jiný kód / model si není jistý | **+10 / max. 70 / max. 70** |
 | **Konzistence** (vztah Dg / Topografie / Morfologie, TNM ↔ stádium, pořadí dat) | porušení **−25** a varování |
 | **Explicitní vs odvozené** („pT1c“ přímo v textu vs stádium dopočtené z TNM, lateralita z „l.sin.“) | odvozené **−15** (model vrací `derived: true`) |
 | **Zajišťovací výrazy** v citaci („susp.“, „v.s.“, „nelze vyloučit“, „?“) | **−30** |

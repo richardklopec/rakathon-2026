@@ -51,6 +51,16 @@ class Review(BaseModel):
     note: str | None = None
 
 
+class RuleRef(BaseModel):
+    """A coding rule the value relies on (MKN-10 Tabelární část), quoted and located in the PDF."""
+
+    source: str = "MKN-10, Tabelární část (ÚZIS, 2014)"
+    code: str  # category or note range, e.g. "C50" or "C00–D48"
+    page: int | None = None  # printed page in the PDF
+    quote: str
+    verified: bool = False  # quote found in the rule text sent to the LLM
+
+
 class Extracted(BaseModel, Generic[T]):
     value: T | None = None
     coding: Coding | None = None
@@ -60,6 +70,7 @@ class Extracted(BaseModel, Generic[T]):
     needs_review: bool = False  # conflict or confidence below AUTO_ACCEPT_THRESHOLD
     evidence: list[Evidence] = []
     alternatives: list[T] = []  # other values seen in the documents (for conflicts)
+    rules: list[RuleRef] = []  # coding rules behind the value (MKN-10 Tabelární část)
     review: Review = Review()
 
 

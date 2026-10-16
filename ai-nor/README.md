@@ -24,14 +24,16 @@ Potřeba: Python 3.12, Node 20+, Docker Desktop (běžící).
 ```powershell
 copy .env.example .env          # doplnit LLM_API_KEY; LLM_MODE=live (mock jede bez klíče). Data FNO (Rakathon_DATA_NOR) patří vedle složky rakathon-2026
 cd backend; python -m venv .venv; .\.venv\Scripts\pip install -e ".[dev]"; cd ..
-.\start-iris.ps1                # IRIS + prázdný FHIR server /fhir/r4 + tabulky Nor.Chunk, Nor.Code
+.\start-iris.ps1                # IRIS + prázdný FHIR server /fhir/r4 + tabulky Nor.Chunk, Nor.Code, Nor.Rule
 cd backend; .\.venv\Scripts\python -m scripts.index_codes     # číselníky MKN-10 + morfologie do IRIS (~1,5 min)
+.\.venv\Scripts\python -m scripts.index_rules     # pravidla MKN-10 z PDF Tabelární část do IRIS (Nor.Rule, ~4 min)
 .\.venv\Scripts\uvicorn app.main:app --port 8000
 cd frontend; npm install; npm run dev     # http://localhost:5173
 ```
 
 - Syntetičtí pacienti k nahrání: `data/synthetic/PAC001` … `PAC010` (vytvoří `python -m scripts.export_synthetic <složka s XLSX>`).
 - Číselníky formuláře (MKN-10, topografie, morfologie): balíček MKN-10 od ÚZIS ve složce `uploads/` (CSV v UTF-8 i Windows-1250, `CODELISTS_DIR`), jinak složka `MKN10_CSV`.
+- Pravidla MKN-10: PDF `mkn-tabelarni-cast_1-4-2014_2.pdf` z `Rakathon_DATA_NOR` (`MKN10_RULES_PDF`). Druhý krok LLM podle nich volí kód Dg. MKN a cituje pravidlo (PLAN.md §3.1 krok 6).
 - LLM: `gpt-6-luna-dz-eu` (EU Data Zone), `reasoning_effort=low`, odpovědi se cachují v `backend/var/llm-cache`.
 - Embeddingy běží **lokálně** (`paraphrase-multilingual-MiniLM-L12-v2`, 384 dim, model se stáhne do `backend/var/models`), text zpráv neopouští počítač.
 - FHIR: `http://localhost:52773/fhir/r4/metadata` (SuperUser / SYS — jen dev) · Management Portal: `http://localhost:52773/csp/sys/UtilHome.csp`
