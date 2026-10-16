@@ -149,17 +149,26 @@ def _collect(out: LlmExtraction, docs: list[Document]) -> dict[str, list[tuple[D
     return by_field
 
 
-def _score(winners: list[_M], *, code_valid: bool | None = None, code_path: str | None = None) -> tuple[int, list[str]]:
+def _score(winners: list[_M], *, code_valid: bool | None = None, code_path: str | None = None,
+           found: dict[str, tuple[Document, Evidence]] | None = None) -> tuple[int, list[str]]:
+    """`found`: documents where the code itself found the winning value written (see _finder). Agreement then counts
+    the documents that state the value, not how many of them the LLM happened to list (stable between runs)."""
     reasons = []
     verified = [w for w in winners if w.ev and w.ev.verified]
     best = max(winners, key=lambda w: w.rank)
     score = best.rank
-    reasons.append(f"zdroj: {SOURCE_LABEL.get(best.kind, best.kind)}")
-    sources = {w.source for w in verified}
+    kind = best.kind
+    if found:  # the most trusted document stating the value sets the base, even if the LLM did not quote it
+        top = max((d for d, _ in found.values()), key=lambda d: SOURCE_RANK.get(d.kind or "other", 45))
+        if SOURCE_RANK.get(top.kind or "other", 45) > score:
+            score, kind = SOURCE_RANK.get(top.kind or "other", 45), top.kind or "other"
+    reasons.append(f"zdroj: {SOURCE_LABEL.get(kind, kind)}")
+    sources = {w.source for w in verified} | set(found or {})
     if len(sources) > 1:
         bonus = min(10 * (len(sources) - 1), 20)
         score += bonus
-        reasons.append(f"✓ {len(sources)} nezávislé zdroje se shodují (+{bonus})")
+        how = ", hledáno v dokumentech" if found else ""
+        reasons.append(f"✓ {len(sources)} nezávislé zdroje se shodují{how} (+{bonus})")
     if code_path == "literal":
         score += 10
         reasons.append("✓ kód přímo v textu (+10)")
@@ -200,8 +209,11 @@ def _name_tokens(name: str) -> frozenset[str]:
     return frozenset(_NAME_SYNONYMS.get(w, w) for w in re.findall(r"[a-z0-9]+", folded)) - _NAME_NOISE
 
 
-def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, **score_kw) -> Extracted:
-    """Pick the winning value, detect conflicts, score. `mentions` already carry normalised values."""
+def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, find=None, **score_kw) -> Extracted:
+    """Pick the winning value, detect conflicts, score. `mentions` already carry normalised values.
+
+    `find(value)` (optional, see _finder) returns the documents where the value is written; they count as agreeing
+    sources and are cited, so the score does not depend on how many mentions the LLM listed."""
     mentions = [m for m in mentions if m.value is not None]
     if not mentions:
         return Extracted()
@@ -216,12 +228,15 @@ def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, **
         groups[key].append(m)
     ranked = sorted(groups.values(), key=lambda g: (max(m.rank for m in g), len({m.source for m in g})), reverse=True)
     winners = ranked[0]
-    score, reasons = _score(winners, **score_kw)
+    found = find(winners[0].value) if find else None
+    score, reasons = _score(winners, found=found, **score_kw)
     verified_groups = [g for g in ranked if any(m.ev and m.ev.verified for m in g)]
     conflict = len(verified_groups) > 1
     if conflict:
         reasons.append(f"⚠ rozpor: {len(verified_groups)} různé hodnoty v dokumentech")
     evidence = [m.ev for g in ranked for m in g if m.ev and m.ev.verified]
+    cited = {e.doc_id for e in evidence}
+    evidence += [ev for doc_id, (_, ev) in (found or {}).items() if doc_id not in cited]
     # merged free text: the most complete wording from the most trusted source ("… karcinom + LCIS", not "… karcinom")
     best = max(winners, key=lambda m: (m.rank, len(_name_tokens(str(m.value))))) if merge_contained else winners[0]
     return Extracted(
@@ -232,6 +247,54 @@ def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, **
         evidence=evidence,
         alternatives=[g[0].value for g in ranked[1:]],
     )
+
+
+def _ci(value: str) -> str:
+    """Regex for a value with case-insensitive letters ("1b" also matches "1B")."""
+    return "".join(f"[{c.lower()}{c.upper()}]" if c.isalpha() else re.escape(c) for c in value)
+
+
+_PT_IN_LINE = re.compile(r"(?<![A-Za-z])y?pT(?:is|[0-4Xx])")
+
+
+def _finder(docs: list[Document], pattern, line_must=None):
+    """value -> {doc id: (document, evidence)} for every document where the value is written in its fixed form."""
+    def find(value) -> dict[str, tuple[Document, Evidence]]:
+        rx = pattern(str(value))
+        if rx is None:
+            return {}
+        out = {}
+        for doc in docs:
+            for line in re.finditer(r"[^\n]+", doc.text):
+                if line_must is not None and not line_must.search(line.group(0)):
+                    continue
+                if m := rx.search(line.group(0)):
+                    s, e = line.start() + m.start(), line.start() + m.end()
+                    out[doc.id] = (doc, Evidence(doc_id=doc.id, quote=doc.text[s:e], start=s, end=e, verified=True))
+                    break
+        return out
+    return find
+
+
+def _tnm_finder(docs: list[Document], prefix: str, part: str):
+    """pT1c / ypT1c, pN0 (also the bare "N0" next to a pT: "pT1c N0( 0/3)"), cT1c, cN0. Not M (step 4 handles M)."""
+    if prefix == "p":
+        pfx = "y?p" if part == "T" else "(?:y?p)?"
+        line_must = None if part == "T" else _PT_IN_LINE
+    else:
+        pfx, line_must = "y?c", None
+    return _finder(docs, lambda v: re.compile(rf"(?<![A-Za-z]){pfx}{part}{_ci(v)}(?![0-9A-Za-z])"), line_must)
+
+
+def _grade_finder(docs: list[Document]):
+    return _finder(docs, lambda v: re.compile(rf"(?<![A-Za-z])G\s?{v}(?![0-9])") if v in "1234" else None)
+
+
+def _morphology_finder(docs: list[Document]):
+    def pattern(v):
+        m = re.fullmatch(r"(\d{4})/(\d)", v)
+        return re.compile(rf"(?<!\d)M?-?{m.group(1)}\s?/?\s?{m.group(2)}(?!\d)") if m else None
+    return _finder(docs, pattern)
 
 
 def _normalised(items, fn) -> list[_M]:
@@ -671,7 +734,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     codes = _normalised(morph_items, normalize.morphology)
     codes = [c for c in codes if c.value]
     if codes:
-        r.morphology_code = _field(codes, code_valid=True, code_path="literal")
+        r.morphology_code = _field(codes, code_valid=True, code_path="literal", find=_morphology_finder(docs))
     elif r.morphology_name.value:
         from app.retrieval.codes import MORPHOLOGY, search_codes
 
@@ -685,13 +748,14 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
             r.morphology_code.alternatives = [h.code for h in hits[1:]]
             r.morphology_code.confidence_reasons.append("kandidáti: " + ", ".join(f"{h.code} {h.name[:30]}" for h in hits))
 
-    r.grade = _field(_normalised(f["grade"], lambda v: normalize.grade(v) or normalize.high_grade(v)))
+    r.grade = _field(_normalised(f["grade"], lambda v: normalize.grade(v) or normalize.high_grade(v)), find=_grade_finder(docs))
 
     # --- TNM
     for prefix, tnm in (("c", r.tnm_clinical), ("p", r.tnm_pathological)):
         for part in ("T", "N", "M"):
             items = f[f"{prefix}{part}"]
-            setattr(tnm, part.lower(), _field(_normalised(items, lambda v, p=part: normalize.tnm(v, p))))
+            find = _tnm_finder(docs, prefix, part) if part in "TN" else None  # M: see _clinical_m
+            setattr(tnm, part.lower(), _field(_normalised(items, lambda v, p=part: normalize.tnm(v, p)), find=find))
             if prefix == "p" and any(normalize.y_prefix(m.value) for _, _, m in items):
                 tnm.y_prefix = True
     _clinical_m(r, docs)

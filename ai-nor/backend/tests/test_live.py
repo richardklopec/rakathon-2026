@@ -248,3 +248,30 @@ def test_no_targeted_pass_when_nothing_mandatory_is_missing(monkeypatch):
     monkeypatch.setattr(coder, "_default_candidates", lambda q, lit: ([C50_RULE], []))
     live.extract_live([HIST, MDT])
     assert sum(calls) <= 1  # at most one targeted call per case, never one per field
+
+
+def test_agreement_counted_in_the_documents_not_in_the_llm_mentions(monkeypatch):
+    hist = Document(id="h", filename="H.pdf", kind="histology", text="Závěr:\n9. TNM: pT1c N0 Mx\nG2\nM1: M85203 KARCINOM")
+    az = Document(id="a", filename="AZ.pdf", kind="AZ", text="Ca mammae pT1c N0( 0/3)M0, G2")
+    mdt = Document(id="m", filename="MDT.pdf", kind="MDT", text="TNM: pT1c N0 /3/0/ Mx\ncT1c cN1 dle sono\nN0 jinde bez pT\nM1: M85203")
+
+    def run(listed: list[int]):
+        def llm(system, user, schema):
+            m = lambda doc, q, v: Mention(doc=doc, quote=q, value=v, explicit=True, hedged=False)  # noqa: E731
+            quotes = {1: "9. TNM: pT1c N0 Mx", 2: "Ca mammae pT1c N0( 0/3)M0, G2", 3: "TNM: pT1c N0 /3/0/ Mx"}
+            return LlmExtraction(primary_tumour="", other_tumours=[], patient_sex="F", fields=[
+                FieldMentions(field="pT", mentions=[m(d, quotes[d], "pT1c") for d in listed]),
+                FieldMentions(field="pN", mentions=[m(d, quotes[d], "N0") for d in listed]),
+                FieldMentions(field="grade", mentions=[m(2, "Ca mammae pT1c N0( 0/3)M0, G2", "G2")]),
+                FieldMentions(field="morphology", mentions=[m(3, "M1: M85203", "M85203")])])
+
+        monkeypatch.setattr(live.llm, "structured", llm)
+        r, _, _ = live.extract_live([hist, az, mdt])
+        return r
+
+    one, three = run([2]), run([1, 2, 3])
+    assert one.tnm_pathological.t.confidence == three.tnm_pathological.t.confidence == 90  # histology 70 + 3 sources
+    assert {e.doc_id for e in one.tnm_pathological.t.evidence} == {"h", "a", "m"}
+    assert one.tnm_pathological.n.confidence == 90  # "N0" next to a pT counts, "cN1" and "N0" without pT do not
+    assert one.grade.confidence == 80 and "zdroj: histology" in one.grade.confidence_reasons  # G2 written in histology too
+    assert one.morphology_code.confidence == 100  # footer in histology + MDT, literal and valid
