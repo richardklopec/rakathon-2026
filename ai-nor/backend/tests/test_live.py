@@ -186,3 +186,25 @@ def test_coder_gets_the_site_descriptions_first(monkeypatch):
     live.extract_live([AZ, MD])
     quotes = seen["user"].split("Citace z dokumentace:\n")[1]
     assert quotes.startswith("- drobné ložisko na rozhraní DKK")  # not cut off by the 12-quote limit
+
+
+def test_morphology_name_is_the_pathologists_wording(monkeypatch):
+    hist = Document(id="h", filename="H.pdf", kind="histology",
+                    text="Závěr:\n2. Typ nádoru: Invazivní tubulární karcinom + DCIS\nM1:  M82113 KARCINOM TUBULARNI\nkarcinomu tubulárního")
+    mdt = Document(id="m", filename="MDT.pdf", kind="MDT", text="KARCINOM TUBULARNI INFILTRUJICI")
+
+    def llm(system, user, schema):
+        m = lambda doc, q, v: Mention(doc=doc, quote=q, value=v, explicit=True, hedged=False)  # noqa: E731
+        return LlmExtraction(primary_tumour="karcinom prsu", other_tumours=[], patient_sex="F", fields=[FieldMentions(
+            field="morphology", mentions=[m(1, "M1:  M82113 KARCINOM TUBULARNI", "M82113 – karcinom tubulární"),
+                                          m(1, "karcinomu tubulárního", "Invazivní tubulární karcinom;"),
+                                          m(1, "Typ nádoru: Invazivní tubulární karcinom + DCIS", "Invazivní tubulární karcinom + DCIS"),
+                                          m(2, "KARCINOM TUBULARNI INFILTRUJICI", "Karcinom tubulární infiltrující")])])
+
+    monkeypatch.setattr(live.llm, "structured", llm)
+    r, _, _ = live.extract_live([hist, mdt])
+    assert r.morphology_name.value == "Invazivní tubulární karcinom + DCIS"  # most complete wording, in situ part kept
+    assert r.morphology_name.status == FieldStatus.found  # the code label and the synonym are not a conflict
+    assert r.morphology_code.value == "8211/3"
+    assert live._clean_name("M85203 – karcinom lobulární infiltrující") == "karcinom lobulární infiltrující"
+    assert live._clean_name("Invazivní lobulární karcinom; M85203") == "Invazivní lobulární karcinom"

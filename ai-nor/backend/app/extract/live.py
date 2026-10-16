@@ -5,6 +5,7 @@ PLAN.md §3 (steps 4-8), §3.1 (code selection), §4 (confidence 0-100).
 """
 
 import re
+import unicodedata
 from collections import defaultdict
 from typing import Literal
 
@@ -188,6 +189,17 @@ def _score(winners: list[_M], *, code_valid: bool | None = None, code_path: str 
     return max(0, min(100, score)), reasons
 
 
+# free-text names: word synonyms and words that do not change the finding, for grouping equivalent names
+_NAME_SYNONYMS = {"infiltrujici": "invazivni", "infiltrativni": "invazivni", "ca": "karcinom", "carcinoma": "karcinom"}
+_NAME_NOISE = {"a", "s", "se", "prsu", "sin", "dx", "vlevo", "vpravo", "l", "typ", "nadoru"}
+
+
+def _name_tokens(name: str) -> frozenset[str]:
+    folded = unicodedata.normalize("NFKD", name)
+    folded = "".join(c for c in folded if not unicodedata.combining(c)).lower()
+    return frozenset(_NAME_SYNONYMS.get(w, w) for w in re.findall(r"[a-z0-9]+", folded)) - _NAME_NOISE
+
+
 def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, **score_kw) -> Extracted:
     """Pick the winning value, detect conflicts, score. `mentions` already carry normalised values."""
     mentions = [m for m in mentions if m.value is not None]
@@ -196,9 +208,11 @@ def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, **
     groups: dict[str, list[_M]] = defaultdict(list)
     for m in mentions:
         key = to_display(m.value)
-        if merge_contained:  # free text: "karcinom NST" and "karcinom NST prsu" are the same finding
-            low = key.lower()
-            key = next((k for k in groups if low in k.lower() or k.lower() in low), key)
+        if merge_contained:
+            # free text: one name containing the other is the same finding ("karcinom NST" / "karcinom NST prsu",
+            # "karcinom lobulární infiltrující" / "invazivní lobulární karcinom + LCIS"), word order and synonyms aside
+            tokens = _name_tokens(key)
+            key = next((k for k in groups if tokens <= _name_tokens(k) or _name_tokens(k) <= tokens), key)
         groups[key].append(m)
     ranked = sorted(groups.values(), key=lambda g: (max(m.rank for m in g), len({m.source for m in g})), reverse=True)
     winners = ranked[0]
@@ -208,8 +222,10 @@ def _field(mentions: list[_M], to_display=str, merge_contained: bool = False, **
     if conflict:
         reasons.append(f"⚠ rozpor: {len(verified_groups)} různé hodnoty v dokumentech")
     evidence = [m.ev for g in ranked for m in g if m.ev and m.ev.verified]
+    # merged free text: the most complete wording from the most trusted source ("… karcinom + LCIS", not "… karcinom")
+    best = max(winners, key=lambda m: (m.rank, len(_name_tokens(str(m.value))))) if merge_contained else winners[0]
     return Extracted(
-        value=winners[0].value,
+        value=best.value,
         status=FieldStatus.conflict if conflict else FieldStatus.found,
         confidence=score,
         confidence_reasons=reasons,
@@ -279,6 +295,16 @@ def _node_field(res: "nodes.NodeResult", which: str, warnings: list[str]) -> Ext
     if which == "examined" and (bad := [r for r in res.references if r.examined not in {c.examined for c in specs} | {value}]):
         cap(field, 70, f"⚠ odkaz v jiné zprávě uvádí {', '.join(r.label() for r in bad)}")
     return field
+
+
+_CODE_FOOTER = re.compile(r"\bM\d\s*:\s*M?-?\d{4}\s?/?\s?\d")  # "M1: M85203" in the histology footer
+
+
+def _clean_name(value: str) -> str | None:
+    """Morphology name without the code and without leftover punctuation ("– karcinom …", "… karcinom;")."""
+    name = re.sub(r"\(?M?-?\d{4}\s?/?\s?\d\)?", "", value)
+    name = re.sub(r"\s+", " ", name).strip(" :,;.-–—")
+    return name or None
 
 
 CLINICAL_M_CAP = 75  # a clinical M from the documents always goes to review (M0 is never accepted automatically)
@@ -549,8 +575,12 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     # --- morphology
     r.morphology_type = _field(_normalised(f["morphology_type"], lambda v: "Cytologie" if "cyto" in v.lower() else ("Histologie" if "histo" in v.lower() else None)))
     morph_items = f["morphology"]
-    names = [_M(doc, ev, m, re.sub(r"\(?M?-?\d{4}\s?/?\s?\d\)?", "", m.value).strip(" :,-") or None) for doc, ev, m in morph_items]
-    r.morphology_name = _field(names, merge_contained=True)
+    names = [_M(doc, ev, m, _clean_name(m.value), "code_label" if _CODE_FOOTER.search(m.quote) else None)
+             for doc, ev, m in morph_items]
+    # the code footer ("M1: M85203 KARCINOM LOBULARNI INFILTRUJICI") is the label of the code, not the pathologist's
+    # wording: it names the field only when nothing else does (and then it does not make a conflict with the wording)
+    worded = [n for n in names if n.kind != "code_label" and n.value]
+    r.morphology_name = _field(worded or names, merge_contained=True)
     codes = _normalised(morph_items, normalize.morphology)
     codes = [c for c in codes if c.value]
     if codes:
