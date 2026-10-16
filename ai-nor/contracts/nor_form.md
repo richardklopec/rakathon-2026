@@ -67,7 +67,7 @@ Kód, který v číselníku není, se do hlášení nedostane.
 |---|---|---|
 | Dg. MKN, Dg. slovně | **MKN-10 ÚZIS** `01_MKN10_5E_2026_utf8.csv` (`KodSTeckou`, `Nazev`), jen kapitola C (+ D00–D09 in situ, D37–D48 nejisté) | ✅ celý (39 191 řádků) |
 | Topografie | MKN-O-3 topografie C00.0–C80.9. Kódy se z velké části kryjí s MKN-10 C00–C80, názvy bez „ZN –“ („C44.5 - Kůže trupu“). Rejstřík lokalizací: `07_…novotvary_utf8.csv` (lokalizace → kód primární / sekundární / in situ / benigní / nejisté) | 🟠 přibližně z MKN-10; přesný číselník vyžádat |
-| Kód morfologie | MKN-O-3 morfologie `NNNN/C`. Částečně v rejstříku MKN-10 `05_…nemoci a poranění_utf8.csv`: 702 kódů s českými termíny, např. „Adenokarcinom (M8140/3)“, „– duktální (M8500/3)“, „bazocelulární (M8090/3)“ | 🟠 702 kódů; úplný MKN-O-3 (aplikace NOR → Číselníky) vyžádat od FNO / ÚZIS |
+| Kód morfologie | MKN-O-3 morfologie `NNNN/C`. Částečně v rejstříku MKN-10 `05_…nemoci a poranění_*.csv`: 704 kódů s českými termíny, např. „Adenokarcinom (M8140/3)“, „– duktální (M8500/3)“, „bazocelulární (M8090/3)“ (2 překlepy ÚZIS opraveny: `M90013/0` → 9013/0, `M91200/3` → 9120/3). Lymfomy a leukemie (96xx–99xx) v rejstříku skoro chybí: doplněny z přílohy PDF Tabelární části (Klasifikace SZO hematopoetických a lymfoidních nádorů, str. 867–870) → `uploads/morfologie_hematologie_szo_pdf2014_utf8.csv` (`scripts/extract_pdf_morphology.py`) | 🟠 793 kódů; úplný MKN-O-3 (aplikace NOR → Číselníky) vyžádat od FNO / ÚZIS |
 | Typ morfologie, Lateralita, Grading, Onemocnění | malé pevné seznamy ze screenshotu formuláře (viz tabulky výše) | ✅ |
 | K dg. vedla vyšetření, Metastázy, Pracoviště hlásící | pevné bitové hodnoty z formuláře | ✅ |
 | Oddělení | číselník oddělení NOR (87 položek) | 🔴 jen prvních 13 + „20 Chirurgie“ |

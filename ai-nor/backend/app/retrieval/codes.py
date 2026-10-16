@@ -1,8 +1,10 @@
 """Code lists (číselníky) in IRIS Vector Search (table Nor.Code) for step 3 of code selection (PLAN.md §3.1).
 
-Sources: ÚZIS MKN-10-CZ 2026 package (folder of MKN10_CSV):
-- 01_MKN10_5E_2026_utf8.csv: MKN-10 codes C00-C97, D00-D48 with full names
-- 05_MKN10_2026_Abecední seznam - nemoci a poranění_utf8.csv: index terms with ICD-O morphology codes "(M8140/3)"
+Sources: ÚZIS MKN-10-CZ 2026 package (ai-nor/uploads, see app/validate/codefiles.py):
+- 01_MKN10_5E_2026_*.csv: MKN-10 codes C00-C97, D00-D48 with full names
+- 05_MKN10_2026_Abecední seznam - nemoci a poranění_*.csv: index terms with ICD-O morphology codes "(M8140/3)"
+- morfologie_hematologie_szo_pdf2014_utf8.csv: WHO haematopoietic and lymphoid tumours with ICD-O codes (96xx-99xx,
+  almost absent from the index), extracted from the tabular-part PDF by scripts/extract_pdf_morphology.py
 """
 
 import re
@@ -15,7 +17,10 @@ from app.validate import codefiles
 MKN10 = "mkn10"
 MORPHOLOGY = "icdo3-morph"
 
-_MORPH = re.compile(r"\(M(\d{4})/(\d)\)")
+_MORPH = re.compile(r"\(M(\d{4,5})/(\d)\)")
+# typos in the ÚZIS 2026 index: 'Adenofibrom (M90013/0)' is M9013/0, 'Angiom – zhoubný (M91200/3)' is angiosarkom M9120/3
+# (both codes appear correctly elsewhere in the same file); other 5-digit codes are skipped, never guessed
+_MORPH_TYPOS = {"90013": "9013", "91200": "9120"}
 _ONCO_ICD10 = re.compile(r"^(C\d|D0\d|D3[7-9]|D4[0-8])")
 
 
@@ -43,13 +48,14 @@ def load_mkn10() -> list[tuple[str, str]]:
 
 
 def _clean(term: str) -> str:
-    term = _MORPH.sub("", term)
+    term = re.sub(r"\s*\(M\d{4,5}(?:/+\d)?\)", "", term)  # also malformed ones: '(M9013)', '(M8010//2)'
     term = re.split(r"\s+–\s+viz\b|\(viz\b", term)[0]
     return term.strip(" –-*;").strip()
 
 
 def load_morphology() -> list[tuple[str, str]]:
-    """Morphology terms from the hierarchical index: child names are prefixed by their parents."""
+    """Morphology terms from the hierarchical index (child names are prefixed by their parents), plus the WHO
+    haematological classification from the tabular-part PDF when its CSV is present."""
     _require(codefiles.INDEX_DISEASES)
     stack: list[str] = []
     out: dict[tuple[str, str], None] = {}
@@ -59,8 +65,13 @@ def load_morphology() -> list[tuple[str, str]]:
         level, name = int(row[0]), row[1]
         stack = stack[: level - 1] + [_clean(name)]
         if m := _MORPH.search(name):
-            full = " ".join(p for p in stack if p)
-            out[(f"{m.group(1)}/{m.group(2)}", full)] = None
+            number = _MORPH_TYPOS.get(m.group(1), m.group(1))
+            if len(number) == 4:
+                full = " ".join(p for p in stack if p)
+                out[(f"{number}/{m.group(2)}", full)] = None
+    for row in codefiles.dict_rows(codefiles.MORPHOLOGY_HEMATO):
+        if re.fullmatch(r"\d{4}/\d", row.get("Kod", "")):
+            out[(row["Kod"], row["Nazev"])] = None
     return list(out)
 
 

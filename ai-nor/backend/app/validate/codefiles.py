@@ -14,6 +14,7 @@ from app.config import get_settings
 MKN10 = "01_MKN10_5E"
 INDEX_DISEASES = "05_MKN10"
 INDEX_NEOPLASMS = "07_MKN10"
+MORPHOLOGY_HEMATO = "morfologie_hematologie"  # scripts/extract_pdf_morphology.py (WHO haematological tumours)
 
 
 def _dirs() -> list[Path]:

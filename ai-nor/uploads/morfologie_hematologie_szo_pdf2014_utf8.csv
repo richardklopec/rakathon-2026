@@ -1,0 +1,98 @@
+Kod;Nazev;Skupina;Strana
+9875/3;"Chronická myeloidní leukemie, Filadelfský chromozom (Ph1) pozitivní {t(9;22)(q34;q11)}, {BCR/ABL}";Chronické myeloproliferativní nemoci;867
+9963/3;Chronická neutrofilní leukemie;Chronické myeloproliferativní nemoci;867
+9964/3;Chronická eozinofilní leukemie/hypereozinofilní syndrom;Chronické myeloproliferativní nemoci;867
+9961/3;Chronická idiopatická myelofibróza;Chronické myeloproliferativní nemoci;867
+9950/3;Polycytemie pravá;Chronické myeloproliferativní nemoci;867
+9962/3;Esenciální trombocytemie;Chronické myeloproliferativní nemoci;867
+9975/3;Chronická myeloproliferativní nemoc, neklasifikovatelná;Chronické myeloproliferativní nemoci;867
+9945/3;Chronická myelomonocytická leukemie;Myelodysplastické/myeloproliferativní nemoci;868
+9876/3;Atypická chronická myeloidní leukemie;Myelodysplastické/myeloproliferativní nemoci;868
+9946/3;Juvenilní myelomonocytická leukemie;Myelodysplastické/myeloproliferativní nemoci;868
+9975/3;Myelodysplastická/myeloproliferativní nemoc, neklasifikovatelná;Myelodysplastické/myeloproliferativní nemoci;868
+9980/3;Refrakterní anemie;Myelodysplastické syndromy;868
+9982/3;Refrakterní anemie s prsténčitými sideroblasty;Myelodysplastické syndromy;868
+9985/3;Refrakterní cytopenie s dysplazií ve více řadách;Myelodysplastické syndromy;868
+9985/3;Refrakterní cytopenie (myelodysplastický syndrom) s dysplazií ve více řadách;Myelodysplastické syndromy;868
+9983/3;Refrakterní anemie s excesem blastů;Myelodysplastické syndromy;868
+9986/3;Myelodysplastický syndrom spojení s izolovanou delecí(5q);Myelodysplastické syndromy;868
+9989/3;Myelodysplastický syndrom, neklasifikovatelný;Myelodysplastické syndromy;868
+9896/3;"AML s t(8;21)(q22;q22)}, {AML1/ETO}";AML s cytogenetickými abnormalitami;868
+9866/3;"Akutní promyelocytická leukemie {AML s t(15;17)(q22;q12)} {PML/RAR-alfa} a varianty";AML s cytogenetickými abnormalitami;868
+9871/3;"AML s inv (16)(p13;q22)} nebo {t(16;16)(p13;q22)}, {CBFbeta/MYH11}";AML s cytogenetickými abnormalitami;868
+9897/3;AML s 11q23 {MLL} abnormalitami;AML s cytogenetickými abnormalitami;868
+9895/3;AML s dysplazií ve více řadách;AML s cytogenetickými abnormalitami;868
+9920/3;AML a myelodysplastický syndrom, spojené s terapií;AML s cytogenetickými abnormalitami;868
+9861/3;AML dále nezařazovaná;AML s cytogenetickými abnormalitami;868
+9872/3;AML minimálně diferencovaná;AML s cytogenetickými abnormalitami;868
+9873/3;AML bez vyzrávání;AML s cytogenetickými abnormalitami;868
+9874/3;AML s vyzráváním;AML s cytogenetickými abnormalitami;868
+9867/3;Akutní myelomonocytická leukemie;AML s cytogenetickými abnormalitami;868
+9891/3;Akutní monoblastická a monocytická leukemie;AML s cytogenetickými abnormalitami;868
+9840/3;Akutní erytroidní leukemie;AML s cytogenetickými abnormalitami;868
+9910/3;Akutní megakaryoblastická leukemie;AML s cytogenetickými abnormalitami;868
+9870/3;Akutní bazofilní leukemie;AML s cytogenetickými abnormalitami;868
+9931/3;Akutní panmyelóza s myelofibrózou;AML s cytogenetickými abnormalitami;868
+9930/3;Myeloidní sarkom;AML s cytogenetickými abnormalitami;868
+9805/3;Akutní leukemie ze smíšených linií;AML s cytogenetickými abnormalitami;868
+9835/3;Prekurzorová B-lymfoblastická leukemie;Nádor z prekurzorových B-buněk;868
+9728/3;Prekurzorový B-lymfoblastický lymfom;Nádor z prekurzorových B-buněk;869
+9823/3;Chronická lymfocytická leukemie;Nádory ze zralých B-buněk;869
+9670/3;Chronický malobuněčný lymfocytický lymfom;Nádory ze zralých B-buněk;869
+9833/3;Prolymfocytická leukemie z B-buněk;Nádory ze zralých B-buněk;869
+9671/3;Lymfoplazmocytický lymfom;Nádory ze zralých B-buněk;869
+9689/3;Splenický lymfom marginální zóny;Nádory ze zralých B-buněk;869
+9940/3;Trichocelulární leukemie;Nádory ze zralých B-buněk;869
+9732/3;Plazmocytární myelom;Nádory ze zralých B-buněk;869
+9731/3;Solitární plazmocytom kosti;Nádory ze zralých B-buněk;869
+9734/3;Extraosální plazmocytom;Nádory ze zralých B-buněk;869
+9699/3;Extranodální lymfom z B-buněk, marginální zóny ze slizniční lymfatické tkáně (MALT lymfom);Nádory ze zralých B-buněk;869
+9699/3;Nodální lymfom z B-buněk marginální zóny;Nádory ze zralých B-buněk;869
+9690/3;Folikulární lymfom;Nádory ze zralých B-buněk;869
+9673/3;Lymfom z buněk plášťové zóny;Nádory ze zralých B-buněk;869
+9680/3;Difuzní velkobuněčný lymfom z B-buněk;Nádory ze zralých B-buněk;869
+9679/3;Mediastinální (thymický) velkobuněčný lymfom z B-buněk;Nádory ze zralých B-buněk;869
+9680/3;Intravaskulární velkobuněčný lymfom z B-buněk;Nádory ze zralých B-buněk;869
+9678/3;Primární exsudativní lymfom;Nádory ze zralých B-buněk;869
+9687/3;Burkittův lymfom;Nádory ze zralých B-buněk;869
+9826/3;Burkittova leukemie;Nádory ze zralých B-buněk;869
+9766/1;Lymfomatoidní granulomatóza;B-buněčné proliferace nejistého maligního potenciálu;869
+9970/1;Posttransplantační lymfoproliferativní porucha, polymorfní;B-buněčné proliferace nejistého maligního potenciálu;869
+9729/3;Prekurzorový T-lymfoblastický lymfom;Nádory z prekurzorových T-buněk;869
+9837/3;Prekurzorová T-lymfoblastická leukemie;Nádory z prekurzorových T-buněk;869
+9727/3;Blastický lymfom z NK-buněk (nádor nejistého původu a stupně diferenciace);Nádory z prekurzorových T-buněk;869
+9834/3;Prolymfocytická leukemie z T-buněk;Nádory ze zralých T a NK buněk;869
+9831/3;Lymfocytická leukemie z velkých granulárních T-buněk;Nádory ze zralých T a NK buněk;869
+9948/3;Agresivní leukemie z NK-buněk;Nádory ze zralých T a NK buněk;869
+9827/3;Adultní leukemie/lymfom z T-buněk;Nádory ze zralých T a NK buněk;869
+9719/3;Extranodální lymfom z NK/T-buněk , nazálního typu;Nádory ze zralých T a NK buněk;869
+9717/3;Lymfom z T-buněk, enteropatický typ;Nádory ze zralých T a NK buněk;869
+9716/3;Hepatosplenický lymfom z T-buněk;Nádory ze zralých T a NK buněk;869
+9708/3;Podkožní panikulitidě podobný lymfom z T-buněk;Nádory ze zralých T a NK buněk;869
+9700/3;Mycosis fungoides;Nádory ze zralých T a NK buněk;869
+9701/3;Sézaryho syndrom;Nádory ze zralých T a NK buněk;869
+9718/3;Primární kožní anaplastický velkobuněčný lymfom;Nádory ze zralých T a NK buněk;869
+9702/3;Periferní lymfom z T-buněk, nespecifikovaný;Nádory ze zralých T a NK buněk;869
+9705/3;Angioimunoblastický lymfom z T-buněk;Nádory ze zralých T a NK buněk;869
+9714/3;Anaplastický velkobuněčný lymfom;Nádory ze zralých T a NK buněk;870
+9718/1;Lymfomatoidní papulóza;T-buněčné proliferace nejistého maligního potenciálu;870
+9659/3;Nodulární Hodgkinův lymfom, lymfocytárně predominantní;Hodgkinův lymfom (Hodgkinova nemoc);870
+9650/3;Klasický Hodgkinův lymfom;Hodgkinův lymfom (Hodgkinova nemoc);870
+9663/3;Klasický Hodgkinův lymfom, nodulární skleróza;Hodgkinův lymfom (Hodgkinova nemoc);870
+9651/3;Klasický Hodgkinův lymfom, bohatý na lymfocyty;Hodgkinův lymfom (Hodgkinova nemoc);870
+9652/3;Klasický Hodgkinův lymfom, smíšená buněčnost;Hodgkinův lymfom (Hodgkinova nemoc);870
+9653/3;Klasický Hodgkinův lymfom, lymfocytodepleční;Hodgkinův lymfom (Hodgkinova nemoc);870
+9755/3;Histiocytický sarkom;Nádor z makrofágů/histiocytů;870
+9751/3;Histiocytóza z Langerhansových buněk;Nádory z dendritických buněk;870
+9756/3;Sarkom z Langerhansových buněk;Nádory z dendritických buněk;870
+9757/3;Sarkom z interdigitujících dendritických buněk;Nádory z dendritických buněk;870
+9757/1;Nádor z interdigitujících dendritických buněk;Nádory z dendritických buněk;870
+9758/3;Sarkom z folikulárních dendritických buněk;Nádory z dendritických buněk;870
+9758/1;Nádor z folikulárních dendritických buněk;Nádory z dendritických buněk;870
+9757/3;Sarkom z dendritických buněk, jinak nespecifikovaný;Nádory z dendritických buněk;870
+9741/1;Indolentní systémová mastocytóza;Kožní mastocytóza;870
+9741/3;Systémová mastocytóza spojená s klonální hematologickou nemocí z jiných buněk než mastocytů;Kožní mastocytóza;870
+9741/3;Agresivní systémová mastocytóza;Kožní mastocytóza;870
+9742/3;Leukemie z žírných buněk;Kožní mastocytóza;870
+9740/3;Sarkom z žírných buněk;Kožní mastocytóza;870
+9740/1;Extrakutánní mastocytóm;Kožní mastocytóza;870
