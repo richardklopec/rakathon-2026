@@ -3,9 +3,12 @@
 The exact ÚZIS import format is not known yet (PLAN.md §10.1); this JSON mirrors the form fields 1:1.
 """
 
+import re
+from functools import lru_cache
+
 from app.config import get_settings
-from app.models import Case, Extracted, FieldStatus, ReviewState
-from app.validate import mkn10
+from app.models import Case, DiagnosisBasis, Extracted, FieldStatus, Laterality, MetastasisSite, ReviewState
+from app.validate import mkn10, rodne_cislo
 from app.validate.normalize import DISEASE_EXTENT_NOR, GRADE_NOR, LATERALITY_LABEL, LATERALITY_NOR, SENTINEL_LABEL
 
 # Fields we treat as mandatory for "Úplné" (assumption, verify with FNO - PLAN.md §10.2)
@@ -78,9 +81,64 @@ def build(case: Case) -> dict:
     return {
         "formular": "NOR - Incidence zhoubného novotvaru",
         "pacient": case.patient_ref,
+        "pacient_rc": patient_check(case.patient_ref),
         "stav": "Úplné" if not missing else "Neúplné",
         "chybi_povinne": missing,
         "potvrzeno": case.confirmed_at is not None,
         "varovani": case.warnings,
         **form,
     }
+
+
+def patient_check(patient_ref: str | None) -> dict:
+    """Birth-number check of the patient header ('Pacient RČ'); anonymised ids (e.g. 'PAC001') are not birth numbers."""
+    if not patient_ref or not rodne_cislo.looks_like(patient_ref):
+        return {"je_rc": False, "platne": None, "chyby": []}
+    rc = rodne_cislo.check(patient_ref)
+    return {
+        "je_rc": True,
+        "platne": rc.valid,
+        "chyby": rc.errors,
+        "datum_narozeni": rc.birth_date.isoformat() if rc.birth_date else None,
+        "pohlavi": rc.sex,
+    }
+
+
+def _options(labels: dict[str, str]) -> list[dict]:
+    return [{"value": code, "label": label} for code, label in labels.items()]
+
+
+@lru_cache
+def codelists() -> dict:
+    """Options of the form's select boxes: `value` is what the report stores (models.py), `label` is what the form shows."""
+    onco = re.compile(r"^(C\d|D0\d|D3[7-9]|D4[0-8])")
+    rows = mkn10._rows()
+    mkn = [{"value": c, "label": f"{c} - {r['Nazev']}"} for c, r in rows.items() if onco.match(c)]
+    topo = [{"value": c, "label": mkn10.topography_label(c)} for c in rows if re.match(r"^C[0-7]\d\.\d$|^C80\.\d$", c)]
+    morph: dict[str, str] = {}
+    try:
+        from app.retrieval.codes import load_morphology
+
+        for code, name in load_morphology():
+            if code not in morph or len(name) < len(morph[code]):  # shortest term = the base name of the code
+                morph[code] = name
+    except (RuntimeError, OSError):
+        pass  # MKN10_CSV not configured: the form falls back to free text
+    lat = {v.value: LATERALITY_LABEL[LATERALITY_NOR[v]] for v in Laterality if v != Laterality.midline}
+    return {
+        "laterality": sorted(_options(lat), key=lambda o: o["label"]),
+        "morphology_type": _options({"Histologie": "Histologie", "Cytologie": "Cytologie"}),
+        "grade": _options(GRADE_NOR),
+        "sentinel_node": _options(SENTINEL_LABEL),
+        "clinical_stage": _options(STAGE_NOR),
+        "disease_extent": _options(DISEASE_EXTENT_NOR),
+        "diagnosis_basis": [{"value": b.value, "label": f"{b.value:02d} {lbl}"} for b, lbl in zip(DiagnosisBasis, BASIS_LABELS)],
+        "metastasis_sites": [{"value": s.value, "label": f"{s.value} {lbl}"} for s, lbl in zip(MetastasisSite, METASTASIS_LABELS)],
+        "icd10": mkn,
+        "topography": topo,
+        "morphology_code": [{"value": c, "label": f"{c} - {n}"} for c, n in sorted(morph.items())],
+    }
+
+
+BASIS_LABELS = ["klinicky jasné", "klinické vyšetření", "laboratorní vyš. markery", "cytologie", "histologie metastázy", "histologie primárního nádoru"]
+METASTASIS_LABELS = ["neznámo", "plíce", "kostní dřeň", "kost", "pleura", "játra", "peritoneum", "mozek", "nadledvinky", "uzliny", "kůže", "jiný orgán"]

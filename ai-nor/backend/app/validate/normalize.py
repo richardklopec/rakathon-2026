@@ -81,6 +81,10 @@ GRADE_NOR = {
     "2": "2 - středně diferencovaný",
     "3": "3 - špatně diferencovaný",
     "4": "4 - nediferencovaný, anaplastický",
+    "5": "5 - T-buňka",
+    "6": "6 - B-buňka",
+    "7": "7 - Null buňka",
+    "8": "8 - NK buňka",
     "9": "9 - neurčen, neuveden, nepoužitelný",
 }
 

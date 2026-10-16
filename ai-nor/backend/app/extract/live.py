@@ -315,15 +315,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     # --- case-level warnings
     if out.other_tumours:
         warnings.append("Další (starší) nádor v dokumentaci, nehlásí se zde: " + "; ".join(out.other_tumours))
-    if r.icd10.value and out.patient_sex in ("M", "F"):
-        sex_rule = mkn10.forbidden_sex(r.icd10.value)
-        if (sex_rule == "1" and out.patient_sex == "M") or (sex_rule == "2" and out.patient_sex == "F"):
-            warnings.append(f"Diagnóza {r.icd10.value} není podle MKN-10 přípustná pro pohlaví pacienta.")
-            r.icd10.confidence = min(r.icd10.confidence or 0, 40)
-            r.icd10.confidence_reasons.append("✗ nepřípustné pohlaví podle MKN-10")
-    ids = {m for d in docs for m in re.findall(r"\b\d{6}/\d{3,4}\b", d.text)}
-    if len(ids) > 1:
-        warnings.append(f"Nesoulad identity: v dokumentech jsou různá rodná čísla ({len(ids)}).")
+    # sex vs. diagnosis and birth-number checks: app/validate/rodne_cislo.case_checks (run by extract())
     # _field builds untyped Extracted; re-validate into the typed report
     r = NorReport.model_validate_json(r.model_dump_json(warnings=False))
     return r, warnings, out

@@ -13,6 +13,7 @@ from app.fhir import client as fhir
 from app.fhir.mapping import build_bundle
 from app.models import Case, NorReport
 from app.retrieval import codes
+from app.validate import rodne_cislo
 
 app = FastAPI(title="AI NOR")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173"], allow_methods=["*"], allow_headers=["*"])
@@ -74,7 +75,7 @@ def search_codes(q: str, system: str = codes.MORPHOLOGY, k: int = 5) -> list[dic
 @app.post("/api/cases/{case_id}/extract")
 def run_extract(case_id: str) -> Case:
     case = _get(case_id)
-    case.report, case.warnings = extract.extract(case.documents)
+    case.report, case.warnings = extract.extract(case.documents, case.patient_ref)
     case.confirmed_by = case.confirmed_at = None  # new extraction needs a new confirmation
     case.updated_at = datetime.now(timezone.utc)
     return store.save(case)
@@ -88,6 +89,32 @@ def update_report(case_id: str, report: NorReport) -> Case:
     case.confirmed_by = case.confirmed_at = None
     case.updated_at = datetime.now(timezone.utc)
     return store.save(case)
+
+
+class Patient(BaseModel):
+    patient_ref: str | None
+
+
+@app.put("/api/cases/{case_id}/patient")
+def update_patient(case_id: str, body: Patient) -> Case:
+    """'Pacient RČ' from the preview. A value shaped like a birth number must be a valid one (stored as RRMMDD/XXXX)."""
+    case = _get(case_id)
+    ref = (body.patient_ref or "").strip() or None
+    if ref and rodne_cislo.looks_like(ref):
+        rc = rodne_cislo.check(ref)
+        if not rc.valid:
+            raise HTTPException(422, "Neplatné rodné číslo: " + "; ".join(rc.errors))
+        ref = rc.normalized
+    case.patient_ref = ref
+    case.confirmed_by = case.confirmed_at = None
+    case.updated_at = datetime.now(timezone.utc)
+    return store.save(case)
+
+
+@app.get("/api/codelists")
+def get_codelists() -> dict:
+    """Options for the select boxes of the NOR form preview ({value, label}; value = what NorReport stores)."""
+    return uzis.codelists()
 
 
 @app.get("/api/cases/{case_id}/review-queue")

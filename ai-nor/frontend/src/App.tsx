@@ -1,7 +1,7 @@
 // Simple working UI (PLAN.md §6): upload -> AI extraction -> review queue -> preview -> confirm -> ÚZIS / FHIR.
 // The polished UI comes later; keep this one boring and correct.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { api, type Case, type Evidence, type Extracted, type NorReport } from './api'
+import { api, getField, type Case, type Codelists, type Evidence, type Extracted, type NorReport } from './api'
 import NorFormPreview from './NorFormPreview'
 
 const SECTIONS: [string, [string, string][]][] = [
@@ -29,12 +29,6 @@ const SECTIONS: [string, [string, string][]][] = [
 const ALL_FIELDS = SECTIONS.flatMap(([, f]) => f)
 const LATERALITY: Record<string, string> = {
   right: '1 - vpravo', left: '2 - vlevo', bilateral: '3 - oboustranně', not_applicable: '4 - odpadá', midline: '4 - odpadá', unknown: '9 - neznámo',
-}
-
-function getField(report: NorReport, path: string): Extracted {
-  const [a, b] = path.split('.')
-  const top = report[a] as unknown as Record<string, unknown>
-  return (b ? top[b] : top) as Extracted
 }
 
 function show(path: string, v: unknown): string {
@@ -66,17 +60,23 @@ export default function App() {
   const [preview, setPreview] = useState<Record<string, unknown> | null>(null)
   const [doctor, setDoctor] = useState('')
   const [fhirResult, setFhirResult] = useState<string | null>(null)
+  const [lists, setLists] = useState<Codelists | null>(null)
   const previewRef = useRef<HTMLElement>(null)
+  const previewOpen = preview != null
+  const latest = useRef<Case | null>(null)
+  const saving = useRef<Promise<unknown>>(Promise.resolve())
+  useEffect(() => { latest.current = kase }, [kase])
 
   useEffect(() => {
     api.health().then(setHealth).catch(() => setHealth(null))
     api.cases().then(setCases).catch(() => {})
+    api.codelists().then(setLists).catch(() => setLists(null))
   }, [])
 
-  // the preview renders below the document, so bring it into view when it opens
+  // the preview renders below the document, so bring it into view when it opens (not on every edit inside it)
   useEffect(() => {
-    if (preview) previewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [preview])
+    if (previewOpen) previewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [previewOpen])
 
   async function run<T>(label: string, fn: () => Promise<T>): Promise<T | undefined> {
     setBusy(label)
@@ -114,7 +114,39 @@ export default function App() {
     const saved = await run('Ukládám…', () => api.saveReport(kase.id, report))
     if (saved) {
       setCase(saved)
-      setPreview(null)
+      if (preview) setPreview(await api.uzisPreview(saved.id))
+    }
+  }
+
+  // edit made directly in the form preview: save the report and refresh the preview in place.
+  // Edits are queued and each one starts from the last saved report, so quick successive edits don't overwrite each other.
+  async function editInPreview(change: (r: NorReport) => void) {
+    const job = saving.current.then(async () => {
+      const c = latest.current
+      if (!c) return
+      const report = structuredClone(c.report)
+      change(report)
+      const saved = await run('Ukládám…', () => api.saveReport(c.id, report))
+      if (saved) {
+        latest.current = saved
+        setCase(saved)
+        setPreview(await api.uzisPreview(saved.id))
+      }
+    })
+    saving.current = job.catch(() => {})
+    await job
+  }
+
+  async function savePatient(ref: string | null): Promise<string | null> {
+    if (!kase) return null
+    try {
+      const saved = await api.updatePatient(kase.id, ref)
+      setCase(saved)
+      setPreview(await api.uzisPreview(saved.id))
+      api.cases().then(setCases)
+      return null
+    } catch (e) {
+      return String(e instanceof Error ? e.message.replace(/^\d+: /, '') : e)
     }
   }
 
@@ -289,7 +321,8 @@ export default function App() {
                   {(preview.chybi_povinne as string[]).length > 0 && (
                     <p className="mb-2 text-amber-800">Chybí povinná pole: {(preview.chybi_povinne as string[]).join(', ')}</p>
                   )}
-                  <NorFormPreview data={preview} />
+                  <NorFormPreview data={preview} report={kase.report} lists={lists} editable={!kase.confirmed_at}
+                    onEdit={editInPreview} onPatient={savePatient} />
                   <div className="mt-4 flex flex-wrap items-center gap-2">
                     {!kase.confirmed_at ? (
                       <>

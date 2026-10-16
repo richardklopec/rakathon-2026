@@ -9,6 +9,7 @@ import re
 from app.confidence import apply_review_policy
 from app.config import get_settings
 from app.models import Coding, Document, Evidence, Extracted, FieldStatus, NorReport
+from app.validate import rodne_cislo
 from app.validate.mkn10 import ICD10_SYSTEM, is_valid, lookup
 
 _ICD10 = re.compile(r"\bC\d{2}(?:\.?\d{1,2})?\b")
@@ -84,11 +85,15 @@ def extract_mock(docs: list[Document]) -> NorReport:
     return report
 
 
-def extract(docs: list[Document]) -> tuple[NorReport, list[str]]:
+def extract(docs: list[Document], patient_ref: str | None = None) -> tuple[NorReport, list[str]]:
     """Return the report (with review policy applied) and case-level warnings."""
     if get_settings().llm_mode == "mock":
-        return apply_review_policy(extract_mock(docs)), []
-    from app.extract.live import extract_live
+        report, warnings, sex = extract_mock(docs), [], None
+    else:
+        from app.extract.live import extract_live
 
-    report, warnings, _ = extract_live(docs)
+        report, warnings, out = extract_live(docs)
+        sex = out.patient_sex
+    # identity checks run in both modes, before the review policy (they may lower the icd10 confidence)
+    warnings += rodne_cislo.case_checks(docs, report, patient_ref, sex)
     return apply_review_policy(report), warnings

@@ -32,6 +32,25 @@ export interface TNM {
 
 export type NorReport = Record<string, Extracted | TNM | unknown[]>
 
+export interface PartialDate {
+  year: number
+  month?: number | null
+  day?: number | null
+}
+
+// select options of the NOR form (GET /api/codelists): value = what NorReport stores, label = what the form shows
+export interface Option<V = string | number> {
+  value: V
+  label: string
+}
+export type Codelists = Record<string, Option[]>
+
+export function getField(report: NorReport, path: string): Extracted {
+  const [a, b] = path.split('.')
+  const top = report[a] as unknown as Record<string, unknown>
+  return (b ? top[b] : top) as Extracted
+}
+
 export interface DocumentT {
   id: string
   filename: string
@@ -89,6 +108,13 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(report),
     }).then(json<Case>),
+  updatePatient: (id: string, patientRef: string | null) =>
+    fetch(`/api/cases/${id}/patient`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patient_ref: patientRef }),
+    }).then(json<Case>),
+  codelists: () => fetch('/api/codelists').then(json<Codelists>),
   uzisPreview: (id: string) => fetch(`/api/cases/${id}/uzis-preview`).then(json<Record<string, unknown>>),
   confirm: (id: string, by: string) => post(`/api/cases/${id}/confirm`, { by }).then(json<Case>),
   uzisExportUrl: (id: string) => `/api/cases/${id}/uzis-export`,
