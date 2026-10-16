@@ -467,7 +467,14 @@ def _clinical_m(r: NorReport, docs: list[Document]) -> None:
     if cm.status != FieldStatus.missing and cm.value not in (None, "X"):
         return  # the LLM found a clinical M; the consistency checks compare it with the rest
     explicit = [h for h in derive.explicit_m(docs) if h.value in ("0", "1")]
-    staging = derive.negative_staging(docs)
+    # a TNM string with another T belongs to another tumour (e.g. an earlier cancer in the history: "2004 … pT3N0M1")
+    reported_t = staging.t_category(r.tnm_pathological.t.value or r.tnm_clinical.t.value)
+    if reported_t:
+        def same_tumour(h) -> bool:
+            t = re.search(r"(?<![A-Za-z])[cpy]{0,2}T(is|[0-4X][a-d]?)", h.evidence.quote)
+            return not t or staging.t_category(t.group(1)) in (None, reported_t)
+        explicit = [h for h in explicit if same_tumour(h)]
+    staging_hits = derive.negative_staging(docs)
     if explicit:
         values = sorted({h.value for h in explicit})
         value = "1" if "1" in values else "0"
@@ -479,18 +486,18 @@ def _clinical_m(r: NorReport, docs: list[Document]) -> None:
         score = base + min(10 * (len(sources) - 1), 20)
         reasons = ["✓ citace ověřena", f"M{value} výslovně v TNM ({', '.join(dict.fromkeys(h.doc.filename for h in hits))}, {base})"]
         evidence = [h.evidence for h in hits]
-        if value == "0" and staging:
+        if value == "0" and staging_hits:
             score += 10
-            reasons.append(f"✓ staging bez vzdálených metastáz ({', '.join(dict.fromkeys(h.doc.filename for h in staging))}, +10)")
-            evidence += [h.evidence for h in staging[:2]]
+            reasons.append(f"✓ staging bez vzdálených metastáz ({', '.join(dict.fromkeys(h.doc.filename for h in staging_hits))}, +10)")
+            evidence += [h.evidence for h in staging_hits[:2]]
         others = [v for v in values if v != value] + (["X"] if cm.value == "X" else [])
         field = Extracted[str](value=value, status=FieldStatus.conflict if others else FieldStatus.found,
                                confidence=score, confidence_reasons=reasons, evidence=evidence, alternatives=others)
-    elif staging and cm.status == FieldStatus.missing:
+    elif staging_hits and cm.status == FieldStatus.missing:
         field = Extracted[str](
-            value="0", status=FieldStatus.found, confidence=60, evidence=[h.evidence for h in staging[:2]],
+            value="0", status=FieldStatus.found, confidence=60, evidence=[h.evidence for h in staging_hits[:2]],
             confidence_reasons=["✓ citace ověřena", "odvozeno z negativního stagingu: "
-                                + "; ".join(h.evidence.quote for h in staging[:2]), "M0 není výslovně uvedeno"],
+                                + "; ".join(h.evidence.quote for h in staging_hits[:2]), "M0 není výslovně uvedeno"],
         )
     else:
         return
@@ -513,7 +520,7 @@ def _stage_mentions(items) -> list[_M]:
     return out
 
 
-def _derive_stage(r: NorReport) -> None:
+def _derive_stage(r: NorReport, docs: list[Document]) -> None:
     """Anatomic stage from TNM (validate/staging.py, UICC TNM 8): pT/pN before cT/cN, M from cM (or pM1)."""
     if r.tnm_pathological.y_prefix:
         return  # ypTNM after neoadjuvant therapy is not the stage at diagnosis
@@ -527,15 +534,29 @@ def _derive_stage(r: NorReport) -> None:
     if not value:
         return
     inputs = [x for x in (t, n, m) if x.value is not None]
+    names = {d.id: d.filename for d in docs}
+
+    def reports(f: Extracted) -> str:  # "3 zprávy"
+        k = len({e.doc_id for e in f.evidence})
+        return f"{k} {'zpráva' if k == 1 else 'zprávy' if k < 5 else 'zpráv'}"
+
+    def sources(f: Extracted) -> str:  # "AZ.pdf: „pT1b N0( 0/3)M0“; MDT.pdf: „SONO … negat“"
+        return "; ".join(f"{names.get(e.doc_id, e.doc_id)}: „{e.quote[:40]}{'…' if len(e.quote) > 40 else ''}“" for e in f.evidence[:3])
+
     tp = "p" if t is r.tnm_pathological.t else "c"
     np = "p" if n is r.tnm_pathological.n else "c"
-    how = f"{tp}T{t.value} + {np}N{n.value} + {'c' if m is r.tnm_clinical.m else 'p'}M{m.value} → {value} (UICC TNM 8)"
+    mp = "c" if m is r.tnm_clinical.m else "p"
+    code = r.icd10.value or ""
+    # the reader must see which organ's table was used and what each input rests on (a pTNM alone says nothing)
+    how = (f"pro {staging.SITE.get(code[:3], code[:3])} ({code}, tabulka UICC TNM 8): {tp}T{t.value} ({reports(t)}) + "
+           f"{np}N{n.value} ({reports(n)}) + {mp}M{m.value} ({sources(m)}) → {value}")
     derived_conf = max(0, min(x.confidence or 0 for x in inputs) - 5)
     cs = r.clinical_stage
     if cs.value is None or cs.status == FieldStatus.missing:
         r.clinical_stage = Extracted[str](
             value=value, status=FieldStatus.found, confidence=derived_conf,
-            confidence_reasons=["✓ citace ověřena", f"odvozeno: {how}", "jistota = nejnižší jistota vstupů −5"],
+            confidence_reasons=[f"odvozeno {how}", "✓ vstupy ověřeny citacemi, výsledek je výpočet (stádium v dokumentaci není)",
+                                "jistota = nejnižší jistota vstupů −5"],
             evidence=[x.evidence[0] for x in inputs if x.evidence],
         )
     elif str(cs.value).upper() == value:  # a stage written in its context (abbreviations.stage_in) agrees with the TNM
@@ -794,7 +815,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
         warnings.append(f"Počet uzlin: {issue}.")
     r.sentinel_node = _field(_normalised(f["sentinel_node"], normalize.sentinel))
     r.clinical_stage = _field(_stage_mentions(f["clinical_stage"]))
-    _derive_stage(r)
+    _derive_stage(r, docs)
 
     def sites(v: str):
         t = v.lower()

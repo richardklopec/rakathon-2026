@@ -60,6 +60,7 @@ BREAST = [
     Rule("IIIC", ANY_T, {"3"}),
 ]
 TABLES: dict[str, list[Rule]] = {"C50": BREAST}
+SITE = {"C50": "prs"}  # the organ each table is for, named in the explanation of a derived stage
 
 
 def stage(category: str, t: str | None, n: str | None, m: str | None) -> str | None:

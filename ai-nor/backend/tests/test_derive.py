@@ -63,7 +63,13 @@ def test_derived_m_stage_extent_and_date(monkeypatch):
     assert cm.value == "0" and cm.confidence == live.CLINICAL_M_CAP  # explicit M0 65 + staging 10 = 75, still for review
     assert any("M0 výslovně v TNM (AZ.pdf, 65)" in x for x in cm.confidence_reasons)
     assert any("staging bez vzdálených metastáz" in x for x in cm.confidence_reasons)
-    assert r.clinical_stage.value == "IA" and any("pT1c + pN0 + cM0 → IA" in x for x in r.clinical_stage.confidence_reasons)
+    assert r.clinical_stage.value == "IA"
+    how = next(x for x in r.clinical_stage.confidence_reasons if x.startswith("odvozeno"))
+    # the explanation says which organ table was used and what every input rests on
+    assert how.startswith("odvozeno pro prs (C50.4, tabulka UICC TNM 8): pT1c (2 zprávy) + pN0 (2 zprávy) + cM0 (AZ.pdf: „pT1c N0( 0/3)M0“")
+    assert "MDT.pdf: „SONO břicha a RTG plic: negativní“" in how and how.endswith("→ IA")
+    assert any("výsledek je výpočet" in x for x in r.clinical_stage.confidence_reasons)
+    assert not any(x == "✓ citace ověřena" for x in r.clinical_stage.confidence_reasons)
     assert r.disease_extent.value == "1"  # from cM0, not from the MX in the MDT
     assert r.diagnosis_date.value == PartialDate(year=2026, month=5, day=7)
     assert r.diagnosis_date.confidence == 60 and any("zahájení léčby" in x for x in r.diagnosis_date.confidence_reasons)
@@ -103,4 +109,12 @@ def test_aromatase_inhibitor_is_not_a_stage(monkeypatch):
     cs = r.clinical_stage
     assert cs.value == "IA"  # still IA, but computed from TNM, not read from the therapy line
     assert not any("hormonoterapie" in e.quote for e in cs.evidence)
-    assert any(x.startswith("odvozeno: pT1c + pN0 + cM0") for x in cs.confidence_reasons)
+    assert any(x.startswith("odvozeno pro prs (C50.4") and x.endswith("→ IA") for x in cs.confidence_reasons)
+
+
+def test_tnm_of_an_earlier_tumour_is_not_the_m_of_this_one(monkeypatch):
+    az = AZ.model_copy(update={"text": "I. r. 2004 Ca recta, pT3N0M1\n" + AZ.text})
+    r, _, _ = _run(monkeypatch, [az, MDT])
+    cm = r.tnm_clinical.m
+    assert cm.value == "0" and cm.status == FieldStatus.found  # the M1 of the earlier pT3 tumour is not a conflict
+    assert all("pT3" not in e.quote for e in cm.evidence)

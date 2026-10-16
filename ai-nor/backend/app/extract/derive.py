@@ -46,13 +46,22 @@ def explicit_m(docs: list[Document]) -> list[Hit]:
             for m in _M_TOKEN.finditer(line):
                 if line[max(0, m.start() - 1)] == "p":  # pM
                     continue
-                hits.append(Hit(m.group(1).upper(), doc, line_m.start() + m.start(), line_m.start() + m.end(), "tnm"))
+                # cite the whole TNM string ("pT1c N0( 0/3)M0"), not the bare "M0"
+                start = min((c.start() for c in _TNM_CONTEXT.finditer(line, 0, m.start())), default=m.start())
+                hits.append(Hit(m.group(1).upper(), doc, line_m.start() + start, line_m.start() + m.end(), "tnm"))
     return hits
+
+
+def _word_end(text: str, pos: int) -> int:
+    while pos < len(text) and text[pos].isalnum():
+        pos += 1
+    return pos
 
 
 def negative_staging(docs: list[Document]) -> list[Hit]:
     """Statements that the staging found no distant disease ("bez známek generalizace", "SONO břicha … negat.")."""
-    return [Hit("0", doc, m.start(), m.end(), "staging") for doc in docs for m in _NEGATIVE_STAGING.finditer(doc.text)]
+    return [Hit("0", doc, m.start(), _word_end(doc.text, m.end()), "staging")  # whole last word ("negativní")
+            for doc in docs for m in _NEGATIVE_STAGING.finditer(doc.text)]
 
 
 # --- dates --------------------------------------------------------------------------------------------------------
