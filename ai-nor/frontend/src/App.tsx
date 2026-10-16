@@ -1,6 +1,6 @@
 // Simple working UI (PLAN.md §6): upload -> AI extraction -> review queue -> preview -> confirm -> ÚZIS / FHIR.
 // The polished UI comes later; keep this one boring and correct.
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { api, type Case, type Evidence, type Extracted, type NorReport } from './api'
 import NorFormPreview from './NorFormPreview'
 
@@ -66,11 +66,17 @@ export default function App() {
   const [preview, setPreview] = useState<Record<string, unknown> | null>(null)
   const [doctor, setDoctor] = useState('')
   const [fhirResult, setFhirResult] = useState<string | null>(null)
+  const previewRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     api.health().then(setHealth).catch(() => setHealth(null))
     api.cases().then(setCases).catch(() => {})
   }, [])
+
+  // the preview renders below the document, so bring it into view when it opens
+  useEffect(() => {
+    if (preview) previewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [preview])
 
   async function run<T>(label: string, fn: () => Promise<T>): Promise<T | undefined> {
     setBusy(label)
@@ -194,8 +200,7 @@ export default function App() {
                 {kase.confirmed_at && <span className="text-green-700">✓ potvrdil {kase.confirmed_by}</span>}
                 <span className="flex-1" />
                 <button className="rounded border px-3 py-1" onClick={() => run('AI vytěžuje hlášení…', () => api.extract(kase.id)).then((c) => c && open(c))} disabled={!!busy}>Vytěžit znovu</button>
-                <button className="rounded bg-slate-900 px-3 py-1 text-white disabled:opacity-40" disabled={queue.length > 0 || !!busy}
-                  title={queue.length ? 'Nejdřív vyřešte pole ke kontrole' : ''}
+                <button className="rounded bg-slate-900 px-3 py-1 text-white disabled:opacity-40" disabled={!!busy}
                   onClick={() => run('Připravuji náhled…', () => api.uzisPreview(kase.id)).then((p) => p && setPreview(p))}>
                   Náhled a potvrzení →
                 </button>
@@ -279,7 +284,7 @@ export default function App() {
               </div>
 
               {preview && (
-                <section className="rounded-lg border-2 border-slate-900 bg-white p-4 text-sm">
+                <section ref={previewRef} className="scroll-mt-4 rounded-lg border-2 border-slate-900 bg-white p-4 text-sm">
                   <h2 className="mb-2 font-semibold">Náhled hlášení · {String(preview.formular)} · stav: {String(preview.stav)}</h2>
                   {(preview.chybi_povinne as string[]).length > 0 && (
                     <p className="mb-2 text-amber-800">Chybí povinná pole: {(preview.chybi_povinne as string[]).join(', ')}</p>
@@ -289,13 +294,17 @@ export default function App() {
                     {!kase.confirmed_at ? (
                       <>
                         <input className="rounded border px-2 py-1" placeholder="Jméno lékaře" value={doctor} onChange={(e) => setDoctor(e.target.value)} />
-                        <button className="rounded bg-green-700 px-4 py-1.5 text-white disabled:opacity-40" disabled={!doctor || !!busy}
+                        <button className="rounded bg-green-700 px-4 py-1.5 text-white disabled:opacity-40" disabled={!doctor || queue.length > 0 || !!busy}
                           onClick={() => run('Potvrzuji…', () => api.confirm(kase.id, doctor)).then(async (c) => {
                             if (c) { open(c); setPreview(await api.uzisPreview(c.id)) }
                           })}>
                           Potvrdit hlášení
                         </button>
-                        <span className="text-xs text-slate-500">Bez potvrzení se nic neexportuje do ÚZIS ani nezapíše do FHIR.</span>
+                        {queue.length > 0 ? (
+                          <span className="text-xs text-amber-800">Před potvrzením vyřešte {queue.length} polí ke kontrole (nahoře).</span>
+                        ) : (
+                          <span className="text-xs text-slate-500">Bez potvrzení se nic neexportuje do ÚZIS ani nezapíše do FHIR.</span>
+                        )}
                       </>
                     ) : (
                       <>

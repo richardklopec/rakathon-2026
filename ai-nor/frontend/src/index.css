@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* Tailwind v4 preflight resets buttons to cursor: default; show the hand on everything clickable */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  input[type="file"]:not(:disabled),
+  input[type="file"]::file-selector-button,
+  label:has(input[type="file"]),
+  a[href] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
