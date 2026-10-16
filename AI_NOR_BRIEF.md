@@ -1,7 +1,12 @@
 # AI NOR — brief (jen to, co potřebujeme)
 
-> Výzva 4, zadavatel **FN Ostrava**. Hackování pá 12:00 → so 12:00, pitch so 13:00 Ostrava.
-> Plný plán: [RAKATHON_PLAN.md](RAKATHON_PLAN.md) · všechny poznámky: [PREHACK_POZNAMKY.md](PREHACK_POZNAMKY.md)
+> Výzva 4, zadavatel **FN Ostrava**. Hackování pá 14:00 → so 13:00 (odevzdání), od 14:00 hodnocení u stolu, 17:00 vyhlášení v Ostravě.
+> Plný plán: [RAKATHON_PLAN.md](RAKATHON_PLAN.md) · všechny poznámky: [PREHACK_POZNAMKY.md](PREHACK_POZNAMKY.md) · InterSystems/FHIR: [INTERSYSTEMS_FHIR.md](INTERSYSTEMS_FHIR.md)
+
+## ✅ Rozhodnutí (16. 10. 2026)
+**Bereme výzvu 4. AI NOR (FN Ostrava) + výzvu InterSystems „Best Use of InterSystems Technology for AI and Interoperability“ (1 500 €).**
+- Obě výzvy jdou kombinovat; řešení postavíme na **InterSystems IRIS for Health**: FHIR server (vstupní zprávy i potvrzené hlášení jako FHIR + Provenance), Vector Search (citace zdrojů), SQL (číselníky MKN-10), FHIR SQL Builder (export NOR).
+- Kapitán: vybrat na https://submit.rakathon.cz/vyzvy/vybrat výzvu **AI NOR** do 16. 10. 19:00 (InterSystems výzva se nevybírá formulářem — hodnotí se napříč výzvami).
 
 ## Zadání
 > Automatizujte jednu z nejnáročnějších částí onkologické administrativy. AI nástroj vytěží z klinické dokumentace **diagnózu, stadium, TNM, morfologii, biomarkery, výkony, léčbu i průběh onemocnění**, připraví je pro registr v jednotné podobě a umožní **rychlou kontrolu zdravotníkem**.
@@ -11,6 +16,14 @@
 - **Chatty**: *„Co když nemocnice má jen PDF?"* → je potřeba vlastní **„transformátor"**, který data vezme a převede do standardizovaného (EHDS/FHIR) formátu. AI NOR je přesně tohle.
 - **FN Ostrava sama používá InterSystems pro integrace** (Hoferek) → řešení nad IRIS FHIR = reálná cesta k nasazení u zadavatele.
 - NOR = sekundární využití dat (EHDS) — jedna věta do pitche, ne víc.
+
+## Z pátečních slidů zadavatelky (Ing. Magdaléna Najbrtová, FNO)
+*Zdroj: Google Drive „Prezentace/Ostrava/4 - FN Ostrava – AI NOR.pptx“, odkaz v #01-oznameni 16. 10. 11:43.*
+- **Pole, která má nástroj najít**: datum stanovení dg., diagnóza a lokalizace (MKN-10), lokalizace primárního nádoru, lateralita, histologický typ, kód morfologie, grading, TNM, klinické stadium, metastázy, systémová léčba, radioterapie, recidiva/progrese.
+- **Požadovaný workflow**: (1) vstup = anonymizovaná dokumentace → (2) vyhledání informací v českém textu → (3) extrakce → (4) přiřazení k položkám formuláře → (5) **dohledání zdroje** (propojení s místem v textu) → (6) zdravotník potvrdí/upraví → (7) vyplněný formulář odpovídající registru.
+- **Data od FNO**: modeloví pacienti — onkologické ambulantní zprávy, výsledky histologie, propouštěcí zprávy; **ukázka onkologického hlášení**; **datový slovník (MKN-10)**. Data v Ostravě rozdává mentorka osobně v místnosti mentorů (#01-oznameni 16. 10. 12:30); do #ai-nor zatím nic nepřišlo.
+- **Hodnoticí kritéria zadavatele** (= naše eval tabulka): přesnost vytěžení vs reference · úplnost (povinné položky vyplněné nebo označené jako chybějící) · správné pole NOR · dohledatelnost zdroje · počet oprav uživatelem · čas na záznam vs ručně.
+- **Konkurence**: na submit.rakathon.cz/vyzvy (16. 10. 14:32) AI NOR v Ostravě **nemá žádný tým**. Výzvu musí kapitán vybrat do **16. 10. 19:00**.
 
 ## Co zjistit v pátek dopoledne od mentora FNO
 1. Data: dostaneme anonymizované zprávy? Smíme je poslat do cloudového LLM (EU)? *(Jinak jen syntetika.)*

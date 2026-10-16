@@ -20,6 +20,8 @@
 \*\* Celkové pořadí (100k/50k/25k) + **cena děkana FEI VŠB-TUO** (technická kvalita, předává se v sobotu v Ostravě) + **InterSystems 1 500 EUR** (FHIR server + Vector Search) + Hackers' choice / Caelestinus / Asseco.
 
 ### Rozhodnutí
+> ✅ **Potvrzeno 16. 10. 2026: AI NOR (FN Ostrava) + výzva InterSystems (1 500 €)**, řešení postavené na IRIS for Health (FHIR server, Vector Search, SQL, FHIR SQL Builder). Detaily: [INTERSYSTEMS_FHIR.md](INTERSYSTEMS_FHIR.md).
+
 **Jdeme do 4. AI NOR.** Produkt pojmout jako *„strukturovaný onkologický záznam z volného textu"*:
 - primární výstup = **hlášení do NOR** k potvrzení lékařem,
 - stejná data uložená jako **FHIR (HL7 EU Common Cancer Model / mCODE)** v IRIS,
@@ -275,3 +277,44 @@ Klíčové designové body pro porotu:
 - HL7 EU Common Cancer Model: https://hl7.eu/fhir/cancer-common/ (artefakty + příklad karcinomu plic)
 - mCODE STU4: https://hl7.org/fhir/us/mcode/STU4/ · CZ FHIR: https://hl7.cz/fhir/
 - Syntetická EU FHIR data: https://synderai.net/ · Synthea: https://synthetichealth.github.io/synthea/
+
+---
+
+## 10. Změny po pátku (16. 10., ~14:30)
+
+Zdroje: slidy výzev (Google Drive „Prezentace/Ostrava“), Slack #01-oznameni, #02-dotazy, #05-info-ostrava, kanály výzev, živý přehled https://submit.rakathon.cz/vyzvy.
+
+### Obsazenost ostravských výzev (14:32)
+| Výzva | Týmy | Data od zadavatele (ze slidů) |
+|---|---|---|
+| 1. Onkologický AI průvodce | 1 (Wigym Trio) | informační materiály, Modrá kniha, EQ-5D, FAQ, kontakty |
+| 2. AI asistent MDT | 1 (Codebridge) | dokumentace fiktivních pacientů, struktura MDT protokolu FNO |
+| 3. Plánování stacionáře | **0** | **anonymizované objednávky (30 dní) + aplikační rozpis chemoterapie** |
+| **4. AI NOR** | **0** | modeloví pacienti (amb. zprávy, histologie, propouštěcí zprávy), ukázka hlášení, datový slovník MKN-10 |
+| 5. AI Surgical Copilot (FNOL) | 2 | Dropbox: data + videa |
+| VZP společné (konec života, mamograf, cesta pacienta) | 0 v Ostravě | data v portálu účastníka (Azure) |
+
+Náš tým na přehledu figuruje jako **„www.pixed.cz“ (stůl 11) bez vybrané výzvy** → kapitán musí vybrat na https://submit.rakathon.cz/vyzvy/vybrat **do 19:00**.
+
+### Přehodnocení
+| Výzva | Proveditelnost | Data | Briefing | Demo | Konkurence | Ceny | Σ | změna |
+|---|---|---|---|---|---|---|---|---|
+| **4. AI NOR** | 5 | 5 | 5 | 5 | 5 | 5 | **30** | data potvrzena, 0 týmů, zadavatel dal i kritéria |
+| 3. Stacionář | 4 | 4 | 1 | 4 | 5 | 3 | 21 | ↑ data existují (dřív 14) |
+| 2. MDT | 4 | 4 | 5 | 3 | 3 | 4 | 23 | Asseco MDT Copilot v Praze bez týmu, v Ostravě 1 tým |
+| 1. Průvodce | 4 | 4 | 2 | 3 | 3 | 3 | 19 | |
+| 5. Surgical | 1 | 3 | 1 | 2 | 2 | 2 | 11 | |
+
+**Verdikt: AI NOR platí.** Žádná konkurence v lokalitě, data i vzor hlášení od FNO, hodnoticí kritéria zadavatele se kryjí s naším eval plánem (přesnost, úplnost, správné pole, dohledatelnost, počet oprav, čas). Pivot na MDT už nedává smysl (má tým, my bychom byli druzí). Stacionář je rozumná záloha jen pokud by data k NOR nepřišla — je ale mimo FHIR/LLM příběh, takže slabší na InterSystems a briefing.
+
+### Okamžité kroky
+1. Kapitán: vybrat výzvu AI NOR na submit.rakathon.cz (do 19:00).
+2. Vyzvednout data u mentorky FNO (místnost mentorů) — zeptat se na formát a zda smí do cloud LLM `-dz-eu`.
+3. Z ukázky hlášení + datového slovníku udělat `contracts/nor_record.schema.json`.
+
+### Doplnění (16. 10., ~15:00) — z info.rakathon.cz a Slacku
+- **Odevzdání je v sobotu ve 13:00** přes formulář (po 13:00 už nic nepřijme), ne ve 12:00. Feature freeze tedy posunout na ~10:00.
+- **Hodnocení zadavatelem je osobně u stolu**: od 14:00 Ing. Najbrtová obchází týmy své výzvy a hodnotí každý zvlášť → **živé demo u stolu**, ne jen pitch. Vítěz výzvy hlášen do 16:00, vyhlášení 17:00–18:00, **vítěz každé výzvy postupuje do nedělního finále v Praze** (Kampus Plzeňská, finalisté do 13:00).
+- AI NOR má zatím 0 týmů → pokud zůstane, soutěžíme hlavně sami se sebou o postup do finále.
+- #ai-nor je zatím prázdný (jen joiny); data FNO se rozdávají osobně (máme je, viz `../Rakathon_DATA_NOR/PREHLED_DAT.md`, mimo repo).
+- Konkurenční signál: hacker „Stan“ (#06-hledam-tym) staví MEMOyA — AI přečte spis, najde chybějící a rozporné údaje s doslovnou citací; cílí na MDT + InterSystems. Podobné jádro jako my → odlišit se FHIR (Common Cancer Model) výstupem a přesným mapováním na formulář NOR.
