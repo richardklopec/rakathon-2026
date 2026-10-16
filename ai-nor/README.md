@@ -31,6 +31,7 @@ cd frontend; npm install; npm run dev     # http://localhost:5173
 ```
 
 - Syntetičtí pacienti k nahrání: `data/synthetic/PAC001` … `PAC010` (vytvoří `python -m scripts.export_synthetic <složka s XLSX>`).
+- Číselníky formuláře (MKN-10, topografie, morfologie): balíček MKN-10 od ÚZIS ve složce `uploads/` (CSV v UTF-8 i Windows-1250, `CODELISTS_DIR`), jinak složka `MKN10_CSV`.
 - LLM: `gpt-6-luna-dz-eu` (EU Data Zone), `reasoning_effort=low`, odpovědi se cachují v `backend/var/llm-cache`.
 - Embeddingy běží **lokálně** (`paraphrase-multilingual-MiniLM-L12-v2`, 384 dim, model se stáhne do `backend/var/models`), text zpráv neopouští počítač.
 - FHIR: `http://localhost:52773/fhir/r4/metadata` (SuperUser / SYS — jen dev) · Management Portal: `http://localhost:52773/csp/sys/UtilHome.csp`

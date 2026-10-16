@@ -42,6 +42,19 @@ export interface PartialDate {
 export interface Option<V = string | number> {
   value: V
   label: string
+  search?: string // extra words to find the option by (e.g. organ names from the MKN-10 neoplasm index)
+}
+
+// overall AI confidence of the report (backend app/confidence.py: overall)
+export interface AiConfidence {
+  score: number | null
+  level: string | null
+  fields_ai: number
+  auto_accepted: number
+  to_review: number
+  conflicts: number
+  edited_by_human: number
+  missing_required: number
 }
 export type Codelists = Record<string, Option[]>
 
@@ -68,6 +81,7 @@ export interface Case {
   confirmed_at: string | null
   fhir_bundle_id: string | null
   updated_at: string
+  ai_confidence: AiConfidence
 }
 
 async function json<T>(res: Response): Promise<T> {

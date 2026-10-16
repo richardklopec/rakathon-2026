@@ -23,3 +23,9 @@ backend/var/
 .idea/
 .DS_Store
 Thumbs.db
+
+# uploads: only the ÚZIS CSV code lists are tracked (xlsx / pdf / docx are reference copies)
+uploads/*.xlsx
+uploads/*.pdf
+uploads/*.docx
+uploads/~$*

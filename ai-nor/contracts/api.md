@@ -14,7 +14,9 @@ Pole hlášení: `Extracted` s `value`, `confidence` 0–100, `confidence_reason
 | PUT | `/api/cases/{id}/report` | `NorReport` | `Case` | lékař řeší frontu (`review.state` = confirmed / edited / rejected). Ruší potvrzení. |
 | GET | `/api/cases/{id}/uzis-preview` | — | hlášení ve struktuře formuláře ÚZIS + `stav` Úplné / Neúplné + `chybi_povinne` + `pacient_rc` (kontrola RČ: `je_rc`, `platne`, `chyby`, `datum_narozeni`, `pohlavi`) | náhled, který lékař potvrzuje a v němž může pole upravit (ukládá se přes `PUT /report`) |
 | PUT | `/api/cases/{id}/patient` | `{patient_ref}` | `Case` | „Pacient RČ“ z náhledu. Hodnota ve tvaru RČ musí projít kontrolou (`app/validate/rodne_cislo.py`), jinak 422; ukládá se jako `RRMMDD/XXXX`. Ruší potvrzení. |
-| GET | `/api/codelists` | — | `{pole: [{value, label}]}` | volby rozbalovacích seznamů formuláře NOR; `value` = hodnota v `NorReport`, `label` = text ve formuláři |
+| GET | `/api/codelists` | — | `{pole: [{value, label, search?}]}` | volby rozbalovacích seznamů formuláře NOR; `value` = hodnota v `NorReport`, `label` = text ve formuláři, `search` = názvy orgánů z abecedního seznamu novotvarů (07) pro hledání. Zdroj: balíček MKN-10 ÚZIS v `CODELISTS_DIR` (výchozí `ai-nor/uploads`, UTF-8 i Windows-1250), záloha složka `MKN10_CSV` |
+
+`Case.ai_confidence` (počítané, jen ve výstupu): celková jistota AI `{score 0–100, level, fields_ai, auto_accepted, to_review, conflicts, edited_by_human, missing_required}` – vážený průměr jistoty polí, která vyplnila AI (povinná pole NOR váha 2); pole opravená lékařem se nepočítají, chybějící pole jsou úplnost, ne jistota (`app/confidence.py: overall`).
 | POST | `/api/cases/{id}/confirm` | `{by}` | `Case` | **potvrzení celého hlášení**; 409, dokud není fronta prázdná |
 | GET | `/api/cases/{id}/uzis-export` | — | JSON hlášení pro ÚZIS | 409 bez potvrzení |
 | GET | `/api/cases/{id}/fhir-bundle` | — | FHIR `Bundle` (transaction) | náhled |

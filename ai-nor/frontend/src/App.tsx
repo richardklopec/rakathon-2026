@@ -1,7 +1,7 @@
 // Simple working UI (PLAN.md §6): upload -> AI extraction -> review queue -> preview -> confirm -> ÚZIS / FHIR.
 // The polished UI comes later; keep this one boring and correct.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { api, getField, type Case, type Codelists, type Evidence, type Extracted, type NorReport } from './api'
+import { api, getField, type AiConfidence, type Case, type Codelists, type Evidence, type Extracted, type NorReport } from './api'
 import NorFormPreview from './NorFormPreview'
 
 const SECTIONS: [string, [string, string][]][] = [
@@ -49,6 +49,23 @@ function badge(f: Extracted): string {
 }
 
 const needsHuman = (f: Extracted) => f.needs_review && f.review.state === 'pending'
+
+/** Overall AI confidence of the report (backend confidence.overall), with the breakdown in the tooltip. */
+function AiScore({ c }: { c: AiConfidence | undefined }) {
+  if (!c || c.score == null) return <span className="text-slate-400">Jistota AI: —</span>
+  const color = c.score >= 85 ? 'bg-green-100 text-green-800 border-green-300'
+    : c.score >= 60 ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-red-100 text-red-800 border-red-300'
+  const detail = [
+    `Vážený průměr jistoty ${c.fields_ai} polí vyplněných AI (povinná pole NOR se počítají dvakrát).`,
+    `Předvyplněno automaticky: ${c.auto_accepted} · ke kontrole: ${c.to_review} · rozpory: ${c.conflicts}`,
+    `Opraveno lékařem (nepočítá se): ${c.edited_by_human} · chybí povinných polí: ${c.missing_required}`,
+  ].join('\n')
+  return (
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-sm ${color}`} title={detail}>
+      Jistota AI <b className="tabular-nums">{c.score}</b><span className="text-xs opacity-75">/100 · {c.level}</span>
+    </span>
+  )
+}
 
 export default function App() {
   const [health, setHealth] = useState<{ llm_mode: string; fhir: boolean } | null>(null)
@@ -229,6 +246,7 @@ export default function App() {
                 <b>{kase.patient_ref ?? 'Pacient'}</b>
                 <span>{kase.documents.length} dokumenty</span>
                 <span>ke kontrole: <b>{queue.length}</b></span>
+                <AiScore c={kase.ai_confidence} />
                 {kase.confirmed_at && <span className="text-green-700">✓ potvrdil {kase.confirmed_by}</span>}
                 <span className="flex-1" />
                 <button className="rounded border px-3 py-1" onClick={() => run('AI vytěžuje hlášení…', () => api.extract(kase.id)).then((c) => c && open(c))} disabled={!!busy}>Vytěžit znovu</button>
@@ -317,7 +335,10 @@ export default function App() {
 
               {preview && (
                 <section ref={previewRef} className="scroll-mt-4 rounded-lg border-2 border-slate-900 bg-white p-4 text-sm">
-                  <h2 className="mb-2 font-semibold">Náhled hlášení · {String(preview.formular)} · stav: {String(preview.stav)}</h2>
+                  <div className="mb-2 flex flex-wrap items-center gap-3">
+                    <h2 className="font-semibold">Náhled hlášení · {String(preview.formular)} · stav: {String(preview.stav)}</h2>
+                    <AiScore c={kase.ai_confidence} />
+                  </div>
                   {(preview.chybi_povinne as string[]).length > 0 && (
                     <p className="mb-2 text-amber-800">Chybí povinná pole: {(preview.chybi_povinne as string[]).join(', ')}</p>
                   )}

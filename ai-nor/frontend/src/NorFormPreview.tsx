@@ -1,7 +1,7 @@
 // Preview that mirrors the ÚZIS NOR form "Incidence zhoubného novotvaru" (screenshots from FNO, contracts/nor_form.md).
 // Display values come from GET /api/cases/{id}/uzis-preview; the editable controls read and write the NorReport itself
 // (select options from GET /api/codelists), so an edit here is the same as a clinician's edit in the review queue.
-import { useId, useState, type ReactNode } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { getField, type Codelists, type NorReport, type Option, type PartialDate, type TNM } from './api'
 
 type Rec = Record<string, unknown>
@@ -69,42 +69,107 @@ function Select({ value, options, onChange, disabled, className = '' }: {
   )
 }
 
-/** Long code lists (MKN-10, topografie, morfologie): type to filter, only a code from the list is accepted. */
+const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+// crude Czech stemming for search: 'jícen' must find 'jícnu', 'plíce' 'plic'; codes (with digits) stay exact
+const stem = (w: string) => (/\d/.test(w) || w.length <= 4 ? w : w.slice(0, Math.max(3, w.length - 2)))
+const SHOWN = 1000 // rows rendered at once (the code lists have ~700), so the current value is in view when opened
+
+/** Long code lists (MKN-10, topografie, morfologie): a select with a search box, like the NOR application.
+ *  Opens the whole list on click; typing filters by code, name and site words (diacritics ignored). Only codes
+ *  from the list can be chosen. */
 function CodeSelect({ value, options, onChange, disabled, className = '' }: {
   value: unknown; options: Option[]; onChange: (v: string | null) => void; disabled?: boolean; className?: string
 }) {
-  const id = useId()
-  const label = (v: unknown) => (v == null ? '' : options.find((o) => o.value === v)?.label ?? String(v))
-  const [text, setText] = useState(label(value))
-  const [error, setError] = useState<string | null>(null)
+  const listId = useId()
+  const root = useRef<HTMLDivElement>(null)
+  const list = useRef<HTMLUListElement>(null)
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [active, setActive] = useState(0)
+  const current = options.find((o) => o.value === value)
+  const outside = value != null && !current // value from extraction that is not in the code list
 
-  function commit(t: string) {
-    const s = t.trim()
-    if (!s) { setError(null); if (value != null) onChange(null); return }
-    const code = s.split(' - ')[0].trim().toUpperCase()
-    const hit = options.find((o) => o.label === s) ?? options.find((o) => String(o.value).toUpperCase() === code)
-    if (!hit) { setError('Kód není v číselníku'); return }
-    setError(null)
-    setText(hit.label)
-    if (hit.value !== value) onChange(String(hit.value))
+  const hits = useMemo(() => {
+    const words = fold(query).split(/\s+/).filter(Boolean).map(stem)
+    if (!words.length) return options
+    const matches = options.filter((o) => {
+      const hay = fold(`${o.label} ${o.search ?? ''}`)
+      return words.every((w) => hay.includes(w))
+    })
+    // options whose own label matches come before those found only through the site words
+    const inLabel = (o: Option) => words.every((w) => fold(o.label).includes(w))
+    return [...matches.filter(inLabel), ...matches.filter((o) => !inLabel(o))]
+  }, [options, query])
+
+  useEffect(() => {
+    if (!open) return
+    const close = (e: MouseEvent) => { if (!root.current?.contains(e.target as Node)) setOpen(false) }
+    document.addEventListener('mousedown', close)
+    return () => document.removeEventListener('mousedown', close)
+  }, [open])
+
+  useEffect(() => {
+    list.current?.querySelector<HTMLElement>(`[data-i="${active}"]`)?.scrollIntoView({ block: 'nearest' })
+  }, [active, open])
+
+  function show() {
+    if (disabled) return
+    setQuery('')
+    setActive(Math.max(0, options.findIndex((o) => o.value === value)))
+    setOpen(true)
+  }
+  function pick(o: Option | null) {
+    setOpen(false)
+    const v = o ? String(o.value) : null
+    if (v !== (value == null ? null : String(value))) onChange(v)
+  }
+  function onKey(e: KeyboardEvent) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(a + 1, Math.min(hits.length, SHOWN) - 1)) }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)) }
+    else if (e.key === 'Enter') { e.preventDefault(); if (hits[active]) pick(hits[active]) }
+    else if (e.key === 'Escape') setOpen(false)
   }
 
   return (
-    <div className={className}>
-      <div className="relative">
-        <input className={`w-full pl-2 pr-7 ${BOX} ${border(error)}`} list={id} value={text} disabled={disabled}
-          placeholder="hledat kód nebo název…"
-          onChange={(e) => {
-            setText(e.target.value)
-            // picking from the list fills the whole label: save immediately
-            if (options.some((o) => o.label === e.target.value)) commit(e.target.value)
-          }}
-          onBlur={(e) => commit(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && commit(e.currentTarget.value)} />
-        <span className="pointer-events-none absolute right-0 top-0 flex h-8 w-6 items-center justify-center border-l border-slate-300 text-[10px] text-slate-500">▼</span>
-      </div>
-      <datalist id={id}>{options.map((o) => <option key={String(o.value)} value={o.label} />)}</datalist>
-      <FieldError msg={error} />
+    <div ref={root} className={`relative ${className}`}>
+      <button type="button" disabled={disabled} onClick={() => (open ? setOpen(false) : show())}
+        aria-haspopup="listbox" aria-expanded={open} aria-controls={listId}
+        title={current?.label ?? (outside ? `${String(value)} není v číselníku` : undefined)}
+        className={`flex w-full items-center text-left ${BOX} ${border(outside ? 'mimo číselník' : null)}`}>
+        <span className={`flex-1 truncate px-2 ${current || outside ? '' : 'text-slate-400'}`}>
+          {current?.label ?? (outside ? `${String(value)} (mimo číselník)` : '—')}
+        </span>
+        <span className="flex h-full w-6 items-center justify-center border-l border-slate-300 text-[10px] text-slate-500">▼</span>
+      </button>
+      {outside && <FieldError msg="Kód není v číselníku, vyberte ze seznamu" />}
+
+      {open && (
+        <div className="absolute left-0 z-20 mt-1 w-full min-w-[26rem] rounded-md border border-slate-300 bg-white shadow-lg">
+          <input autoFocus className="w-full border-b border-slate-200 px-2 py-1.5 text-[14px] outline-none"
+            placeholder={`Hledat kód, název nebo orgán (${options.length} položek)…`} value={query}
+            role="combobox" aria-controls={listId} aria-expanded
+            onChange={(e) => { setQuery(e.target.value); setActive(0) }} onKeyDown={onKey} />
+          <ul ref={list} id={listId} role="listbox" className="max-h-72 overflow-auto py-1 text-[13px]">
+            {!query && value != null && (
+              <li role="option" aria-selected={false} className="cursor-pointer px-2 py-1 text-slate-500 hover:bg-slate-100" onMouseDown={() => pick(null)}>
+                — vymazat
+              </li>
+            )}
+            {hits.slice(0, SHOWN).map((o, i) => (
+              <li key={String(o.value)} data-i={i} role="option" aria-selected={o.value === value}
+                className={`cursor-pointer px-2 py-1 ${i === active ? 'bg-blue-600 text-white' : o.value === value ? 'bg-blue-50' : 'hover:bg-slate-100'}`}
+                onMouseEnter={() => setActive(i)} onMouseDown={(e) => { e.preventDefault(); pick(o) }}>
+                <div className="truncate">{o.label}</div>
+                {query && o.search && !fold(o.label).includes(stem(fold(query).split(/\s+/)[0])) && (
+                  <div className={`truncate text-[11px] ${i === active ? 'text-blue-100' : 'text-slate-500'}`}>{o.search}</div>
+                )}
+              </li>
+            ))}
+            {hits.length === 0 && <li className="px-2 py-1 text-slate-500">Nic nenalezeno, kód musí být z číselníku.</li>}
+            {hits.length > SHOWN && <li className="px-2 py-1 text-[12px] text-slate-500">… a dalších {hits.length - SHOWN}, upřesněte hledání</li>}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

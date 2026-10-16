@@ -1,21 +1,15 @@
-"""MKN-10 (Czech ICD-10) lookup from the ÚZIS CSV (`01_MKN10_5E_2026_utf8.csv`, ';'-separated)."""
+"""MKN-10 (Czech ICD-10) lookup from the ÚZIS CSV (`01_MKN10_5E_2026_*.csv`, ';'-separated, see codefiles.py)."""
 
-import csv
 from functools import lru_cache
-from pathlib import Path
 
-from app.config import get_settings
+from app.validate import codefiles
 
 ICD10_SYSTEM = "https://uzis.cz/terminology/CodeSystem/mkn-10"
 
 
 @lru_cache
 def _rows() -> dict[str, dict]:
-    path = get_settings().mkn10_csv
-    if not path or not Path(path).exists():
-        return {}
-    with open(path, encoding="utf-8-sig", newline="") as f:
-        return {row["KodSTeckou"]: row for row in csv.DictReader(f, delimiter=";")}
+    return {row["KodSTeckou"]: row for row in codefiles.dict_rows(codefiles.MKN10)}
 
 
 def _table() -> dict[str, str]:

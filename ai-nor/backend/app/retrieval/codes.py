@@ -5,14 +5,12 @@ Sources: ÚZIS MKN-10-CZ 2026 package (folder of MKN10_CSV):
 - 05_MKN10_2026_Abecední seznam - nemoci a poranění_utf8.csv: index terms with ICD-O morphology codes "(M8140/3)"
 """
 
-import csv
 import re
 from dataclasses import dataclass
-from pathlib import Path
 
 from app import iris_db
-from app.config import get_settings
 from app.retrieval.embeddings import embed
+from app.validate import codefiles
 
 MKN10 = "mkn10"
 MORPHOLOGY = "icdo3-morph"
@@ -30,20 +28,18 @@ class CodeHit:
     exact: bool = False  # the term equals a code-list name (step 2), not just semantically close (step 3)
 
 
-def _package_dir() -> Path:
-    csv_path = get_settings().mkn10_csv
-    if not csv_path:
-        raise RuntimeError("MKN10_CSV is not configured in .env")
-    return Path(csv_path).parent
+def _require(prefix: str) -> None:
+    if codefiles.find(prefix) is None:
+        raise RuntimeError(f"{prefix}*.csv not found in CODELISTS_DIR (ai-nor/uploads) nor next to MKN10_CSV")
 
 
 def load_mkn10() -> list[tuple[str, str]]:
-    with open(_package_dir() / "01_MKN10_5E_2026_utf8.csv", encoding="utf-8-sig", newline="") as f:
-        return [
-            (row["KodSTeckou"], row["NazevPlny"] or row["Nazev"])
-            for row in csv.DictReader(f, delimiter=";")
-            if _ONCO_ICD10.match(row["KodSTeckou"])
-        ]
+    _require(codefiles.MKN10)
+    return [
+        (row["KodSTeckou"], row["NazevPlny"] or row["Nazev"])
+        for row in codefiles.dict_rows(codefiles.MKN10)
+        if _ONCO_ICD10.match(row["KodSTeckou"])
+    ]
 
 
 def _clean(term: str) -> str:
@@ -54,18 +50,17 @@ def _clean(term: str) -> str:
 
 def load_morphology() -> list[tuple[str, str]]:
     """Morphology terms from the hierarchical index: child names are prefixed by their parents."""
-    path = _package_dir() / "05_MKN10_2026_Abecední seznam - nemoci a poranění_utf8.csv"
+    _require(codefiles.INDEX_DISEASES)
     stack: list[str] = []
     out: dict[tuple[str, str], None] = {}
-    with open(path, encoding="utf-8-sig", newline="") as f:
-        for row in csv.reader(f, delimiter=";"):
-            if not row or not row[0].isdigit():
-                continue
-            level, name = int(row[0]), row[1]
-            stack = stack[: level - 1] + [_clean(name)]
-            if m := _MORPH.search(name):
-                full = " ".join(p for p in stack if p)
-                out[(f"{m.group(1)}/{m.group(2)}", full)] = None
+    for row in codefiles.rows(codefiles.INDEX_DISEASES):
+        if not row or not row[0].isdigit():
+            continue
+        level, name = int(row[0]), row[1]
+        stack = stack[: level - 1] + [_clean(name)]
+        if m := _MORPH.search(name):
+            full = " ".join(p for p in stack if p)
+            out[(f"{m.group(1)}/{m.group(2)}", full)] = None
     return list(out)
 
 

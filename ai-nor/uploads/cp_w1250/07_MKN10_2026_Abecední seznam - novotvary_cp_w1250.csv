@@ -1,0 +1,1558 @@
+Úroveò;Název, specifikace, lokalizace;Maligní, zhoubný - primární;Maligní, zhoubný - sekundární;In situ;Benigní, nezhoubný;Nejistého nebo neznámého chování;
+2;– abdominopelvický;C76.8;C79.8;;D36.7;D48.7
+2;– adenoidní (tkáò);C11.1;C79.8;D00.0;D10.6;D37.0
+2;– adnex (dìložních);C57.4;C79.8;D07.3;D28.7;D39.7
+2;– akromion (výbìžku) *;C40.0;C79.5;;D16.0;D48.0
+2;– alveolární(-ho);;;;;
+3;– – høebene nebo výbìžku;C41.1;C79.5;;D16.5;D48.0
+4;– – – dolního;C41.1;C79.5;;D16.5;D48.0
+4;– – – horního;C41.0;C79.5;;D16.4;D48.0
+4;– – – karcinom;C03.9;C79.8;;;
+5;– – – – dolního;C03.1;C79.8;;;
+5;– – – – horního;C03.0;C79.8;;;
+4;– – – sliznice;C03.9;C79.8;D00.0;D10.3;D37.0
+5;– – – – dolního;C03.1;C79.8;D00.0;D10.3;D37.0
+5;– – – – horního;C03.0;C79.8;D00.0;D10.3;D37.0
+3;– – rýhy (sulcus);C06.1;C79.8;D00.0;D10.3;D37.0
+3;– – sliznice;C03.9;C79.8;D00.0;D10.3;D37.0
+4;– – – dolní;C03.1;C79.8;D00.0;D10.3;D37.0
+4;– – – horní;C03.0;C79.8;D00.0;D10.3;D37.0
+2;– alveolu;C03.9;C79.8;D00.0;D10.3;D37.0
+3;– – dolního;C03.1;C79.8;D00.0;D10.3;D37.0
+3;– – horního;C03.0;C79.8;D00.0;D10.3;D37.0
+3;– – plicního – viz též Novotvar, plíce;;;;;
+2;– anorekta, anorektálního (spojení);C21.8;C78.5;D01.3;D12.9;D37.7
+2;– antrum (Highmori) (maxillare);C31.0;C78.3;D02.3;D14.0;D38.5
+3;– – pyloricum;C16.3;C78.8;D00.2;D13.1;D37.1
+3;– – tympanicum;C30.1;C78.3;D02.3;D14.0;D38.5
+2;– aortálního tìlíska;C75.5;C79.8;;D35.6;D44.7
+2;– aorty (hrudní);C49.3;C79.8;;D21.3;D48.1
+3;– – bøišní;C49.4;C79.8;;D21.4;D48.1
+2;– apendixu;C18.1;C78.5;D01.0;D12.1;D37.3
+2;– aponeurózy – viz též Novotvar, mìkké tkánì;;;;;
+3;– – palmární;C49.1;C79.8;;D21.1;D48.1
+3;– – plantární;C49.2;C79.8;;D21.2;D48.1
+2;– arachnoidální;C70.9;C79.4;;D32.9;D42.9
+3;– – míšní;C70.1;C79.4;;D32.1;D42.1
+3;– – mozkový;C70.0;C79.3;;D32.0;D42.0
+2;– areoly, dvorce prsního;C50.0;C79.8;D05.9;D24;D48.6
+2;– arterie – viz Novotvar, mìkké tkánì;;;;;
+2;– aryepiglotické øasy;C13.1;C79.8;D00.0;D10.7;D37.0
+3;– – hypofaryngeální strany;C13.1;C79.8;D00.0;D10.7;D37.0
+3;– – laryngeální strany;C32.1;C78.3;D02.0;D14.1;D38.0
+3;– – okrajové zóny;C13.1;C79.8;D00.0;D10.7;D37.0
+2;– arytenoidní (chrupavky);C32.3;C78.3;D02.0;D14.1;D38.0
+3;– – øasy – viz Novotvar, aryepiglotické øasy;;;;;
+2;– atlasu *;C41.2;C79.5;;D16.6;D48.0
+2;– autonomního nervu nebo nervového systému – viz Novotvar, nervu, periferního;;;;;
+2;– axily, axilární;C76.1;C79.8;D09.7;D36.7;D48.7
+3;– – øasy (kùže);C44.5;C79.2;D04.5;D23.5;D48.5
+2;– Bartholínské žlázy;C51.0;C79.8;D07.1;D28.0;D39.7
+2;– bazálního ganglia;C71.0;C79.3;;D33.0;D43.0
+2;– báze crus cerebri;C71.7;C79.3;;D33.1;D43.1
+2;– bìlimy, sclery;C69.4;C79.4;D09.2;D31.4;D48.7
+2;– bílé hmoty (centrální) (mozkové);C71.0;C79.3;;D33.0;D43.0
+2;– boku NJ #;C76.7;C79.8;D04.5;D36.7;D48.7
+2;– boltce ušního ;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – chrupavky;C49.0;C79.8;;D21.0;D48.1
+2;– brady;C44.3;C79.2;D04.3;D23.3;D48.5
+2;– branchiální (štìrbiny) (vestigií, zbytkù);C10.4;C79.8;D00.0;D10.5;D37.0
+2;– bránice;C49.3;C79.8;;D21.3;D48.1
+2;– bronchiolù, prùdušinek;C34.9;C78.0;D02.2;D14.3;D38.1
+2;– bronchogenní, bronchiogenní (plíce);C34.9;C78.0;D02.2;D14.3;D38.1
+2;– bronchù(-u), prùdušek;C34.9;C78.0;D02.2;D14.3;D38.1
+3;– – dolního plicního laloku;C34.3;C78.0;D02.2;D14.3;D38.1
+3;– – hlavního;C34.0;C78.0;D02.2;D14.3;D38.1
+3;– – horního plicního laloku;C34.1;C78.0;D02.2;D14.3;D38.1
+3;– – hrany, cariny;C34.0;C78.0;D02.2;D14.3;D38.1
+3;– – støedního plicního laloku;C34.2;C78.0;D02.2;D14.3;D38.1
+2;– bøicha, bøišní(-ho)(-ch);C76.2;C79.8;D09.7;D36.7;D48.7
+3;– – dutiny;C76.2;C79.8;D09.7;D36.7;D48.7
+3;– – orgánu;C76.2;C79.8;;D36.7;D48.7
+3;– – stìny ;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – útrob;C76.2;C79.8;;D36.7;D48.7
+2;– bukální (dutiny);C06.9;C79.8;D00.0;D10.3;D37.0
+3;– – rýhy (dolní) (horní);C06.1;C79.8;D00.0;D10.3;D37.0
+3;– – sliznice;C06.0;C79.8;D00.0;D10.3;D37.0
+2;– bulbouretrální žlázy;C68.0;C79.1;D09.1;D30.4;D41.3
+2;– bulbu oèního;C69.9;C79.4;D09.2;D31.9;D48.7
+2;– burzy – viz Novotvar, mìkké tkánì;;;;;
+2;– capsulae, internae;C71.0;C79.3;;D33.0;D43.0
+2;– cariny (tracheální);C34.0;C78.0;D02.2;D14.3;D38.1
+2;– caudy equiny;C72.1;C79.4;;D33.4;D43.4
+2;– céka (slepé støevo);C18.0;C78.5;D01.0;D12.0;D37.4
+2;– centrální(-ho);;;;;
+3;– – bílé hmoty;C71.0;C79.3;;D33.0;D43.0
+3;– – nervového systému – viz Novotvar, nervového systému;;;;;
+2;– cévnatky;C69.3;C79.4;D09.2;D31.3;D48.7
+2;– cévní – viz Novotvar, mìkké tkánì;;;;;
+2;– cévy (krevní) – viz Novotvar, mìkké tkánì;;;;;
+2;– columnae faucium, øasy palatofaryngeální;C09.1;C79.8;D00.0;D10.5;D37.0
+2;– conus medullaris;C72.0;C79.4;;D33.4;D43.4
+2;– corpus ciliare, øasnatého tìlesa;C69.4;C79.4;D09.2;D31.4;D48.7
+2;– Cowperovy žlázy;C68.0;C79.1;D09.1;D30.4;D41.3
+2;– èela NJ;C44.3;C79.2;D04.3;D23.3;D48.5
+2;– èela, oboèí;C44.3;C79.2;D04.3;D23.3;D48.5
+2;– èelisti;C76.0;C79.8;D09.7;D36.7;D48.7
+3;– – karcinom (kteréhokoli typu) (dolní) (horní);C76.0;C79.8;;;
+3;– – kosti;C41.1;C79.5;;D16.5;D48.0
+4;– – – dolní;C41.1;C79.5;;D16.5;D48.0
+4;– – – horní;C41.0;C79.5;;D16.4;D48.0
+3;– – kùže;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – mìkkých tkání;C03.9;C79.8;;D10.3;D37.0
+4;– – – dolní;C03.1;C79.8;;D10.3;D37.0
+4;– – – horní;C03.0;C79.8;;D10.3;D37.0
+2;– èelní(-ho);;;;;
+3;– – dutiny;C31.2;C78.3;D02.3;D14.0;D38.5
+3;– – kosti *;C41.0;C79.5;;D16.4;D48.0
+3;– – laloku;C71.1;C79.3;;D33.0;D43.0
+3;– – pólu;C71.1;C79.3;;D33.0;D43.0
+2;– èervenì rtu – viz Novotvar, rtu;;;;;
+2;– èlánkù prstu *;C40.9;C79.5;;D16.9;D48.0
+3;– – nohy *;C40.2;C79.5;;D16.2;D48.0
+3;– – ruky *;C40.0;C79.5;;D16.0;D48.0
+2;– èoèky, oèní;C69.4;C79.4;D09.2;D31.4;D48.7
+2;– dásnì (alveolární) (marginální);C03.9;C79.8;D00.0;D10.3;D37.0
+3;– – dolní èelisti;C03.1;C79.8;D00.0;D10.3;D37.0
+3;– – horní èelisti;C03.0;C79.8;D00.0;D10.3;D37.0
+2;– dìlohy, dìložní(-ho);C55 ;C79.8;D07.3;D26.9;D39.0
+3;– – adnexa;C57.4;C79.8;D07.3;D28.7;D39.7
+3;– – dolního segmentu;C54.0;C79.8;D07.3;D26.1;D39.0
+3;– – endocervixu (kanálu) (žlázy);C53.0;C79.8;D06.0;D26.0;D39.0
+3;– – exocervixu;C53.1;C79.8;D06.1;D26.0;D39.0
+3;– – fundu;C54.3;C79.8;D07.3;D26.1;D39.0
+3;– – hrdla;C53.9;C79.8;D06.9;D26.0;D39.0
+3;– – istmu;C54.0;C79.8;D07.3;D26.1;D39.0
+3;– – rohu;C54.9;C79.8;D07.3;D26.1;D39.0
+3;– – skvamokolumnárního spojení;C53.8;C79.8;D06.7;D26.0;D39.0
+3;– – tìla;C54.9;C79.8;D07.3;D26.1;D39.0
+3;– – vazu;C57.3;C79.8;;D28.2;D39.7
+4;– – – oblého;C57.2;C79.8;;D28.2;D39.7
+4;– – – širokého;C57.1;C79.8;D07.3;D28.2;D39.7
+3;– – vejcovodu;C57.0;C79.8;D07.3;D28.2;D39.7
+3;– – vnìjšího orificia;C53.1;C79.8;D06.1;D26.0;D39.0
+3;– – vnitøního orificia;C53.0;C79.8;D06.0;D26.0;D39.0
+2;– dermis – viz Novotvar, kùže;;;;;
+2;– diseminovaný, generalizovaný;;C79.9;;;
+2;– Douglasova prostoru;C48.1;C78.6;;D20.1;D48.4
+2;– døenì (kostní);C96.9;C79.5;;;D47.9
+2;– døenì nadledviny;C74.1;C79.7;D09.3;D35.0;D44.1
+2;– ductus;;;;;
+3;– – craniopharyngealis;C75.2;C79.8;D09.3;D35.3;D44.4
+3;– – cysticus;C24.0;C78.8;D01.5;D13.5;D37.6
+3;– – ejaculatorius;C63.7;C79.8;D07.6;D29.7;D40.7
+3;– – choledochus;C24.0;C78.8;D01.5;D13.5;D37.6
+3;– – thoracicus;C49.3;C79.8;;D21.3;D48.1
+3;– – thyreoglossus;C73 ;C79.8;D09.3;D34;D44.0
+2;– duhovky;C69.4;C79.4;D09.2;D31.4;D48.7
+2;– duodena, dvanáctníku;C17.0;C78.4;D01.4;D13.2;D37.2
+2;– duodenojejunálního spojení;C17.8;C78.4;D01.4;D13.3;D37.2
+2;– duté žíly (bøišní) (dolní);C49.4;C79.8;;D21.4;D48.1
+3;– – horní;C49.3;C79.8;;D21.3;D48.1
+2;– dutiny;;;;;
+3;– – nosní;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – peritoneální;C48.2;C78.6;;D20.1;D48.4
+3;– – tympanické, støedoušní;C30.1;C78.3;D02.3;D14.0;D38.5
+3;– – ústní;C06.9;C79.8;D00.0;D10.3;D37.0
+2;– dýchacího(-ích);;;;;
+3;– – orgánù nebo systému NJ;C39.9;C78.3;D02.4;D14.4;D38.6
+3;– – traktu NJ;C39.9;C78.3;D02.4;D14.4;D38.6
+4;– – – horního;C39.0;C78.3;D02.4;D14.4;D38.6
+2;– endocervixu (kanálu);C53.0;C79.8;D06.0;D26.0;D39.0
+2;– endokardu;C38.0;C79.8;;D15.1;D48.7
+2;– endokrinní žlázy NJ;C75.9;C79.8;D09.3;D35.9;D44.9
+3;– – pluriglandulární;C75.8;C79.8;D09.3;D35.8;D44.8
+2;– endometria korporálního (žlázy) (stromatu);C54.1;C79.8;D07.0;D26.1;D39.0
+2;– ependymu (mozku);C71.5;C79.3;;D33.0;D43.0
+2;– epidurální;C72.9;C79.4;;D33.9;D43.9
+2;– epifyzární (tìla) (žlázy);C75.3;C79.8;;D35.4;D44.5
+2;– epiglottis;C32.1;C78.3;D02.0;D14.1;D38.0
+3;– – chrupavky;C32.1;C78.3;D02.0;D14.1;D38.0
+3;– – pøední strany nebo plochy;C10.1;C79.8;D00.0;D10.5;D37.0
+3;– – suprahyoidní èásti;C32.1;C78.3;D02.0;D14.1;D38.0
+3;– – volného okraje;C10.1;C79.8;D00.0;D10.5;D37.0
+3;– – zadní (hrtanové) plochy;C32.1;C78.3;D02.0;D14.1;D38.0
+2;– epikardu;C38.0;C79.8;;D15.1;D48.7
+2;– etmoidální(-ho) (sinusu, dutiny);C31.1;C78.3;D02.3;D14.0;D38.5
+3;– – kosti nebo labyrintu *;C41.0;C79.5;;D16.4;D48.0
+2;– Eustachovy trubice;C30.1;C78.3;D02.3;D14.0;D38.5
+2;– exocervixu;C53.1;C79.8;D06.1;D26.0;D39.0
+2;– extradurální;C72.9;C79.4;;D33.9;D43.9
+2;– extrarektální;C76.3;C79.8;;D36.7;D48.7
+2;– ezofagogastrického spojení;C16.0;C78.8;D00.2;D13.1;D37.1
+2;– ezofagu – viz Novotvar, jícnu;;;;;
+2;– falx (cerebelli) (cerebri);C70.0;C79.3;;D32.0;D42.0
+2;– faryngu, faryngeální(-ho);C14.0;C79.8;D00.0;D10.9;D37.0
+3;– – klenby;C11.3;C79.8;D00.0;D10.6;D37.0
+3;– – krajiny;C14.0;C79.8;D00.0;D10.9;D37.0
+3;– – mandle;C11.1;C79.8;D00.0;D10.6;D37.0
+3;– – recesu;C11.2;C79.8;D00.0;D10.6;D37.0
+3;– – stìny (boèní) (zadní);C14.0;C79.8;D00.0;D10.9;D37.0
+2;– fascie (viz též Novotvar, mìkké tkánì);C49.9;C79.8;;D21.9;D48.1
+3;– – palmární;C49.1;C79.8;;D21.1;D48.1
+3;– – plantární;C49.2;C79.8;;D21.2;D48.1
+2;– femuru, kosti stehenní (kterékoli èásti) *;C40.2;C79.5;;D16.2;D48.0
+2;– fibuly, kosti lýtkové (kterékoli èásti) *;C40.2;C79.5;;D16.2;D48.0
+2;– filum terminale;C72.0;C79.4;;D33.4;D43.4
+2;– fossa piriformis nebo sinu;C12 ;C79.8;D00.0;D10.7;D37.0
+2;– fossa tonsillaris;C09.0;C79.8;D00.0;D10.5;D37.0
+2;– fundu;;;;;
+3;– – dìlohy;C54.3;C79.8;D07.3;D26.1;D39.0
+3;– – žaludku;C16.1;C78.8;D00.2;D13.1;D37.1
+2;– ganglia (viz též Novotvar, nervu, periferního);C47.9;C79.8;;D36.1;D48.2
+3;– – bazálního;C71.0;C79.3;;D33.0;D43.0
+2;– Gärtnerova duktu;C52 ;C79.8;D07.2;D28.1;D39.7
+2;– gastrický – viz Novotvar, žaludku;;;;;
+2;– gastroezofageálního spojení;C16.0;C78.8;D00.2;D13.1;D37.1
+2;– gastrointestinálního (traktu) NJ;C26.9;C78.8;D01.9;D13.9;D37.9
+2;– generalizovaný; ;C79.9;;;
+2;– glans penis;C60.1;C79.8;D07.4;D29.0;D40.7
+2;– globus pallidus;C71.0;C79.3;;D33.0;D43.0
+2;– glomu;;;;;
+3;– – jugulárního;C75.5;C79.8;;D35.6;D44.7
+3;– – kokcygeálního;C49.5;C79.8;;D21.5;D48.1
+2;– glosoepiglotické(-ých) øasy(øas);C10.1;C79.8;D00.0;D10.5;D37.0
+2;– glosopalatinálních øas;C09.1;C79.8;D00.0;D10.5;D37.0
+2;– glotis;C32.0;C78.3;D02.0;D14.1;D38.0
+2;– hemisféry, mozkové;C71.0;C79.3;;D33.0;D43.0
+2;– hemoroidální zóny;C21.1;C78.5;D01.3;D12.9;D37.7
+2;– hepatobiliární;C24.9;C78.8;D01.5;D13.9;D37.6
+2;– hilu plicního;C34.0;C78.0;D02.2;D14.3;D38.1
+2;– hippocampu;C71.2;C79.3;;D33.0;D43.0
+2;– hlavy NJ #;C76.0;C79.8;D04.4;D36.7;D48.7
+2;– hltanu;C14.0;C79.8;D00.0;D10.9;D37.0
+2;– hrdla (dìložního);C53.9;C79.8;D06.9;D26.0;D39.0
+3;– – kanálu;C53.0;C79.8;D06.0;D26.0;D39.0
+3;– – pahýlu;C53.8;C79.8;D06.7;D26.0;D39.0
+3;– – skvamokolumnární junkce;C53.8;C79.8;D06.7;D26.0;D39.0
+2;– hrudníku, hrudní (dutiny) (orgánù NJ);C76.1;C79.8;D09.7;D36.7;D48.7
+3;– – stìny NJ;C76.1;C79.8;D09.7;D36.7;D48.7
+2;– humeru, kosti pažní (kterékoli èásti) *;C40.0;C79.5;;D16.0;D48.0
+2;– hymenu;C52 ;C79.8;D07.2;D28.1;D39.7
+2;– hypofaryngu, hypofaryngeální NJ;C13.9;C79.8;D00.0;D10.7;D37.0
+3;– – zadní stìny;C13.2;C79.8;D00.0;D10.7;D37.0
+2;– hypofýzy, hypofyzární (tìla) (fosy) (laloku);C75.1;C79.8;D09.3;D35.2;D44.3
+2;– hypotalamu;C71.0;C79.3;;D33.0;D43.0
+2;– hýždì NJ #;C76.3;C79.8;D04.5;D36.7;D48.7
+2;– hýžïové krajiny #;C76.3;C79.8;D04.5;D36.7;D48.7
+2;– chiasma opticum;C72.3;C79.4;;D33.3;D43.3
+2;– choany;C11.3;C79.8;D00.0;D10.6;D37.0
+2;– cholangiolu;C22.1;C78.7;D01.5;D13.4;D37.6
+2;– choledochu;C24.0;C78.8;D01.5;D13.5;D37.6
+2;– choroidey (cévnatky), choroidálního;C69.3;C79.4;D09.2;D31.3;D48.7
+3;– – plexu (pletenì)(laterální komory)(tøetí komory);C71.5;C79.3;;D33.0;D43.0
+4;– – – ètvrté komory;C71.5;C79.3;;D33.0;D43.0
+2;– chrupavky (kloubní) (viz též Novotvar, kosti);C41.9;C79.5;;D16.9;D48.0
+3;– – arytenoidní;C32.3;C78.3;D02.0;D14.1;D38.0
+3;– – epiglottis;C32.1;C78.3;D02.0;D14.1;D38.0
+3;– – krikoidní;C32.3;C78.3;D02.0;D14.1;D38.0
+3;– – kuneiformní, klínovité;C32.3;C78.3;D02.0;D14.1;D38.0
+3;– – laryngu, laryngeální;C32.3;C78.3;D02.0;D14.1;D38.0
+3;– – nosu, nosní;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – oèního víèka;C49.0;C79.8;;D21.0;D48.1
+3;– – polomìsíèité (kolena) *;C40.2;C79.5;;D16.2;D48.0
+3;– – prùdušky, bronchu;C34.0;C78.0;D02.2;D14.3;D38.1
+3;– – prùdušnice, trachey;C33 ;C78.3;D02.1;D14.2;D38.1
+3;– – tyroidní, štítné;C32.3;C78.3;D02.0;D14.1;D38.0
+3;– – ucha (vnìjšího);C49.0;C79.8;;D21.0;D48.1
+3;– – ušní;C49.0;C79.8;;D21.0;D48.1
+3;– – žeberní *;C41.3;C79.5;;D16.7;D48.0
+2;– ilea;C17.2;C78.4;D01.4;D13.3;D37.2
+2;– ileocéka, ileocekální(-ho) (ohbí, klièky) (spojení) (chlopnì);C18.0;C78.5;D01.0;D12.0;D37.4
+2;– ilium, kosti kyèelní *;C41.4;C79.5;;D16.8;D48.0
+2;– imunoproliferativní NJ;C88.9;;;;D47.9
+2;– infraklavikulární (krajiny) #;C76.1;C79.8;D04.5;D36.7;D48.7
+2;– inguinální (krajiny) #;C76.3;C79.8;D04.5;D36.7;D48.7
+2;– insula(-y) Reili(-ovy);C71.0;C79.3;;D33.0;D43.0
+2;– insuly cerebri ;C71.0;C79.3;;D33.0;D43.0
+2;– interarytenoidální øasy;C13.1;C79.8;D00.0;D10.7;D37.0
+3;– – hypofaryngeální strany;C13.1;C79.8;D00.0;D10.7;D37.0
+3;– – laryngeální strany;C32.1;C78.3;D02.0;D14.1;D38.0
+3;– – okrajové zóny;C13.1;C79.8;D00.0;D10.7;D37.0
+2;– intraselární;C75.1;C79.8;D09.3;D35.2;D44.3
+2;– inzulární tkánì (pankreatu);C25.4;C78.8;D01.7;D13.7;D37.7
+2;– ischiorektální (jámy);C76.3;C79.8;;D36.7;D48.7
+2;– istmu dìložního;C54.0;C79.8;D07.3;D26.1;D39.0
+2;– jámy (fosa);;;;;
+3;– – hypofýzy;C75.1;C79.8;D09.3;D35.2;D44.3
+3;– – ischiorektální;C76.3;C79.8;;D36.7;D48.7
+3;– – lebeèní;C71.9;C79.3;;D33.2;D43.2
+3;– – piriformní;C12 ;C79.8;D00.0;D10.7;D37.0
+3;– – pøední (lebeèní);C71.9;C79.3;;D33.2;D43.2
+3;– – pterygoidní;C49.0;C79.8;;D21.0;D48.1
+3;– – Rosenmülleri;C11.2;C79.8;D00.0;D10.6;D37.0
+3;– – støední (lebeèní);C71.9;C79.3;;D33.2;D43.2
+3;– – tonzilární;C09.0;C79.8;D00.0;D10.5;D37.0
+3;– – zadní (lebeèní);C71.9;C79.3;;D33.2;D43.2
+2;– jater;C22.9;C78.7;D01.5;D13.4;D37.6
+3;– – primární;C22.9;;D01.5;D13.4;D37.6
+2;– jaterní(-ho);C22.9;C78.7;D01.5;D13.4;D37.6
+3;– – ohbí (traèníku);C18.3;C78.5;D01.0;D12.3;D37.4
+3;– – primární;C22.9;;D01.5;D13.4;D37.6
+3;– – žluèovodu;C24.0;C78.8;D01.5;D13.5;D37.6
+2;– jazyka(-ové);C02.9;C79.8;D00.0;D10.1;D37.0
+3;– – fixované èásti;C01 ;C79.8;D00.0;D10.1;D37.0
+3;– – hrany (laterální);C02.1;C79.8;D00.0;D10.1;D37.0
+3;– – hrotu;C02.1;C79.8;D00.0;D10.1;D37.0
+3;– – høbetní strany;C02.0;C79.8;D00.0;D10.1;D37.0
+4;– – – koøene;C01 ;C79.8;D00.0;D10.1;D37.0
+4;– – – spodní;C02.2;C79.8;D00.0;D10.1;D37.0
+3;– – junkèní zóny;C02.8;C79.8;D00.0;D10.1;D37.0
+3;– – koøene;C01 ;C79.8;D00.0;D10.1;D37.0
+3;– – koøene (høbetní strany);C01 ;C79.8;D00.0;D10.1;D37.0
+3;– – mandle;C02.4;C79.8;D00.0;D10.1;D37.0
+3;– – okraje (laterálního);C02.1;C79.8;D00.0;D10.1;D37.0
+3;– – pohyblivé èásti NJ;C02.3;C79.8;D00.0;D10.1;D37.0
+3;– – pøedních dvou tøetin NJ;C02.3;C79.8;D00.0;D10.1;D37.0
+4;– – – høbetní strany;C02.0;C79.8;D00.0;D10.1;D37.0
+4;– – – spodní strany;C02.2;C79.8;D00.0;D10.1;D37.0
+3;– – støedové èáry NJ;C02.0;C79.8;D00.0;D10.1;D37.0
+3;– – uzdièky, frenula;C02.2;C79.8;D00.0;D10.1;D37.0
+3;– – zadní tøetiny;C01 ;C79.8;D00.0;D10.1;D37.0
+2;– jejuna;C17.1;C78.4;D01.4;D13.3;D37.2
+2;– jícnu;C15.9;C78.8;D00.1;D13.0;D37.7
+3;– – bøišní èásti;C15.2;C78.8;D00.1;D13.0;D37.7
+3;– – distální (tøetiny);C15.5;C78.8;D00.1;D13.0;D37.7
+3;– – dolní (tøetiny);C15.5;C78.8;D00.1;D13.0;D37.7
+3;– – horní (tøetiny);C15.3;C78.8;D00.1;D13.0;D37.7
+3;– – hrudní èásti;C15.1;C78.8;D00.1;D13.0;D37.7
+3;– – krèní èásti;C15.0;C78.8;D00.1;D13.0;D37.7
+3;– – proximální (tøetiny);C15.3;C78.8;D00.1;D13.0;D37.7
+3;– – støední (tøetiny);C15.4;C78.8;D00.1;D13.0;D37.7
+2;– kalichù, ledvinných;C65 ;C79.0;D09.1;D30.1;D41.1
+2;– kalvy, lebeèní klenby kostìné *;C41.0;C79.5;;D16.4;D48.0
+2;– kanálku;;;;;
+3;– – intrahepatálního;C22.1;C78.7;D01.5;D13.4;D37.6
+3;– – žluèového;C22.1;C78.7;D01.5;D13.4;D37.6
+2;– kanálu;;;;;
+3;– – øitního;C21.1;C78.5;D01.3;D12.9;D37.7
+3;– – sluchového (vnìjšího);C44.2;C79.2;D04.2;D23.2;D48.5
+2;– kapilární – viz Novotvar, mìkké tkánì;;;;;
+2;– kardiálního ústí (žaludku);C16.0;C78.8;D00.2;D13.1;D37.1
+2;– kardie (žaludku);C16.0;C78.8;D00.2;D13.1;D37.1
+2;– kardioezofageálního spojení;C16.0;C78.8;D00.2;D13.1;D37.1
+2;– kardioezofagu;C16.0;C78.8;D00.2;D13.1;D37.1
+2;– karotického tìlíska ;C75.4;C79.8;;D35.5;D44.6
+2;– karotidy (arterie);C49.0;C79.8;;D21.0;D48.1
+2;– klavikuly, klíèní kosti *;C41.3;C79.5;;D16.7;D48.0
+2;– klenby;;;;;
+3;– – hltanu;C11.3;C79.8;D00.0;D10.6;D37.0
+3;– – poševní;C52 ;C79.8;D07.2;D28.1;D39.7
+2;– klínové;C31.3;C78.3;D02.3;D14.0;D38.5
+3;– – dutiny;C31.3;C78.3;D02.3;D14.0;D38.5
+3;– – kosti *;C41.0;C79.5;;D16.4;D48.0
+2;– klitorisu;C51.2;C79.8;D07.1;D28.0;D39.7
+2;– klivu (kosti týlní) *;C41.0;C79.5;;D16.4;D48.0
+2;– kloakogenní zóny;C21.2;C78.5;D01.3;D12.9;D37.7
+2;– kloubu NJ (viz též Novotvar, kosti) *;C41.9;C79.5;;D16.9;D48.0
+3;– – akromioklavikulárního *;C40.0;C79.5;;D16.0;D48.0
+3;– – burzy nebo synoviální blány – viz Novotvar, mìkké tkánì;;;;;
+3;– – kostovertebrálního *;C41.3;C79.5;;D16.7;D48.0
+3;– – sternokostálního *;C41.3;C79.5;;D16.7;D48.0
+3;– – temporomandibulárního *;C41.1;C79.5;;D16.5;D48.0
+2;– kokcygeálního, kostrèního;;;;;
+3;– – glomu nebo tìlíska;C49.5;C79.8;;D21.5;D48.1
+3;– – obratle *;C41.4;C79.5;;D16.8;D48.0
+2;– kolena NJ #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– kolenní jamky nebo prostoru #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– kolumely (nosního septa);C44.3;C79.2;D04.3;D23.3;D48.5
+2;– komisury;;;;;
+3;– – hrtanové (laryngeální);C32.0;C78.3;D02.0;D14.1;D38.0
+3;– – retní, rtu;C00.6;C79.8;D00.0;D10.0;D37.0
+2;– komory;;;;;
+3;– – mozkové;C71.5;C79.3;;D33.0;D43.0
+4;– – – ètvrté;C71.7;C79.3;;D33.1;D43.1
+4;– – – postranní;C71.5;C79.3;;D33.0;D43.0
+4;– – – spodiny;C71.5;C79.3;;D33.0;D43.0
+4;– – – tøetí;C71.5;C79.3;;D33.0;D43.0
+3;– – srdeèní (levé) (pravé);C38.0;C79.8;;D15.1;D48.7
+2;– konèetiny #;C76.7;C79.8;D04.8;D36.7;D48.7
+3;– – dolní #;C76.5;C79.8;D04.7;D36.7;D48.7
+3;– – horní #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– koneèníku (ampuly);C20 ;C78.5;D01.2;D12.8;D37.5
+3;– – s traèníkem;C19 ;C78.5;D01.1;D12.7;D37.5
+2;– konchy (kosti) *;C41.0;C79.5;;D16.4;D48.0
+3;– – nosní;C30.0;C78.3;D02.3;D14.0;D38.5
+2;– kosti (periostu) *;C41.9;C79.5;;D16.9;D48.0
+C;Poznámka: Karcinomy a adenokarcinomy, jiné než intraoseální nebo odontogenetické, zaøazené pod heslem Novotvar kosti, musí být považovány za metastatické z nespecifikovaného primárního ložiska a kódovány jako C79.5.;;;;;
+3;– – acetabula;C41.4;C79.5;;D16.8;D48.0
+3;– – akromionu (výbìžku);C40.0;C79.5;;D16.0;D48.0
+3;– – atlasu;C41.2;C79.5;;D16.6;D48.0
+3;– – axis (èepovce);C41.2;C79.5;;D16.6;D48.0
+3;– – èelisti – viz Novotvar, èelisti, kosti;;;;;
+3;– – èelní;C41.0;C79.5;;D16.4;D48.0
+3;– – èéšky;C40.3;C79.5;;D16.3;D48.0
+3;– – èichové (labyrintu);C41.0;C79.5;;D16.4;D48.0
+3;– – èlánkù prstu;C40.9;C79.5;;D16.9;D48.0
+4;– – – nohy;C40.2;C79.5;;D16.2;D48.0
+4;– – – ruky;C40.0;C79.5;;D16.0;D48.0
+3;– – dlouhé;C40.9;C79.5;;D16.9;D48.0
+4;– – – dolních konèetin NJ;C40.2;C79.5;;D16.2;D48.0
+4;– – – horních konèetin NJ;C40.0;C79.5;;D16.0;D48.0
+3;– – dolní konèetiny NJ;C40.2;C79.5;;D16.2;D48.0
+3;– – døenì NJ;C96.9;C79.5;;;D47.9
+3;– – hlezenní;C40.3;C79.5;;D16.3;D48.0
+3;– – holenní (kterékoli èásti);C40.2;C79.5;;D16.2;D48.0
+3;– – hrudní;C41.3;C79.5;;D16.7;D48.0
+3;– – chrupavky NJ;C41.9;C79.5;;D16.9;D48.0
+3;– – jazylky;C41.0;C79.5;;D16.4;D48.0
+3;– – kalkanea;C40.3;C79.5;;D16.3;D48.0
+3;– – klenby lebeèní, kalvy;C41.0;C79.5;;D16.4;D48.0
+3;– – klíèní;C41.3;C79.5;;D16.7;D48.0
+3;– – klínové;C41.0;C79.5;;D16.4;D48.0
+3;– – klivu (kosti týlní);C41.0;C79.5;;D16.4;D48.0
+3;– – kolene;C40.2;C79.5;;D16.2;D48.0
+3;– – konèetiny NJ;C40.9;C79.5;;D16.9;D48.0
+4;– – – dolní (dlouhých kostí);C40.2;C79.5;;D16.2;D48.0
+5;– – – – krátkých kostí;C40.3;C79.5;;D16.3;D48.0
+4;– – – horní (dlouhých kostí);C40.0;C79.5;;D16.0;D48.0
+5;– – – – krátkých kostí;C40.1;C79.5;;D16.1;D48.0
+3;– – kostrèe;C41.4;C79.5;;D16.8;D48.0
+3;– – kostrèního obratle;C41.4;C79.5;;D16.8;D48.0
+3;– – kostry, kosterní NJ;C41.9;C79.5;;D16.9;D48.0
+3;– – kotníku;C40.3;C79.5;;D16.3;D48.0
+3;– – krátké;C40.9;C79.5;;D16.9;D48.0
+4;– – – dolních konèetin;C40.3;C79.5;;D16.3;D48.0
+4;– – – horních konèetin;C40.1;C79.5;;D16.1;D48.0
+3;– – køížové;C41.4;C79.5;;D16.8;D48.0
+3;– – køížového obratle;C41.4;C79.5;;D16.8;D48.0
+3;– – kyèelní;C41.4;C79.5;;D16.8;D48.0
+3;– – lebeèní;C41.0;C79.5;;D16.4;D48.0
+3;– – lebky;C41.0;C79.5;;D16.4;D48.0
+3;– – lícní;C41.0;C79.5;;D16.4;D48.0
+3;– – loketní (kterékoli èásti);C40.0;C79.5;;D16.0;D48.0
+3;– – lokte;C40.0;C79.5;;D16.0;D48.0
+3;– – lopatky (kterékoli èásti);C40.0;C79.5;;D16.0;D48.0
+3;– – lýtkové (kterékoli èásti);C40.2;C79.5;;D16.2;D48.0
+3;– – mandibuly, dolní èelisti;C41.1;C79.5;;D16.5;D48.0
+3;– – maxily, horní èelisti, maxilární (horní);C41.0;C79.5;;D16.4;D48.0
+4;– – – dolní ;C41.1;C79.5;;D16.5;D48.0
+3;– – meèovitého výbìžku;C41.3;C79.5;;D16.7;D48.0
+3;– – metakarpu (kteréhokoli);C40.0;C79.5;;D16.0;D48.0
+3;– – metatarzu (kteréhokoli);C40.2;C79.5;;D16.2;D48.0
+3;– – meziobratlové chrupavky nebo ploténky;C41.2;C79.5;;D16.6;D48.0
+3;– – nártní (kterékoli);C40.3;C79.5;;D16.3;D48.0
+3;– – nohy;C40.9;C79.5;;D16.9;D48.0
+3;– – nosu, nosní;C41.0;C79.5;;D16.4;D48.0
+3;– – oblièeje;C41.0;C79.5;;D16.4;D48.0
+3;– – obratle (páteøe);C41.2;C79.5;;D16.6;D48.0
+4;– – – kostrèe;C41.4;C79.5;;D16.8;D48.0
+4;– – – køížového;C41.4;C79.5;;D16.8;D48.0
+3;– – oènice;C41.0;C79.5;;D16.4;D48.0
+3;– – palce ruky;C40.0;C79.5;;D16.0;D48.0
+3;– – pánevní;C41.4;C79.5;;D16.8;D48.0
+3;– – páteøe, páteøní;C41.2;C79.5;;D16.6;D48.0
+4;– – – kostrèe;C41.4;C79.5;;D16.8;D48.0
+4;– – – kosti køížové;C41.4;C79.5;;D16.8;D48.0
+3;– – paty;C40.3;C79.5;;D16.3;D48.0
+3;– – paže NJ;C40.0;C79.5;;D16.0;D48.0
+3;– – pažní (kterékoli èásti);C40.0;C79.5;;D16.0;D48.0
+3;– – prstce (kteréhokoli);C40.2;C79.5;;D16.2;D48.0
+3;– – prstu;C40.9;C79.5;;D16.9;D48.0
+4;– – – nohy;C40.2;C79.5;;D16.2;D48.0
+4;– – – ruky;C40.0;C79.5;;D16.0;D48.0
+3;– – pøedloktí;C40.0;C79.5;;D16.0;D48.0
+3;– – ramene;C40.0;C79.5;;D16.0;D48.0
+3;– – ruky;C40.9;C79.5;;D16.9;D48.0
+3;– – sedací;C41.4;C79.5;;D16.8;D48.0
+3;– – skoøepy nosní;C41.0;C79.5;;D16.4;D48.0
+3;– – spánkové;C41.0;C79.5;;D16.4;D48.0
+3;– – stehenní (kterékoli èásti);C40.2;C79.5;;D16.2;D48.0
+3;– – stydké;C41.4;C79.5;;D16.8;D48.0
+3;– – temenní;C41.0;C79.5;;D16.4;D48.0
+3;– – tureckého sedla;C41.0;C79.5;;D16.4;D48.0
+3;– – týlní;C41.0;C79.5;;D16.4;D48.0
+3;– – vomeru (kosti radlièné);C41.0;C79.5;;D16.4;D48.0
+3;– – vøetenní (kterékoli èásti);C40.0;C79.5;;D16.0;D48.0
+3;– – zad NJ;C41.2;C79.5;;D16.6;D48.0
+3;– – zápìstí (kteréhokoli);C40.1;C79.5;;D16.1;D48.0
+3;– – žeberní chrupavky;C41.3;C79.5;;D16.7;D48.0
+3;– – žebra;C41.3;C79.5;;D16.7;D48.0
+2;– kosti hrudní *;C41.3;C79.5;;D16.7;D48.0
+2;– kosti køížové (obratle) *;C41.4;C79.5;;D16.8;D48.0
+2;– kosti køížové a kostrèní, sakrokokcygeální *;C41.4;C79.5;;D16.8;D48.0
+3;– – krajiny;C76.3;C79.8;D09.7;D36.7;D48.7
+2;– kosti sedací, ischium *;C41.4;C79.5;;D16.8;D48.0
+2;– kostrèe *;C41.4;C79.5;;D16.8;D48.0
+2;– kostry, kosterní NJ *;C41.9;C79.5;;D16.9;D48.0
+2;– kotníku NJ #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– koutku (oèního) (vnitøního) (vnìjšího);C44.1;C79.2;D04.1;D23.1;D48.5
+2;– kožní – viz Novotvar, kùže;;;;;
+2;– krèní krajiny;C76.0;C79.8;D09.7;D36.7;D48.7
+2;– krevní cévy – viz Novotvar, mìkké tkánì;;;;;
+2;– krikofaryngeální;C13.0;C79.8;D00.0;D10.7;D37.0
+2;– krikoidní;C13.0;C79.8;D00.0;D10.7;D37.0
+3;– – chrupavky;C32.3;C78.3;D02.0;D14.1;D38.0
+2;– krku NJ #;C76.0;C79.8;D09.7;D36.7;D48.7
+2;– krvetvorný, krvetvorné tkánì NJ;C96.9;;;;D47.9
+2;– kùry;;;;;
+3;– – mozkové;C71.0;C79.3;;D33.0;D43.0
+3;– – nadledvin;C74.0;C79.7;D09.3;D35.0;D44.1
+2;– kùže (amelanotický);C44.9;C79.2;D04.9;D23.9;D48.5
+C;"Pozn.: Pro novotvary kùže nebo morfologické typy oznaèující kùži kódujte podle seznamu pod „Novotvar kùže“; pro lokalizace, které se v tomto seznamu nevyskytují, kódujte pod novotvary dané lokalizace, napøíklad Karcinom, intraoseální C41.1. Morfologické typy oznaèující kùži jsou na svém místì v Abecedním seznamu doplnìny pokynem „viz Novotvar, kùže“.";;;;;
+3;– – axily, axilární øasy;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – boku;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – boltce, ušního;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – brady;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – bøišní stìny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – èela;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – èela, nadoènice, oboèí;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – èelisti;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – dlanì;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – hlavy NJ;C44.4;C79.2;D04.4;D23.4;D48.5
+3;– – hrudníku (stìny);C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – hýždì;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – hýžïové krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – chodidla;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – infraklavikulární krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – inframamární rýhy;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – inguinální krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – klavikulární krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – klitorisu;C51.2;C79.8;D07.1;D28.0;D39.7
+3;– – kolena;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – kolumely (nosu);C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – konèetiny NJ;C44.9;C79.2;D04.9;D23.9;D48.5
+4;– – – dolní;C44.7;C79.2;D04.7;D23.7;D48.5
+4;– – – horní;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – kotníku;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – koutku (oèního) (vnitøního) (vnìjšího);C44.1;C79.2;D04.1;D23.1;D48.5
+3;– – krèní krajiny;C44.4;C79.2;D04.4;D23.4;D48.5
+3;– – krku;C44.4;C79.2;D04.4;D23.4;D48.5
+3;– – køídla nosního;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – lokte;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – lopatkové krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – lýtka;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – melanotický – viz Melanom;;;;;
+3;– – mužských pohlavních orgánù;C63.9;C79.8;D07.6;D29.9;D40.9
+4;– – – penisu NJ;C60.9;C79.8;D07.4;D29.0;D40.7
+4;– – – pøedkožky;C60.0;C79.8;D07.4;D29.0;D40.7
+4;– – – šourku;C63.2;C79.8;D07.6;D29.4;D40.7
+3;– – nohy;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – nosu (vnìjšího);C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – oblièeje NJ;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – oboèí;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – oèního víèka;C44.1;C79.2;D04.1;D23.1;D48.5
+3;– – okraje ušního boltce;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – palce ruky;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – paty;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – paže;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – perianální;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – perinea;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – popliteální jamky nebo prostoru;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – praeputia;C60.0;C79.8;D07.4;D29.0;D40.7
+3;– – prstu nohy;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – prstu ruky;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – prsu;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – pøedloktí;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – pupku;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – pyje, penisu NJ;C60.9;C79.8;D07.4;D29.0;D40.7
+3;– – pysku stydkého;C51.9;C79.8;D07.1;D28.0;D39.7
+4;– – – malého;C51.1;C79.8;D07.1;D28.0;D39.7
+4;– – – velkého;C51.0;C79.8;D07.1;D28.0;D39.7
+3;– – ramene;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – rtu (dolního) (horního);C44.0;C79.2;D04.0;D23.0;D48.5
+3;– – ruky;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – øiti;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – sakrokokcygeální krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – skrota;C63.2;C79.8;D07.6;D29.4;D40.7
+3;– – spánku, skránì;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – stehna;C44.7;C79.2;D04.7;D23.7;D48.5
+3;– – stydké krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – supraklavikulární krajiny;C44.4;C79.2;D04.4;D23.4;D48.5
+3;– – tragu;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – trupu;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – tøísla, tøíselné krajiny;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – tváøe, líce;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – ucha;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – ušního boltce;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – víèka (dolního) (horního);C44.1;C79.2;D04.1;D23.1;D48.5
+3;– – vlasové èásti hlavy;C44.4;C79.2;D04.4;D23.4;D48.5
+3;– – vulvy;C51.9;C79.8;D07.1;D28.0;D39.7
+3;– – zad;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – zápìstí;C44.6;C79.2;D04.6;D23.6;D48.5
+3;– – zvukovodu (vnìjšího);C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – ženských pohlavních orgánù;;;;;
+4;– – – klitorisu;C51.2;C79.8;D07.1;D28.0;D39.7
+4;– – – labia NJ;C51.9;C79.8;D07.1;D28.0;D39.7
+5;– – – – majus;C51.0;C79.8;D07.1;D28.0;D39.7
+5;– – – – minus;C51.1;C79.8;D07.1;D28.0;D39.7
+4;– – – pudenda ;C51.9;C79.8;D07.1;D28.0;D39.7
+4;– – – vulvy;C51.9;C79.8;D07.1;D28.0;D39.7
+2;– kyèle NJ #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– labia (velkého pysku) (kùže);C51.9;C79.8;D07.1;D28.0;D39.7
+3;– – majus;C51.0;C79.8;D07.1;D28.0;D39.7
+3;– – minus;C51.1;C79.8;D07.1;D28.0;D39.7
+2;– labiální (viz též Novotvar, rtu);C00.9;C79.8;D00.0;D10.0;D37.0
+3;– – rýhy (dolní) (horní);C06.1;C79.8;D00.0;D10.3;D37.0
+2;– laloku (mozku);;;;;
+3;– – èelního;C71.1;C79.3;;D33.0;D43.0
+3;– – frontálního;C71.1;C79.3;;D33.0;D43.0
+3;– – okcipitálního;C71.4;C79.3;;D33.0;D43.0
+3;– – spánkového, temporálního;C71.2;C79.3;;D33.0;D43.0
+3;– – temenního;C71.3;C79.3;;D33.0;D43.0
+3;– – týlního;C71.4;C79.3;;D33.0;D43.0
+2;– laloku (plic);;;;;
+3;– – dolního;C34.3;C78.0;D02.2;D14.3;D38.1
+3;– – horního;C34.1;C78.0;D02.2;D14.3;D38.1
+3;– – støedního;C34.2;C78.0;D02.2;D14.3;D38.1
+2;– Langerhansových ostrùvkù;C25.4;C78.8;D01.7;D13.7;D37.7
+2;– laryngofaryngu;C13.9;C79.8;D00.0;D10.9;D37.0
+2;– laryngu, hrtanu, hrtanové NJ;C32.9;C78.3;D02.0;D14.1;D38.0
+3;– – chrupavky (arytenoidní) (krikoidní) (kuneiformní) (tyroidní);C32.3;C78.3;D02.0;D14.1;D38.0
+3;– – komisury (pøední) (zadní);C32.0;C78.3;D02.0;D14.1;D38.0
+3;– – ventrikulárních øas;C32.1;C78.3;D02.0;D14.1;D38.0
+3;– – vnìjšího NJ;C32.1;C78.3;D02.0;D14.1;D38.0
+4;"– – – roz. ""hypofarynx""";C13.9;C79.8;D00.0;D10.7;D37.0
+3;– – vnitøního;C32.0;C78.3;D02.0;D14.1;D38.0
+2;– lebky *;C41.0;C79.5;;D16.4;D48.0
+2;– ledviny(-é)(-ého) (parenchymu);C64 ;C79.0;D09.1;D30.0;D41.0
+3;– – hilu;C65 ;C79.0;D09.1;D30.1;D41.1
+3;– – kalichu;C65 ;C79.0;D09.1;D30.1;D41.1
+3;– – pánvièky;C65 ;C79.0;D09.1;D30.1;D41.1
+2;– limbu rohovky;C69.1;C79.4;D09.2;D31.1;D48.7
+2;– linguly, plíce;C34.1;C78.0;D02.2;D14.3;D38.1
+2;– lingvální NJ (viz též Novotvar, jazyka);C02.9;C79.8;D00.0;D10.1;D37.0
+2;– loketní jamky nebo prostoru #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– lokte NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– lopatkové krajiny #;C76.1;C79.8;D04.5;D36.7;D48.7
+2;– lopatky (kterékoli èásti) *;C40.0;C79.5;;D16.0;D48.0
+2;– lumbosakrálního plexu;C47.5;C79.8;;D36.1;D48.2
+2;– lymfy, lymfatické(-ho);;;;;
+3;– – cévy (viz též Novotvar, mìkké tkánì);C49.9;C79.8;;D21.9;D48.1
+3;– – kanálu NJ (viz též Novotvar, mìkké tkánì);C49.9;C79.8;;D21.9;D48.1
+3;– – uzliny, žlázy (sekundární);;C77.9;;D36.0;D48.7
+4;– – – aortální;;C77.2;;D36.0;D48.7
+4;– – – axily, axilární;;C77.3;;D36.0;D48.7
+4;– – – bederní;;C77.2;;D36.0;D48.7
+4;– – – brachiální;;C77.3;;D36.0;D48.7
+4;– – – bránièní, diafragmatické;;C77.1;;D36.0;D48.7
+4;– – – bronchiální;;C77.1;;D36.0;D48.7
+4;– – – bronchopulmonální;;C77.1;;D36.0;D48.7
+4;– – – bøišní;;C77.2;;D36.0;D48.7
+4;– – – celiakální;;C77.2;;D36.0;D48.7
+4;– – – cervikofaciální;;C77.0;;D36.0;D48.7
+4;– – – Cloquetovy;;C77.4;;D36.0;D48.7
+4;– – – dolní konèetiny;;C77.4;;D36.0;D48.7
+4;– – – epigastrické;;C77.5;;D36.0;D48.7
+4;– – – epitrochleární;;C77.3;;D36.0;D48.7
+4;– – – ezofageální;;C77.1;;D36.0;D48.7
+4;– – – hilu (plicního);;C77.1;;D36.0;D48.7
+5;– – – – sleziny;;C77.2;;D36.0;D48.7
+4;– – – hlavy;;C77.0;;D36.0;D48.7
+4;– – – horní konèetiny;;C77.3;;D36.0;D48.7
+4;– – – hrudní;;C77.1;;D36.0;D48.7
+4;– – – hypogastrické;;C77.5;;D36.0;D48.7
+4;– – – choledochu;;C77.2;;D36.0;D48.7
+4;– – – ileokolické;;C77.2;;D36.0;D48.7
+4;– – – ilické;;C77.5;;D36.0;D48.7
+4;– – – infraklavikulární;;C77.3;;D36.0;D48.7
+4;– – – jater;;C77.2;;D36.0;D48.7
+4;– – – jugulární;;C77.0;;D36.0;D48.7
+4;– – – kolické;;C77.2;;D36.0;D48.7
+4;– – – konèetiny;;;;;
+5;– – – – dolní;;C77.4;;D36.0;D48.7
+5;– – – – horní;;C77.3;;D36.0;D48.7
+4;– – – krèní;;C77.0;;D36.0;D48.7
+4;– – – krku;;C77.0;;D36.0;D48.7
+4;– – – loketní;;C77.3;;D36.0;D48.7
+4;– – – mandibulární;;C77.0;;D36.0;D48.7
+4;– – – mediastinální;;C77.1;;D36.0;D48.7
+4;– – – mezenterické (dolní) (horní);;C77.2;;D36.0;D48.7
+4;– – – mezižeberní;;C77.1;;D36.0;D48.7
+4;– – – mnohoèetných lokalizací v položkách C77.0–C77.5;;C77.8;;D36.0;D48.7
+4;– – – nitrobøišní, intraabdominální;;C77.2;;D36.0;D48.7
+4;– – – nitrohrudní, intratorakální;;C77.1;;D36.0;D48.7
+4;– – – nitropánevní, intrapelvické;;C77.5;;D36.0;D48.7
+4;– – – obturátorové;;C77.5;;D36.0;D48.7
+4;– – – pankreatické;;C77.2;;D36.0;D48.7
+4;– – – paraaortální;;C77.2;;D36.0;D48.7
+4;– – – paracervikální (cervix uteri);;C77.5;;D36.0;D48.7
+4;– – – parametriální;;C77.5;;D36.0;D48.7
+4;– – – parasternální;;C77.1;;D36.0;D48.7
+4;– – – paže;;C77.3;;D36.0;D48.7
+4;– – – pektorální, hrudní;;C77.3;;D36.0;D48.7
+4;– – – pelvické;;C77.5;;D36.0;D48.7
+4;– – – periaortální;;C77.2;;D36.0;D48.7
+4;– – – peripankreatické;;C77.2;;D36.0;D48.7
+4;– – – plicní (hilové);;C77.1;;D36.0;D48.7
+4;– – – podjazykové, sublingvální;;C77.0;;D36.0;D48.7
+4;– – – popliteální;;C77.4;;D36.0;D48.7
+4;– – – portální;;C77.2;;D36.0;D48.7
+4;– – – porty hepatis;;C77.2;;D36.0;D48.7
+4;– – – preaurikulární;;C77.0;;D36.0;D48.7
+4;– – – prelaryngeální;;C77.0;;D36.0;D48.7
+4;– – – presymfyzální;;C77.5;;D36.0;D48.7
+4;– – – pretracheální;;C77.0;;D36.0;D48.7
+4;– – – primární (kódujte podle morfologického typu, chování a lokalizace);;;;;
+4;– – – pøi arteria innominata;;C77.1;;D36.0;D48.7
+4;– – – pylorické;;C77.2;;D36.0;D48.7
+4;– – – retrofaryngeální;;C77.0;;D36.0;D48.7
+4;– – – retroperitoneální;;C77.2;;D36.0;D48.7
+4;– – – Rosenmüllerovy;;C77.4;;D36.0;D48.7
+4;– – – sakrální, køížové;;C77.5;;D36.0;D48.7
+4;– – – skalenové;;C77.0;;D36.0;D48.7
+4;– – – splenické, slezinné (hilové);;C77.2;;D36.0;D48.7
+4;– – – stehenní, femorální;;C77.4;;D36.0;D48.7
+4;– – – støedních kolických, mediokolických;;C77.2;;D36.0;D48.7
+4;– – – støevní;;C77.2;;D36.0;D48.7
+4;– – – subinguinální;;C77.4;;D36.0;D48.7
+4;– – – subklavikulární;;C77.3;;D36.0;D48.7
+4;– – – submandibulární;;C77.0;;D36.0;D48.7
+4;– – – submaxilární;;C77.0;;D36.0;D48.7
+4;– – – submentální;;C77.0;;D36.0;D48.7
+4;– – – subskapulární;;C77.3;;D36.0;D48.7
+4;– – – supraklavikulární;;C77.0;;D36.0;D48.7
+4;– – – tibiální;;C77.4;;D36.0;D48.7
+4;– – – tracheální, prùdušnicové;;C77.1;;D36.0;D48.7
+4;– – – tracheobronchiální;;C77.1;;D36.0;D48.7
+4;– – – tøísla, tøíselné;;C77.4;;D36.0;D48.7
+4;– – – tváøe;;C77.0;;D36.0;D48.7
+4;– – – týlní, okcipitální;;C77.0;;D36.0;D48.7
+4;– – – ušní (pøední) (zadní);;C77.0;;D36.0;D48.7
+4;– – – Virchowovy;;C77.0;;D36.0;D48.7
+4;– – – žaludeèní;;C77.2;;D36.0;D48.7
+4;– – – žlázy pøíušní, parotické;;C77.0;;D36.0;D48.7
+3;– – žlázy – viz též Novotvar, lymfatické uzliny;;;;;
+4;– – – primární – kódujte podle morfologického typu, chování a lokalizace;;;;;
+2;– lýtka #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– mandibuly;C41.1;C79.5;;D16.5;D48.0
+3;– – alveolární(-ho);;;;;
+4;– – – høebene nebo výbìžku;C41.1;C79.5;;D16.5;D48.0
+4;– – – sliznice;C03.1;C79.8;D00.0;D10.3;D37.0
+5;– – – – karcinom;C03.1;C79.8;;;
+2;– mandle, tonzily;C09.9;C79.8;D00.0;D10.4;D37.0
+3;– – hltanové;C11.1;C79.8;D00.0;D10.6;D37.0
+3;– – jazykové;C02.4;C79.8;D00.0;D10.1;D37.0
+3;– – oblouku (pøedního) (zadního);C09.1;C79.8;D00.0;D10.5;D37.0
+3;– – patrové;C09.9;C79.8;D00.0;D10.4;D37.0
+2;– mastoidální(-ho) (antra) (dutiny);C30.1;C78.3;D02.3;D14.0;D38.5
+3;– – kosti nebo výbìžku *;C41.0;C79.5;;D16.4;D48.0
+2;– maxily, èelisti horní, maxilární(-ho);C41.0;C79.5;;D16.4;D48.0
+3;– – alveolární(-ho);;;;;
+4;– – – høebene nebo výbìžku;C41.0;C79.5;;D16.4;D48.0
+4;– – – sliznice;C03.0;C79.8;D00.0;D10.3;D37.0
+5;– – – – karcinom;C03.0;C79.8;;;
+3;– – antra;C31.0;C78.3;D02.3;D14.0;D38.5
+3;– – karcinom;C03.0;C79.8;;;
+3;– – sinu;C31.0;C78.3;D02.3;D14.0;D38.5
+2;– mazové žlázy – viz Novotvar, kùže;;;;;
+2;– Meckelova divertiklu;C17.3;C78.4;D01.4;D13.3;D37.2
+2;– meèovitého výbìžku, processus xiphoideus *;C41.3;C79.5;;D16.7;D48.0
+2;– mediastina, mediastinálního;C38.3;C78.1;;D15.2;D38.3
+3;– – pøedního;C38.1;C78.1;;D15.2;D38.3
+3;– – zadního;C38.2;C78.1;;D15.2;D38.3
+2;– mìchýøe (moèového);C67.9;C79.1;D09.0;D30.3;D41.4
+3;– – hrdla;C67.5;C79.1;D09.0;D30.3;D41.4
+3;– – klenby;C67.1;C79.1;D09.0;D30.3;D41.4
+3;– – stìny;C67.9;C79.1;D09.0;D30.3;D41.4
+4;– – – boèní;C67.2;C79.1;D09.0;D30.3;D41.4
+4;– – – pøední;C67.3;C79.1;D09.0;D30.3;D41.4
+4;– – – zadní;C67.4;C79.1;D09.0;D30.3;D41.4
+3;– – svìraèe (sfinkteru);C67.8;C79.1;D09.0;D30.3;D41.4
+3;– – trigona;C67.0;C79.1;D09.0;D30.3;D41.4
+3;– – urachu;C67.7;C79.1;D09.0;D30.3;D41.4
+3;– – ústí;C67.9;C79.1;D09.0;D30.3;D41.4
+4;– – – moèové trubice;C67.5;C79.1;D09.0;D30.3;D41.4
+4;– – – moèovodu;C67.6;C79.1;D09.0;D30.3;D41.4
+2;– Meibomovy žlázy;C44.1;C79.2;D04.1;D23.1;D48.5
+2;– mìkké tkánì NJ;C49.9;C79.8;;D21.9;D48.1
+C;"Pozn.: Nádory mìkkých tkání jako krevních cév, burz, fascií, vazù, svalù, dále periferních nervù, autonomního nervstva a ganglií, synovie, šlach atd. nebo morfologické typy nádorù, které ukazují na mezenchymový pùvod, kódujte podle seznamu uvedeného v položce „Novotvar mìkké tkánì"". Pokud se lokalizace novotvaru v tomto seznamu nevyskytuje, kódujte jako novotvar pøíslušné lokalizace, napø. Fibrosarkom pankreatu C25.9, Leiomyosarkom žaludku C16.9. Morfologické typy nádorù, které ukazují na jejich mezenchymový charakter, se vyskytují na svém odpovídajícím místì v Abecedním seznamu s pokynem „viz Novotvar, mìkké tkánì..."".";;;;;
+3;– – boku;C49.2;C79.8;;D21.2;D48.1
+3;– – boltce, ušního;C49.0;C79.8;;D21.0;D48.1
+3;– – brady;C49.0;C79.8;;D21.0;D48.1
+3;– – bránice;C49.3;C79.8;;D21.3;D48.1
+3;– – bøicha, bøišní stìny;C49.4;C79.8;;D21.4;D48.1
+3;– – èela;C49.0;C79.8;;D21.0;D48.1
+3;– – èelisti;C03.9;C79.8;;D10.3;D37.0
+3;– – extrarektální;C49.5;C79.8;;D21.5;D48.1
+3;– – fossa pterygoidea;C49.0;C79.8;;D21.0;D48.1
+3;– – gluteální krajiny;C49.5;C79.8;;D21.5;D48.1
+3;– – hlavy;C49.0;C79.8;;D21.0;D48.1
+3;– – hrudního (mízovodu) (stìny);C49.3;C79.8;;D21.3;D48.1
+3;– – hrudníku ;C49.3;C79.8;;D21.3;D48.1
+3;– – hýždí;C49.5;C79.8;;D21.5;D48.1
+3;– – inguinální(-ho) (kanálu) (krajiny);C49.5;C79.8;;D21.5;D48.1
+3;– – jamky ischiorektální;C49.5;C79.8;;D21.5;D48.1
+3;– – kolena;C49.2;C79.8;;D21.2;D48.1
+3;– – kolenní jamky nebo prostoru;C49.2;C79.8;;D21.2;D48.1
+3;– – konèetiny NJ;C49.9;C79.8;;D21.9;D48.1
+4;– – – dolní;C49.2;C79.8;;D21.2;D48.1
+4;– – – horní;C49.1;C79.8;;D21.1;D48.1
+3;– – kotníku;C49.2;C79.8;;D21.2;D48.1
+3;– – krèní krajiny;C49.0;C79.8;;D21.0;D48.1
+3;– – krku;C49.0;C79.8;;D21.0;D48.1
+3;– – kyèle;C49.2;C79.8;;D21.2;D48.1
+3;– – loketní, kubitální jamky nebo prostoru;C49.1;C79.8;;D21.1;D48.1
+3;– – lokte;C49.1;C79.8;;D21.1;D48.1
+3;– – lopatkové krajiny;C49.3;C79.8;;D21.3;D48.1
+3;– – lýtka;C49.2;C79.8;;D21.2;D48.1
+3;– – musculus iliopsoas;C49.4;C79.8;;D21.4;D48.1
+3;– – musculus psoas;C49.4;C79.8;;D21.4;D48.1
+3;– – nitrohrudní;C49.3;C79.8;;D21.3;D48.1
+3;– – nohy;C49.2;C79.8;;D21.2;D48.1
+3;– – nohy, holenì;C49.2;C79.8;;D21.2;D48.1
+3;– – oblièeje;C49.0;C79.8;;D21.0;D48.1
+3;– – oènice;C69.6;C79.4;;D31.6;D48.1
+3;– – oèního víèka;C49.0;C79.8;;D21.0;D48.1
+3;– – palce ruky;C49.1;C79.8;;D21.1;D48.1
+3;– – pánve (dna);C49.5;C79.8;;D21.5;D48.1
+3;– – pararektální;C49.5;C79.8;;D21.5;D48.1
+3;– – parauretrální;C49.5;C79.8;;D21.5;D48.1
+3;– – paravaginální;C49.5;C79.8;;D21.5;D48.1
+3;– – paty;C49.2;C79.8;;D21.2;D48.1
+3;– – paže;C49.1;C79.8;;D21.1;D48.1
+3;– – pelviabdominální;C49.8;C79.8;;D21.9;D48.1
+3;– – perinea;C49.5;C79.8;;D21.5;D48.1
+3;– – perirektální (tkánì);C49.5;C79.8;;D21.5;D48.1
+3;– – periuretrální (tkánì);C49.5;C79.8;;D21.5;D48.1
+3;– – podbradku (submentální oblasti);C49.0;C79.8;;D21.0;D48.1
+3;– – podlopatkové krajiny;C49.3;C79.8;;D21.3;D48.1
+3;– – podpaží, axily;C49.3;C79.8;;D21.3;D48.1
+3;– – presakrální;C49.5;C79.8;;D21.5;D48.1
+3;– – prstu nohy, prstce;C49.2;C79.8;;D21.2;D48.1
+3;– – prstu ruky;C49.1;C79.8;;D21.1;D48.1
+3;– – pøedloktí;C49.1;C79.8;;D21.1;D48.1
+3;– – pupeèníku;C49.4;C79.8;;D21.4;D48.1
+3;– – ramene;C49.1;C79.8;;D21.1;D48.1
+3;– – rektovaginálního septa nebo stìny;C49.5;C79.8;;D21.5;D48.1
+3;– – rektovezikální;C49.5;C79.8;;D21.5;D48.1
+3;– – retroperitoneální;C48.0;C78.6;;D20.0;D48.3
+3;– – ruky;C49.1;C79.8;;D21.1;D48.1
+3;– – sakrokokcygeální krajiny;C49.5;C79.8;;D21.5;D48.1
+3;– – spánkové krajiny;C49.0;C79.8;;D21.0;D48.1
+3;– – spánku, skránì;C49.0;C79.8;;D21.0;D48.1
+3;– – stehna;C49.2;C79.8;;D21.2;D48.1
+3;– – supraklavikulární krajiny;C49.0;C79.8;;D21.0;D48.1
+3;– – trupu;C49.6;C79.8;;D21.6;D48.1
+3;– – tøísla;C49.5;C79.8;;D21.5;D48.1
+3;– – tváøe;C49.0;C79.8;;D21.0;D48.1
+3;– – ucha (vnìjšího);C49.0;C79.8;;D21.0;D48.1
+3;– – velkých cév NJ;C49.3;C79.8;;D21.3;D48.1
+3;– – vezikorektální;C49.5;C79.8;;D21.5;D48.1
+3;– – vlasové èásti hlavy;C49.0;C79.8;;D21.0;D48.1
+3;– – zad;C49.6;C79.8;;D21.6;D48.1
+3;– – zápìstí;C49.1;C79.8;;D21.1;D48.1
+2;– mìkkých èástí nebo tkání – viz Novotvar, mìkké tkánì;;;;;
+2;– menisku, kolenního kloubu (laterálního) (mediálního) *;C40.2;C79.5;;D16.2;D48.0
+2;– metakarpu (kterékoli kosti) *;C40.0;C79.5;;D16.0;D48.0
+2;– metastatický (mnohoèetný);;C79.9;;;
+2;– metatarzu (kterékoli èásti) *;C40.2;C79.5;;D16.2;D48.0
+2;– mezenteria, mezenterický;C48.1;C78.6;;D20.1;D48.4
+2;– meziobratlové ploténky nebo disku *;C41.2;C79.5;;D16.6;D48.0
+2;– mezoapendixu;C48.1;C78.6;;D20.1;D48.4
+2;– mezofaryngu – viz Novotvar, orofaryngu;;;;;
+2;– mezokolon;C48.1;C78.6;;D20.1;D48.4
+2;– mezoovaria;C57.1;C79.8;D07.3;D28.2;D39.7
+2;– mezosalpingu;C57.1;C79.8;;D28.2;D39.7
+2;– míchy prodloužené;C71.7;C79.4;;D33.1;D43.1
+2;– míchy, míšní(-ch)(-ho), páteøní, (krèní) (bederní) (køížové) (hrudní);C72.0;C79.3;;D33.4;D43.4
+3;– – blan;C70.1;C79.4;;D32.1;D42.1
+3;– – nervu (koøene);C47.9;C79.4;;D36.1;D48.2
+3;– – pia mater;C70.1;C79.4;;D32.1;D42.1
+3;– – plen, mening;C70.1;C79.4;;D32.1;D42.1
+3;– – tvrdé pleny, dura mater;C70.1;C79.4;;D32.1;D42.1
+2;– mléèné žlázy – viz Novotvar, prsu;;;;;
+2;– mnohoèetný, maligní NJ;C80.9;;;;
+3;– – samostatných primárních lokalizací;C97;;;;
+3;– – sekundární NJ;;C79.9;;;
+2;– moèového orgánu nebo ústrojí NJ;C68.9;C79.1;D09.1;D30.9;D41.9
+3;– – mìchýøe – viz Novotvar, mìchýøe;;;;;
+2;– moèovodu;C66 ;C79.1;D09.1;D30.2;D41.2
+3;– – ústí;C67.6;C79.1;D09.0;D30.3;D41.4
+2;– mons;;;;;
+3;– – pubis;C51.9;C79.8;D07.1;D28.0;D39.7
+3;– – veneris;C51.9;C79.8;D07.1;D28.0;D39.7
+2;– Morgagniho krypt (sinus analis);C21.8;C78.5;D01.3;D12.9;D37.7
+2;– mostomozeèkový;C71.6;C79.3;;D33.1;D43.1
+2;– mozeèku, mozeèkový;C71.6;C79.3;;D33.1;D43.1
+2;– mozku (mozkového, mozkových) NJ;C71.9;C79.3;;D33.2;D43.2
+3;– – kmene;C71.7;C79.3;;D33.1;D43.1
+3;– – plen, mening;C70.0;C79.3;;D32.0;D42.0
+2;– mozku, mozkové(-ých)(-ého) (kùry) (hemisféry) (bílé hmoty);C71.0;C79.3;;D33.0;D43.0
+3;– – komory (mozkové) (laterální) (tøetí);C71.5;C79.3;;D33.0;D43.0
+4;– – – ètvrté;C71.7;C79.3;;D33.1;D43.1
+3;– – pedunkulu (crus cerebri);C71.7;C79.3;;D33.1;D43.1
+3;– – plen;C70.0;C79.3;;D32.0;D42.0
+2;– Müllerova duktu;;;;;
+3;– – mužského;C63.7;C79.8;D07.6;D29.7;D40.7
+3;– – ženského;C57.7;C79.8;D07.3;D28.7;D39.7
+2;– myokardu;C38.0;C79.8;;D15.1;D48.7
+2;– myometria;C54.2;C79.8;;D26.1;D39.0
+2;– Nabothovy žlázy (folikulu);C53.0;C79.8;D06.0;D26.0;D39.0
+2;– nadledviny(-ové);C74.9;C79.7;D09.3;D35.0;D44.1
+3;– – døenì;C74.1;C79.7;D09.3;D35.0;D44.1
+3;– – kùry;C74.0;C79.7;D09.3;D35.0;D44.1
+2;– nadvarlete;C63.0;C79.8;D07.6;D29.3;D40.7
+2;– nártu (kterékoli èásti) *;C40.3;C79.5;;D16.3;D48.0
+2;– nazolabiální rýhy;C44.3;C79.2;D04.3;D23.3;D48.5
+2;– nazolakrimálního kanálku;C69.5;C79.4;D09.2;D31.5;D48.7
+2;– nemoc, generalizovaná;;C79.9;;;
+2;– nervového systému (centrálního) NJ;C72.9;C79.4;;D33.9;D43.9
+3;– – autonomního – viz Novotvar, nervu, periferního;;;;;
+3;– – parasympatického – viz Novotvar, nervu, periferního;;;;;
+3;– – sympatického – viz Novotvar, nervu, periferního;;;;;
+2;– nervu(-s) (ganglia);C47.9;C79.8;;D36.1;D48.2
+3;– – abducens;C72.5;C79.4;;D33.3;D43.3
+3;– – accessorius (míšního);C72.5;C79.4;;D33.3;D43.3
+3;– – acusticus;C72.4;C79.4;;D33.3;D43.3
+3;– – autonomního NJ (viz též Novotvar, nervu, periferního);C47.9;C79.8;;D36.1;D48.2
+3;– – bederního, lumbálního;C47.6;C79.8;;D36.1;D48.2
+3;– – brachiálního;C47.1;C79.8;;D36.1;D48.2
+3;– – èichového;C72.2;C79.4;;D33.3;D43.3
+3;– – femorálního;C47.2;C79.8;;D36.1;D48.2
+3;– – ganglia NJ (viz též Novotvar, nervu, periferního);C47.9;C79.8;;D36.1;D48.2
+3;– – glosofaryngeálního;C72.5;C79.4;;D33.3;D43.3
+3;– – hlavového NJ;C72.5;C79.4;;D33.3;D43.3
+3;– – hypoglossus;C72.5;C79.4;;D33.3;D43.3
+3;– – ischiadického;C47.2;C79.8;;D36.1;D48.2
+3;– – lícního;C72.5;C79.4;;D33.3;D43.3
+3;– – medianus;C47.1;C79.8;;D36.1;D48.2
+3;– – mezižeberního, interkostálního;C47.3;C79.8;;D36.1;D48.2
+3;– – obturatoriu;C47.2;C79.8;;D36.1;D48.2
+3;– – okohybného;C72.5;C79.4;;D33.3;D43.3
+3;– – parasympatického NJ (viz též Novotvar, nervu, periferního);C47.9;C79.8;;D36.1;D48.2
+3;– – periferního NJ;C47.9;C79.8;;D36.1;D48.2
+4;– – – axily;C47.3;C79.8;;D36.1;D48.2
+4;– – – brady;C47.0;C79.8;;D36.1;D48.2
+4;– – – bøicha (stìny);C47.4;C79.8;;D36.1;D48.2
+4;– – – èela;C47.0;C79.8;;D36.1;D48.2
+4;– – – extrarektálního;C47.5;C79.8;;D36.1;D48.2
+4;– – – fossa pterygoidea;C47.0;C79.8;;D36.1;D48.2
+4;– – – hlavy;C47.0;C79.8;;D36.1;D48.2
+4;– – – hrudní(-ho) (duktu, ductus thoracicus) (stìny);C47.3;C79.8;;D36.1;D48.2
+4;– – – hrudníku (stìny);C47.3;C79.8;;D36.1;D48.2
+4;– – – hýždí;C47.5;C79.8;;D36.1;D48.2
+4;– – – hýžïové krajiny;C47.5;C79.8;;D36.1;D48.2
+4;– – – infraklavikulární krajiny;C47.3;C79.8;;D36.1;D48.2
+4;– – – inguinální(-ho) (kanálu) (krajiny);C47.5;C79.8;;D36.1;D48.2
+4;– – – jamky ischiorektální;C47.5;C79.8;;D36.1;D48.2
+4;– – – kolene;C47.2;C79.8;;D36.1;D48.2
+4;– – – konèetiny NJ;C47.9;C79.8;;D36.1;D48.2
+5;– – – – dolní;C47.2;C79.8;;D36.1;D48.2
+5;– – – – horní;C47.1;C79.8;;D36.1;D48.2
+4;– – – kotníku;C47.2;C79.8;;D36.1;D48.2
+4;– – – krèní krajiny;C47.0;C79.8;;D36.1;D48.2
+4;– – – krku;C47.0;C79.8;;D36.1;D48.2
+4;– – – kubitální jamky nebo prostoru;C47.1;C79.8;;D36.1;D48.2
+4;– – – kyèle;C47.2;C79.8;;D36.1;D48.2
+4;– – – lokte;C47.1;C79.8;;D36.1;D48.2
+4;– – – lopatkové krajiny;C47.3;C79.8;;D36.1;D48.2
+4;– – – lýtka;C47.2;C79.8;;D36.1;D48.2
+4;– – – nitrohrudního;C47.3;C79.8;;D36.1;D48.2
+4;– – – nohy;C47.2;C79.8;;D36.1;D48.2
+4;– – – nohy, holenì;C47.2;C79.8;;D36.1;D48.2
+4;– – – oènice;C69.6;C79.4;;D31.6;D48.7
+4;– – – oèního víèka;C47.0;C79.8;;D36.1;D48.2
+4;– – – palce ruky;C47.1;C79.8;;D36.1;D48.2
+4;– – – pánve (spodiny);C47.5;C79.8;;D36.1;D48.2
+4;– – – pararektálního;C47.5;C79.8;;D36.1;D48.2
+4;– – – parauretrálního;C47.5;C79.8;;D36.1;D48.2
+4;– – – paravaginálního;C47.5;C79.8;;D36.1;D48.2
+4;– – – paty;C47.2;C79.8;;D36.1;D48.2
+4;– – – paže;C47.1;C79.8;;D36.1;D48.2
+4;– – – pelveoabdominálního;C47.8;C79.8;;D36.1;D48.2
+4;– – – perinea (hráze);C47.5;C79.8;;D36.1;D48.2
+4;– – – perirektální (tkánì);C47.5;C79.8;;D36.1;D48.2
+4;– – – periuretrální (tkánì);C47.5;C79.8;;D36.1;D48.2
+4;– – – podbradového;C47.0;C79.8;;D36.1;D48.2
+4;– – – popliteální jamky nebo prostoru;C47.2;C79.8;;D36.1;D48.2
+4;– – – presakrálního;C47.5;C79.8;;D36.1;D48.2
+4;– – – prstu nohy;C47.2;C79.8;;D36.1;D48.2
+4;– – – prstu ruky;C47.1;C79.8;;D36.1;D48.2
+4;– – – pøedloktí;C47.1;C79.8;;D36.1;D48.2
+4;– – – pupku;C47.4;C79.8;;D36.1;D48.2
+4;– – – ramene;C47.1;C79.8;;D36.1;D48.2
+4;– – – rektovaginálního septa nebo stìny;C47.5;C79.8;;D36.1;D48.2
+4;– – – rektovezikálního;C47.5;C79.8;;D36.1;D48.2
+4;– – – ruky;C47.1;C79.8;;D36.1;D48.2
+4;– – – sakrokokcygeální krajiny;C47.5;C79.8;;D36.1;D48.2
+4;– – – spánkové krajiny;C47.0;C79.8;;D36.1;D48.2
+4;– – – spánku, skránì;C47.0;C79.8;;D36.1;D48.2
+4;– – – stehna;C47.2;C79.8;;D36.1;D48.2
+4;– – – supraklavikulární krajiny;C47.0;C79.8;;D36.1;D48.2
+4;– – – trupu;C47.6;C79.8;;D36.1;D48.2
+4;– – – tøísla, tøíselné krajiny;C47.5;C79.8;;D36.1;D48.2
+4;– – – tváøe, oblièeje;C47.0;C79.8;;D36.1;D48.2
+4;– – – ucha (vnìjšího);C47.0;C79.8;;D36.1;D48.2
+4;– – – ušního boltce;C47.0;C79.8;;D36.1;D48.2
+4;– – – vezikorektálního;C47.5;C79.8;;D36.1;D48.2
+4;– – – vlasové èásti hlavy;C47.0;C79.8;;D36.1;D48.2
+4;– – – zad;C47.6;C79.8;;D36.1;D48.2
+4;– – – zápìstí;C47.1;C79.8;;D36.1;D48.2
+3;– – radiálního;C47.1;C79.8;;D36.1;D48.2
+3;– – sakrálního;C47.5;C79.8;;D36.1;D48.2
+3;– – sluchového;C72.4;C79.4;;D33.3;D43.3
+3;– – spinálního NJ;C47.9;C79.8;;D36.1;D48.2
+4;– – – pøídatného, akcesoriu;C72.5;C79.4;;D33.3;D43.3
+3;– – sympatického NJ (viz též Novotvar, nervu, periferního);C47.9;C79.8;;D36.1;D48.2
+3;– – trochlearis;C72.5;C79.4;;D33.3;D43.3
+3;– – trojklaného;C72.5;C79.4;;D33.3;D43.3
+3;– – ulnárního;C47.1;C79.8;;D36.1;D48.2
+3;– – vagu;C72.5;C79.4;;D33.3;D43.3
+3;– – zrakového;C72.3;C79.4;;D33.3;D43.3
+2;– neznámé lokalizace;C80.0;C79.9;;;
+2;– neznámé lokalizace, primární;C80.0;;;;
+2;– neznámé lokalizace, primární èi sekundární;C80.9;;;;
+2;– nitrobøišní;C76.2;C79.8;;D36.7;D48.7
+2;– nitrohrudní(-ch) (dutiny) (orgánù NJ);C76.1;C79.8;;D36.7;D48.7
+2;– nitrolební NJ;C71.9;C79.3;;D33.2;D43.2
+2;– nitrooèní;C69.9;C79.4;D09.2;D31.9;D48.7
+2;– nohy NJ #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– nosní – viz Novotvar, nosu;;;;;
+2;– nosního køídla (vnìjšího);C44.3;C79.2;D04.3;D23.3;D48.5
+2;– nosohltanu(-ové);C11.9;C79.8;D00.0;D10.6;D37.0
+3;– – spodiny;C11.3;C79.8;D00.0;D10.6;D37.0
+3;– – stìny;C11.9;C79.8;D00.0;D10.6;D37.0
+4;– – – boèní;C11.2;C79.8;D00.0;D10.6;D37.0
+4;– – – horní;C11.0;C79.8;D00.0;D10.6;D37.0
+4;– – – pøední;C11.3;C79.8;D00.0;D10.6;D37.0
+4;– – – zadní;C11.1;C79.8;D00.0;D10.6;D37.0
+3;– – stropu;C11.0;C79.8;D00.0;D10.6;D37.0
+2;– nosu, nosní(-ho);C76.0;C79.8;D04.3;D36.7;D48.7
+3;– – dutiny;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – choany;C11.3;C79.8;D00.0;D10.6;D37.0
+3;– – chrupavky;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – jamky;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – konchy (sliznice);C30.0;C78.3;D02.3;D14.0;D38.5
+4;– – – kosti *;C41.0;C79.5;;D16.4;D48.0
+3;– – kosti *;C41.0;C79.5;;D16.4;D48.0
+3;– – køídla (vnìjšího);C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – kùže;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – pøedsínì, vestibula;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – septa;C30.0;C78.3;D02.3;D14.0;D38.5
+4;– – – zadního okraje;C11.3;C79.8;D00.0;D10.6;D37.0
+3;– – sinu – viz Novotvar, dutiny, sinu;;;;;
+3;– – sliznice;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – vnìjšího (kùže);C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – vnitøního;C30.0;C78.3;D02.3;D14.0;D38.5
+2;– nozdry, chøípí (pøední) (zadní);C30.0;C78.3;D02.3;D14.0;D38.5
+2;– nucleus pulposus *;C41.2;C79.5;;D16.6;D48.0
+2;– oblého vazu;C57.2;C79.8;;D28.2;D39.7
+2;– oboèí;C44.3;C79.2;D04.3;D23.3;D48.5
+2;– obratle (páteøe) *;C41.2;C79.5;;D16.6;D48.0
+3;– – kostrèe *;C41.4;C79.5;;D16.8;D48.0
+3;– – køížové *;C41.4;C79.5;;D16.8;D48.0
+2;– oènice;C69.6;C79.4;D09.2;D31.6;D48.7
+3;– – autonomního nervu;C69.6;C79.4;;D31.6;D48.7
+3;– – kosti *;C41.0;C79.5;;D16.4;D48.0
+3;– – mìkkých èástí;C69.6;C79.4;;D31.6;D48.7
+3;– – periferních nervù;C69.6;C79.4;;D31.6;D48.7
+2;– oènice, intraorbitální;C69.6;C79.4;D09.2;D31.6;D48.7
+2;– odontogenní – viz Novotvar, èelisti, kosti;;;;;
+2;– ohanbí (ženského);C51.9;C79.8;D07.1;D28.0;D39.7
+2;– oka NJ;C69.9;C79.4;D09.2;D31.9;D48.7
+2;– okraje ušního boltce;C44.2;C79.2;D04.2;D23.2;D48.5
+2;– olfactorii nervi (bulbi);C72.2;C79.4;;D33.3;D43.3
+2;– olivy (mozku);C71.7;C79.3;;D33.1;D43.1
+2;– omenta, pøedstìry;C48.1;C78.6;;D20.1;D48.4
+2;– operkula (mozku);C71.0;C79.3;;D33.0;D43.0
+2;– optického nervu, chiazma nebo traktu;C72.3;C79.4;;D33.3;D43.3
+2;– orificia (dìložního);;;;;
+3;– – vnìjšího;C53.1;C79.8;D06.1;D26.0;D39.0
+3;– – vnitøního;C53.0;C79.8;D06.0;D26.0;D39.0
+2;– orofaryngu;C10.9;C79.8;D00.0;D10.5;D37.0
+3;– – boèní stìny;C10.2;C79.8;D00.0;D10.5;D37.0
+3;– – hranièní oblasti;C10.8;C79.8;D00.0;D10.5;D37.0
+3;– – zadní stìny;C10.3;C79.8;D00.0;D10.5;D37.0
+2;– pahýlu, hrdla dìložního;C53.8;C79.8;D06.7;D26.0;D39.0
+2;– palatofaryngeálního oblouku;C09.1;C79.8;D00.0;D10.5;D37.0
+2;– palatoglosálního oblouku;C09.1;C79.8;D00.0;D10.5;D37.0
+2;– palce ruky NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– pallia;C71.0;C79.3;;D33.0;D43.0
+2;– pankreatu(-ického)(-ických), slinivky bøišní;C25.9;C78.8;D01.7;D13.6;D37.7
+3;– – hlavy;C25.0;C78.8;D01.7;D13.6;D37.7
+3;– – ocasu;C25.2;C78.8;D01.7;D13.6;D37.7
+3;– – ostrùvkù;C25.4;C78.8;D01.7;D13.7;D37.7
+3;– – tìla;C25.1;C78.8;D01.7;D13.6;D37.7
+3;– – vývodu (Santoriniho) (Wirsungova);C25.3;C78.8;D01.7;D13.6;D37.7
+2;– pánve, pánevní(-ho);C76.3;C79.8;D09.7;D36.7;D48.7
+3;– – kosti *;C41.4;C79.5;;D16.8;D48.0
+3;– – orgánù;C76.3;C79.8;;D36.7;D48.7
+3;– – spodiny, dna;C76.3;C79.8;D09.7;D36.7;D48.7
+3;– – stìny;C76.3;C79.8;D09.7;D36.7;D48.7
+2;– pánvièky ledvinné;C65 ;C79.0;D09.1;D30.1;D41.1
+2;– paraaortického tìlíska;C75.5;C79.8;;D35.6;D44.7
+2;– paraganglia NJ;C75.5;C79.8;;D35.6;D44.7
+2;– parametria;C57.3;C79.8;;D28.2;D39.7
+2;– paranefrický;C48.0;C78.6;;D20.0;D48.3
+2;– pararektální;C76.3;C79.8;;D36.7;D48.7
+2;– paraselární;C71.9;C79.3;;D33.2;D43.2
+2;– paratyreoidey, pøíštítného tìlíska;C75.0;C79.8;D09.3;D35.1;D44.2
+2;– parauretrální;C76.3;C79.8;;D36.7;D48.7
+3;– – žlázy;C68.1;C79.1;D09.1;D30.7;D41.7
+2;– paravaginální;C76.3;C79.8;;D36.7;D48.7
+2;– parenchymu, ledviny;C64 ;C79.0;D09.1;D30.0;D41.0
+2;– parietálního laloku;C71.3;C79.3;;D33.0;D43.0
+2;– parovariální;C57.1;C79.8;D07.3;D28.2;D39.7
+2;– patelly, èéšky *;C40.3;C79.5;;D16.3;D48.0
+2;– páteøe *;C41.2;C79.5;;D16.6;D48.0
+3;– – kosti køížové *;C41.4;C79.5;;D16.8;D48.0
+3;– – kostrèe *;C41.4;C79.5;;D16.8;D48.0
+3;– – lumbosakrální *;C41.2;C79.5;;D16.6;D48.0
+2;– patra;C05.9;C79.8;D00.0;D10.3;D37.0
+3;– – mìkkého;C05.1;C79.8;D00.0;D10.3;D37.0
+4;– – – nazofaryngeální plochy;C11.3;C79.8;D00.0;D10.6;D37.0
+4;– – – pøední plochy;C11.3;C79.8;D00.0;D10.6;D37.0
+4;– – – zadní plochy;C11.3;C79.8;D00.0;D10.6;D37.0
+3;– – spojení tvrdého a mìkkého;C05.8;C79.8;D00.0;D10.3;D37.0
+3;– – tvrdého;C05.0;C79.8;D00.0;D10.3;D37.0
+2;– paty NJ #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– paže NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– pažní pletenì;C47.1;C79.8;;D36.1;D48.2
+2;– pedunkulu, stopky, mozkové;C71.7;C79.3;;D33.1;D43.1
+2;– pelveoabdominální;C76.8;C79.8;D09.7;D36.7;D48.7
+2;– pelvirektálního spojení;C19 ;C78.5;D01.1;D12.7;D37.5
+2;– penisu, pyje;C60.9;C79.8;D07.4;D29.0;D40.7
+3;– – kavernózního tìlesa;C60.2;C79.8;D07.4;D29.0;D40.7
+3;– – kùže NJ;C60.9;C79.8;D07.4;D29.0;D40.7
+3;– – tìla;C60.2;C79.8;D07.4;D29.0;D40.7
+3;– – žaludu;C60.1;C79.8;D07.4;D29.0;D40.7
+2;– periadrenální;C48.0;C78.6;;D20.0;D48.3
+2;– periampulární (týká se Vaterovy ampuly);C24.1;C78.8;D01.5;D13.5;D37.6
+2;– perianální (kùže);C44.5;C79.2;D04.5;D23.5;D48.5
+2;– periferního nervu NJ;C47.9;C79.8;;D36.1;D48.2
+2;– perikardu;C38.0;C79.8;;D15.1;D48.7
+2;– perinea;C76.3;C79.8;D09.7;D36.7;D48.7
+2;– perinefrický;C48.0;C78.6;;D20.0;D48.3
+2;– periodontální tkánì NJ;C03.9;C79.8;D00.0;D10.3;D37.0
+2;– periostu – viz Novotvar, kosti;;;;;
+2;– peripankreatický;C48.0;C78.6;;D20.0;D48.3
+2;– perirektální (tkánì);C76.3;C79.8;;D36.7;D48.7
+2;– perirenální (tkánì);C48.0;C78.6;;D20.0;D48.3
+2;– peritonea, pobøišnice;C48.2;C78.6;;D20.1;D48.4
+3;– – nástìnného;C48.1;C78.6;;D20.1;D48.4
+3;– – pánevního;C48.1;C78.6;;D20.1;D48.4
+3;– – urèité èásti NJ;C48.1;C78.6;;D20.1;D48.4
+2;– peritoneální dutiny;C48.2;C78.6;;D20.1;D48.4
+2;– periuretrální tkánì;C76.3;C79.8;;D36.7;D48.7
+2;– pia mater;C70.9;C79.4;;D32.9;D42.9
+3;– – hlavy;C70.0;C79.3;;D32.0;D42.0
+3;– – míšní;C70.1;C79.4;;D32.1;D42.1
+3;– – mozkové;C70.0;C79.3;;D32.0;D42.0
+2;– placenty;C58 ;C79.8;D07.3;D26.7;D39.2
+2;– plen, mening;C70.9;C79.4;;D32.9;D42.9
+3;– – intrakraniálních;C70.0;C79.3;;D32.0;D42.0
+3;– – kraniálních (hlavových);C70.0;C79.3;;D32.0;D42.0
+3;– – míšních (provazec);C70.1;C79.4;;D32.1;D42.1
+3;– – mozkových;C70.0;C79.3;;D32.0;D42.0
+3;– – mozku;C70.0;C79.3;;D32.0;D42.0
+2;– pletenì, plexu;;;;;
+3;– – chorioideu;C71.5;C79.3;;D33.0;D43.0
+3;– – krèní;C47.0;C79.8;;D36.1;D48.2
+3;– – lumbosakrální;C47.5;C79.8;;D36.1;D48.2
+3;– – pažní;C47.1;C79.8;;D36.1;D48.2
+3;– – sakrální, køížové;C47.5;C79.8;;D36.1;D48.2
+2;– pleury, pohrudnice, pohrudnièní (dutiny);C38.4;C78.2;;D15.7;D38.2
+3;– – nástìnné;C38.4;C78.2;;D15.7;D38.2
+3;– – viscerální, útrobní;C38.4;C78.2;;D15.7;D38.2
+2;– plíce;C34.9;C78.0;D02.2;D14.3;D38.1
+3;– – cariny;C34.0;C78.0;D02.2;D14.3;D38.1
+3;– – dolního laloku;C34.3;C78.0;D02.2;D14.3;D38.1
+3;– – hilu;C34.0;C78.0;D02.2;D14.3;D38.1
+3;– – hlavního bronchu;C34.0;C78.0;D02.2;D14.3;D38.1
+3;– – horního laloku;C34.1;C78.0;D02.2;D14.3;D38.1
+3;– – linguly;C34.1;C78.0;D02.2;D14.3;D38.1
+3;– – støedního bronchu;C34.2;C78.0;D02.2;D14.3;D38.1
+2;– plicní (viz též Novotvar, plíce);C34.9;C78.0;D02.2;D14.3;D38.1
+2;– plodových blan;C58 ;C79.8;D07.3;D26.7;D39.2
+2;– ploténky, meziobratlové *;C41.2;C79.5;;D16.6;D48.0
+2;– pluriglandulární, více žláz s vnitøní sekrecí;C75.8;C79.8;D09.3;D35.8;D44.8
+2;– podkožní (uzlíku) (tkánì) NJ – viz Novotvar, mìkké tkánì;;;;;
+2;– pohlavního orgánu nebo ústrojí;;;;;
+3;– – mužského NJ;C63.9;C79.8;D07.6;D29.9;D40.9
+4;– – – urèené èásti NJ;C63.7;C79.8;D07.6;D29.7;D40.7
+3;– – ženského NJ;C57.9;C79.8;D07.3;D28.9;D39.9
+4;– – – urèené èásti NJ;C57.7;C79.8;D07.3;D28.7;D39.7
+2;– pochvy, vaginy, vaginální klenby, stìny;C52 ;C79.8;D07.2;D28.1;D39.7
+2;– postkrikoidní (krajiny);C13.0;C79.8;D00.0;D10.7;D37.0
+2;– postnazálního prostoru;C11.9;C79.8;D00.0;D10.6;D37.0
+2;– potní žlázy (apokrinní) (ekrinní), lokalizace neurèena;C44.9;C79.2;D04.9;D23.9;D48.5
+2;– prepyloru;C16.4;C78.8;D00.2;D13.1;D37.1
+2;– presakrální (krajiny);C76.3;C79.8;;D36.7;D48.7
+2;– primární lokalizace neznámá, uvedeno;C80.0;;;;
+2;– prostaty (žlázy);C61 ;C79.8;D07.5;D29.1;D40.0
+2;– provazce semenného;C63.1;C79.8;D07.6;D29.7;D40.7
+2;– prsní bradavky;C50.0;C79.8;D05.9;D24 ;D48.6
+2;– prstu nohy, prstce NJ #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– prstu ruky NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– prsu (pojivové tkánì) (žlázové tkánì) (mìkkých èástí);C50.9;C79.8;D05.9;D24 ;D48.6
+3;– – axilárního výbìžku;C50.6;C79.8;D05.9;D24 ;D48.6
+3;– – centrální èásti;C50.1;C79.8;D05.9;D24 ;D48.6
+3;– – dolní èásti;C50.8;C79.8;D05.9;D24 ;D48.6
+3;– – dolního vnitøního kvadrantu;C50.3;C79.8;D05.9;D24 ;D48.6
+3;– – dolního zevního kvadrantu;C50.5;C79.8;D05.9;D24 ;D48.6
+3;– – dvorce, areoly;C50.0;C79.8;D05.9;D24 ;D48.6
+3;– – ektopické lokalizace;C50.8;C79.8;D05.9;D24 ;D48.6
+3;– – horní èásti;C50.8;C79.8;D05.9;D24 ;D48.6
+3;– – horního vnitøního kvadrantu;C50.2;C79.8;D05.9;D24 ;D48.6
+3;– – horního zevního kvadrantu;C50.4;C79.8;D05.9;D24 ;D48.6
+3;– – kùže;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – ve støední èáøe;C50.8;C79.8;D05.9;D24 ;D48.6
+3;– – vnìjší èásti;C50.8;C79.8;D05.9;D24 ;D48.6
+3;– – vnitøní èásti;C50.8;C79.8;D05.9;D24 ;D48.6
+3;– – výbìžku axilárního;C50.6;C79.8;D05.9;D24 ;D48.6
+2;– prùdušnice, trachey;C33 ;C78.3;D02.1;D14.2;D38.1
+2;– pøedkožky;C60.0;C79.8;D07.4;D29.0;D40.7
+2;– pøedloktí NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– pøedsínì, vestibula;;;;;
+3;– – nosní;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – ústní;C06.1;C79.8;D00.0;D10.3;D37.0
+2;– pøídatné dutiny (nosní) – viz Novotvar, dutiny;;;;;
+2;– pøíušní(-ho) (vývodu) (žlázy);C07 ;C79.8;D00.0;D11.0;D37.0
+2;– pterygoidní fosy NJ;C49.0;C79.8;;D21.0;D48.1
+3;– – autonomního nervového systému;C47.0;C79.8;;D36.1;D48.2
+3;– – fibrózní tkánì;C49.0;C79.8;;D21.0;D48.1
+3;– – mìkké tkánì;C49.0;C79.8;;D21.0;D48.1
+3;– – periferního nervu;C47.0;C79.8;;D36.1;D48.2
+3;– – pojivové tkánì;C49.0;C79.8;;D21.0;D48.1
+2;– pupku, pupeèní;C44.5;C79.2;D04.5;D23.5;D48.5
+2;– putamen;C71.0;C79.3;;D33.0;D43.0
+2;– pylorického;;;;;
+3;– – antra;C16.3;C78.8;D00.2;D13.1;D37.1
+3;– – kanálu;C16.4;C78.8;D00.2;D13.1;D37.1
+2;– pyloru;C16.4;C78.8;D00.2;D13.1;D37.1
+2;– pyramidy (mozku);C71.7;C79.3;;D33.1;D43.1
+2;– pysku stydkého (kùže);C51.9;C79.8;D07.1;D28.0;D39.7
+3;– – malého;C51.1;C79.8;D07.1;D28.0;D39.7
+3;– – velkého;C51.0;C79.8;D07.1;D28.0;D39.7
+2;– radia (kterékoli èásti) *;C40.0;C79.5;;D16.0;D48.0
+2;– radlièné kosti (vomeru) ;C41.0;C79.5;;D16.4;D49.0
+2;– ramene NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– Rathkeovy výchlipky;C75.1;C79.8;D09.3;D35.2;D44.3
+2;– rektosigmoidea (traèníku) (spojení);C19 ;C78.5;D01.1;D12.7;D37.5
+2;– rektouterinní výchlipky;C48.1;C78.6;;D20.1;D48.4
+2;– rektovaginálního septa nebo stìny;C76.3;C79.8;D09.7;D36.7;D48.7
+2;– rektovezikálního septa;C76.3;C79.8;D09.7;D36.7;D48.7
+2;– retrobulbární;C69.6;C79.4;;D31.6;D48.7
+2;– retrocékální;C48.0;C78.6;;D20.0;D48.3
+2;– retrofaryngeální;C14.0;C79.8;D00.0;D10.9;D37.0
+2;– retromolární (oblasti) (trojúhelníku) (trigona);C06.2;C79.8;D00.0;D10.3;D37.0
+2;– retroperitonea;C48.0;C78.6;;D20.0;D48.3
+2;– retroperitoneální(-ho) (prostoru) (tkánì);C48.0;C78.6;;D20.0;D48.3
+2;– retrovezikání;C76.3;C79.8;;D36.7;D48.7
+2;– rhinencephala;C71.0;C79.3;;D33.0;D43.0
+2;– rohovky (limbu);C69.1;C79.4;D09.2;D31.1;D48.7
+2;– Rosenmüllerovy jamky;C11.2;C79.8;D00.0;D10.6;D37.0
+2;– rtu;C00.9;C79.8;D00.0;D10.0;D37.0
+3;– – èervenì rtu;C00.2;C79.8;D00.0;D10.0;D37.0
+4;– – – dolní;C00.1;C79.8;D00.0;D10.0;D37.0
+4;– – – horní;C00.0;C79.8;D00.0;D10.0;D37.0
+3;– – dolního;C00.1;C79.8;D00.0;D10.0;D37.0
+4;– – – vnitøního;C00.4;C79.8;D00.0;D10.0;D37.0
+3;– – horního;C00.0;C79.8;D00.0;D10.0;D37.0
+4;– – – vnitøního;C00.3;C79.8;D00.0;D10.0;D37.0
+3;– – komisury;C00.6;C79.8;D00.0;D10.0;D37.0
+3;– – kùže (komisury) (dolního) (horního);C44.0;C79.2;D04.0;D23.0;D48.5
+3;– – sliznice – viz Novotvar, rtu, vnitøního;;;;;
+3;– – sliznièní strany – viz Novotvar, rtu, vnitøního;;;;;
+3;– – ústní èásti – viz Novotvar, rtu, vnitøního;;;;;
+3;– – uzdièky – viz Novotvar, rtu, vnitøního;;;;;
+3;– – vnitøní èásti – viz Novotvar, rtu, vnitøního;;;;;
+3;– – vnitøního;C00.5;C79.8;D00.0;D10.0;D37.0
+4;– – – dolního;C00.4;C79.8;D00.0;D10.0;D37.0
+4;– – – horního;C00.3;C79.8;D00.0;D10.0;D37.0
+3;– – zevního;C00.2;C79.8;D00.0;D10.0;D37.0
+4;– – – dolního;C00.1;C79.8;D00.0;D10.0;D37.0
+4;– – – horního;C00.0;C79.8;D00.0;D10.0;D37.0
+2;– ruky NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– øiti, øitního;C21.0;C78.5;D01.3;D12.9;D37.7
+3;– – kanálu;C21.1;C78.5;D01.3;D12.9;D37.7
+3;– – kùže;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – okraje;C44.5;C79.2;D04.5;D23.5;D48.5
+3;– – svìraèe, sfinkteru;C21.1;C78.5;D01.3;D12.9;D37.7
+2;– sakrouterinního vazu;C57.3;C79.8;;D28.2;D39.7
+2;– Santoriniho vývodu;C25.3;C78.8;D01.7;D13.6;D37.7
+2;– semenného provazce;C63.1;C79.8;D07.6;D29.7;D40.7
+2;– semenného váèku;C63.7;C79.8;D07.6;D29.7;D40.7
+2;– septa, pøepážky;;;;;
+3;– – nosního;C30.0;C78.3;D02.3;D14.0;D38.5
+4;– – – zadního okraje;C11.3;C79.8;D00.0;D10.6;D37.0
+3;– – rektovaginálního;C76.3;C79.8;D09.7;D36.7;D48.7
+3;– – rektovezikálního;C76.3;C79.8;D09.7;D36.7;D48.7
+3;– – uretrovaginálního;C57.9;C79.8;D07.3;D28.9;D39.7
+3;– – vezikovaginálního;C57.9;C79.8;D07.3;D28.9;D39.7
+2;– sigmoidní (flexury);C18.7;C78.5;D01.0;D12.5;D37.4
+2;– sínì, srdeèní;C38.0;C79.8;;D15.1;D48.7
+2;– sítnice;C69.2;C79.4;D09.2;D31.2;D48.7
+2;– Skeneho žlázek (parauretrálních);C68.1;C79.1;D09.1;D30.7;D41.7
+2;– skoøepy nosní;C30.0;C78.3;D02.3;D14.0;D38.5
+2;– slepého støeva – viz Novotvar, céka;;;;;
+2;– sleziny, slezinného NJ;C26.1;C78.8;;D13.9;D37.7
+3;– – ohbí (tlustého støeva);C18.5;C78.5;D01.0;D12.3;D37.4
+2;– slinné žlázy nebo vývodu (velké);C08.9;C79.8;D00.0;D11.9;D37.0
+3;– – malé NJ;C06.9;C79.8;D00.0;D10.3;D37.0
+3;– – podjazykové;C08.1;C79.8;D00.0;D11.7;D37.0
+3;– – pøíušní;C07 ;C79.8;D00.0;D11.0;D37.0
+3;– – submandibulární;C08.0;C79.8;D00.0;D11.7;D37.0
+3;– – submaxilární;C08.0;C79.8;D00.0;D11.7;D37.0
+2;– sliznice;;;;;
+3;– – alveolární (høebene nebo výbìžku);C03.9;C79.8;D00.0;D10.3;D37.0
+4;– – – dolního;C03.1;C79.8;D00.0;D10.3;D37.0
+4;– – – horního;C03.0;C79.8;D00.0;D10.3;D37.0
+3;– – nosní;C30.0;C78.3;D02.3;D14.0;D38.5
+3;– – rtu – viz Novotvar, rtu, vnitøního;;;;;
+3;– – tváøové;C06.0;C79.8;D00.0;D10.3;D37.0
+3;– – úst NJ;C06.9;C79.8;D00.0;D10.3;D37.0
+2;– sluchové(-ho);;;;;
+3;– – nervu;C72.4;C79.4;;D33.3;D43.3
+3;– – trubice;C30.1;C78.3;D02.3;D14.0;D38.5
+4;– – – ústí;C11.2;C79.8;D00.0;D10.6;D37.0
+2;– slzné(-ho);;;;;
+3;– – bodu;C69.5;C79.4;D09.2;D31.5;D48.7
+3;– – kanálku;C69.5;C79.4;D09.2;D31.5;D48.7
+3;– – vaku;C69.5;C79.4;D09.2;D31.5;D48.7
+3;– – žlázy;C69.5;C79.4;D09.2;D31.5;D48.7
+2;– slzovodu (nosního);C69.5;C79.4;D09.2;D31.5;D48.7
+2;– spánkové(-ho);;;;;
+3;– – krajiny;C76.0;C79.8;D09.7;D36.7;D48.7
+3;– – pólu nebo laloku;C71.2;C79.3;;D33.0;D43.0
+2;– spánku, skránì (kùže);C44.3;C79.2;D04.3;D23.3;D48.5
+2;– spojení;;;;;
+3;– – anorektálního;C21.8;C78.5;D01.3;D12.9;D37.7
+3;– – ezofagogastrického;C16.0;C78.8;D00.2;D13.1;D37.1
+3;– – gastroezofageálního;C16.0;C78.8;D00.2;D13.1;D37.1
+3;– – ileocekálního;C18.0;C78.5;D01.0;D12.0;D37.4
+3;– – kardioezofageálního;C16.0;C78.8;D00.2;D13.1;D37.1
+3;– – pelvirektálního;C19 ;C78.5;D01.1;D12.7;D37.5
+3;– – pelviureterálního;C65 ;C79.0;D09.1;D30.1;D41.1
+3;– – rektosigmoideálního;C19 ;C78.5;D01.1;D12.7;D37.5
+3;– – skvamokolumnárního, hrdla dìložního;C53.8;C79.8;D06.7;D26.0;D39.0
+3;– – tvrdého a mìkkého patra;C05.8;C79.8;D00.0;D10.3;D37.0
+2;– spojení velkých pyskù;C51.9;C79.8;D07.1;D28.0;D39.7
+2;– spojivky;C69.0;C79.4;D09.2;D31.0;D48.7
+2;– spoleèného žluèovodu;C24.0;C78.8;D01.5;D13.5;D37.6
+2;– srdce;C38.0;C79.8;;D15.1;D48.7
+2;– stehna NJ #;C76.5;C79.8;D04.7;D36.7;D48.7
+2;– Stensenova vývodu;C07 ;C79.8;D00.0;D11.0;D37.0
+2;– stromatu, endometriálního;C54.1;C79.8;D07.0;D26.1;D39.0
+2;– støedního mozku;C71.7;C79.3;;D33.1;D43.1
+2;– støedoušní dutiny;C30.1;C78.3;D02.3;D14.0;D38.5
+2;– støeva, støevního;C26.0;C78.5;D01.4;D13.9;D37.7
+3;– – tenkého;C17.9;C78.4;D01.4;D13.3;D37.2
+4;– – – duodena, dvanáctníku;C17.0;C78.4;D01.4;D13.2;D37.2
+4;– – – ilea;C17.2;C78.4;D01.4;D13.3;D37.2
+4;– – – jejuna;C17.1;C78.4;D01.4;D13.3;D37.2
+3;– – tlustého;C18.9;C78.5;D01.0;D12.6;D37.4
+4;– – – apendixu, èervovitého pøívìsku;C18.1;C78.5;D01.0;D12.1;D37.3
+4;– – – céka;C18.0;C78.5;D01.0;D12.0;D37.4
+4;– – – hepatální flexury;C18.3;C78.5;D01.0;D12.3;D37.4
+4;– – – ileocéka;C18.0;C78.5;D01.0;D12.0;D37.4
+4;– – – sigmoideální flexury;C18.7;C78.5;D01.0;D12.5;D37.4
+4;– – – slezinné flexury;C18.5;C78.5;D01.0;D12.3;D37.4
+4;– – – traèníku;C18.9;C78.5;D01.0;D12.6;D37.4
+5;– – – – esovitého ohbí;C18.7;C78.5;D01.0;D12.5;D37.4
+5;– – – – levého;C18.6;C78.5;D01.0;D12.4;D37.4
+5;– – – – pánevního;C18.7;C78.5;D01.0;D12.5;D37.4
+5;– – – – pravého;C18.2;C78.5;D01.0;D12.2;D37.4
+5;– – – – pøíèného;C18.4;C78.5;D01.0;D12.3;D37.4
+5;– – – – s koneèníkem;C19 ;C78.5;D01.1;D12.7;D37.5
+5;– – – – sestupného;C18.6;C78.5;D01.0;D12.4;D37.4
+5;– – – – sigmoidea;C18.7;C78.5;D01.0;D12.5;D37.4
+5;– – – – vzestupného;C18.2;C78.5;D01.0;D12.2;D37.4
+3;– – traktu NJ;C26.0;C78.5;D01.4;D13.9;D37.7
+2;– støevní – viz Novotvar, støeva;;;;;
+2;– stydké kosti *;C41.4;C79.5;;D16.8;D48.0
+2;– subdurální;C70.9;C79.4;;D32.9;D42.9
+2;– subglotis, subglotický;C32.2;C78.3;D02.0;D14.1;D38.0
+2;– sublingvální, podjazykový(-é);C04.9;C79.8;D00.0;D10.2;D37.0
+3;– – žlázy nebo vývodu;C08.1;C79.8;D00.0;D11.7;D37.0
+2;– submandibulární žlázy;C08.0;C79.8;D00.0;D11.7;D37.0
+2;– submaxilární žlázy nebo vývodu;C08.0;C79.8;D00.0;D11.7;D37.0
+2;– submentální, podbradový;C76.0;C79.8;D09.7;D36.7;D48.7
+2;– subpleurální;C34.9;C78.0;D02.2;D14.3;D38.1
+2;– substernální;C38.1;C78.1;;D15.2;D38.3
+2;– sulcus glossopharyngealis;C09.0;C79.8;D00.0;D10.5;D37.0
+2;– supraglotis;C32.1;C78.3;D02.0;D14.1;D38.0
+2;– supraklavikulární krajiny;C76.0;C79.8;D09.7;D36.7;D48.7
+2;– suprarenální(-ho), nadledvinové;C74.9;C79.7;D09.3;D35.0;D44.1
+3;– – døenì;C74.1;C79.7;D09.3;D35.0;D44.1
+3;– – kùry;C74.0;C79.7;D09.3;D35.0;D44.1
+3;– – žlázy;C74.9;C79.7;D09.3;D35.0;D44.1
+2;– supraselární (krajiny);C71.9;C79.3;;D33.2;D43.2
+2;– supratentoriální (mozku) NJ;C71.0;C79.3;;D33.0;D43.0
+2;– svalu – viz též Novotvar, mìkké tkánì;C49.9;C79.8;;D21.9;D48.1
+3;– – zevního oèního;C69.6;C79.4;D09.2;D31.6;D48.7
+2;– svìraèe, sfinkteru;;;;;
+3;– – Oddiho;C24.1;C78.8;;D13.5;D37.6
+3;– – øitního;C21.1;C78.5;;D21.9;D37.7
+2;– symfýzy kosti stydké;C41.4;C79.5;;D16.8;D48.0
+2;– sympatického nervu nebo nervového systému NJ;C47.9;C79.8;;D36.1;D48.2
+2;– synovialis, synoviální membrány – viz Novotvar, mìkké tkánì;;;;;
+2;– širokého vazu;C57.1;C79.8;;D28.2;D39.7
+2;– šlachy (pochvy) – viz Novotvar, mìkké tkánì;;;;;
+2;– šourku, skrota;C63.2;C79.8;D07.6;D29.4;D40.7
+2;– štítné (žlázy);C73 ;C79.8;D09.3;D34 ;D44.0
+3;– – chrupavky;C32.3;C78.3;D02.0;D14.1;D38.0
+2;– talamu;C71.0;C79.3;;D33.0;D43.0
+2;– tapetum;C71.8;C79.3;;D33.2;D43.2
+2;– tìla, corpus;;;;;
+3;– – callosum;C71.8;C79.3;;D33.2;D43.2
+3;– – cavernosum;C60.2;C79.8;D07.4;D29.0;D40.7
+3;– – dìložního;C54.9;C79.8;D07.3;D26.1;D39.0
+4;– – – istmu;C54.0;C79.8;D07.3;D26.1;D39.0
+3;– – pyje, penisu;C60.2;C79.8;D07.4;D29.0;D40.7
+3;– – striatum;C71.0;C79.3;;D33.0;D43.0
+3;– – žaludeèního;C16.2;C78.8;D00.2;D13.1;D37.1
+2;– tentoria (cerebelli);C70.0;C79.3;;D32.0;D42.0
+2;– thymu (žlázy);C37 ;C79.8;D09.3;D15.0;D38.4
+2;– tibie, kosti holenní *;C40.2;C79.5;;D16.2;D48.0
+2;– tlustého støeva (viz též Novotvar, støeva, tlustého);C18.9;C78.5;D01.0;D12.6;D37.4
+3;– – s koneèníkem;C19 ;C78.5;D01.1;D12.7;D37.5
+2;– tragu;C44.2;C79.2;D04.2;D23.2;D48.5
+2;– tracheobronchiální;C34.8;C78.0;D02.2;D14.2;D38.1
+2;– trachey, prùdušnice (chrupavky) (sliznice) (viz též Novotvar, kariny);C33 ;C78.3;D02.1;D14.2;D38.1
+2;– trávicího ústrojí NJ;C26.9;C78.8;D01.9;D13.9;D37.9
+2;– trávicích orgánù, ústrojí, trubice nebo traktu NJ;C26.9;C78.8;D01.9;D13.9;D37.9
+2;– trupu NJ #;C76.7;C79.8;D04.5;D36.7;D48.7
+2;– tøísla NJ #;C76.3;C79.8;D04.5;D36.7;D48.7
+2;– tuboovariální;C57.8;C79.8;D07.3;D28.7;D39.7
+2;– tuby Fallopií;C57.0;C79.8;D07.3;D28.2;D39.7
+2;– tukové tkánì – viz Novotvar, mìkké tkánì;;;;;
+2;– tunicae vaginalis;C63.7;C79.8;D07.6;D29.7;D40.7
+2;– tureckého sedla, kosti*;C41.0;C79.5;;D16.4;D48.0
+2;– tváøe NJ #;C76.0;C79.8;D04.3;D36.7;D48.7
+2;– tváøe, líce;C76.0;C79.8;D09.7;D36.7;D48.7
+3;– – sliznice;C06.0;C79.8;D00.0;D10.3;D37.0
+3;– – vnìjší;C44.3;C79.2;D04.3;D23.3;D48.5
+3;– – vnitøní;C06.0;C79.8;D00.0;D10.3;D37.0
+3;– – vnitøní plochy;C06.0;C79.8;D00.0;D10.3;D37.0
+2;– tvrdé pleny;C70.9;C79.4;;D32.9;D42.9
+3;– – míšní;C70.1;C79.4;;D32.1;D42.1
+3;– – mozkové;C70.0;C79.3;;D32.0;D42.0
+2;– týlního laloku nebo pólu;C71.4;C79.3;;D33.0;D43.0
+2;– ucha (vnìjšího);C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – boltce;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – chrupavky;C49.0;C79.8;;D21.0;D48.1
+3;– – kùže;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – lalùèku;C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – støedního;C30.1;C78.3;D02.3;D14.0;D38.5
+3;– – vnitøního;C30.1;C78.3;D02.3;D14.0;D38.5
+3;– – zevního zvukovodu;C44.2;C79.2;D04.2;D23.2;D48.5
+2;– ulny, kosti loketní (kterékoli èásti) *;C40.0;C79.5;;D16.0;D48.0
+2;– uncus (gyri hippocampi);C71.2;C79.3;;D33.0;D43.0
+2;– urachu;C67.7;C79.1;D09.0;D30.3;D41.4
+2;– urèené lokalizace NJ;C76.7;C79.8;D09.7;D36.7;D48.7
+2;– uretrovaginálního;C57.9;C79.8;D07.3;D28.9;D39.9
+3;– – septa;C57.9;C79.8;D07.3;D28.9;D39.7
+2;– uretry, moèové trubice, uretrální(-ho) (žlázy);C68.0;C79.1;D09.1;D30.4;D41.3
+3;– – ústí, vnitøního;C67.5;C79.1;D09.0;D30.3;D41.4
+2;– urogenitálního traktu;;;;;
+3;– – mužského;C63.9;C79.8;D07.6;D29.9;D40.9
+3;– – ženského;C57.9;C79.8;D07.3;D28.9;D39.9
+2;– úst, ústní (dutiny);C06.9;C79.8;D00.0;D10.3;D37.0
+3;– – patra;C05.9;C79.8;D00.0;D10.3;D37.0
+3;– – pøedsínì (vestibula);C06.1;C79.8;D00.0;D10.3;D37.0
+3;– – sliznice NJ;C06.9;C79.8;D00.0;D10.3;D37.0
+3;– – spodiny;C04.9;C79.8;D00.0;D10.2;D37.0
+4;– – – postranní èásti;C04.1;C79.8;D00.0;D10.2;D37.0
+4;– – – pøední èásti;C04.0;C79.8;D00.0;D10.2;D37.0
+3;– – urèené èásti NJ;C06.8;C79.8;D00.0;D10.3;D37.0
+2;– ušního boltce, lalùèku (kùže);C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – chrupavky;C49.0;C79.8;;D21.0;D48.1
+2;– utero-ovariální(-ho);C57.8;C79.8;;D28.7;D39.7
+3;– – vazu;C57.1;C79.8;;D28.2;D39.7
+2;– uterosakrálního vazu;C57.3;C79.8;;D28.2;D39.7
+2;– utriculus, prostaticus;C68.0;C79.1;D09.1;D30.4;D41.3
+2;– útrob NJ;C76.7;C79.8;;D36.7;D48.7
+2;– uveálního traktu;C69.4;C79.4;D09.2;D31.4;D48.7
+2;– uvuly, èípku;C05.2;C79.8;D00.0;D10.3;D37.0
+2;– uzdièky;;;;;
+3;– – jazyka;C02.2;C79.8;D00.0;D10.1;D37.0
+3;– – rtu – viz Novotvar, rtu, vnitøního;;;;;
+2;– váèku, semenného;C63.7;C79.8;D07.6;D29.7;D40.7
+2;– vaginovezikální(-ho);C57.9;C79.8;D07.3;D28.9;D39.9
+3;– – septa;C57.9;C79.8;D07.3;D28.9;D39.7
+2;– vajeèníku;C56 ;C79.6;D07.3;D27;D39.1
+2;– valekuly (epiglottis);C10.0;C79.8;D00.0;D10.5;D37.0
+2;– varlete, testis;C62.9;C79.8;D07.6;D29.2;D40.1
+3;– – ektopického;C62.0;C79.8;D07.6;D29.2;D40.1
+3;– – nesestouplého;C62.0;C79.8;D07.6;D29.2;D40.1
+3;– – retinovaného;C62.0;C79.8;D07.6;D29.2;D40.1
+3;– – sestouplého;C62.1;C79.8;D07.6;D29.2;D40.1
+3;– – skrotálního;C62.1;C79.8;D07.6;D29.2;D40.1
+2;– Varolova mostu;C71.7;C79.3;;D33.1;D43.1
+2;– vas deferens;C63.1;C79.8;D07.6;D29.7;D40.7
+2;– Vaterovy ampuly;C24.1;C78.8;D01.5;D13.5;D37.6
+2;– vazivové tkánì – viz Novotvar, mìkké tkánì;;;;;
+2;– vazù hlasových (pravých);C32.0;C78.3;D02.0;D14.1;D38.0
+3;– – nepravých;C32.1;C78.3;D02.0;D14.1;D38.0
+2;– vazu, ligamenta (viz též Novotvar, mìkké tkánì);C49.9;C79.8;;D21.9;D48.1
+3;– – dìložního;C57.3;C79.8;;D28.2;D39.7
+3;– – oblého;C57.2;C79.8;;D28.2;D39.7
+3;– – sakrouterinního;C57.3;C79.8;;D28.2;D39.7
+3;– – širokého;C57.1;C79.8;;D28.2;D39.7
+3;– – uteroovariálního;C57.1;C79.8;;D28.2;D39.7
+3;– – uterosakrálního;C57.3;C79.8;;D28.2;D39.7
+2;– vedlejší dutiny, sinu;C31.9;C78.3;D02.3;D14.0;D38.5
+3;– – èelní;C31.2;C78.3;D02.3;D14.0;D38.5
+3;– – èichové;C31.1;C78.3;D02.3;D14.0;D38.5
+3;– – kosti (kterékoli) *;C41.0;C79.5;;D16.4;D48.0
+3;– – maxilární;C31.0;C78.3;D02.3;D14.0;D38.5
+3;– – nosní, paranazální NJ;C31.9;C78.3;D02.3;D14.0;D38.5
+3;– – piriformního;C12 ;C79.8;D00.0;D10.7;D37.0
+3;– – sfenoidálního;C31.3;C78.3;D02.3;D14.0;D38.5
+2;– vejcovodu;C57.0;C79.8;D07.3;D28.2;D39.7
+2;– velkých cév NJ;C49.3;C79.8;;D21.3;D48.1
+2;– ventriculi – viz Novotvar, žaludku;;;;;
+2;– ventrikulární øasy hrtanu;C32.1;C78.3;D02.0;D14.1;D38.0
+2;– vermis, cerebelli;C71.6;C79.3;;D33.1;D43.1
+2;– vestibulární žlázy, velké;C51.0;C79.8;D07.1;D28.0;D39.7
+2;– vezikální – viz Novotvar, mìchýøe;;;;;
+2;– vezikocervikální tkánì;C57.9;C79.8;D07.3;D28.9;D39.9
+2;– vezikorektální;C76.3;C79.8;D09.7;D36.7;D48.7
+2;– vezikovaginální(-ho);C57.9;C79.8;D07.3;D28.9;D39.9
+3;– – septa;C57.9;C79.8;D07.3;D28.9;D39.7
+2;– víèka oèního (dolního) (horního) (kùže);C44.1;C79.2;D04.1;D23.1;D48.5
+3;– – chrupavky;C49.0;C79.8;;D21.0;D48.1
+2;– Virchowovy uzliny;;C77.0;;D36.0;D48.7
+2;– vlasové èásti hlavy;C44.4;C79.2;D04.4;D23.4;D48.5
+2;– vláseènice – viz Novotvar, mìkké tkánì;;;;;
+2;– vnitøní, interna;;;;;
+3;– – capsula (interna);C71.0;C79.3;;D33.0;D43.0
+3;– – orificia;C53.0;C79.8;D06.0;D26.0;D39.0
+2;– vulvovaginální žlázy;C51.0;C79.8;D07.1;D28.0;D39.7
+2;– vulvy;C51.9;C79.8;D07.1;D28.0;D39.7
+2;– Waldeyerova kruhu;C14.2;C79.8;D00.0;D10.9;D37.0
+2;– Whartonova vývodu;C08.0;C79.8;D00.0;D11.7;D37.0
+2;– Wirsungova vývodu;C25.3;C78.8;D01.7;D13.6;D37.7
+2;– Wolfova (tìlesa) (vývodu);;;;;
+3;– – mužského;C63.7;C79.8;D07.6;D29.7;D40.7
+3;– – ženského;C57.7;C79.8;D07.3;D28.7;D39.7
+2;– zad NJ #;C76.7;C79.8;D04.5;D36.7;D48.7
+2;– zadní jámy (lebeèní);C71.9;C79.3;;D33.2;D43.2
+2;– zápìstí NJ #;C76.4;C79.8;D04.6;D36.7;D48.7
+2;– zevní(-ho);;;;;
+3;– – branky dìložní;C53.1;C79.8;D06.1;D26.0;D39.0
+3;– – zvukovodu;C44.2;C79.2;D04.2;D23.2;D48.5
+2;– zevního oèního svalu;C69.6;C79.8;;D31.6;D48.7
+2;– zubního lùžka NJ;C03.9;C79.8;D00.0;D10.3;D37.0
+2;– Zuckerkandlova orgánu;C75.5;C79.8;;D35.6;D44.7
+2;– zvukovodu (zevního);C44.2;C79.2;D04.2;D23.2;D48.5
+3;– – vnitøního;C30.1;C78.3;D02.3;D14.0;D38.5
+2;– žaludku;C16.9;C78.8;D00.2;D13.1;D37.1
+3;– – antra;C16.3;C78.8;D00.2;D13.1;D37.1
+3;– – kardiálního ústí;C16.0;C78.8;D00.2;D13.1;D37.1
+3;– – kardie;C16.0;C78.8;D00.2;D13.1;D37.1
+3;– – klenby, fundu;C16.1;C78.8;D00.2;D13.1;D37.1
+3;– – malé kurvatury NJ;C16.5;C78.8;D00.2;D13.1;D37.1
+3;– – prepyloru;C16.4;C78.8;D00.2;D13.1;D37.1
+3;– – pyloru, vrátníku;C16.4;C78.8;D00.2;D13.1;D37.1
+3;– – stìny NJ;C16.9;C78.8;D00.2;D13.1;D37.1
+4;– – – pøední NJ;C16.8;C78.8;D00.2;D13.1;D37.1
+4;– – – zadní NJ;C16.8;C78.8;D00.2;D13.1;D37.1
+3;– – tìla;C16.2;C78.8;D00.2;D13.1;D37.1
+3;– – velké kurvatury NJ;C16.6;C78.8;D00.2;D13.1;D37.1
+2;– žebra *;C41.3;C79.5;;D16.7;D48.0
+2;– žíly, žilní – viz Novotvar, mìkké tkánì;;;;;
+2;– žlázy, žlázový (lymfatický) (systém) – viz též Novotvar, lymfatické uzliny;;;;;
+3;– – endokrinní NJ;C75.9;C79.8;D09.3;D35.9;D44.9
+3;– – slinné – viz Novotvar, slinné žlázy;;;;;
+2;– žluèi nebo žluèových (cest);C24.9;C78.8;D01.5;D13.5;D37.6
+3;– – kanálkù, interlobulárních;C22.1;C78.7;D01.5;D13.4;D37.6
+3;– – žluèovodu nebo žluèových cest (extrahepatálních) (cystiku) (choledochu);C24.0;C78.8;D01.5;D13.5;D37.6
+4;– – – interlobulárních;C22.1;C78.7;D01.5;D13.4;D37.6
+4;– – – intrahepatálních;C22.1;C78.7;D01.5;D13.4;D37.6
+5;– – – – s extrahepatálními;C24.8;C78.8;D01.5;D13.5;D37.6
+2;– žluèníku;C23;C78.7;D01.5;D13.5;D37.6
+2;– žluèovodu (extrahepatálního);C24.0;C78.8;D01.5;D13.5;D37.6
+3;– – intrahepatálního;C22.1;C78.7;D01.5;D13.4;D37.6

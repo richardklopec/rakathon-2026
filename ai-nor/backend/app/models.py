@@ -10,7 +10,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Generic, TypeVar
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 T = TypeVar("T")
 
@@ -159,6 +159,19 @@ class NorReport(BaseModel):
     progression: list[ProgressionEvent] = []
 
 
+class AiConfidence(BaseModel):
+    """Overall confidence of the AI in the report (app/confidence.py: overall)."""
+
+    score: int | None = None  # 0-100: weighted mean over fields filled by AI; mandatory NOR fields count double
+    level: str | None = None  # vysoká (>= AUTO_ACCEPT_THRESHOLD) | střední (>= 60) | nízká
+    fields_ai: int = 0  # fields whose current value comes from AI
+    auto_accepted: int = 0
+    to_review: int = 0  # still waiting for the clinician
+    conflicts: int = 0
+    edited_by_human: int = 0  # values replaced by the clinician (not part of the score)
+    missing_required: int = 0  # mandatory NOR fields without a value (completeness, not confidence)
+
+
 class Document(BaseModel):
     id: str
     filename: str
@@ -177,3 +190,10 @@ class Case(BaseModel):
     fhir_bundle_id: str | None = None
     created_at: datetime
     updated_at: datetime
+
+    @computed_field
+    @property
+    def ai_confidence(self) -> AiConfidence:
+        from app.confidence import overall  # confidence.py imports this module
+
+        return overall(self.report)

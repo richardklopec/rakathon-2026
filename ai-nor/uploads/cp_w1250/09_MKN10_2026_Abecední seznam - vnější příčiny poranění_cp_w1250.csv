@@ -1,0 +1,2926 @@
+Úroveò;Název;Kód
+1;Aerosinusitida;W94.–
+1;Alpská nemoc;W94.–
+1;Anafylaktickı šok, anafylaxe NS (RÈV T78.2) (viz té Tabulka lékù a chemikálií);
+1;Andská nemoc;W94.–
+1;Aspirace, inhalace chrchle, ne u novorozence (s dušením, obstrukcí dıchacích cest, udušením);W80.–
+1;Barotitida, barodontalgie, barosinusitida, barotrauma;W94.–
+1;Beztínı stav (jako pøíèina poranìní) (úèinky z) (ve vesmírné lodi, skuteèné nebo simulované);X52.–
+1;Bité dítì (bitá osoba) (viz té Tırání);Y07.9
+1;Blesk (šok) (ochrnutí) (úder od);X33.–
+2;– blesk NJ;X33.–
+2;– jako pøíèina ohnì (viz té Expozice, ohni);X09.–
+1;Bodnutí, bodání (RÈV: napadení);X99.–
+2;– náhodné (viz té Kontakt, s, pøedmìtem);W26.9
+1;Bodnutí, štípnutí (jedovaté) (viz té Kontakt, s, podle typu);X29.–
+2;– èlenovcem NJ;X25.–
+3;– – nejedovatım;W57.–
+2;– hmyzem NJ;X25.–
+3;– – nejedovatım;W57.–
+2;– housenkou;X25.–
+2;– korálem;X26.–
+2;– medùzou;X26.–
+2;– moøskım ivoèichem nebo rostlinou;X26.–
+2;– mravencem;X25.–
+2;– nematocystami;X26.–
+2;– sasankou moøskou, sumıšem (moøskou okurkou) nebo jeovkou;X26.–
+2;– sršnìm;X23.–
+2;– stonokou;X24.–
+3;– – jedovatou;X24.–
+2;– štírem;X22.–
+2;– vèelou;X23.–
+2;– vosou;X23.–
+1;Boj, rvaèka (rukou) (pìstí) (nohou) (viz té Napadení, bojem);Y04.–
+1;Bouøe (katastrofa);X37.–
+2;– jako pùvodce zátopy;X38.–
+1;Cestování (úèinky) (nemoc);X51.–
+1;Cizí tìleso, pøedmìt nebo materiál (vniknutí do (náhodné));
+2;– aspirované (bez dušení, obstrukce dıchacích cest, zadušení);W44.–
+3;– – hlen, ne u novorozence;W80.–
+3;– – chrchel, ne u novorozence;W80.–
+3;– – jako pøíèina poranìní;W44.–
+3;– – s dušením, obstrukcí dıchacích cest, zadušením;W80.–
+4;– – – potravou;W79.–
+4;– – – zvratky;W78.–
+3;– – zvratky;W78.–
+2;– dutiny ústní (viz té Cizí tìleso, trávicí trubice, úst);W44.–
+2;– dıchacích cest (jako pøíèina poranìní);W44.–
+3;– – nosu (bez dušení, obstrukce, zadušení);W44.–
+4;– – – jako pøíèina jiného poranìní;W44.–
+4;– – – s dušením, obstrukcí, zadušením;W80.–
+5;– – – – potravou;W79.–
+5;– – – – zvratky;W78.–
+3;– – s dušením, obstrukcí, zadušením;W80.–
+4;– – – potravou;W79.–
+4;– – – zvratky;W78.–
+2;– faryngu (viz té Cizí tìleso, trávicí trubice, hltanu);W44.–
+2;– jícnu (jako pøíèina poranìní nebo obstrukce);W44.–
+3;– – jako pøíèina stlaèení trachey s pøerušením nebo zamezením dıchání;W80.–
+2;– koneèníku (jako pøíèina poranìní nebo obstrukce);W44.–
+2;– kùe (viz té Kontakt, s, podle typu pøedmìtu);W45.–
+2;– laryngu (viz té Cizí tìleso, dıchacích cest);W44.–
+2;– moèového mìchıøe (jako pøíèina poranìní nebo obstrukce);W44.–
+2;– nosního prùchodu (viz té Cizí tìleso, dıchacích cest, nosu);W44.–
+2;– nosu (viz té Cizí tìleso, dıchacích cest, nosu);W44.–
+2;– oèní spojivky;W44.–
+2;– oka (kterékoli èásti);W44.–
+2;– operaèní rány (ponechané) (viz té Neádoucí pøíhoda, cizí pøedmìt, podle typu vıkonu);Y61.9
+2;– pochvy (jako pøíèina poranìní nebo obstrukce);W44.–
+2;– polknuté;W44.–
+2;– prùdušky, prùdušek (viz té Cizí tìleso, dıchacích cest);W44.–
+2;– prùdušnice;W44.–
+3;– – jako pøíèina udušení NJ;W80.–
+4;– – – potravou;W79.–
+4;– – – zvratky;W78.–
+2;– slzného kanálku nebo lázy;W44.–
+2;– trávicí trubice (jako pøíèina poranìní) (s obstrukcí);W44.–
+3;– – hltanu;W44.–
+4;– – – s dušením, obstrukcí, zadušením;W80.–
+5;– – – – zvratky;W78.–
+3;– – s dušením, stlaèením respiraèního traktu, zadušením;W80.–
+4;– – – zvratky;W78.–
+3;– – úst (dutiny ústní);W44.–
+4;– – – s dušením, obstrukcí, zadušením;W80.–
+5;– – – – zvratky;W78.–
+2;– trávicího systému (viz té Cizí tìleso, zaívací trubice);W44.–
+2;– ucha (jako pøíèina poranìní nebo ucpání);W44.–
+2;– uretry (jako pøíèina poranìní nebo obstrukce);W44.–
+2;– vdechnuté (viz té Cizí tìleso, aspirované);W80.–
+2;– aludku (trichobezoár) (jako pøíèina poranìní nebo obstrukce);W44.–
+1;Dehydratace z nedostatku vody (viz té Nedostatek, vody);X54.–
+1;Dekapitace (náhodné okolnosti) NJ;X59.9
+2;– vraedná;X99.–
+2;– zákonnou popravou (gilotinou);Y35.5
+1;Domovní poár (nekontrolovanı);X00.–
+1;Doutnání (zpùsobené ohnìm) (viz té Expozice, ohni);X09.–
+1;Dušení (asfyxie);
+2;– chemickou látkou pøi váleèné operaci;Y36.7
+2;– jakımkoli pøedmìtem kromì jídla a zvratkù;W80.–
+2;– jídlem (kostí) (jádrem);W79.–
+2;– mechanicky (viz té Udušení);W84.–
+2;– ohnìm (viz té Expozice, ohni);X09.–
+3;– – pøi váleèné operaci;Y36.3
+2;– parou, vıpary pøi váleèné operaci (chemickımi plyny);Y36.7
+2;– plynem (viz té Tabulka lékù a chemikálií);X47.–
+3;– – pøi váleèné operaci (chemickımi plyny);Y36.7
+3;– – pøi zákonné(-m);
+4;– – – popravì;Y35.5
+4;– – – zákroku;Y35.2
+2;– vznícením (viz té Vzplanutí);X09.–
+2;– zvratky;W78.–
+1;Dušení, udušení (jakımkoli pøedmìtem vyjma stravou nebo zvratky);W80.–
+2;– hlenem, chrchlem, ne u novorozence;W80.–
+2;– potravou (kostí) (jádrem);W79.–
+2;– zvratky;W78.–
+1;Elektrickı šok (náhodnı) (viz té Expozice, elektrickému proudu);W87.–
+1;Endotracheální kanyla nesprávnì umístìná v prùbìhu narkózy;Y65.3
+1;Expozice;
+2;– blesku;X33.–
+2;– delšímu pobytu v mrazícím boxu nebo lednici;W93.–
+2;– elektrickému (proudu);W87.–
+3;– – blesku;X33.–
+3;– – elektrárny nebo rozvodny;W86.–
+3;– – kabelu vysokého napìtí;W85.–
+3;– – kolejí pod proudem;W86.–
+3;– – kontrolního pøístroje (vadného);W86.–
+3;– – motoru (vadného);W86.–
+3;– – neurèeno zda náhodná nebo zámìrná;Y33.–
+3;– – neádoucí pøíhodou pøi léèebném nebo chirurgickém vıkonu pøi elektrošoku;Y63.4
+3;– – pøi zákonné popravì;Y35.5
+3;– – sebevraedná (pokus);X83.–
+3;– – transformátoru (vadného);W86.–
+3;– – tøetí koleje;W86.–
+3;– – urèená NJ;W86.–
+3;– – vedení vysokého napìtí;W85.–
+3;– – vlastním zavinìním (neurèeno zda náhodnì nebo úmyslnì);Y33.–
+4;– – – zhodnocená jako zámìrná, sebevraedná (pokus);X83.–
+3;– – vodièe (vadného);W86.–
+3;– – vraedná (pokus);Y08.–
+3;– – z pøístroje (vadného);W86.–
+3;– – zavinìná jinou osobou;
+4;– – – zhodnocená jako;
+5;– – – – neurèeno zda náhodná nebo zámìrná;Y33.–
+5;– – – – úmyslná, vraedná (pokus);Y08.–
+2;– extrémní(–mu);
+3;– – chladu (viz té Expozice, chladu);X31.–
+3;– – áru (pøírodnímu) NJ;X30.–
+4;– – – umìlému;W92.–
+2;– faktoru(-ùm) NJ;X59.9
+3;– – urèenım NJ;X58.–
+3;– – zevního prostøedí NJ;X58.–
+4;– – – pøirozenım NJ;X39.–
+4;– – – umìlım NJ;W99.–
+2;– gravitaèní síle (mimoøádné);W49.–
+2;– G-síle (mimoøádné);W49.–
+2;– hluku;W42.–
+2;– hydraulickému proudu;W41.–
+2;– chladu (náhodná) (extrémní) (pøírodní) (místní);X31.–
+3;– – vlastním zavinìním (neurèeno zda náhodné nebo úmyslné);Y33.–
+4;– – – sebevraedná (pokus);X83.–
+3;– – zpùsobená;
+4;– – – lidskou èinností;W93.–
+4;– – – poèasím (povìtrnostními podmínkami);X31.–
+2;– kouøi (viz té Expozice, ohni);X09.–
+2;– mechanickım silám NJ;W49.–
+3;– – neivotnım NJ;W49.–
+3;– – ivotnım NJ;W64.–
+2;– ohni (náhodná) (s expozicí kouøi nebo parám nebo spalnım zplodinám nebo druhotné explozi);X09.–
+3;– – haraburdí (nekontrolovanému);X01.–
+3;– – kontrolovanému;
+4;– – – budovy nebo konstrukce;X02.–
+4;– – – krbu, pece, kamen nebo sporáku na (døevìné uhlí) (uhlí) (koks) (elektriku) (plyn) (døevo);X02.–
+4;– – – letovacích kamínek (v budovì nebo konstrukci);X02.–
+5;– – – – mimo budovu nebo konstrukci;X03.–
+4;– – – mimo budovu nebo konstrukci;X03.–
+4;– – – se vzplanutím odìvu (viz té Vzplanutí, obleèení);X06.–
+5;– – – – noèního;X05.–
+4;– – – smetí, odpadkù;X03.–
+3;– – krbu;X02.–
+3;– – lesa (nekontrolovanému);X01.–
+3;– – nekontrolovanému;
+4;– – – mimo budovu nebo konstrukci (jakoukoliv);X01.–
+4;– – – v budovì nebo konstrukci;X00.–
+3;– – otevøenému (táborák, vatra);X03.–
+3;– – prérie (nekontrolovanému);X01.–
+3;– – sebevraedná (pokus);X76.–
+3;– – sena (nekontrolovanému);X01.–
+3;– – sporáku, kamen;X02.–
+3;– – trávy (nekontrolovanému);X01.–
+3;– – urèenému NJ;X08.–
+3;– – v dole (nekontrolovanému);X01.–
+3;– – v tunelu (nekontrolovanému);X01.–
+3;– – v, ve, pøi, vzniklému v, ve;
+4;– – – dopravním prostøedku NJ (viz té Nehoda, dopravní, èlen osádky vozu, podle typu vozidla);V87.8
+4;– – – motorovém vozidle (za jízdy) (viz té Nehoda, dopravní, èlena osádky, podle typu vozidla);V87.8
+4;– – – plavidle (v jízdì) (mimo jízdu);V91.–
+5;– – – – lokalizovanému;V93.–
+4;– – – poulièní dráze (v pohybu);V82.8
+4;– – – stroji, mechanizmu (viz té Kontakt, s, podle typu stroje);W31.–
+4;– – – váleèné operaci (plamenometem nebo konvenèní zbraní);Y36.3
+5;– – – – pøi jaderném vıbuchu;Y36.5
+4;– – – vlaku nebo kolejovém vozidle;V81.8
+3;– – vlastním zavinìním (neurèeno zda náhodou nebo úmyslnì);Y26.–
+4;– – – zhodnoceném jako úmyslné, zámìrné, sebevraedné (pokus);X76.–
+3;– – vraedná (pokus);X97.–
+3;– – vzplanutím vysoce hoølavıch látek;X04.–
+3;– – zaøízení nebo nábytku (v budovì nebo konstrukci) (nekontrolovanému);X00.–
+3;– – zpùsobenému;
+4;– – – bleskem NJ;X09.–
+4;– – – jinou osobou;
+5;– – – – zhodnoceno jako;
+6;– – – – – nejisté, zda se zámìrem zranit nebo zabít èi nikoliv;Y26.–
+6;– – – – – zámìrná, vraedná (pokus);X97.–
+4;– – – vıbuchem (viz té Vıbuch);W40.–
+2;– opuštìnosti, zanedbání (viz té Opuštìní);Y06.9
+2;– paprsku vysokého tlaku (vody) (vzduchu);W41.–
+2;– plamenùm (viz té Expozice, ohni);X09.–
+2;– poèasí NJ;X39.–
+3;– – s úmyslem zabít (viz té Opuštìní);Y06.9
+2;– proudu vysokého tlaku (kapaliny) (vzduchu);W41.–
+2;– pøírodním silám NJ;X39.–
+2;– radiaci (viz té Záøení);W91.–
+2;– sluneènímu svitu NJ;X32.–
+2;– specifickım faktorùm NJ;X58.–
+2;– škodlivım látkám (viz Tabulka lékù a chemikálií);X49.–
+2;– vedení vysokého napìtí, elektrickému;W85.–
+2;– vibracím;W43.–
+2;– vlnám;
+3;– – infrazvuku;W43.–
+3;– – nadzvukovım;W42.–
+3;– – zvuku;W42.–
+2;– vzdušnému proudu;W41.–
+2;– áru (pøírodnímu) NJ (viz té ár);X30.–
+1;Faktory, pøídatné;
+2;– alkohol;
+3;– – otrava;Y91.9
+4;– – – lehká;Y91.0
+4;– – – støední;Y91.1
+4;– – – tìká;Y91.2
+5;– – – – velmi;Y91.3
+3;– – pøítomen v krvi, ale hladina neurèena;Y90.9
+3;– – v krvi;
+4;– – – ménì ne 20 mg/100 ml;Y90.0
+4;– – – 20-39 mg/100 ml;Y90.1
+4;– – – 40-59 mg/100 ml;Y90.2
+4;– – – 60-79 mg/100 ml;Y90.3
+4;– – – 80-99 mg/100 ml;Y90.4
+4;– – – 100-119 mg/100 ml;Y90.5
+4;– – – 120-199 mg/100 ml;Y90.6
+4;– – – 200-239 mg/100 ml;Y90.7
+4;– – – 240 mg/100 ml nebo více;Y90.8
+3;– – vliv blíe neurèen;Y91.9
+2;– nozokomiální stav;Y95
+2;– pracovní podmínky;Y96
+2;– zneèistìní (stav se vztahem k zneèistìní (ivotního) prostøedí);Y97
+2;– ivotního stylu (podmínky vázané na ivotní styl);Y98
+1;Fazole v nose;W79.–
+1;Havárie, sráka;
+2;– dopravního prostøedku NJ (viz té Nehoda, dopravní);V89.9
+3;– – motorového NJ (silnièní);V89.2
+4;– – – neurèeno, zda náhodná nebo úmyslná;Y32.–
+4;– – – sebevrada (pokus);X82.–
+4;– – – vrada (pokus);Y03.–
+3;– – neurèeno, zda náhodná nebo úmyslná;Y33.–
+3;– – sebevrada (pokus);X82.–
+3;– – vrada (pokus);Y03.–
+2;– letadla (motorového);V95.–
+3;– – pøi váleèné operaci;Y36.1
+3;– – zhodnocená jako;
+4;– – – neurèeno, zda náhodná nebo úmyslná;Y33.–
+4;– – – sebevrada (pokus);X83.–
+4;– – – vrada (pokus);Y03.–
+1;Hemoragie – viz Krvácení;
+1;Hlad (viz té Nedostatek, potravy);X53.–
+2;– jako následek opuštìní, zanedbání (viz té Opuštìní);Y06.9
+1;Hladovìní;X53.–
+2;– pro opuštìní nebo zanedbání (viz té Opuštìní);Y06.9
+1;Hluk (jako pøíèina poranìní) (zatìující ivotní prostøedí);W42.–
+1;Horké;
+2;– místo, úèinky (viz té ár);X30.–
+2;– poèasí, úèinky;X30.–
+1;Horská nemoc;W94.–
+1;Hrubé zacházení, fyzické (pøi hádce, boji, rvaèce);Y04.–
+2;– pøi zákonném zákroku;Y35.6
+1;Høebík, kontakt s;W45.–
+1;Hurikán (jakékoli poranìní);X37.–
+1;Hypobarizmus, hypobaropatie;W94.–
+1;Chirurgickı vıkon, komplikace (opodìná nebo abnormální reakce bez zmínky o neádoucí pøíhodì) (viz té Komplikace, podle typu vıkonu);Y83.9
+2;– zpùsobená nebo jako dùsledek neádoucí pøíhody (viz té Neádoucí pøíhoda);Y69
+1;Chlad, vystavení (náhodné) (úmyslné) (extrémní) (pøírodní) (místo) NJ (viz té Expozice, chladu);X31.–
+1;Infrazvukové vlny (jako pøíèina poranìní);W43.–
+1;Insolace, úèinky;X32.– (ÈV, AV X30.–)
+1;Jogging, extrémní;X50.–
+1;Katastrofa (jakékoli poranìní) NJ;X39.–
+2;– bouøí;X37.–
+2;– lavinou;X36.–
+2;– pohybem povrchu zemì NJ;X36.–
+2;– povodní (øekou) (vysokou vodou);X38.–
+3;– – vzniklou ze (vzdálené) bouøe;X38.–
+2;– sesuvem pùdy;X36.–
+2;– sopeènou erupcí;X35.–
+2;– zemìtøesením;X34.–
+1;Kesonová nemoc;W94.–
+1;Kinetóza (v autì);X51.–
+1;Klopıtnutí;
+2;– pøes;
+3;– – koberec, obrubu, obrubní kámen, pokrıvku nebo (malı) pøedmìt (viz té Náraz na, pøedmìt);W22.–
+4;– – – s pádem;W01.–
+3;– – osobu;W51.–
+4;– – – s pádem;W03.–
+3;– – zvíøe NJ;W64.–
+4;– – – s pádem;W01.–
+1;Klovnutí ptákem;W64.–
+1;Koèièí pokousání nebo poškrábání;W55.–
+1;Kolize, sráka (zpùsobená nehodou) NJ (viz té Nehoda, dopravní);V89.9
+2;– dopravního prostøedku NJ;V89.9
+3;– – a;
+4;– – – laviny, spadlé, bez pohybu – viz Nehoda, dopravní;
+5;– – – – padající nebo v pohybu;X36.–
+4;– – – pùdy sesuté, spadlé nebo bez pohybu – viz Nehoda, dopravní;
+5;– – – – padající nebo v pohybu;X36.–
+3;– – pøi katastrofì (ivelní pohromì) – viz Katastrofa, podle typu;
+3;– – zámìrná, sebevrada (pokus);X82.–
+2;– chodce (v pohybu);W51.–
+3;– – s;
+4;– – – davem (v panice) (s pádem);W52.–
+4;– – – pøedmìtem (nehybnım);W22.–
+5;– – – – s pádem;W18.–
+3;– – s pádem;W03.–
+2;– osoby(osob) (v pìší dopravì) (viz té Kolize, chodce);W51.–
+1;Komplikace (pozdní) (nebo následující po) (léèebném nebo chirurgickém vıkonu);Y84.9
+2;– amputace konèetiny (konèetin);Y83.5
+2;– anastomózy (arteriovenózní) (krevních cév) (gastrojejunální) (kùe) (šlachy) (pøírodní, umìlı materiál, tkáò);Y83.2
+2;– aspirace (tekutiny);Y84.4
+3;– – tkánì;Y84.8
+2;– biopsie;Y84.8
+2;– by-passu;Y83.2
+2;– cystostomie;Y83.3
+2;– dialızy ledvin;Y84.1
+2;– duodenostomie;Y83.3
+2;– elektrošokové léèby;Y84.3
+2;– gastrostomie;Y83.3
+2;– chirurgického vıkonu NJ (viz té Komplikace, podle druhu operace);Y83.9
+3;– – rekonstrukèního NJ;Y83.4
+4;– – – s;
+5;– – – – anastomózou, by-passem nebo štìpem;Y83.2
+5;– – – – vytváøením zevního ústí;Y83.3
+3;– – urèeného NJ;Y83.8
+2;– implantátu, implantace;
+3;– – pøírodní tkánì (pro anastomózu nebo by-pass);Y83.2
+4;– – – s vytvoøením zevního vyústìní (stomie);Y83.3
+3;– – umìlé(-ho);
+4;– – – interní pomùcky (pacemakeru) (mozkové elektrody) (protézy srdeèní chlopnì) (ortopedické);Y83.1
+4;– – – materiálu (pro anastomózu nebo by-pass);Y83.2
+5;– – – – s vytvoøením zevního vyústìní (stomie);Y83.3
+2;– infuze, infuzního;
+3;– – vıkonu;Y84.8
+2;– injekce, injekèního – viz Tabulka lékù a chemikálií;
+3;– – vıkonu;Y84.8
+2;– inzulinové šokové terapie;Y84.3
+2;– jako neádoucí pøíhoda (viz té Neádoucí pøíhoda);Y69
+2;– katetrizace (moèového ústrojí);Y84.6
+3;– – srdeèní;Y84.0
+2;– kolostomie;Y83.3
+2;– krevní(-ho);
+3;– – odbìru vzorku;Y84.7
+3;– – transfuze;
+4;– – – vıkonu;Y84.8
+2;– léková NJ (viz té Tabulka lékù a chemikálií);Y57.9
+2;– oèkování – viz Tabulka lékù a chemikálií;
+3;– – vıkonu;Y84.8
+2;– odbìru vzorku;
+3;– – krve;Y84.7
+3;– – tekutiny NJ;Y84.4
+3;– – tkánì;Y84.8
+2;– odnìtí orgánu (èásteèného) (úplného) NJ;Y83.6
+2;– podchlazení (léèebnì zavedené);Y84.8
+2;– punkce (bøišní) (hrudní) (aspiraèní);Y84.4
+2;– radiologického vıkonu nebo léèby;Y84.2
+2;– šokové léèby;Y84.3
+2;– štìpu (plastická operace);Y83.2
+2;– transfuze(-ního);
+3;– – vıkonu;Y84.8
+2;– transplantace (srdce) (ledviny) (jater) (celého orgánu, kteréhokoli);Y83.0
+3;– – èásti orgánu;Y83.4
+2;– ureterostomie;Y83.3
+2;– vıkonù jinıch ne chirurgickıch NJ (viz té Komplikace, podle typu vıkonu);Y84.9
+3;– – urèenıch NJ;Y84.8
+2;– zapøíèinìná neádoucí pøíhodou (viz té Neádoucí pøíhoda);Y69
+2;– zavedení gastrické nebo duodenální sondy;Y84.5
+2;– zevního ústí, vytvoøeného umìle (stomie);Y83.3
+1;Komprese;
+2;– potápìèe;W94.–
+2;– trachey;
+3;– – cizím tìlesem, kromì potravy nebo zvratkù;W80.–
+3;– – potravou (v jícnu);W79.–
+3;– – zvratky (v jícnu);W78.–
+1;Kontakt (neúmyslnı);
+2;– s, se;
+3;– – bajonetem (viz té Zranìní, bajonetem);W26.0
+3;– – brusnım kotouèem (opracování eleza);W31.–
+3;– – cepínem;W27.–
+3;– – èlenovci NJ;
+4;– – – jedovatımi;X25.–
+4;– – – nejedovatımi;W57.–
+3;– – deskou (kovovou) (døevìnou);W27.–
+4;– – – horní, stropní;W31.–
+3;– – deskou stropní (nad hlavou);W31.–
+3;– – dlátem, sekáèem, rydlem;W27.–
+3;– – dopravním pásem;W24.–
+3;– – drátem (pro zvedání a transmisní zaøízení) NJ;W24.–
+4;– – – v zemìdìlství;W30.–
+3;– – døevìnou tøískou, odštìpkem;W45.–
+3;– – dıkou;W26.0
+3;– – elektrickım(-ou);
+4;– – – deèkou;X16.–
+4;– – – klepaèem;W29.–
+4;– – – mixerem;W29.–
+4;– – – noem;W29.–
+4;– – – ventilátorem;W29.–
+3;– – exkavátorem (bagrem) (v provozu na místì);W31.–
+3;– – fer de lance (jedovatım jihoamerickım hadem, Bothrops atrox);X20.–
+3;– – hadem (jedovatım) (viz té Kontakt, s, hadem, podle typu);X20.–
+4;– – – moøskım;X20.–
+4;– – – nejedovatım;W59.–
+3;– – hmyzem (nejedovatım) NJ;W57.–
+3;– – hnacím øemenem;W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – hoblicí (prùmyslovou);W31.–
+3;– – horkım(-kou);
+4;– – – hmotou NJ;X19.–
+4;– – – konvicí (na vodu);X15.–
+4;– – – kovem (tekutım) (tavenım) NJ;X18.–
+4;– – – mechanizmem;X17.–
+4;– – – motorem;X17.–
+4;– – – nápojem;X10.–
+4;– – – náøadím;X17.–
+4;– – – olejem (na vaøení);X10.–
+4;– – – pánví, rendlíkem (sklenìnım) (kovovım);X15.–
+4;– – – párou;X13.–
+4;– – – plyny;X14.–
+4;– – – pøedmìtem (netvoøícím oheò nebo plameny) NJ;X19.–
+4;– – – pøístrojem pro domácnost NJ;X15.–
+4;– – – radiátorem;X16.–
+4;– – – sporákem (kuchyòskım);X15.–
+4;– – – stravou;X10.–
+4;– – – talíøem, plechem, deskou;X15.–
+4;– – – tekutinou NJ (viz té Popálení);X12.–
+4;– – – topinkovaèem;X15.–
+4;– – – topnım zaøízením (pøístrojem);X16.–
+4;– – – trubkou;X16.–
+4;– – – tukem;X10.–
+4;– – – vaøièem;X15.–
+4;– – – vodou z vodovodu (z hadice nebo kohoutku) (ve vanì, vìdru, škopku);X11.–
+5;– – – – ohøívanou na plotnì nebo sporáku;X12.–
+4;– – – vzduchem;X14.–
+3;"– – horskou dráhou, „lochneskou""";
+3;– – housenkou (jedovatou);X25.–
+3;– – hrábìmi;W27.–
+3;– – hranou tuhého papíru;W26.8
+3;– – høebíkem;W45.–
+3;– – chøestıšem;X20.–
+3;– – jedovatım(-ou);
+4;– – – èlenovcem;X25.–
+4;– – – hadem;X20.–
+4;– – – ještìrkou;X20.–
+4;– – – moøskou rostlinou NJ;X26.–
+4;– – – moøskım ivoèichem NJ;X26.–
+4;– – – pavoukem;X21.–
+4;– – – rostlinou;X29.–
+5;– – – – urèenou(-ımi) NJ;X28.–
+4;– – – stonokou (tropickou);X24.–
+4;– – – ivoèichem;X29.–
+5;– – – – urèenım NJ;X27.–
+3;– – jehlou;W27.–
+4;– – – podkoní;W46.–
+3;– – jeøábem;W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – ještìrkou (nejedovatou);W59.–
+4;– – – jedovatou;X20.–
+3;– – karaitem (hadem z rodu Bungarus);X20.–
+3;– – kladkou (kladkostrojem) (øemenicí);W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – kobrou;X20.–
+3;– – kombajnem (òovım);W30.–
+3;– – korálem;X26.–
+3;– – kornatcem;X20.–
+3;– – kotlíkem, konvicí (na horkou vodu);X15.–
+3;– – kováøskım strojem;W31.–
+3;– – kovem, horkım, (tekutım) (tavenım) NJ;X18.–
+3;– – lanem (vytahovací nebo transmisní zaøízení), NJ;W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – látkou, horkou NJ;X19.–
+4;– – – roztavenou (kovovou);X18.–
+3;– – lodním jeøábem;W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – lopatou;W27.–
+3;– – masovım;
+4;– – – krájeèem (domácím);W29.–
+5;– – – – prùmyslovım;W31.–
+4;– – – strojkem (domácím);W29.–
+5;– – – – prùmyslovım;W31.–
+3;– – meèem, šavlí, kordem, bodákem;W26.0
+3;– – medùzou;X26.–
+3;– – míchaèkou;W29.–
+3;– – mlátièkou;W30.–
+3;– – mlékárenskım zaøízením;W31.–
+3;– – moøskım(-kou);
+4;– – – rostlinou, jedovatou;X26.–
+4;– – – sasankou, okurkou nebo moøskım jekem;X26.–
+4;– – – ivoèichem;W56.–
+3;– – motorem, horkım NJ;X17.–
+3;– – motorovım(-ou);
+4;– – – domácím zaøízením, náøadím nebo strojem;W29.–
+4;– – – pilou (prùmyslovou);W31.–
+5;– – – – ruèní;W29.–
+4;– – – zahradním kultivátorem;W29.–
+3;– – motykou;W27.–
+3;– – mravenci;X25.–
+3;– – nástrojem NJ;W27.–
+4;– – – horkım;X17.–
+4;– – – motorovım (s vlastním pohonem) NJ;W29.–
+3;– – nastøelovací pistolí (motorovou);W29.–
+3;– – navijákem;W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – nematocystami;X26.–
+3;– – noem;W26.0
+4;– – – elektrickım;W29.–
+3;– – nùkami (ruèními);W27.–
+4;– – – domácími;W29.–
+4;– – – motorovımi (prùmyslovımi);W31.–
+3;– – nıtovací pistolí (pohánìnou);W29.–
+3;– – odstøedivou dímaèkou;W29.–
+4;– – – motorovou sušièkou;W29.–
+3;– – okruní pilou;W31.–
+4;– – – prùmyslovou;W31.–
+3;– – opékaèem topinek (horkım);X15.–
+3;– – oštìpem;W21.–
+4;– – – nehozenım, nepadnuvším;W26.8
+3;– – pánví (horkou) (sklenìnou) (kovovou);X15.–
+3;– – papírem (jako ostrım pøedmìtem);W26.8
+3;– – parní(-m);X13.–
+4;– – – rypadlem (v provozu na místì);W31.–
+4;– – – strojem;W31.–
+4;– – – trubkou;X16.–
+3;– – pásovou pilou (prùmyslovou);W31.–
+3;– – pavoukem (jedovatım);X21.–
+4;– – – èernou vdovou;X21.–
+3;– – pilou;W27.–
+4;– – – pásovou (prùmyslovou);W31.–
+4;– – – ruèní;W27.–
+5;– – – – motorovou;W29.–
+4;– – – øetìzovou;W29.–
+4;– – – stolovou, kotouèovou (prùmyslovou);W31.–
+3;– – pískovaèem;W29.–
+4;– – – prùmyslovım;W31.–
+3;– – plazem;W59.–
+3;– – plechovkou;
+4;– – – otvíraèem;W27.–
+5;– – – – motorovım;W29.–
+4;– – – víèkem;W26.8
+3;– – plotınkou horkou;X15.–
+3;– – plynovou turbinou;W31.–
+3;– – praèkou (motorovou);W29.–
+3;– – pøedmìtem (tupım) NJ;
+4;– – – horkım NJ;X19.–
+4;– – – neurèeno zda náhodnı nebo zámìrnı;Y29.–
+4;– – – ostrım NJ;W26.9
+5;– – – – neurèeno zda náhodnı nebo zámìrnı;Y28.–
+5;– – – – úmyslnı, sebevraednı (pokus);X78.–
+5;– – – – zákonnı zákrok;Y35.4
+5;– – – – zpùsobenı jinou osobou NJ;W26.9
+6;– – – – – zhodnocenı jako;
+7;– – – – – – neurèeno zda náhodnı nebo úmyslnı;Y28.–
+7;– – – – – – úmyslnı, vrada (pokus);X99.–
+5;– – – – zpùsobenı vlastním zavinìním (neurèeno zda náhodnì nebo úmyslnì);Y28.–
+4;– – – pøi zákonném zákroku;Y35.3
+3;– – radiátorem (horkım);X16.–
+3;– – razicím strojem;W31.–
+3;– – rostlinnımi trny, hroty nebo ostrımi listy;W60.–
+4;– – – s toxickou reakcí;X28.–
+3;– – ruèní(-m);
+4;– – – náøadím (nepohánìnım);W27.–
+5;– – – – motorovım;W29.–
+4;– – – pilou;W27.–
+5;– – – – motorovou;W29.–
+3;– – rıèem;W27.–
+3;– – øetìzovım(-ou);
+4;– – – pilou;W29.–
+4;– – – zvedákem;W24.–
+5;– – – – pøi zemìdìlské èinnosti;W30.–
+3;– – øezacím strojem na kov;W31.–
+3;– – øezaèem papíru;W27.–
+3;– – sekaèkou na trávu (motorovou);W28.–
+4;– – – nemotorovou;W27.–
+4;– – – zpùsobující zabití elektrickım proudem;W86.–
+3;– – sekerou;W27.–
+3;– – senovım zvedákem, obraceèem nebo hrábìmi;W30.–
+3;– – silnièním hrabaèem – viz té Nehoda, dopravní, stavebního stroje;
+3;– – sklem (prasklım) (støepy);W25.–
+4;– – – zpùsobenı;
+5;– – – – pádem (viz té Pád, podle typu);W19.–
+5;– – – – støelnou zbraní (viz té Vıstøel, podle typu støelné zbranì);W34.–
+5;– – – – vıbuchem (viz té Vıbuch, podle typu);W40.–
+3;– – soustruhem (na kovy) (na døevo);W31.–
+4;– – – toèícím se;W45.–
+3;– – sporákem (horkım) (kuchyòskım);X15.–
+3;– – sportovním náøadím, náèiním;W21.–
+3;– – spøádacím strojem;W31.–
+3;– – sršnìm(-i);X23.–
+3;– – stonokou;W57.–
+4;– – – jedovatou;X24.–
+5;– – – – tropickou;X24.–
+3;– – strojem, mechanizmem NJ (viz té Kontakt, s, podle typu stroje);W31.–
+4;– – – døevoobrábìcím nebo døevotváøecím (prùmyslovım);W31.–
+4;– – – dùlním;W31.–
+4;– – – formovacím;W31.–
+4;– – – hnacím strojem, tahaèem;W31.–
+4;– – – horkım;X17.–
+4;– – – kovoobrábìcím (prùmyslovım);W31.–
+4;– – – mechanickım lisem, kovovım;W31.–
+4;– – – na;
+5;– – – – èištìní bavlny;W31.–
+5;– – – – hloubící práce (uívanı na místì);W31.–
+5;– – – – mletí, drcení kovu;W31.–
+5;– – – – pøemísování nebo hrabání zeminy (uívanı na místì);W31.–
+4;– – – pohonu (transmise);W24.–
+4;– – – pro rekreaci;W31.–
+4;– – – razicím;W31.–
+4;– – – spøádacím;W31.–
+4;– – – tkacím (stav);W31.–
+4;– – – urèenım NJ;W31.–
+4;– – – válcovım mlınem (stolicí), na kov;W31.–
+4;– – – vrtacím, kovovım (prùmyslovım);W31.–
+4;– – – zdvihacím (pøístrojem);W24.–
+4;– – – zemìdìlskım, vèetnì pohánìného zvíøetem;W30.–
+4;– – – zemním vrtacím;W31.–
+3;– – støihaèem ivého plotu (motorovım);W29.–
+3;– – suchım ledem;W93.–
+3;– – šachtou (tìní) (zdvie) (øemenice) NJ;W24.–
+4;– – – v zemìdìlství;W30.–
+3;– – šicím strojem (elektrickım);W29.–
+4;– – – šlapacím;W27.–
+3;– – šípem, šipkou;W21.–
+4;– – – nehozenım, nestøelenım nebo nepadnuvším;W26.8
+3;– – šroubovákem;W27.–
+4;– – – motorovım;W29.–
+3;– – štírem;X22.–
+3;– – tarantulí;X21.–
+3;– – tekutım plynem;W93.–
+3;– – tekutım vzduchem, vodíkem, dusíkem;W93.–
+3;– – tkalcovskım strojem;W31.–
+3;– – topnım(-ou);
+4;– – – podlokou (elektrickou);X16.–
+4;– – – pøístrojem (horkım);X16.–
+3;– – transmisním zaøízením (øemen, kabel, øetìz, ozubené kolo, kladka, høídel);W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – trubkou, horkou;X16.–
+3;– – tøískou, štìpinou;W45.–
+3;– – turbinou (plynovou) (vodní);W31.–
+3;– – vaøièem (horkım);X15.–
+3;– – vèelou, vèelami;X23.–
+3;– – vidlemi;W27.–
+4;– – – na seno;W27.–
+3;– – vidlovım zvedaèem (na tahaèi);W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – vosou(-ami);X23.–
+3;– – vozidlem;
+4;– – – pøi pouití v terénu – viz Nehoda, dopravní, terénního nebo mimosilnièního vozidla;
+5;– – – – v provozu na místì nebo údrbì;W31.–
+4;– – – pøi zvláštním stavebním pouití – viz Nehoda, dopravní, stavebního vozidla;
+5;– – – – v provozu na místì nebo údrbì;W31.–
+4;– – – v prùmyslu (doprava) – viz Nehoda, dopravní, prùmyslového vozidla;
+5;– – – – v provozu na místì nebo údrbì;W31.–
+4;– – – v zemìdìlství (doprava) – viz Nehoda, dopravní, zemìdìlského vozidla;
+5;– – – – v provozu na místì nebo údrbì;W30.–
+3;– – vrtaèkou (motorovou);W29.–
+4;– – – nemotorovou, ruèní;W27.–
+4;– – – zemní (zemì) (moøské dno);W31.–
+3;– – vrtákem, zemním nebo dùlním (zemì) (moøské dno);W31.–
+3;– – vıtahem (v budovì);W24.–
+4;– – – na obilí;W30.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – vıtahem, zdvihací(-m) (zaøízením) (pákovım);W24.–
+4;– – – pøi zemìdìlské èinnosti;W30.–
+3;– – zahradním(-i);
+4;– – – kultivátorem (motorovım);W29.–
+5;– – – – jetım (s øidièem);W30.–
+4;– – – vidlemi;W27.–
+3;– – zemìdìlskım strojem;W30.–
+3;– – zemní(-m);
+4;– – – stacionárním skrejprem (v provozu na místì);W31.–
+4;– – – vrtnou soupravou (prùmyslovou);W31.–
+3;– – zmijí;X20.–
+3;– – zvedákem (øetìzovım) (pákovım) NJ;W24.–
+4;– – – zemìdìlskım;W30.–
+3;– – acím (sklízecím) strojem;W30.–
+3;– – acím strojem;W30.–
+3;– – árem NJ;X19.–
+4;– – – z pøístroje (elektrického) (pro domácnost);X15.–
+5;– – – – topného;X16.–
+3;– – ivoèichem (nejedovatım) NJ;W64.–
+4;– – – jedovatım;X29.–
+5;– – – – urèenım NJ;X27.–
+4;– – – moøskım;W56.–
+5;– – – – jedovatım;X26.–
+1;Kopnutí (do);
+2;– osobou(-ami) (náhodné);W50.–
+3;– – se zámìrem zranit nebo zabít;Y04.–
+3;– – v boji, rvaèce;Y04.–
+3;– – zpùsobené v davu (v panice) (s pádem);W52.–
+2;– osoby (viz té Vraení do, osoby);W51.–
+2;– pøedmìtu (nehybného);W22.–
+3;– – sportovního náøadí;W21.–
+2;– sportovního náøadí;W21.–
+2;– zvíøetem NJ;W55.–
+1;Kousnutí, pokousání;
+2;– aligátorem;W58.–
+2;– bungarem (indickı jedovatı had);X20.–
+2;– èlenovcem (nejedovatım) NJ;W57.–
+3;– – jedovatım (viz té Kontakt, s, podle typu èlenovce);X25.–
+2;– èlovìkem (náhodné);W50.–
+3;– – úmyslné;Y08.–
+2;– fer de lance (jedovatı jihoamerickı had, Bothrox atrox);X20.–
+2;– hadem (jedovatım);X20.–
+3;– – moøskım;X20.–
+3;– – nejedovatım;W59.–
+2;– hlodavcem kromì krysou;W55.–
+2;– hmyzem (nejedovatım);W57.–
+3;– – jedovatım (viz té Kontakt, s, podle typu hmyzu);X25.–
+2;– chøestıšem;X20.–
+2;– jedovaté (viz té Kontakt, s, podle typu kousnutí);X29.–
+2;– ještìrkou (nejedovatou);W59.–
+3;– – jedovatou;X20.–
+2;– kobrou;X20.–
+2;– koèkou;W55.–
+2;– korálovcem;X20.–
+2;– krokodılem;W58.–
+2;– krysou;W53.–
+2;– moøskım ivoèichem (nejedovatım);W56.–
+3;– – jedovatım;X26.–
+4;– – – hadem;X20.–
+2;– murénou;W56.–
+2;– osobou(-ami) (neúmyslné);W50.–
+3;– – úmyslné;Y08.–
+2;– pavoukem (jedovatım) (èerná vdova);X21.–
+3;– – nejedovatım;W57.–
+2;– plazem (viz té Kousnutí, hadem);X20.–
+2;– plazem NJ;W59.–
+2;– psem;W54.–
+2;– savcem NJ;W55.–
+3;– – jedovatım;X29.–
+4;– – – urèenım NJ;X27.–
+3;– – moøskım;W56.–
+2;– stonokou (viz té Kontakt);X24.–
+3;– – jedovatou (tropickou) (viz té Kontakt);X24.–
+2;– stonokou nejedovatou (viz té Kontakt);W57.–
+2;– tarantulí;X21.–
+2;– zmijí;X20.–
+2;– ralokem;W56.–
+1;Krvácení;
+2;– v prùbìhu lékaøského nebo chirurgického léèení jako neádoucí pøíhoda (viz té Neádoucí pøíhoda, øezem, podle typu vıkonu);Y60.9
+2;– zpodìné, následující po lékaøském nebo chirurgickém léèení bez zmínky o neádoucí pøíhodì (viz té Komplikace, podle typu vıkonu);Y84.9
+1;Lavina, sesuv pùdy;X36.–
+2;– spadlá nebo narazivší;
+3;– – na dopravní (motorové) vozidlo (v pohybu);X36.–
+3;– – na vlak nebo kolejové vozidlo (v pohybu);X36.–
+1;Lékaøskı vıkon, komplikace (jako opodìná nebo abnormální reakce beze zmínky o neádoucí pøíhodì) (viz té Komplikace, podle typu vıkonu);Y84.9
+2;– zpùsobená nebo jako následek neádoucí pøíhody (viz té Neádoucí pøíhoda);Y69
+1;Lesní poár (vystavení);X01.–
+1;Lynèování (viz té Napadení);Y09.–
+1;Moøská nemoc;X51.–
+1;Mrznutí (viz té Expozice, chladu);X31.–
+1;Muèení – viz Tırání;
+1;Nadmìrná expozice, vystavení (náhodná);
+2;– horku (viz té ár);X30.–
+2;– chladu (viz té Expozice, chladu);X31.–
+3;– – v umìlıch podmínkách;W93.–
+2;– poèasí NJ;X39.–
+2;– radioaktivitì;W88.–
+2;– slunci (spálení);X32.–
+2;– vìtru NJ;X39.–
+2;– záøení – viz Záøení;
+1;Nadzvukové vlny (jako pøíèina poranìní);W42.–
+1;Nakroèení, náraz do nehybného pøedmìtu (jakéhokoli);W22.–
+1;Nález zranìného (mrtvého);X59.9
+2;– na;
+3;– – dálnici, cestì, ulici;V89.9
+3;– – eleznièní trati s pøedností v jízdì;V81.9
+2;– následkem expozice (èemu) – viz Expozice;
+1;Namáhání, extrémní;X50.–
+1;Namáhavé (usilovné) pohyby (pøi rekreaèní nebo jiné èinnosti);X50.–
+1;Napadení (vraedné) (pøi) (s);Y09.–
+2;– (za-)dušením;X91.–
+2;– bodnutím do kterékoli èásti tìla;X99.–
+2;– bojem (rukou) (pìstí) (nohou) (neozbrojené);Y04.–
+3;– – se zbraní NJ;Y09.–
+4;– – – øeznou nebo bodnou;X99.–
+4;– – – støelnou (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+4;– – – tupou;Y00.–
+2;– bombou (proti pìchotì) (v dopise) (benzinovou);X96.–
+2;– dıkou;X99.–
+2;– dynamitem;X96.–
+2;– havárií motorového vozidla;Y03.–
+2;– chemikálií;X90.–
+3;– – urèenou NJ;X89.–
+2;– jinımi urèenımi prostøedky NJ;Y08.–
+2;– kousnutím (èlovìka);Y08.–
+2;– kyselinou (polknutou);X86.–
+3;– – polití;X86.–
+2;– léèivy nebo biologickımi látkami;X85.–
+2;– násilím NJ;Y09.–
+2;– následky;Y87.1
+2;– noem;X99.–
+2;– ohnìm;X97.–
+2;– ochrannımi prostøedky na døevo;X87.–
+2;– opaøením;X98.–
+2;– otravou;X90.–
+3;– – chemikálií(-emi);X90.–
+4;– – – urèenımi NJ;X89.–
+3;– – léèivy nebo biologickımi látkami;X85.–
+3;– – oxidem uhelnatım NJ;X88.4
+4;– – – technickım plynem;X88.1
+4;– – – z urèeného zdroje – viz Napadení, otravou, plyny a parami;
+3;– – plyny a parami, kromì léèiv a biologickıch látek NJ (viz té Tabulku lékù a chemikálií);X88.9
+4;– – – zpùsobenımi;
+5;– – – – acetylenem;X88.8
+6;– – – – – vytváøejícím oxid uhelnatı;X88.1
+5;– – – – domácím sporákem;X88.2
+5;– – – – látkami pouívanımi ke svícení, topení nebo vaøení NJ;X88.1
+5;– – – – motorovım èerpadlem;X88.0
+5;– – – – motorovım prostøedkem (nikoli pøi pøepravì);X88.0
+5;– – – – ohništìm;X88.2
+5;– – – – plynovım motorem (jakımkoli typem);X88.0
+5;– – – – prùmyslovım uitím;X88.3
+5;– – – – pøenosnım grilem;X88.2
+5;– – – – roní;X88.2
+3;– – škodlivımi látkami, NJ;X90.–
+4;– – – urèenımi NJ;X89.–
+3;– – technickım plynem;X88.1
+3;– – vıfukovımi plyny (ze spalovacích motorù);X88.0
+2;– pálením, popálením (ohnìm) NJ;X97.–
+3;– – cigaretou, cigaretami;X97.–
+3;– – horkou tekutinou, pøedmìtem nebo parou (vıpary);X98.–
+3;– – chemickım (polknutím íravé, leptavé látky);X86.–
+3;– – kyselinou (polknutou);X86.–
+3;– – opaøením;X98.–
+3;– – párou;X98.–
+3;– – vitriolem (polknutım);X86.–
+3;– – íravinou, leptavou látkou (polknutou);X86.–
+4;– – – plynem NJ;X88.9
+2;– parou;X98.–
+2;– pesticidy;X87.–
+2;– píchnutím do kterékoli èásti tìla;X99.–
+2;– plyny a parami, kromì léèiv a biologickıch látek NJ (viz té Tabulku lékù a chemikálií);X88.9
+2;– poranìním;Y09.–
+3;– – bodnutím;X99.–
+3;– – noem;X99.–
+3;– – ostrım pøedmìtem;X99.–
+3;– – píchnutím;X99.–
+3;– – vıstøelem ze støelné zbranì (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+2;– potopením;X92.–
+2;– povìšením;X91.–
+2;– pozdní následky;Y87.1
+2;– rostlinou potravou;X89.–
+2;– øíznutím, kterékoli èásti tìla;X99.–
+2;– s poranìním NJ;Y09.–
+3;– – dítìte v dùsledku pokusu o kriminální potrat NJ;Y08.–
+2;– sexuální (tìlesnım násilím, silou);Y05.–
+2;– srákou, dopravní (vozidlem(-y));Y03.–
+2;– strèením;
+3;– – pøed pohybující se pøedmìt, vlak, vozidlo;Y02.–
+3;– – z vıšky;Y01.–
+2;– støelbou (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+2;– støelnou zbraní (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+2;– škodlivou látkou;X90.–
+2;– škrcením;X91.–
+2;– tìlesnou silou (rukou) (pìstí) (nohou);Y04.–
+3;– – sexuální;Y05.–
+2;– umìlım hnojivem;X89.–
+2;– umístìním pøed pohybující se pøedmìt, vlak, vozidlo;Y02.–
+2;– únosem, znásilnìním;Y05.–
+2;– utopením;X92.–
+2;– v šarvátce, potyèce (rukou) (pìstí) (nohou) (neozbrojenou);Y04.–
+2;– vitriolem (polknutım);X86.–
+2;– vıbušninou nebo vıbušnım materiálem;X96.–
+2;– vıstøelem (s poranìním) NJ (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+2;– zápalnım zaøízením;X97.–
+2;– zardoušením;X91.–
+2;– zbraní NJ;Y09.–
+3;– – øeznou a bodnou;X99.–
+3;– – støelnou zbraní (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+3;– – tupou;Y00.–
+2;– zvíøetem (na kterém se nejede) NJ;W55.–
+3;– – na kterém se jede (viz té Nehoda, dopravní);V06.–
+2;– íravinou, leptavou látkou (polknutou);X86.–
+3;– – plynem NJ;X88.9
+1;Náraz, naraení, do, na (náhodné);
+2;– dna (pøi skoku nebo potápìní do vody);W16.–
+2;– hladinu vody (s poranìním jinım ne (u)topením nebo potopením);W16.–
+2;– osoby (osob);W51.–
+3;– – s pádem;W03.–
+3;– – zpùsobenı davem (v panice) (s pádem);W52.–
+2;– pøedmìt (nehybnı);W22.–
+3;– – pohybující se, vrenı;W20.–
+3;– – s;
+4;– – – (u)topením nebo potopením (viz té Utopení);W74.–
+4;– – – pádem;W18.–
+3;– – sportovního vybavení, zaøízení, náøadí;W21.–
+3;– – zpùsobenı davem (v panice) (s pádem);W52.–
+2;– skokanského prkna (v bazénu) (pøi skoku nebo potápìní do vody);W16.–
+2;– sportovního náèiní, zaøízení;W21.–
+2;– stìny bazénu (pøi skoku nebo potápìní do vody);W16.–
+1;Následky;Y89.9
+2;– abnormálních reakcí nebo pozdních komplikací chirurgickıch a lékaøskıch vıkonù (zaøaditelnıch do Y83–Y84);Y88.3
+2;– dopravní nehody, kromì motorového vozidla;Y85.9
+2;– napadení (vraedného) (jakéhokoli druhu) (zaøaditelného do X85–Y09);Y87.1
+2;– nehody motorového vozidla;Y85.0
+2;– nehody NJ (zaøaditelné do W00–X59);Y86
+2;– neádoucí pøíhody;
+3;– – související s lékaøskım nebo chirurgickım vıkonem;Y88.1
+3;– – související s pouitím lékaøskıch pøístrojù (pomùcek) v diagnostickém nebo léèebném pouití (zaøaditelné do Y70–Y82);Y88.2
+3;– – u pacienta v prùbìhu lékaøskıch nebo chirurgickıch vıkonù (zaøaditelné do Y60–Y69);Y88.1
+2;– neádoucích úèinkù léèiv a biologickıch látek pouitıch k léèbì (zaøaditelnıch do Y40–Y59);Y88.0
+2;– poranìní neurèeného zda náhodné nebo zámìrné (zaøaditelného do Y10–Y34);Y87.2
+2;– pøípadu nezjištìného úmyslu (zaøaditelného do Y10–Y34);Y87.2
+2;– sebevrady (pokusu) (jakéhokoli druhu) (zaøaditelné do X60–X84);Y87.0
+2;– váleènıch operací;Y89.1
+2;– vraedného pokusu (jakéhokoli druhu) (zaøaditelného do X85–Y09);Y87.1
+2;– zákonného zákroku;Y89.0
+2;– zámìrného sebepoškození (zaøaditelného do X60–X84);Y87.0
+1;Následky, pozdní (viz té Následky);Y89.9
+1;Nedostateèná péèe, pøi nebo po narození (vraednı zámìr) (viz té Opuštìní);Y06.9
+1;Nedostatek (nouze);
+2;– péèe (bezmocná osoba) (dítì) (novorozenec) (viz té Opuštìní);Y06.9
+2;– potravy (vyjma jako následek opuštìní nebo zanedbání);X53.–
+3;– – jako následek opuštìní nebo zanedbání (viz té Opuštìní);Y06.9
+2;– vody vyjma následku dopravní nehody;X54.–
+3;– – u bezmocné osoby, dítìte, novorozence (viz té Opuštìní);Y06.9
+2;– vzduchu (v lednici nebo uzavøeném prostoru) udušení pøi;W81.–
+1;Nehoda;X59.9
+2;– autobusu NJ (viz té Nehoda, dopravní);V79.9
+2;– automobilu NJ (viz té Nehoda, dopravní);V49.9
+2;– èlunu, pøi jízdì na èlunu NJ;V94.–
+2;– dodávkového vozu (pick-up) (viz té Nehoda, dopravní);V59.9
+2;– dopravní (jako pøíèina poranìní) (viz té Tabulka pozemních dopravních nehod);V99
+3;– – cyklisty (pøi);V19.9
+4;– – – beze sráky;V18.–
+4;– – – mimosilnièní;V19.3
+4;– – – sráce (s motorovım vozidlem) (s, se);V19.6
+5;– – – – autobusem nebo tìkım nákladním vozidlem;V14.–
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V12.–
+5;– – – – chodcem;V10.–
+5;– – – – jízdním kolem;V11.–
+5;– – – – mimosilnièní;V19.2
+6;– – – – – cestujícího;V19.1
+6;– – – – – øidièe;V19.0
+5;– – – – nemotorovım vozidlem NJ;V16.–
+5;– – – – osobním autem, pick-up nebo dodávkou;V13.–
+5;– – – – pevnım nebo nehybnım pøedmìtem;V17.–
+5;– – – – poulièní dráhou;V16.–
+5;– – – – silnièní;V19.6
+6;– – – – – cestujícího;V19.5
+6;– – – – – øidièe;V19.4
+5;– – – – vlakem nebo kolejovım vozidlem;V15.–
+5;– – – – vozidlem taenım zvíøetem;V16.–
+5;– – – – zvíøetem;V10.–
+6;– – – – – na nìm se jede;V16.–
+4;– – – urèená NJ;V19.8
+3;– – èlena osádky;
+4;– – – autobusu;V79.9
+4;– – – autokaru;V79.9
+4;– – – automobilu pick-up;V59.9
+4;– – – balonu;V96.0
+4;– – – buldozeru (viz té Nehoda, dopravní, stavebního vozidla);V85.9
+4;– – – èlunu NJ;V94.–
+4;– – – dodávky (viz té Nehoda, dopravní, èlena osádky automobilu pick up nebo dodávky);V59.9
+4;– – – elektrické dráhy;V82.9
+4;– – – jízdního kola – viz Nehoda, dopravní, cyklisty;
+4;– – – jízdního kola s motorem – viz Nehoda, dopravní, jezdec na motocyklu;
+4;– – – kluzáku (nemotorového);V96.2
+5;– – – – motorového, ultralehkého;V95.1
+5;– – – – závìsného;V96.1
+4;– – – kosmické lodi;V95.4
+4;– – – lanové dráhy (na kolejích);V82.9
+5;– – – – nekolejové;V98
+4;– – – lanovky;V98
+4;– – – letadla (motorového);V95.9
+5;– – – – bezmotorového;V96.9
+5;– – – – s pevnımi køídly (obchodního);V95.3
+6;– – – – – soukromého;V95.2
+5;– – – – urèená NJ;V95.8
+4;– – – lodi, NJ;V94.–
+4;– – – lyaøského vleku, lanovky (sedaèkové) (kabinové);V98
+4;– – – mechanické lopaty (viz té Nehoda, dopravní, stavebního vozidla);V85.9
+4;– – – mikrobusu;V49.9
+4;– – – mopedu – viz Nehoda, dopravní, jezdce na motocyklu;
+4;– – – motocyklu (s postranním vozíkem) – viz Nehoda, dopravní, jezdce na motocyklu;
+4;– – – osobního auta;V49.9
+4;– – – plachetnice na kolech;V98
+4;– – – plachetnice na led;V98
+4;– – – plavidla NJ;V94.–
+4;– – – poulièní dráhy (mezimìstské) (jedoucí po veøejné ulici nebo silnici);V82.9
+5;– – – – nárazem vagonu, kolejového vozu (vozidla);V82.2
+5;– – – – pøi provozu na veøejné cestì na vlastním soukromém pozemku, uzavøené ostatní dopravì;V81.–
+5;– – – – pøi sráce s, se;
+6;– – – – – motorovım vozidlem;
+7;– – – – – – mimosilnièní;V82.0
+7;– – – – – – silnièní;V82.1
+6;– – – – – pøedmìtem NJ;V82.3
+6;– – – – – vagonem, kolejovım vozem (vozidlem);V82.2
+6;– – – – – zvíøetem s jezdcem nebo vozidlem taenım zvíøetem;V82.8
+4;– – – rikši – viz té Nehoda, dopravní, cyklisty;
+5;– – – – motorové – viz Nehoda, dopravní, tøíkolového motorového vozidla;
+5;– – – – pohánìné pedály;V19.9
+4;– – – silnièního válce (viz té Nehoda, dopravní, stavebního stroje);V85.9
+4;– – – snìné rolby (viz té Nehoda, dopravní, terénního nebo mimosilnièního vozidla);V86.9
+4;– – – terénního vozidla (mimosilnièního) (viz té Nehoda, dopravní, terénního nebo mimosilnièního vozidla);V86.9
+4;– – – tìkého pøepravního vozidla;V69.9
+4;– – – traktoru (a pøívìsu) (viz té Nehoda, dopravní, zemìdìlského vozidla);V84.9
+4;– – – trolejbusu;V82.9
+4;– – – tøíkolky – viz Nehoda, dopravní, cyklisty;
+5;– – – – motorové – viz Nehoda, dopravní, tøíkolového motorového vozidla;
+4;– – – tøíkolového motorového vozidla;V39.9
+5;– – – – nemotorového – viz Nehoda, dopravní, cyklisty;
+4;– – – tunelové dráhy v dolech nebo v lomu (viz té Nehoda, dopravní, prùmyslového vozidla);V83.9
+4;– – – uhelného vozu (viz té Nehoda, dopravní, prùmyslového vozidla);V83.9
+4;– – – ultralehkého letadla;V95.1
+4;– – – vlaku nebo kolejového vozidla (jedno, dvoukolejového) (podzemního);V81.9
+5;– – – – pøi sráce (s);
+6;– – – – – motorovım vozidlem;
+7;– – – – – – neprovozní;V81.0
+7;– – – – – – provozní;V81.1
+6;– – – – – objektem NJ;V81.3
+6;– – – – – vagonem, kolejovım dopravním prostøedkem, vozem;V81.2
+4;– – – vozidla na elektrickı (bateriovı) pohon (letištní vozidlo pro cestující) (nákladní auto);V83.9
+4;– – – vozidla NJ;V89.9
+5;– – – – motorového (silnièní) NJ;V89.2
+6;– – – – – mimosilnièní NJ;V89.0
+5;– – – – tìkého transportního;V69.9
+4;– – – vozidla pro kácení (viz té Nehoda, dopravní, prùmyslového vozidla);V83.9
+4;– – – vozidla taeného zvíøetem;V80.9
+4;– – – vozu;V49.9
+5;– – – – lanovky na kolejích;V82.9
+6;– – – – – nekolejové;V98
+4;– – – vrtulníku;V95.0
+4;– – – vznášedla (pro otevøenou vodu) NJ;V94.3
+4;– – – závìsného kluzáku;V96.1
+5;– – – – nesoucího osobu – Rogallo;V96.8
+4;– – – zdvihací plošiny (viz Nehoda, dopravní, prùmyslového vozidla);V83.9
+4;– – – zemìdìlského stroje (se samostatnım pohonem) (viz té Nehoda, dopravní, zemìdìlského stroje);V84.9
+4;– – – zemìdìlského vozidla–kombajnu (viz té Nehoda, dopravní, zemìdìlského vozidla);V84.9
+4;– – – zemního stroje (viz té Nehoda, dopravní, stavebního stroje);V85.9
+3;– – èlena osádky osobního automobilu (pøi);V49.9
+4;– – – beze sráky;V48.–
+4;– – – mimosilnièní;V49.3
+4;– – – s pøevrácením;V48.–
+4;– – – sráce s, se (motorovım vozidlem);V49.6
+5;– – – – autobusem nebo tìkım transportním vozidlem;V44.–
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V42.–
+5;– – – – chodcem;V40.–
+5;– – – – jízdním kolem;V41.–
+5;– – – – mimosilnièní;V49.2
+6;– – – – – cestujícího;V49.1
+6;– – – – – øidièe;V49.0
+5;– – – – nemotorovım vozidlem;V46.–
+5;– – – – osobním autem, pick-up nebo dodávkou;V43.–
+5;– – – – pevnım nebo nehybnım pøedmìtem;V47.–
+5;– – – – poulièní dráhou;V46.–
+5;– – – – silnièní;V49.6
+6;– – – – – cestujícího;V49.5
+6;– – – – – øidièe;V49.4
+5;– – – – vlakem nebo kolejovım vozidlem;V45.–
+5;– – – – vozidlem taenım zvíøetem;V46.–
+5;– – – – zvíøetem;V40.–
+6;– – – – – na nìm se jede;V46.–
+4;– – – urèená NJ;V49.8
+3;– – èlena osádky tìkého nákladního vozidla (pøi);V69.9
+4;– – – beze sráky;V68.–
+4;– – – mimosilnièní;V69.3
+4;– – – s pøevrácením;V68.–
+4;– – – sráce s, se (motorovım vozidlem);V69.6
+5;– – – – autobusem nebo tìkım nákladním vozidlem;V64.–
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V62.–
+5;– – – – chodcem;V60.–
+5;– – – – jízdním kolem;V61.–
+5;– – – – mimosilnièní;V69.2
+6;– – – – – cestujícího;V69.1
+6;– – – – – øidièe;V69.0
+5;– – – – nemotorovım vozidlem;V66.–
+5;– – – – osobním autem, pick-up nebo dodávkou;V63.–
+5;– – – – pevnım nebo nehybnım pøedmìtem;V67.–
+5;– – – – poulièní dráhou;V66.–
+5;– – – – silnièní;V69.6
+6;– – – – – cestujícího;V69.5
+6;– – – – – øidièe;V69.4
+5;– – – – vlakem nebo kolejovım vozidlem;V65.–
+5;– – – – vozidlem taenım zvíøetem;V66.–
+5;– – – – zvíøetem;V60.–
+6;– – – – – na nìm se jede;V66.–
+4;– – – urèená NJ;V69.8
+3;– – chodce (pøi);V09.9
+4;– – – mimosilnièní;V09.1
+5;– – – – s úèastí motorového vozidla NJ;V09.0
+4;– – – silnièní;V09.3
+5;– – – – s úèastí motorového vozidla, NJ;V09.2
+4;– – – sráce (s, se);
+5;– – – – autobusem nebo tìkım nákladním vozidlem;V04.–
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V02.–
+5;– – – – jízdním kolem;V01.–
+5;– – – – osobním autem;V03.–
+5;– – – – poulièní dráhou;V06.–
+5;– – – – vlakem nebo kolejovım vozidlem;V05.–
+5;– – – – vozidlem;V09.9
+6;– – – – – motorovım;
+7;– – – – – – mimosilnièní;V09.0
+7;– – – – – – silnièní;V09.2
+6;– – – – – nemotorovım;V06.–
+6;– – – – – taenım zvíøetem;V06.–
+5;– – – – vozidlem pick-up nebo dodávkou;V03.–
+5;– – – – zvíøetem s jezdcem nebo vozidlem taenım zvíøetem;V06.–
+3;– – jezdce na motocyklu pøi;V29.9
+4;– – – beze sráky;V28.–
+4;– – – mimosilnièní;V29.3
+4;– – – pøevrácení;V28.–
+4;– – – sráce s, se (motorovım vozidlem);V29.6
+5;– – – – autobusem nebo tìkım nákladním vozidlem;V24.–
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V22.–
+5;– – – – chodcem;V20.–
+5;– – – – jízdním kolem;V21.–
+5;– – – – mimosilnièní;V29.2
+6;– – – – – cestujícího;V29.1
+6;– – – – – øidièe;V29.0
+5;– – – – nemotorovım vozidlem;V26.–
+5;– – – – osobním autem, pick-up nebo dodávkou;V23.–
+5;– – – – pevnım nebo nehybnım pøedmìtem;V27.–
+5;– – – – poulièní dráhou;V26.–
+5;– – – – silnièní;V29.6
+6;– – – – – cestujícího;V29.5
+6;– – – – – øidièe;V29.4
+5;– – – – vlakem nebo kolejovım vozidlem;V25.–
+5;– – – – vozidlem taenım zvíøetem;V26.–
+5;– – – – zvíøetem;V20.–
+6;– – – – – na nìm se jede;V26.–
+4;– – – urèená NJ;V29.8
+3;– – jezdce na zvíøeti nebo èlena osádky vozidla taeného zvíøetem (pøi);V80.9
+4;– – – bez sráky;V80.0
+4;– – – sráce s (se);
+5;– – – – autobusem nebo tìkım transportním vozidlem;V80.4
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V80.3
+5;– – – – chodcem;V80.1
+5;– – – – jízdním kolem;V80.2
+5;– – – – nemotorovım vozidlem;V80.7
+5;– – – – osobním autem, pick-up nebo dodávkou;V80.4
+5;– – – – pevnım nebo nehybnım pøedmìtem;V80.8
+5;– – – – poulièní dráhou;V80.7
+5;– – – – urèené NJ;V80.5
+5;– – – – vlakem nebo kolejovım vozidlem;V80.6
+5;– – – – vozidlem taenım zvíøetem;V80.7
+5;– – – – zvíøetem;V80.1
+6;– – – – – na nìm se jede;V80.7
+3;– – letadla;
+4;– – – s poranìním osoby;
+5;– – – – na zemi;V97.3
+5;– – – – pøi nastupování nebo vystupování;V97.1
+5;– – – – toèící se vrtulí;V97.3
+5;– – – – vtaením do tryskového motoru;V97.3
+5;– – – – vypadnutím z, (v nebo na) letadla;V97.0
+5;– – – – zasaené objektem padajícím z letadla;V97.3
+5;– – – – zpùsobenım mechanizmem letadla;V97.8
+3;– – osoby NJ (s neznámım zpùsobem dopravy obìti) (pøi);V99
+4;– – – s nemotorovım vozidlem (se srákou) (bez sráky) (silnièní);V87.9
+5;– – – – mimosilnièní;V88.9
+4;– – – sráce (mezi);
+5;– – – – autobusem a tìkım nákladním vozidlem (silnièní);V87.5
+6;– – – – – mimosilnièní;V88.5
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem (silnièní) (s);
+6;– – – – – motorovım vozidlem NJ;V87.1
+7;– – – – – – mimosilnièní;V88.1
+5;– – – – motorovım vozidlem (silnièní) NJ;V87.7
+6;– – – – – mimosilnièní;V88.7
+5;– – – – osobním autem (s);
+6;– – – – – autobusem (silnièní);V87.3
+7;– – – – – – mimosilnièní;V88.3
+6;– – – – – dvou nebo tøíkolovım motorovım vozidlem (silnièní);V87.0
+7;– – – – – – mimosilnièní;V88.0
+6;– – – – – tìkım nákladním vozidlem (silnièní);V87.4
+7;– – – – – – mimosilnièní;V88.4
+6;– – – – – vlakem nebo kolejovım vozidlem (silnièní);V87.6
+7;– – – – – – mimosilnièní;V88.6
+6;– – – – – vozidlem pick-up nebo dodávkou (silnièní);V87.2
+7;– – – – – – mimosilnièní;V88.2
+3;– – osoby pøítomné v autobusu (pøi);V79.9
+4;– – – beze sráky;V78.–
+4;– – – mimosilnièní;V79.3
+4;– – – s pøevrácením;V78.–
+4;– – – sráce s (motorovım vozidlem);V79.6
+5;– – – – autobusem nebo tìkım transportním vozidlem;V74.–
+5;– – – – dopravní, silnièní;V79.6
+6;– – – – – cestujícího;V79.5
+6;– – – – – øidièe;V79.4
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V72.–
+5;– – – – chodcem;V70.–
+5;– – – – jízdním kolem;V71.–
+5;– – – – mimosilnièní;V79.2
+6;– – – – – cestujícího;V79.1
+6;– – – – – øidièe;V79.0
+5;– – – – nemotorovım vozidlem;V76.–
+5;– – – – osobním autem, pick-up nebo dodávkou;V73.–
+5;– – – – pevnım nebo nehybnım pøedmìtem;V77.–
+5;– – – – s poulièní dráhou;V76.–
+5;– – – – vlakem nebo kolejovım vozidlem;V75.–
+5;– – – – vozidlem taenım zvíøetem;V76.–
+5;– – – – zvíøetem;V70.–
+6;– – – – – na nìm se jede;V76.–
+4;– – – urèená, NJ;V79.8
+3;– – parašutisty;V97.2
+4;– – – po nehodì letadla;V95.9
+3;– – prùmyslového vozidla (mimosilnièní);V83.9
+4;– – – cestujícího;V83.6
+4;– – – osoby mimo vozidlo;V83.7
+4;– – – pøi nastupování a vystupování;V83.4
+4;– – – øidièe;V83.5
+4;– – – silnièní;V83.3
+5;– – – – cestujícího;V83.1
+5;– – – – osoby mimo vozidlo;V83.2
+5;– – – – øidièe;V83.0
+3;– – stavebního vozidla (mimosilnièní);V85.9
+4;– – – cestujícího;V85.6
+4;– – – osoby mimo vozidlo;V85.7
+4;– – – pøi nastupování a vystupování;V85.4
+4;– – – øidièe;V85.5
+4;– – – silnièní;V85.3
+5;– – – – cestujícího;V85.1
+5;– – – – osoby mimo vozidlo;V85.2
+5;– – – – øidièe;V85.0
+3;– – terénního nebo mimosilnièního vozidla (mimosilnièní);V86.9
+4;– – – cestujícího;V86.6
+4;– – – dopravní, silnièní;V86.3
+5;– – – – cestujícího;V86.1
+5;– – – – osoby mimo vozidlo;V86.2
+5;– – – – øidièe;V86.0
+4;– – – osoby mimo vozidlo;V86.7
+4;– – – pøi nastupování a vystupování;V86.4
+4;– – – øidièe;V86.5
+3;– – tøíkolového motorového vozidla (pøi);V39.9
+4;– – – beze sráky;V38.–
+4;– – – mimosilnièní;V39.3
+4;– – – sráce (s motorovım vozidlem) (s, se);V39.6
+5;– – – – autobusem nebo tìkım nákladním vozidlem;V34.–
+5;– – – – cyklistou;V31.–
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V32.–
+5;– – – – chodcem;V30.–
+5;– – – – mimosilnièní;V39.2
+6;– – – – – cestujícího;V39.1
+6;– – – – – øidièe;V39.0
+5;– – – – nemotorovım vozidlem;V36.–
+5;– – – – osobním autem, pick-up nebo dodávkou;V33.–
+5;– – – – pevnım nebo nehybnım pøedmìtem;V37.–
+5;– – – – poulièní dráhou;V36.–
+5;– – – – silnièní;V39.6
+6;– – – – – cestujícího;V39.5
+6;– – – – – øidièe;V39.4
+5;– – – – vlakem nebo kolejovım vozidlem;V35.–
+5;– – – – vozidlem taenım zvíøetem;V36.–
+5;– – – – zvíøetem;V30.–
+6;– – – – – na nìm se jede;V36.–
+4;– – – urèená NJ;V39.8
+3;– – urèená NJ;V98
+3;– – v dùsledku katastrofy – viz Katastrofa, dle typu;
+3;– – vozidla pick-up nebo dodávky (pøi);V59.9
+4;– – – beze sráky;V58.–
+4;– – – mimosilnièní;V59.3
+4;– – – s pøevrácením;V58.–
+4;– – – sráce s, se (motorovım vozidlem);V59.6
+5;– – – – autobusem nebo tìkım nákladním vozidlem;V54.–
+5;– – – – cyklistou;V51.–
+5;– – – – dvou nebo tøíkolovım motorovım vozidlem;V52.–
+5;– – – – chodcem;V50.–
+5;– – – – mimosilnièní;V59.2
+6;– – – – – cestujícího;V59.1
+6;– – – – – øidièe;V59.0
+5;– – – – nemotorovım vozidlem;V56.–
+5;– – – – osobním autem, pick-up nebo dodávkou;V53.–
+5;– – – – pevnım nebo nehybnım pøedmìtem;V57.–
+5;– – – – poulièní dráhou;V56.–
+5;– – – – silnièní;V59.6
+6;– – – – – cestujícího;V59.5
+6;– – – – – øidièe;V59.4
+5;– – – – vlakem nebo kolejovım vozidlem;V55.–
+5;– – – – vozidlem taenım zvíøetem;V56.–
+5;– – – – zvíøetem;V50.–
+6;– – – – – na nìm se jede;V56.–
+4;– – – urèená NJ;V59.8
+3;– – zemìdìlského vozidla (mimosilnièní);V84.9
+4;– – – èlena osádky;V84.6
+4;– – – dopravní, silnièní;V84.3
+5;– – – – èlena osádky;V84.1
+5;– – – – osoby mimo vozidlo;V84.2
+5;– – – – øidièe;V84.0
+4;– – – osoby mimo vozidlo;V84.7
+4;– – – pøi nastupování nebo vystupování;V84.4
+4;– – – øidièe;V84.5
+2;– jezdce na zvíøeti NJ (viz té Nehoda, dopravní);V80.9
+2;– jízdního kola NJ (viz té Nehoda, dopravní);V19.9
+2;– kolejového vozidla (jakéhokoliv) (v pohybu) NJ (viz té Nehoda, dopravní);V81.9
+3;– – pøi katastrofì – viz Katastrofa, podle typu;
+2;– letadla, (v pohybu) (motorového) NJ (viz té Nehoda, dopravní);V95.9
+3;– – zpùsobená katastrofou – viz Katastrofa, podle typu;
+2;– lodi NJ;V94.–
+3;– – zpùsobená katastrofou – viz Katastrofa, podle typu;
+2;– motocyklu NJ (viz té Nehoda, dopravní);V29.9
+2;– motorového vozidla (dopravní) NJ (viz Nehoda, dopravní);V89.2
+2;– nemotorového vozidla NJ (neprovozní) (viz té Nehoda, dopravní);V89.1
+3;– – silnièní NJ;V89.3
+2;– osobního auta NJ (viz té Nehoda, dopravní);V49.9
+2;– potopení;W16.–
+3;– – s;
+4;– – – nedostateènım pøívodem vzduchu;W81.–
+4;– – – utonutím (viz té Utopení);W74.–
+2;– poulièní dráhy NJ (viz té Nehoda, dopravní);V82.9
+2;– povozu NJ (viz té Nehoda, dopravní);V79.9
+2;– pøi lyování;W02.–
+2;– s následky (viz té Následky);Y86
+2;– s pozdními následky (viz té Následky);Y86
+2;– stroje, mechanizmu NJ (viz Kontakt, s, podle typu stroje);W31.–
+2;– tìkého nákladního vozidla, NJ (viz té Nehoda, dopravní);V69.9
+2;– urèené pøíèiny NJ;X58.–
+2;– vozidla NJ;V89.9
+3;– – speciálního;
+4;– – – prùmyslového NJ (viz té Nehoda, dopravní, prùmyslového vozidla);V83.9
+4;– – – stavebního NJ (viz té Nehoda, dopravní, stavebního vozidla);V85.9
+4;– – – zemìdìlského NJ (viz té Nehoda, dopravní, zemìdìlského vozidla);V84.9
+3;– – taeného zvíøetem (viz té Nehoda, dopravní, jezdce na zvíøeti nebo èlena osádky vozidla taeného zvíøetem);V80.9
+3;– – tøíkolového NJ (motorového) (viz té Nehoda, dopravní, tøíkolového motorového vozidla);V39.9
+2;– zpùsobená;
+3;– – bleskem NJ;X33.–
+3;– – elektrickım;
+4;– – – motorem (viz té Kontakt, s, podle typu stroje);W31.–
+5;– – – – proudem;W86.–
+4;– – – proudem (viz té Expozice, elektrickému proudu);W87.–
+3;– – horkem (nadmìrnım) (viz té ár, horko);X30.–
+3;– – chladem nadmìrnım (viz té Expozice, chladu);X31.–
+3;– – ohnìm, plameny (viz té Expozice, ohni);X09.–
+3;– – okolními vlivy NJ;X58.–
+3;– – párou (viz té Popálenina, párou);X13.–
+3;– – pøírodním vlivem NJ;X58.–
+3;– – radiací (viz té Záøení);W91.–
+3;– – øeznım nebo bodnım nástrojem (viz té Kontakt, s, podle typu nástroje);W26.9
+3;– – strojem, strojním mechanizmem, NJ (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – støelou ze støelné zbranì (viz té Vıstøel, podle typu støelné zbranì dle typu);W34.–
+3;– – transmisním zaøízením (viz té Kontakt, s, podle typu transmisního zaøízení);W24.–
+3;– – vıbušninou (viz té Vıbuch);W40.–
+3;– – vzplanutím (viz té Vzplanutí);X09.–
+3;– – zdvihacím zaøízením (viz té Kontakt, s, podle typu zdvihacího zaøízení);W24.–
+3;– – zvíøetem NJ;W64.–
+3;– – íravinou (viz Tabulka lékù a chemikálií);
+1;Nemoc;
+2;– alpská;W94.–
+2;– andská;W94.–
+2;– cestovní – kinetóza;X51.–
+2;– horská;W94.–
+2;– høebenová, vysokohorská;W94.–
+2;– letadlová;X51.–
+2;– letcù;W94.–
+2;– Minamata;X49.–
+2;– moøská;X51.–
+2;– pohybová – kinetóza;X51.–
+2;– potápìèù, ochrnutí, paralıza, stištìní–tlak;W94.–
+2;– pøi jízdì autem;X51.–
+2;– z dekomprese;W94.–
+1;Neobratnì provedená operace;Y65.5
+1;Nepodání, neposkytnutí;
+2;– chirurgické nebo zdravotní péèe;Y66
+2;– léèiva nebo biologické látky (potøebné);Y63.6
+1;Neschopnost, pozdní následek poranìní (viz té Následky);Y89.9
+1;Nesprávná tekutina v infuzi;Y65.1
+1;Neštìstí (nezpùsobené válkou), NJ;X59.9
+2;– váleèné (viz té Váleèné operace);Y36.9
+1;Nevhodná krev pøi transfuzi;Y65.0
+1;Neádoucí pøíhoda(-y) u pacienta(-ù) pøi chirurgické nebo lékaøské péèi (zpùsobená);Y69
+2;– extrémním mnostvím krve nebo jiné tekutiny v prùbìhu transfuze nebo infuze;Y63.0
+2;– chybou;
+3;– – mechanickou, nástroje nebo pøístroje (kteréhokoli) (pøi jakémkoli vıkonu);Y65.8
+3;– – stehu nebo ligatury (podvazu) pøi chirurgickém vıkonu;Y65.2
+3;– – sterilizace (v prùbìhu vıkonu) pøi;Y62.9
+4;– – – aspiraci tekutiny nebo tkánì (pøi punkci nebo katetrizaci kromì srdce);Y62.6
+4;– – – biopsii (kromì punkèní aspiraèní);Y62.8
+5;– – – – punkèní (aspiraèní);Y62.6
+4;– – – dialıze (ledvin);Y62.2
+4;– – – endoskopickém vyšetøení;Y62.4
+4;– – – chirurgickém vıkonu;Y62.0
+4;– – – imunizaci;Y62.3
+4;– – – infuzi;Y62.1
+4;– – – injekci;Y62.3
+4;– – – katetrizaci (kromì srdce);Y62.6
+5;– – – – srdce;Y62.5
+4;– – – klyzmatu;Y62.8
+4;– – – odbìru vzorku krve;Y62.6
+4;– – – odstraòování katétru nebo tamponády;Y62.8
+4;– – – paracentéze (bøišní) (hrudní);Y62.6
+4;– – – perfuzi;Y62.2
+4;– – – punkci (lumbální);Y62.6
+4;– – – punkèní biopsii;Y62.6
+4;– – – transfuzi;Y62.1
+4;– – – urèeném vıkonu NJ;Y62.8
+4;– – – vakcinaci;Y62.3
+3;– – v dávkování;Y63.9
+4;– – – elektrošokové léèby;Y63.4
+4;– – – infuze;
+5;– – – – extrémním mnostvím tekutiny;Y63.0
+5;– – – – nesprávnım øedìním;Y63.1
+4;– – – inzulinové šokové léèby;Y63.4
+4;– – – pøedávkováním – viz Tabulka lékù a chemikálií;
+5;– – – – radiace, léèebné;Y63.2
+4;– – – transfuze extrémního mnostvím krve;Y63.0
+4;– – – urèeného vıkonu NJ;Y63.8
+3;– – zavádìní nebo pøemísování katétru nebo nástroje (kromì endotracheálního kanyly pøi anestesii);Y65.4
+2;– infuzí (viz té Neádoucí pøíhoda, podle typu, infuze);Y69
+3;– – extrémním mnostvím tekutiny;Y63.0
+3;– – nesprávnım roztokem;Y65.1
+3;– – nesprávnım øedìním roztoku;Y63.1
+2;– kontaminovanou léèebnou nebo biologickou látkou (krví, léèivem, tekutinou);Y64.9
+3;– – aplikovanou (pøi);
+4;– – – imunizaci;Y64.1
+4;– – – infuzi;Y64.0
+4;– – – injekci;Y64.1
+4;– – – transfuzi;Y64.0
+4;– – – urèenım zpùsobem NJ;Y64.8
+4;– – – vakcinaci;Y64.1
+2;– krvácením (viz té Neádoucí pøíhoda, øezem, podle typu vıkonu);Y60.9
+2;– následky;Y88.1
+2;– nepatøiènou;
+3;– – operací;Y65.5
+3;– – teplotou (pøíliš horká nebo chladná) pøi lokální aplikaci;Y63.5
+2;– nepodáním nezbytnıch léèiv nebo biologického materiálu;Y63.6
+2;– nesprávnım;
+3;– – lékem podanım omylem – viz Tabulka lékù a chemikálií;
+3;– – roztokem v infuzi;Y65.1
+3;– – umístìním endotracheální kanyly pøi anestesii;Y65.3
+2;– nevhodnou krví pøi transfuzi;Y65.0
+2;– perforací (viz té Neádoucí pøíhoda, øezem, podle typu vıkonu);Y60.9
+2;– ponecháním cizího pøedmìtu v tìle (bìhem vıkonu) pøi;Y61.9
+3;– – aspiraci tekutiny nebo tkánì (pøi punkci nebo katetrizaci kromì srdce);Y61.6
+3;– – biopsii (kromì punkèní biopsie);Y61.8
+4;– – – punkèní biopsii (aspiraèní);Y61.6
+3;– – dialıze (ledvin);Y61.2
+3;– – endoskopickém vyšetøení;Y61.4
+3;– – chirurgickém vıkonu;Y61.0
+3;– – imunizaci;Y61.3
+3;– – infuzi;Y61.1
+3;– – injekci;Y61.3
+3;– – katetrizaci (kromì srdce);Y61.6
+4;– – – srdce;Y61.5
+3;– – klyzmatu;Y61.8
+3;– – odbìru vzorku krve;Y61.6
+3;– – paracentéze (bøišní) (hrudní);Y61.6
+3;– – perfuzi;Y61.2
+3;– – punkci (lumbální);Y61.6
+3;– – punkèní biopsii;Y61.6
+3;– – transfuzi;Y61.1
+3;– – urèeném vıkonu NJ;Y61.8
+3;– – vakcinaci;Y61.3
+3;– – vyjímání katétru nebo odstraòování tamponády;Y61.7
+2;– pozdní projev;Y88.1
+2;– provedením nevhodné operace, vıkonu;Y65.5
+2;– pøedávkováním – viz Tabulka lékù a chemikálií;
+3;– – radiace (pøi léèbì);Y63.2
+2;– punkcí (viz té Neádoucí pøíhoda, øezem, podle typu vıkonu);Y60.9
+2;– øezem, øezáním, bodáním, perforací nebo krvácením (náhodná) (z nepozornosti) (neúmyslná) (pøi);Y60.9
+3;– – aspiraci tekutiny nebo tkánì (pøi nabodnutí nebo katetrizaci, kromì srdce);Y60.6
+3;– – biopsii (kromì aspiraèní jehlové biopsie);Y60.8
+4;– – – aspiraèní (tenkou jehlou);Y60.6
+3;– – dialıze (ledvin);Y60.2
+3;– – endoskopickém vyšetøení;Y60.4
+3;– – chirurgickém vıkonu;Y60.0
+3;– – imunizaci;Y60.3
+3;– – infuzi;Y60.1
+3;– – injekci;Y60.3
+3;– – katetrizaci;Y60.6
+4;– – – srdce;Y60.5
+3;– – klyzmatu;Y60.7
+3;– – odebírání vzorku krve;Y60.6
+3;– – paracentéze (bøišní) (hrudní);Y60.6
+3;– – perfuzi;Y60.2
+3;– – punkci (lumbální);Y60.6
+3;– – punkèní biopsii;Y60.6
+3;– – transfuzi;Y60.1
+3;– – urèeném vıkonu NJ;Y60.8
+3;– – vakcinaci;Y60.3
+2;– transfuzní (viz té Neádoucí pøíhoda, podle typu, transfuze);Y69
+3;– – extrémním mnostvím krve;Y63.0
+3;– – nevhodnou krví;Y65.0
+2;– urèeného typu NJ;Y65.8
+2;– vystavením pacienta radiaci z nedbalosti;Y63.3
+1;Nízkı(-á);
+2;– teplota (pùsobení) (viz té Expozice, chladu);X31.–
+2;– tlak (pùsobení);W94.–
+1;Obìšení (náhodné);W76.–
+2;– neurèeno zda náhodné nebo zámìrnì vykonané;Y20.–
+2;– sebe sama (neurèeno zda náhodné nebo úmyslné);Y20.–
+3;– – náhodné;W76.–
+3;– – zhodnocené jako úmyslné, sebevrada (pokus);X70.–
+2;– sebevraedné (pokus);X70.–
+2;– v posteli nebo kolébce;W75.–
+2;– vraedné (pokus);X91.–
+2;– zákonná poprava;Y35.5
+2;– zpùsobené jinou osobou;
+3;– – náhodné;W76.–
+3;– – zhodnocené jako;
+4;– – – neurèeno zda náhodné nebo úmyslné;Y20.–
+4;– – – úmyslné (vraedné) (pokus);X91.–
+1;Obì;
+2;– blesku;X33.–
+2;– bouøe (katastrofické) (snìhové) NJ;X37.–
+3;– – se zátopou;X38.–
+2;– hustého snìení;X37.–
+2;– laviny;X36.–
+2;– monzunu;X37.–
+2;– pohybu zemì NJ;X36.–
+2;– potopy;X38.–
+2;– sesuvu pùdy;X36.–
+2;– sopeèného vıbuchu;X35.–
+2;– tajfunu;X37.–
+2;– vysoké vody;X38.–
+2;– závìjí;X37.–
+2;– zemìtøesení;X34.9
+3;– – kataklyzmatického;X34.0
+3;– – tsunami;X34.1
+3;– – urèeného efektu NJ;X34.8
+1;Obstrukce, uzávìr;
+2;– dıchacích cest, hrtanu;
+3;– – zpùsobená;
+4;– – – hlenem;W80.–
+4;– – – chrchlem;W80.–
+4;– – – materiálem nebo pøedmìtem kromì potravy nebo zvratkù;W80.–
+4;– – – potravou, jakoukoli;W79.–
+4;– – – zvratky;W78.–
+2;– dıchání;
+3;– – zpùsobená;
+4;– – – cizím tìlesem, kromì potravy a zvratkù (uvázlım v jícnu);W80.–
+4;– – – potravou (uvázlou v jícnu);W79.–
+4;– – – zvratky (zachycenımi v jícnu) (se stlaèením trachey);W78.–
+2;– hltanu;
+3;– – zpùsobená;
+4;– – – materiálem nebo pøedmìtem kromì potravy a zvratkù;W80.–
+4;– – – potravou jakoukoli;W79.–
+4;– – – zvratky;W78.–
+2;– jícnu;
+3;– – zpùsobená;
+4;– – – cizím tìlesem, kromì potravy a zvratkù;W44.–
+4;– – – potravou, jakoukoli;W44.–
+5;– – – – s dušením, obstrukcí dıchacích cest, udušením (zpùsobenım stlaèením dıchacích cest);W79.–
+4;– – – zvratky;W44.–
+5;– – – – s dušením, obstrukcí dıchacích cest, udušením;W78.–
+2;– zaívacího traktu, kromì úst a hltanu;
+3;– – zpùsobená;
+4;– – – cizím tìlesem, jakımkoli;W44.–
+4;– – – potravou, jakoukoli;W44.–
+4;– – – zvratky;W44.–
+1;Oheò (náhodnı) (viz té Expozice, ohni);X09.–
+1;Ohòostroj (vıbuch);W39.–
+1;Ohroené dıchání;W84.–
+2;– urèené NJ;W83.–
+2;– zavalením, padající zeminou nebo jinou hmotou NJ;W77.–
+1;Omrzlina;X31.–
+2;– zpùsobená podmínkami vytvoøenımi èlovìkem;W93.–
+1;Opakované pohyby extrémní, pøetíení;X50.–
+1;Opaøení (náhodné), popálení;X19.–
+2;– druhou osobou;
+3;– – zhodnocené jako;
+4;– – – neurèeno zda náhodné nebo zámìrné;Y27.–
+4;– – – zámìrné, vraedné (pokus);X98.–
+2;– kovem (horkım) (tavenım) (tekutım) NJ;X18.–
+2;– lokální aplikací zevnì uívané látky pøi lékaøské nebo chirurgické péèi;Y63.5
+2;– neurèeno zda náhodné èi úmyslné;Y27.–
+2;– parou;X13.–
+2;– plynem (horkım);X14.–
+2;– sebe sama (neurèeno zda náhodné nebo úmyslné);Y27.–
+3;– – zhodnoceno jako úmyslné, zámìrné, sebevraedné (pokus);X77.–
+2;– sebevraedné (pokus);X77.–
+2;– tekutinou (vaøící) (horkou) NJ;X12.–
+2;– vraedné (pokus);X98.–
+2;– vıpary, dımem (horkımi);X13.–
+2;– vzduchem (horkım);X14.–
+1;Opuštìní (vedoucí k vystavení povìtrnostním vlivùm) (s úmyslem poškození nebo zabití) NJ;Y06.9
+2;– jinou urèenou osobou NJ;Y06.8
+2;– manelem, manelkou nebo partnerem;Y06.0
+2;– rodièem;Y06.1
+2;– známım nebo pøítelem;Y06.2
+1;Otrava (náhodná) zpùsobená (viz té Tabulka lékù a chemikálií);X49.–
+2;– dımem nebo kouøem z, ze;
+3;– – ohnì (viz té Expozice, ohni);X09.–
+3;– – vıbuchu (viz té Vıbuch);W40.–
+3;– – vzplanutí (viz té Vzplanutí);X09.–
+2;– jedem – viz Tabulka lékù a chemikálií;
+2;– léèivem, drogou – viz Tabulka lékù a chemikálií;
+2;– moøskımi rostlinami (jedovatımi);X26.–
+2;– olovem – viz Tabulka lékù a chemikálií, Olovo;
+2;– oxidem uhelnatım NJ;X47.4
+3;– – z, ze;
+4;– – – motorového vozidla (nikoli pøi pøepravì);X47.0
+5;– – – – pøi pøepravì – viz Dopravní nehody – Zaøazovací a kódovací pokyny pro dopravní nehody v kapitole XX. Tabelární èásti MKN-10;
+4;– – – plavidla (v pohybu);V93.–
+4;– – – spalovacího motoru (jakıkoli typ);X47.0
+4;– – – technického plynu;X47.1
+3;– – z urèeného zdroje – viz Otrava, plyny a parami, z, ze;
+2;– plyny a parami, kromì léèiv a biologickıch látek NJ (viz té Tabulku lékù a chemikálií);X47.9
+3;– – pøi zákonné popravì;Y35.5
+3;– – pøi zákonném zákroku;Y35.2
+3;– – zpùsobenımi;
+4;– – – acetylenem;X47.8
+5;– – – – vytváøejícím oxid uhelnatı;X47.1
+4;– – – domácím sporákem;X47.2
+4;– – – látkami pouívanımi ke svícení, topení nebo vaøení NJ;X47.1
+4;– – – motorovım èerpadlem;X47.0
+4;– – – motorovım prostøedkem – viz Otrava, vıfukovım plynem, z, ze, motorového vozdla;
+4;– – – ohništìm;X47.2
+4;– – – plynovım motorem (jakımkoli typem);X47.0
+4;– – – prùmyslovım uitím;X47.3
+4;– – – pøenosnım grilem;X47.2
+4;– – – roní;X47.2
+2;– pøi váleèné operaci (otravnımi plyny);Y36.7
+2;– pøi zákonné popravì (zákroku);Y35.5
+2;– rostlinou, trny, bodlinami nebo ostrımi listy (viz té Tabulka lékù a chemikálií);X28.–
+2;– technickım plynem;X47.1
+2;– vıfukovım plynem;
+3;– – z, ze;
+4;– – – motorového vozidla (nikoli pøi pøepravì);X47.0
+5;– – – – pøi pøepravì – viz Dopravní nehody – Zaøazovací a kódovací pokyny pro dopravní nehody v kapitole XX. Tabelární èásti MKN-10;
+4;– – – plavidla (v pohybu);V93.–
+4;– – – spalovacího motoru (jakıkoli typ);X47.0
+1;Otøesy, vibrace (jako pøíèina poranìní);W43.–
+1;Pád, padnutí (náhodné);W19.–
+2;– budovy;W20.–
+3;– – hoøící (nekontrolovanı oheò);X00.–
+2;– do;
+3;– – dutiny;W17.–
+3;– – jámy, propasti;W17.–
+3;– – lomu;W17.–
+3;– – nádre;W17.–
+3;– – odvodòovacího kanálu;W17.–
+3;– – ohnì – viz Expozice, ohni, podle typu;
+3;– – otvoru s poklopem (kanalizace apod.);W17.–
+3;– – otvoru v povrchu terénu NJ;W17.–
+3;– – pohyblivé èásti stroje, mechanizmu (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – studny;W17.–
+3;– – vody (s utonutím nebo potopením) (viz té Utonutí);W74.–
+2;– dolù z, ze;
+3;– – rampy (zahrnující i led a sníh);W10.–
+3;– – schodù, stupòù (zahrnující i led a sníh);W10.–
+3;– – vıtahu;W10.–
+3;– – ebøíku;W11.–
+2;– kamene;W20.–
+2;– konstrukce;W20.–
+3;– – hoøící (nekontrolovanı oheò);X00.–
+2;– laviny;X36.–
+2;– na rovinì, na tée úrovni NJ;W18.–
+3;– – na ledì nebo snìhu;W00.–
+4;– – – na bruslích,koleèkovıch bruslích a skateboardu, lyích;W02.–
+3;– – zavinìnı, zpùsobenı;
+4;– – – drcením, strèením nebo pošlapáním davem (v panice);W52.–
+4;– – – srákou, strèením, sraením jinou osobou;W03.–
+4;– – – uklouznutím, zakopnutím, klopıtnutím;W01.–
+2;– podlahou, støechou nebo oknem;W13.–
+2;– pøed vlak, vozidlo nebo jinı pohybující se pøedmìt;
+3;– – zhodnocenı jako;
+4;– – – neurèeno zda náhodnı nebo úmyslnı;Y31.–
+4;– – – úmyslnı, zámìrnı, sebevraednı (pokus);X81.–
+2;– pøedmìtu (viz té Úder, pøedmìtem, padajícím);W20.–
+2;– pøes;
+3;– – hráz, násep, val;W17.–
+3;– – malı pøedmìt;W01.–
+3;– – skálu;W15.–
+3;– – zvíøe;W01.–
+2;– pøi nesení nebo podpírání jinou osobou(-ami);W04.–
+2;– skály, balvanu;W20.–
+2;– spolu s (se);
+3;– – bruslemi (zimními) (koleèkovımi);W02.–
+3;– – koleèkovou idlí;W05.–
+3;– – lùkem;W06.–
+3;– – lyemi;W02.–
+3;– – nábytkem NJ;W08.–
+3;– – skateboardem(-y);W02.–
+3;– – sklem – viz Pád, podle typu;
+3;– – stolem;W08.–
+3;– – vybavením høištì;W09.–
+3;– – idlí;W07.–
+2;– stromu (zpùsobenı bleskem);W20.–
+2;– trámu;W20.–
+2;– v, ve, na;
+3;– – dopravní prostøedek po sráce – viz Nehoda, dopravní, podle typu vozidla, sráka;
+3;– – lešení;W12.–
+3;– – letadle NJ;V97.0
+4;– – – pøi nastupování nebo vıstupu;V97.1
+4;– – – pøi nehodì letadla;V97.0
+3;– – pøedmìt, hranatı, pichlavı nebo ostrı (s øíznutím) (viz té Pád, podle typu);W19.–
+3;– – rampu (vèetnì ledové nebo snìné);W10.–
+3;– – schodišti, schodech, stupních (vèetnì zledovatìlého nebo zasnìeného);W10.–
+3;– – stroje, mechanizmu (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – svahu;W10.–
+3;– – vanì;W18.–
+3;– – vlaku(vlak) (bez pøedchozí sráky);V81.5
+4;– – – pøi vykolejení (bez pøedchozí sráky);V81.7
+5;– – – – s pøedchozí srákou;V81.3
+4;– – – pøi vystupování nebo nastupování;V81.4
+4;– – – s pøedchozí srákou;V81.3
+3;– – vozu poulièní dráhy (bez pøedchozí sráky);V82.5
+4;– – – pøi nastupování nebo vystupování;V82.4
+4;– – – s pøedchozí srákou;V82.3
+3;– – vıtahu (eskalátoru);W10.–
+3;– – ebøíku;W11.–
+2;– z, ze;
+3;– – balkonu;W13.–
+3;– – budovy;W13.–
+4;– – – hoøící (nekontrolovanı oheò);X00.–
+3;– – èlunu, lodì, plavidla NJ (s utopením nebo potopením);V92.–
+4;– – – s nehodou plavidla;V90.–
+3;– – doku;W17.–
+3;– – dopravního prostøedku po sráce – viz Nehoda, dopravní, podle typu vozidla, sráka;
+3;– – hráze;W17.–
+3;– – koleèkové idle;W05.–
+3;– – konstrukce NJ;W13.–
+4;– – – hoøící (nekontrolovanı oheò);X00.–
+3;– – lanovky;W17.–
+3;– – lešení;W12.–
+3;– – letadla NJ (s nehodou letadla NJ);V97.0
+4;– – – pøi nástupu nebo vıstupu;V97.1
+3;– – lùka;W06.–
+3;– – mobilní zdvihací pracovní plošiny;W17.–
+3;– – mostu;W13.–
+3;– – nábytku NJ;W08.–
+3;– – okna;W13.–
+3;– – rampy (vèetnì ledu a snìhu);W10.–
+3;– – schodù, stupòù (vèetnì ledu a snìhu);W10.–
+3;– – schùdkového ebøíku;W11.–
+3;– – stìny;W13.–
+3;– – stohu sena;W17.–
+3;– – stolu;W08.–
+3;– – stoáru (vlajkového);W13.–
+3;– – stroje, mechanizmu (viz té Kontakt, s, podle typu stroje);W31.–
+4;– – – ne v chodu;W17.–
+3;– – stromu;W14.–
+3;– – støechy;W13.–
+3;– – svahu (vèetnì ledu a snìhu);W10.–
+3;– – toalety;W18.–
+3;– – útesu, skály;W15.–
+3;– – vìe;W13.–
+3;– – vìièky;W13.–
+3;– – viaduktu;W13.–
+3;– – vlaku NJ;V81.6
+4;– – – pøi nástupu nebo vıstupu;V81.4
+4;– – – pøi vykolejení (bez pøedchozí sráky);V81.7
+5;– – – – po pøedchozí sráce;V81.3
+3;– – vozidla (v pohybu) NJ (viz té Nehoda, dopravní);V89.9
+4;– – – motorového NJ (viz té Nehoda, dopravní, èlena osádky, podle typu vozidla);V87.8
+4;– – – nehybného, s vıjimkou vystupování, nastupování, vcházení, opouštìní;W17.–
+3;– – vozu poulièní dráhy NJ;V82.6
+4;– – – po pøedchozí sráce NJ;V82.3
+4;– – – pøi nástupu èi vıstupu;V82.4
+3;– – vybavení høištì;W09.–
+3;– – vysokého místa NJ;W17.–
+4;– – – neurèeno zda náhodnı èi úmyslnı, zámìrnı;Y30.–
+3;– – vysokozdviné plošiny;W17.–
+3;– – vıtahu;W10.–
+3;– – z jedné úrovnì na druhou NJ;W17.–
+4;– – – neurèeno zda náhodnı nebo zámìrnı;Y30.–
+4;– – – úmyslnı, zámìrnı, sebevraednı (pokus);X80.–
+3;– – zdvihacího zaøízení;W17.–
+3;– – zábradlí;W13.–
+3;– – ebøíku;W11.–
+3;– – idle;W07.–
+2;– zeminy (s dušením nebo udušením) (viz té Sesuv, zeminy);W77.–
+1;Perforace (prodìravìní) bìhem lékaøské nebo chirurgické péèe jako neádoucí pøíhoda (viz té Neádoucí pøíhoda, øezem, podle typu vıkonu);Y60.9
+1;Piercing, probodnutí (viz té Kontakt, s, podle typu pøedmìtu nebo stroje);W26.9
+1;Píchnutí, bodnutí (viz té Kontakt, s, podle typu pøedmìtu nebo stroje);W26.9
+2;– bodlinou moøského jeka (jeovky);X26.–
+2;– pøi lékaøské nebo chirurgické péèi jako neádoucí pøíhoda (viz té Neádoucí pøíhoda, øezem, podle typu vıkonu);Y60.9
+2;– rostlinnımi trny, bodlinami, ostrımi listy nebo ústrojím NJ;W60.–
+1;Poèasí, expozice NJ (viz té Expozice);X39.–
+1;Podupání zvíøetem NJ;W55.–
+2;– na kterém se jede;V06.–
+1;Podvıiva (z, ze) (hladu) (viz té Nedostatek, potravy);X53.–
+2;– jako následek vraedného zámìru (viz té Opuštìní);Y06.9
+2;– íznì (viz té Nedostatek, vody);X54.–
+1;Pohyb zemského povrchu NJ;X36.–
+1;Pohybová (nevolnost) (nemoc);X51.–
+1;Polknutí (vpravení do aludku);
+2;– cizího tìlesa (jako pøíèina poranìní) (s obstrukcí) (viz té Cizí tìleso, trávicí trubice);W44.–
+2;– jedu, jedovaté;
+3;– – látky NJ (viz té Tabulka lékù a chemikálií);X49.–
+3;– – rostliny(rostlin);X49.–
+2;– íravé nebo leptavé látky;X49.–
+1;Poloení pøed vlak, vozidlo nebo jinı pohybující se pøedmìt (neurèeno zda náhodné nebo úmyslné);Y31.–
+2;– zhodnoceno jako úmyslné, zámìrné, sebevraedné (pokus);X81.–
+1;Popálení (náhodné) (od);X09.–
+2;– bleskem;X33.–
+2;– doutníkem nebo cigaretou, dımkou (kouøení) (viz té Expozice, ohni);X08.–
+2;– elektrickou deèkou;X16.–
+2;– horkem;
+3;– – pøi lokální aplikaci pøi léèebném nebo chirurgickém vıkonu;Y63.5
+3;– – pøístroje (elektrického) (v domácnosti) NJ;X15.–
+4;– – – topného;X16.–
+2;– horkım(-ou);
+3;– – kotlem;X15.–
+3;– – kovem (tekutım) (roztavenım) NJ;X18.–
+3;– – nápojem;X10.–
+3;– – náøadím;X17.–
+3;– – olejem (pøi vaøení);X10.–
+3;– – opékaèem topinek;X15.–
+3;– – pánví, kastrolem (sklenìnım) (kovovım);X15.–
+3;– – parou;X13.–
+3;– – plotnou, plotınkou;X15.–
+3;– – plynem;X14.–
+3;– – potravou;X10.–
+3;– – pøedmìtem (neprodukujícím oheò ani plameny) NJ;X19.–
+3;– – pøístrojem pro domácnost NJ;X15.–
+3;– – radiátorem;X16.–
+3;– – sporákem (kuchyòskım);X15.–
+3;– – strojem;X17.–
+3;– – strojním zaøízením;X17.–
+3;– – substancí NJ;X19.–
+4;– – – íravinou nebo leptavou látkou NJ – viz Tabulka lékù a chemikálií;
+3;– – tekutinou NJ;X12.–
+3;– – topnım pøístrojem;X16.–
+3;– – trubkou;X16.–
+3;– – tukem;X10.–
+3;– – vaøièem;X15.–
+3;– – vodou (pøi koupeli) (ve vìdru) (z hadice) (z kohoutku) (v lázni);X11.–
+4;– – – ohøívané na sporáku;X12.–
+3;– – vzduchem;X14.–
+2;– hoøákem, plamenem, pøi sváøení (viz té Expozice, ohni);X08.–
+2;– chemikálií (zevní) (vnitøní);X49.–
+3;– – pøi váleèné operaci (chemickımi plyny, vıpary);Y36.7
+2;– jako léèebná neádoucí pøíhoda;
+3;– – horkem pøi lokální aplikaci v prùbìhu léèebného nebo chirurgického vıkonu;Y63.5
+3;– – pøedávkováním radiace;Y63.2
+2;– konvicí na vaøení vody (horkou);X15.–
+2;– kovem (horkım) (tekutım) (roztavenım);X18.–
+2;– kyselinou NJ (viz té Tabulka lékù a chemikálií);X49.–
+2;– lampou (ohnìm) (viz té Expozice, ohni);X08.–
+2;– látkou (horkou) NJ;X19.–
+3;– – roztavenou (kovem);X18.–
+3;– – vaøicí;X12.–
+2;– lékem, podanım zevnì;Y63.5
+2;– lokální aplikací zevnì uívané látky pøi lékaøské nebo chirurgické péèi;Y63.5
+2;– loním prádlem;X08.–
+2;– matrací (hoøící);X08.–
+2;– motorem (horkım);X17.–
+2;– náøadím (horkım);X17.–
+2;– neurèeno zda náhodné nebo úmyslnì provedené;Y26.–
+3;– – horkım pøedmìtem, horkou párou nebo vıpary;Y27.–
+3;– – íravinou nebo leptavou látkou NJ;Y33.–
+2;– noèním prádlem;X05.–
+2;– odìvem, obleèením NJ (pøi kontrolovaném ohni);X06.–
+3;– – pøi poáru;X00.–
+4;– – – ne v budovì nebo konstrukci;X01.–
+2;– ohnìm, plameny (viz té Expozice, ohni);X09.–
+2;– opékaèem topinek (horkım);X15.–
+2;– pájecí nebo opalovací lampou (viz té Expozice, ohni);X08.–
+2;– pánví, kastrolem (horkım) (sklenìnım) (kovovım);X15.–
+2;– párou, parním (horkou);X13.–
+3;– – potrubím;X16.–
+2;– pistolí signální (viz té Vıstøel, ze støelné zbranì);W34.–
+2;– pøedmìtem (horkım) NJ;X19.–
+2;– pøi váleèné operaci (plamenometem nebo konvenèní zbraní) NJ (viz té Váleèné operace);Y36.3
+3;– – benzinové bombì;Y36.3
+3;– – pøi jaderném vıbuchu;Y36.5
+2;– radiátorem (horkım);X16.–
+2;– sebevraedné (pokus);X76.–
+3;– – íravinou;X83.–
+2;– smetím (odpadem) hoøícím (øízenım) (viz té Popálení, vatrou, táborákem);X03.–
+2;– sporákem (horkım) (kuchyòskım);X15.–
+2;– stolním vaøièem, ohøívaèem jídla;X15.–
+2;– strojem (horkım);X17.–
+2;– svìtlicí, raketou, signální pistolí (viz té Vıstøel, ze støelné zbranì);W34.–
+2;– svíèkou (viz té Expozice, ohni);X08.–
+2;– tekutinou (vaøící) (horkou) NJ;X12.–
+2;– topením, kamny, radiátorem nebo trubkou;X16.–
+2;– trubkou (horkou);X16.–
+2;– vaøièem (horkım);X15.–
+2;– vatrou, táborákem (kontrolovanım);X03.–
+3;– – nekontrolovanım;X01.–
+2;– vitriolem;X49.–
+2;– vlastní vinou (nestanoveno zda náhodnì nebo úmyslnì);Y26.–
+3;– – horkım pøedmìtem, horkou párou nebo vıpary;Y27.–
+3;– – urèené jako úmyslné, zámìrné, sebevraedné(-ı) (pokus);X76.–
+4;– – – íravinou nebo leptavou látkou NJ;X83.–
+3;– – íravinou nebo leptavou látkou;Y33.–
+2;– vnitøní, polknutím íraviny, leptající tekutiny, látky;X49.–
+2;– vraedné (pokus) (viz té Napadení, pálením, popálením);X97.–
+2;– vzplanutím (viz té Vzplanutí);X09.–
+3;– – noèním prádlem;X05.–
+3;– – vysoce hoølavého materiálu (benzin) (tuk) (petrolej) (parafin);X04.–
+2;– zápalkami (viz té Expozice, ohni);X08.–
+2;– zapalovaèem (doutníku) (cigarety) (viz té Expozice, ohni);X08.–
+2;– zpùsobené jinou osobou;
+3;– – posouzené jako;
+4;– – – nestanovené zda náhodné nebo úmyslné;Y26.–
+5;– – – – horkım pøedmìtem, horkou párou nebo vıpary;Y27.–
+4;– – – úmyslná, vrada (pokus);X97.–
+5;– – – – horkım pøedmìtem, horkou párou nebo vıpary;X98.–
+2;– ehlièkou (horkou);X15.–
+2;– íravinou tekutou, pevnou (zevní) (vnitøní) NJ (viz té Tabulka lékù a chemikálií);X49.–
+1;Popálenina po vıbuchu (viz té Vıbuch);W40.–
+1;Poprava zákonná (jakımkoli zpùsobem);Y35.5
+1;Poranìní, zranìní (náhodné(-ì)) NJ;X59.9
+2;– ledovımi kroupami;X39.–
+2;– støelné (viz té Vıstøel, podle typu støelné zbranì);W34.–
+2;– urèené NJ;X58.–
+2;– váleèné (viz té Váleèné operace);Y36.9
+2;– vraedné (viz té Napadení);Y09.–
+2;– zámìrné (zpùsobené) druhou osobou(-ami) (viz té Napadení);Y09.–
+2;– zhodnocené jako;
+3;– – neurèeno zda náhodné nebo zámìrnì zpùsobené;Y34.–
+4;– – – bodnutím (kterékoliv èásti tìla);Y28.–
+4;– – – noem;Y28.–
+4;– – – obìšením;Y20.–
+4;– – – pádem z vıšky;Y30.–
+4;– – – potopením;Y21.–
+4;– – – pøedmìtem (tupım) NJ;Y29.–
+5;– – – – ostrım (jakımkoliv);Y28.–
+4;– – – øeznım nebo bodnım nástrojem;Y28.–
+4;– – – øíznutím (kterékoli èásti tìla);Y28.–
+4;– – – støelením (viz té Vıstøel, podle typu støelné zbranì, neurèeno zda náhodnı nebo zámìrnı);Y24.–
+4;– – – škrcením;Y20.–
+4;– – – udušením;Y20.–
+4;– – – urèené NJ;Y33.–
+4;– – – vıbušninou(-ami) (raketou);Y25.–
+2;– zpùsobené;
+3;– – jinou osobou;
+4;– – – zhodnocené jako;
+5;– – – – náhodné;X59.9
+5;– – – – neurèeno zda náhodné nebo úmyslné (viz té Poranìní, zhodnocené jako, neurèeno zda náhodnì nebo zámìrnì zpùsobené);Y34.–
+5;– – – – úmyslné, vraedné (pokus) (viz té Napadení);Y09.–
+3;– – napadením (viz té Napadení);Y09.–
+3;– – osobou se zákonnım oprávnìním, policií, pøi zákonném zákroku (viz té Zákonnı zákrok);Y35.7
+3;– – pøi zatıkání (pokusu), potlaèování nepokoje, udrování poøádku, osobou se zákonnım oprávnìním (vizté Zákonnı zákrok);
+3;– – sebevradou (pokusem) (viz té Sebevrada);X84.–
+2;– zpùsobené sebou samım (neurèeno zda náhodné nebo úmyslné);Y34.–
+3;– – zhodnocené jako;
+4;– – – náhodné;X59.–
+4;– – – úmyslné, zámìrné, sebevraedné (pokus);X84.–
+2;– zpùsobené, pøi;
+3;– – bojem, rvaèkou (viz té Napadení, bojem);Y04.–
+3;– – motorem, v plavidle (bez dopravní nehody);V93.–
+3;– – ohıbání, namáhavıch nebo opakovanıch pohybech;X50.–
+3;– – povstání obèanském – viz Váleèné operace;
+3;– – váleènou operací – viz Váleèné operace;
+1;Porucha, neádoucí, nepøíznivá;
+2;– pøístroje, zaøízení, pomùcky;
+3;– – anestesiologické(-ho);Y70.–
+3;– – gastroenterologické(-ho);Y73.–
+3;– – gynekologické(-ho);Y76.–
+3;– – chirurgické(-ho) (všeobecnì);Y81.–
+3;– – kardiovaskulární(-ho);Y71.–
+3;– – lékaøské(-ho) (urèené(-ho)) NJ;Y82.–
+3;– – nemocnièní(-ho) (všeobecnì);Y74.–
+3;– – neurologické(-ho);Y75.–
+3;– – oftalmologické(-ho);Y77.–
+3;– – ortopedické(-ho);Y79.–
+3;– – osobní(-ho);Y74.–
+3;– – otorinolaryngologické(-ho);Y72.–
+3;– – porodnické(-ho);Y76.–
+3;– – pro fyzikální medicínu;Y80.–
+3;– – pro plastickou chirurgii;Y81.–
+3;– – radiologické(-ho);Y78.–
+3;– – urologické(-ho);Y73.–
+1;Poøezání zápìstí (viz té Øíznutí, zpùsobené sobì samému);Y28.–
+1;Poškrábání;
+2;– koèkou;W55.–
+2;– osobou(-ami) (náhodné);W50.–
+1;Pošlapání;
+2;– davem (v panice);W52.–
+2;– osobou;W50.–
+2;– zvíøetem (na kterém se nejede) NJ;W55.–
+3;– – na kterém se jede;V06.–
+1;Potluèení, pohmodìní (náhodné) NJ;X59.9
+2;– zvíøetem NJ;W55.–
+1;Potopení (do vody) (viz té Nehoda, potopení);W16.–
+2;– náhodné;
+3;– – èlunu, lodì, plavidla (jako pøíèina (u)topení nebo potopení);V90.–
+4;– – – jako pøíèina poranìní kromì (u)topení nebo potopení;V91.–
+3;– – ruky nebo nohy do extrémního chladu;X31.–
+1;Potrava (jakákoli) v;
+2;– dıchacích cestách (s dušením, obstrukcí nebo zadušením);W79.–
+2;– zaívacím traktu jako pøíèina dušení (stlaèením trachey);W79.–
+1;Povstání, vzpoura civilní (viz té Váleèné operace);Y36.9
+1;Pozdní úèinek – viz Následky;
+1;Poár – viz Expozice, ohni;
+1;Poár lùka (vystavení ohni) NJ;X08.–
+1;Poár, hoøení, samovolnı (viz té Vzplanutí);X09.–
+1;Poití, vzetí;
+2;– jedu – viz Tabulka lékù a chemikálií;
+2;– nadmìrné dávky (léèiva, drogy) – viz Tabulka lékù a chemikálií;
+1;Prach v oku;W44.–
+1;Prasklá(-é)(-ı);
+2;– elektrická šnùra (kabel) (jako pøíèina elektrického šoku);W85.–
+2;– sklo, kontakt s (viz té Kontakt, se, sklem);W25.–
+2;– tlakovı pøístroj, zaøízení (viz té Vıbuch, podle typu pøístroje, zaøízení);W38.–
+1;Probodnutí, nabodnutí na rohy (parohy);W55.–
+1;Prodlouenı pobyt v, ve;
+2;– beztíném prostøedí;X52.–
+2;– vysoké vıšce jako pøíèina anoxie, barodontalgie, barotitidy nebo hypoxie;W94.–
+1;Prudkı déš (jakékoli poranìní);X37.–
+1;Prùtr mraèen (jakékoli poranìní);X37.–
+1;Pøedávkování (léèiva) – viz Tabulka lékù a chemikálií;
+2;– radiace;Y63.2
+1;Pøedèasné ukonèení chirurgické a lékaøské péèe;Y66
+1;Pøedmìt;
+2;– danı do pohybu pøi, ze;
+3;– – náhodném vıbuchu nebo prasknutí tlakové nádoby NJ;W38.–
+3;– – stroje, strojního zaøízení (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – støelné zbranì (viz té Vıstøel, podle typu støelné zbranì);W34.–
+2;– padající ze, v, do, na stroje, stroj, mechanizmu(-s) (viz té Kontakt, s, podle typu stroje);W31.–
+1;Pøehøátí (viz té ár);X30.–
+1;Pøejetí (náhodné);
+2;– dopravním prostøedkem NJ (viz té Nehoda, dopravní);V09.9
+3;– – motorovım NJ;V09.2
+4;– – – neurèeno zda náhodné èi úmyslné;Y33.–
+4;– – – úmyslné, vraedné (pokus);Y03.–
+3;– – neurèeno zda náhodné èi úmyslné;Y33.–
+3;– – úmyslné, vraedné (pokus);Y03.–
+2;– strojem (viz té Kontakt, s, podle typu stroje);W31.–
+2;– zvíøetem (na kterém se nejede) NJ;W55.–
+3;– – na kterém se jede;V06.–
+1;Pøerušení dıchání;
+2;– cizím tìlesem (v jícnu) kromì potravy a zvratkù;W80.–
+2;– potravou (v jícnu);W79.–
+2;– zvratky (v jícnu);W78.–
+1;Pøetíení (zdvihání) (tahání) (tlaèení);X50.–
+1;Pøevrácení (náhodné);
+2;– èlunu, lodi, plavidla (jako pøíèina (u)topení, potopení);V90.–
+3;– – jako pøíèina poranìní kromì (u)topení nebo potopení;V91.–
+2;– dopravního prostøedku NJ (viz té Nehoda, dopravní);V89.9
+2;– stroje, strojního zaøízení (viz té Kontakt, s, podle typu stroje);W31.–
+1;Pøidušení (viz té Udušení);W84.–
+1;Pøikrytí s dušením;W75.–
+1;Pøílivová vlna (jakékoli poranìní) NJ;X39.–
+2;– zpùsobená bouøí;X37.–
+1;Pøitisknutí pod strojní zaøízení (viz té Kontakt, s, podle typu stroje);W31.–
+1;Psychické tırání (viz té Tırání);Y07.9
+1;Pùsobení (nepøíznivé);
+2;– cestování;X51.–
+2;– horkého;
+3;– – místa (viz té ár);X30.–
+3;– – poèasí;X30.–
+2;– chladu extrémního (viz té Expozice, chladu);X31.–
+2;– jaderného vıbuchu nebo zbranì pøi váleèné operaci (tlaková vlna) (epicentrum) (ár) (radiace) (pøímá) (sekundární);Y36.5
+2;– opalování;RÈV: X32.–, AV: X30.–
+2;– pohybu;X51.–
+2;– pozdní – viz Následky;
+2;– radiace – viz Radiace;
+2;– tlaku vzduchu (jakéhokoli);W94.–
+2;– áru extrémního (viz té ár);X30.–
+1;Rána (úder);X59.9
+2;– osobou podporující zákon, policistou ve slubì;Y35.6
+3;– – tupım pøedmìtem;Y35.3
+1;Rdoušení – viz Škrcení;
+1;Reakce abnormální na (lékaøskı vıkon) (viz té Komplikace, podle typu vıkonu);Y84.9
+2;– biologické látky – viz Tabulka lékù a chemikálií;
+2;– léèiva – viz Tabulka lékù a chemikálií;
+2;– oèkovací látku – viz Tabulka lékù a chemikálií;
+2;– s neádoucí pøíhodou (viz té Neádoucí pøíhoda);Y69
+1;Reziduální následky (viz té Následky);Y89.9
+1;Rozdrcení (náhodné);X59.9
+2;– (èím);
+3;– – davem (v panice);W52.–
+2;– dveømi (budovy);W23.–
+3;– – hadem (nejedovatım);W59.–
+4;– – – jedovatım;X20.–
+3;– – ještìrem (nejedovatım);W59.–
+3;– – lavinou NJ;X36.–
+3;– – pádem;
+4;– – – letadla;V95.9
+5;– – – – pøi váleèné operaci;Y36.1
+4;– – – pøedmìtu NJ;W20.–
+4;– – – zeminy nebo jiného materiálu (s dušením nebo udušením) (viz té Udušení, zpùsobené, zavalením);W77.–
+5;– – – – bez dušení nebo udušení;W20.–
+3;– – plazem NJ;W59.–
+3;– – sesuvem pùdy NJ;X36.–
+3;– – strojem, mechanizmem NJ (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – zavalením – zasypáním (s dušením) (viz té Udušení, zpùsobené zavalením);W77.–
+4;– – – bez dušení;W20.–
+2;– mezi pøedmìty (v pohybu) (nehybnım a v pohybu) (viz té Zachycení);W23.–
+1;Roztrení, lacerace NJ (viz té Poranìní);X59.9
+1;Rvaèka (rukou) (pìstí) (nohou);Y04.–
+1;Øíznutí, seknutí (kterékoli èásti tìla) (náhodné) (èím) (viz té Kontakt, s, podle pøedmìtu nebo stroje);W26.9
+2;– jako zákonná(-ı);
+3;– – poprava;Y35.5
+3;– – zákrok;Y35.4
+2;– neurèeno zda náhodné nebo úmyslné;Y28.–
+2;– pøi lékaøském nebo chirurgickém zákroku jako neádoucí pøíhoda (viz té Neádoucí pøíhoda, øezem, podle typu vıkonu);Y60.9
+2;– pøi váleèné operaci;Y36.4
+2;– sebevraedné (pokus);X78.–
+2;– strojem NJ (viz té Kontakt, s, podle typu stroje);W31.–
+2;– vraedné (pokus);X99.–
+2;– zpùsobené jinou osobou;
+3;– – zhodnocené jako;
+4;– – – neurèeno zda náhodné nebo úmyslné;Y28.–
+4;– – – úmyslná, vrada (pokus);X99.–
+2;– zpùsobené sobì samému (neurèeno zda náhodné nebo úmyslné);Y28.–
+3;– – zhodnocené jako úmyslné, sebevraedné (pokus);X78.–
+1;Saturnismus – viz Tabulka lékù a chemikálií, Olovo;
+1;Sebepoškození NJ (viz té vnìjší pøíèiny podle typu, neurèeno zda náhodné èi úmyslné);Y34.–
+2;– úmyslné (viz té Sebevrada);X84.–
+1;Sebevrada, sebevraednı pokus;X84.–
+2;– bodnutím (do kterékoli èásti tìla);X78.–
+2;– havárií;
+3;– – dopravního prostøedku NJ;X82.–
+3;– – letadla;X83.–
+3;– – vozu poulièní dráhy, vlaku nebo tramvaje;X82.–
+2;– horkım pøedmìtem;X77.–
+2;– lehnutím pøed pohybující se pøedmìt, vlak, vozidlo;X81.–
+2;– následky pokusu;Y87.0
+2;– obìšením;X70.–
+2;– ohnìm, plameny;X76.–
+2;– opaøením;X77.–
+2;– ostrım pøedmìtem (jakımkoli);X78.–
+2;– otravou (viz té Tabulka lékù a chemikálií);
+3;– – oxidem uhelnatım NJ;X67.4
+4;– – – technickım plynem;X67.1
+4;– – – z urèeného zdroje NJ (viz té Sebevrada, otravou, plyny a parami, z, ze);X67.3
+3;– – plyny a parami, kromì léèiv a biologickıch látek NJ (viz té Tabulku lékù a chemikálií);X67.9
+4;– – – zpùsobenımi;
+5;– – – – domácím sporákem;X67.2
+5;– – – – jinım urèenım zdrojem NJ;X67.9
+5;– – – – látkami pouívanımi ke svícení, topení nebo vaøení NJ;X67.1
+5;– – – – motorovım èerpadlem;X67.0
+5;– – – – motorovım prostøedkem (nikoli pøi pøepravì);X67.0
+5;– – – – ohništìm;X67.2
+5;– – – – plynovım motorem;X67.0
+5;– – – – prùmyslovım uitím;X67.3
+5;– – – – pøenosnım grilem;X67.2
+5;– – – – roní;X67.2
+3;– – technickım plynem;X67.1
+3;– – vıfukovım plynem (ze spalovacího motoru);X67.0
+2;– parou, horkımi vıpary;X77.–
+2;– popálením;X76.–
+3;– – horkım pøedmìtem, parou nebo vıpary;X77.–
+2;– poranìním NJ;X84.–
+2;– potopením;X71.–
+2;– pozdní úèinky pokusu;Y87.0
+2;– øeznım nebo bodnım nástrojem;X78.–
+2;– øíznutím (kterékoli èásti tìla);X78.–
+2;– skokem;
+3;– – pøed pohybující se pøedmìt, vlak, vozidlo;X81.–
+3;– – z vysokého místa;X80.–
+2;– srákou;
+3;– – dopravního prostøedku NJ;X82.–
+3;– – motorového vozidla;X82.–
+3;– – vozu poulièní dráhy, vlaku nebo tramvaje;X82.–
+2;– støelením (viz té Vıstøel, podle typu støelné zbranì, sebevrada);X74.–
+2;– støelnou zbraní (viz té Vıstøel, podle typu støelné zbranì, sebevrada);X74.–
+2;– tupım pøedmìtem;X79.–
+2;– udušením;X70.–
+2;– urèenım zpùsobem NJ;X83.–
+2;– uškrcením;X70.–
+2;– utopením;X71.–
+2;– vıbušnou(-ımi) látkou(-ami);X75.–
+2;– zabitím elektrickım proudem;X83.–
+2;– zimou extrémní;X83.–
+2;– íravinou;X83.–
+3;– – otrávením – viz Tabulka lékù a chemikálií;
+3;– – polknutou – viz Tabulka lékù a chemikálií;
+1;Selhání, porucha, opomenutí, neúspìch;
+2;– mechanická, pøístroje nebo nástroje (jakákoliv) (v prùbìhu jakéhokoliv lékaøského nebo chirurgického vıkonu);Y65.8
+2;– pøi;
+3;– – pøemístování katétru nebo nástroje (s vıjimkou endotracheální kanyly pøi anestezii);Y65.4
+3;– – zatáèení (dopravního prostøedku) NJ (viz té Nehoda, dopravní);V89.9
+3;– – zavádìní katétru nebo nástroje (s vıjimkou endotracheální kanyly pøi anastezii);Y65.4
+2;– stehu nebo podvazu v prùbìhu chirurgického vıkonu;Y65.2
+2;– sterility (v prùbìhu lékaøské nebo chirurgické péèe) (viz té Neádoucí pøíhoda, chybou, sterilizace, podle typu vıkonu),;Y62.9
+1;Seskok padákem (dobrovolnı) (bez nehody letadla);V97.2
+2;– pro nehodu letadla;V95.9
+1;Sesuv pùdy;X36.–
+2;– bahna (pøi katastrofì);X36.–
+2;– bez dušení nebo udušení;W20.–
+2;– s dušením nebo udušením (tlakem) (viz té Udušení, zpùsobené, zavalením);W77.–
+2;– spadlı na, narazivší do;
+3;– – dopravní prostøedek (motorovı) (jakıkoliv);X36.–
+3;– – vlak nebo kolejové vozidlo;X36.–
+1;Siriasis - vystavení sluneènímu záøení;X32.–
+1;Sjetí z;
+2;– dálnice, silnice, cesty, ulice;
+3;– – dopravního prostøedku NJ (viz té Nehoda, dopravní);V89.9
+1;Skála spadlá nebo narazivší (náhodnì) na osobu;W20.–
+1;Skok, skákání;
+2;– do vody;
+3;– – s poranìním (kromì (u)topení nebo potopení);W16.–
+4;– – – s (u)topením nebo potopením (viz té Utopení);W74.–
+3;– – z plavidla – viz Skok, ze, èlunu;
+2;– pøed vlak, vozidlo nebo jinı pohybující se pøedmìt (neurèeno zda náhodnı nebo úmyslnı);Y31.–
+3;– – zhodnocenı jako úmyslnı, zámìrnı, sebevraednı (pokus);X81.–
+2;– z, ze;
+3;– – budovy (viz té Skok, z, vıšky);W13.–
+4;– – – hoøící (nekontrolovanı oheò);X00.–
+3;– – èlunu (do vody) dobrovolnı, bez nehody èlunu s poranìním (jinım ne (u)topením nebo potopením);W16.–
+4;– – – s (u)topením nebo potopením;W69.–
+3;– – konstrukce (viz té Skok, z, vıšky);W13.–
+4;– – – hoøící (nekontrolovanı oheò);X00.–
+3;– – vysokého místa NJ;W17.–
+4;– – – zhodnocenı jako;
+5;– – – – úmyslnı sebevraednı (pokus);X80.–
+5;– – – – za nejasnıch okolností;Y30.–
+1;Smršt vìtrná (jakékoli poranìní);X37.–
+1;Smrt zpùsobená poranìním, které se událo pøed rokem nebo døíve (viz té Následky);Y89.9
+1;Sníení;
+2;– atmosferického tlaku;W94.–
+3;– – pøi vynoøení, vyjití na povrch;
+4;– – – z podzemí;W94.–
+4;– – – z potápìní do hloubky (jako pøíèina kesonové nemoci nebo nemoci potápìèù, ochrnutí, paralıza);W94.–
+1;Sodomie (pokus) násilím;Y05.–
+1;Sopeènı vıbuch (jakékoli poranìní);X35.–
+1;Spálení (náhodné) (viz té Expozice, ohni);X09.–
+1;Spláchnutí, odplavení;
+2;– pøi záplavì;X38.–
+2;– z cesty pøi bouøi (dopravní prostøedek);X37.–
+1;Splašení, úprk;
+2;– zvíøete (s jezdcem) (viz té Nehoda, dopravní);V80.9
+3;– – bez jezdce;W55.–
+2;– zvíøete zapøaeného do vozidla NJ (viz té Nehoda, dopravní);V80.9
+1;Sraení, skolení (náhodné) NJ;X59.9
+2;– davem (v panice);W52.–
+2;– dopravním prostøedkem NJ (viz té Nehoda, dopravní);V09.9
+2;– osobou;W51.–
+3;– – pøi hádce, boji, rvaèce;Y04.–
+2;– zvíøetem (na kterém se nejede) NJ (viz té Náraz, podle typu zvíøete);W55.–
+3;– – na kterém se jede;V06.–
+1;Sráka hráèe ve sportu;W03.–
+1;Stìtí (gilotinou);
+2;– pøi zákonné popravì;Y35.5
+2;– vraedné;X99.–
+1;Stisknutí mezi pøedmìty (v pohybu) (stojící a v pohybu) (viz té Zachycení);W23.–
+1;Stlaèení (náhodné);
+2;– mezi pøedmìty (pohybující se) (stojící a pohybující se) (viz té Zachycení);W23.–
+2;– v objektu NJ;W23.–
+1;Strádání (Deprivace);X57.–
+2;– vraednı pokus (viz té Opuštìní);Y06.9
+2;– z nedostatku potravy (viz té Nedostatek, potravy);X53.–
+2;– z nedostatku vody (viz té Nedostatek, vody);X54.–
+2;– zpùsobené opuštìním nebo zanedbáním (viz té Opuštìní);Y06.9
+1;Strèení, tlak, tlaèení (náhodné) (poranìní pøi) (pøetaení);X50.–
+2;– jinou osobou (náhodné);W51.–
+3;– – pøed pohybující se pøedmìt, vlak, vozidlo;V89.9
+4;– – – zhodnocené jako;
+5;– – – – neurèeno zda náhodné èi zámìrné;Y33.–
+5;– – – – úmyslné, vraedné (pokus);Y08.–
+3;– – s pádem;W03.–
+3;– – z, ze;
+4;– – – dopravního prostøedku NJ (viz té Nehoda, dopravní);V89.9
+5;– – – – zhodnoceno jako;
+6;– – – – – neurèeno zda náhodné nebo zámìrné;Y33.–
+6;– – – – – úmyslné, vraedné (pokus);Y08.–
+4;– – – vıšky NJ;
+5;– – – – pøi náhodnıch okolnostech;W17.–
+5;– – – – zhodnocené jako;
+6;– – – – – neurèeno zda náhodné nebo zámìrné;Y30.–
+6;– – – – – úmyslné, vraedné (pokus);Y01.–
+3;– – zpùsobené davem (v panice) (s pádem);W52.–
+1;Strom spadlı na nebo udeøivší (osobu) (náhodnì);W20.–
+1;Støelení (náhodné) (viz té Vıstøel, podle typu støelné zbranì);W34.–
+2;– pøi váleènıch operacích;Y36.4
+2;– sebe sama (neurèeno zda náhodné nebo úmyslné) (viz té Vıstøel, podle typu støelné zbranì, sebe sama);Y24.–
+3;– – zhodnocené jako;
+4;– – – úmyslné, zámìrné, sebevraedné (pokus) (viz té Vıstøel, podle typu støelné zbranì, sebevrada);X74.–
+2;– sebe sama (viz té Vıstøel, podle typu støelné zbranì, zpùsobenı sobì samému);Y24.–
+2;– sebevrada (pokus) (viz té Vıstøel, podle typu støelné zbranì, sebevrada);X74.–
+2;– sebevraedné (pokus) (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+2;– zákonná(-ı);
+3;– – poprava;Y35.5
+3;– – zákrok;Y35.0
+2;– zpùsobené druhou osobou;
+3;– – zhodnocené jako;
+4;– – – neurèeno zda náhodné nebo úmyslné (viz té Vıstøel, podle typu støelné zbranì, zhodnoceno jako nezjištìného úmyslu);Y24.–
+4;– – – úmyslné, vraedné (pokus) (viz té Vıstøel, podle typu støelné zbranì);X95.–
+1;Støelná rána (viz té Vıstøel, podle typu støelné zbranì);W34.–
+1;Syndrom tırání – viz Tırání;
+1;Škrcení (náhodné), uškrcení;W76.–
+2;– neurèeno zda náhodné èi zámìrné;Y20.–
+2;– sebe sama (neurèeno zda náhodné èi úmyslné);Y20.–
+3;– – náhodné;W76.–
+3;– – zhodnoceno jako úmyslné, zámìrné, sebevraedné (pokus);X70.–
+2;– sebevraedné (pokus);X70.–
+2;– v, èím, kım;
+3;– – dìtském koèárku;W75.–
+3;– – druhou osobou NJ;W76.–
+4;– – – v posteli;W75.–
+4;– – – zhodnoceno jako neurèené zda náhodné nebo zámìrné;Y20.–
+3;– – polštáøem;W75.–
+3;– – posteli, loním prádlem;W75.–
+3;– – postılce, kolébce;W75.–
+3;– – prostìradlem, rouškou (plastikovım(-ou));W75.–
+3;– – pøikrıvkou;W75.–
+3;– – slintáèkem;W76.–
+3;– – v dìtském koèárku;W75.–
+2;– vraedné (pokus);X91.–
+1;Šlápnutí na;
+2;– pøedmìt (nehybnı);W22.–
+3;– – s pádem;W18.–
+2;– sportovní náèiní, náøadí;W21.–
+1;Šok;
+2;– elektrickı (viz té Expozice, elektrickému proudu);W87.–
+3;– – z elektrického pøístroje (kteréhokoli) (vadného);W86.–
+1;Štìpina, kontakt s;W45.–
+1;Táborák (vystavení se) (hlídanı, kontrolovanı);X03.–
+2;– nekontrolovanı;X01.–
+1;Tah, extrémní;X50.–
+1;Tavení (ohnìm) (viz té Expozice, ohni);X09.–
+2;– noèního prádla;X05.–
+2;– odìvu NJ;X06.–
+2;– plastikové biuterie;X06.–
+2;– šatù, ošacení NJ;X06.–
+3;– – noèního prádla;X05.–
+2;– zaøízení nebo nábytku (v hoøící budovì) (nekontrolovanı oheò);X00.–
+1;Tekutina (neleptavá) v oku;W44.–
+2;– leptavá (v oku);X49.–
+1;Tepelné úèinky jaderné exploze pøi váleèné operaci;Y36.5
+1;Tlak zevní jako pøíèina dušení, udušení (viz té Udušení);W84.–
+1;Toèení extrémní;X50.–
+1;Trest smrti (všemi zpùsoby);Y35.5
+1;Trichobezoár (v aludku) (s obstrukcí);W44.–
+1;Trknutí zvíøetem NJ;W55.–
+1;Trıznìní (duševní) (fyzické) (sexuální) (viz té Tırání);Y07.9
+1;Tøíska, døevìná, kontakt s;W45.–
+1;Tsunami (jakékoliv poranìní) NJ;X34.1
+1;Tırání (syndrom) NJ;Y07.9
+2;– kım;
+3;– – doprovodem nebo pøítelem;Y07.2
+3;– – manelem, manelkou nebo druhem, drukou;Y07.0
+3;– – rodièem;Y07.1
+3;– – urèitou osobou(-ami) NJ;Y07.8
+3;– – úøední osobou;Y07.3
+1;Úder, rána, náraz, bití (náhodnı);
+2;– aligátorem;W58.–
+2;– blesku;X33.–
+2;– dopravním prostøedkem NJ (viz té Nehoda, dopravní);V09.9
+3;– – motorovım NJ (viz té Nehoda, dopravní);V09.2
+4;– – – neurèeno zda náhodnı nebo úmyslnı;Y33.–
+4;– – – úmyslnı, vraednı (pokus);Y03.–
+3;– – neurèeno zda náhodnı nebo úmyslnı;Y33.–
+3;– – zámìrnı, vraednı (pokus);Y03.–
+2;– hokejovou holí nebo pukem;W21.–
+2;– jinou osobou(-ami);W50.–
+3;– – sportovním náøadím;W21.–
+3;– – tupım pøedmìtem;W22.–
+4;– – – sportovním náèiním;W21.–
+4;– – – zámìrnı, vraednı (pokus);Y00.–
+3;– – zpùsobenı davem (v panice) (s pádem);W52.–
+2;– krokodılem;W58.–
+2;– kroupami (ledovımi);X39.–
+2;– kulkou, støelou (viz té Vıstøel, podle typu støelné zbranì);W34.–
+3;– – pøi váleènıch operacích;Y36.4
+2;– lavinou;X36.–
+2;– míèem (odpálenım) (hozenım);W21.–
+2;– moøskım ivoèichem;W56.–
+2;– osobou se zákonnım oprávnìním (ve slubì);Y35.6
+3;– – tupım pøedmìtem (hùl) (obušek);Y35.3
+2;– policií (ve slubì);Y35.6
+3;– – tupım pøedmìtem (hùl) (klacek) (obušek);Y35.3
+2;– pøedmìtem NJ;W22.–
+3;– – hozenım NJ;W20.–
+3;– – padajícím;W20.–
+4;– – – z, ze, pøi;
+5;– – – – budovy;W20.–
+6;– – – – – hoøící (nekontrolovanı oheò);X00.–
+5;– – – – dopravního prostøedku (v pohybu) NJ (viz té Nehoda, dopravní);V89.9
+6;– – – – – nehybného;W20.–
+5;– – – – katastrofì;
+6;– – – – – bouøi;X37.–
+6;– – – – – pohybu zemského povrchu NJ;X36.–
+5;– – – – konstrukce;W20.–
+6;– – – – – hoøící;X00.–
+5;– – – – stroje (v èinnosti) (viz té Kontakt, s, podle typu stroje);W31.–
+5;– – – – zasypání;W20.–
+6;– – – – – s dušením nebo udušením (viz té Udušení, zpùsobené, zavalením);W77.–
+5;– – – – zemìtøesení;X34.–
+3;– – uvedenım do pohybu vıbuchem (viz té Vıbuch);W40.–
+3;– – v pohybu NJ;W20.–
+3;– – vrenım NJ;W20.–
+2;– psem;W54.–
+2;– savcem NJ;W55.–
+3;– – moøskım;W56.–
+2;– sesuvem pùdy;X36.–
+2;– sportovním náøadím;W21.–
+2;– stroje (viz té Kontakt, s, podle typu stroje);W31.–
+2;– støelou;
+3;– – pøi váleèné operaci – viz Váleèné operace, støelou;
+3;– – ze støelné zbranì (viz té Vıstøel, podle typu støelné zbranì);W34.–
+2;– svìtlicí, signální pistolí (viz té Vıstøel, ze støelné zbranì);W34.–
+2;– vozidlem (dopravním) NJ (viz té Nehoda, dopravní);V09.9
+3;– – nehybnım (padajícím ze zvedáku, hydraulického vıtahu nebo rampy);W20.–
+2;– zvíøetem (na kterém se nejede) NJ;W55.–
+3;– – na kterém se jede;V06.–
+1;Udušení (náhodné) (z vnìjších pøíèin) (tlakem) (mechanické);W84.–
+2;– dítìte ve spánku;W75.–
+2;– neurèeno zda náhodné nebo zámìrné;Y20.–
+2;– sebe sama;Y20.–
+3;– – za náhodnıch okolností;W84.–
+3;– – zhodnoceno jako úmyslné, zámìrné, sebevraedné (pokus);X70.–
+2;– sebevraedné (pokus);X70.–
+2;– v, ve;
+3;– – dìtské postılce, kolébce;W75.–
+3;– – dìtském koèárku;W75.–
+3;– – hoøící budovì;X00.–
+3;– – koèárku;W75.–
+3;– – lednici;W81.–
+3;– – plastikovém vaku (za náhodnıch okolností);W83.–
+4;– – – neurèeno zda náhodné nebo zámìrné;Y20.–
+4;– – – sebevraedné (pokus);X70.–
+4;– – – vraedné (pokus);X91.–
+4;– – – zpùsobené sebou samım (neurèeno zda náhodné nebo úmyslné);Y20.–
+5;– – – – náhodné;W83.–
+5;– – – – zhodnoceno jako úmyslné, zámìrné, sebevraedné (pokus);X70.–
+3;– – posteli;W75.–
+3;– – uzavøeném prostoru;W81.–
+3;– – vzduchotìsném prostoru;W81.–
+2;– vrada (pokus);X91.–
+2;– zpùsobené;
+3;– – cizím tìlesem, kromì potravin nebo zvratkù;W80.–
+3;– – hlenem (vdechnutím) (inhalací), ne u novorozence;W80.–
+3;– – chrchlem (vdechnutím) (inhalací), ne u novorozence;W80.–
+3;– – jinou osobou na lùku;W75.–
+3;– – lavinou;X36.–
+3;– – lùkem, loním prádlem;W75.–
+3;– – materiálem nebo pøedmìtem vyjma potravy nebo zvratkù;W80.–
+3;– – ohnìm (viz té Expozice, ohni);X09.–
+3;– – padající zeminou nebo jinou hmotou;W77.–
+3;– – plastikovım vakem, pytlem (viz té Udušení, v, plastikovém vaku);W83.–
+3;– – pokrıvkou;W75.–
+3;– – polštáøem;W75.–
+3;– – potravou, jakéhokoli typu (vdechnutí) (polknutí) (inhalace);W79.–
+3;– – rouškou (plastikovou);W75.–
+3;– – sesuvem pùdy;X36.–
+3;– – slintákem;W76.–
+3;– – strojem, strojním zaøízením (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – urèenım zpùsobem, NJ;W83.–
+3;– – vıbuchem (viz té Vıbuch);W40.–
+3;– – vzplanutím (viz té Vzplanutí);X09.–
+3;– – zavalením;W77.–
+4;– – – pøi katastrofickém pohybu pùdy;X36.–
+3;– – zvratky (aspirací) (inhalací);W78.–
+2;– zpùsobené jinou osobou;
+3;– – za náhodnıch okolností;W84.–
+3;– – zhodnocené jako;
+4;– – – neurèeno zda náhodnì èi zámìrnì;Y20.–
+4;– – – úmyslné, vraedné (pokus);X91.–
+1;Uklouznutí (náhodné) (na rovinì) (s pádem);W01.–
+2;– na;
+3;– – blátì;W01.–
+3;– – ledu;W00.–
+4;– – – s bruslemi;W02.–
+3;– – oleji;W01.–
+3;– – povrchu (kluzkém) (mokrém) NJ;W01.–
+3;– – snìhu;W00.–
+4;– – – s lyemi;W02.–
+1;Úpal (z pøehøátí) (viz té ár);X30.–
+1;Uskøípnutí, zachycení (náhodné);
+2;– jakoukoli èástí;
+3;– – dopravního prostøedku NJ (viz té Nehoda, dopravní);V89.9
+3;– – jízdního kola;V19.8
+3;– – motocyklu;V29.8
+2;– mezi;
+3;– – budovami (øítícími se) pøi zemìtøesení;X34.0
+3;– – pøedmìty (v pohybu) (nehybnımi a v pohybu) (viz té Zachycení);W23.–
+2;– v prostøedí s nedostatkem kyslíku;W81.–
+1;Útok savce NJ;W55.–
+1;Utopení, (u)tonutí (náhodné);W74.–
+2;– cizí osobou;
+3;– – neurèeno zda náhodné nebo úmyslné;Y21.–
+3;– – úmyslné, vraedné (pokus);X92.–
+2;– neurèeno zda náhodné èi úmyslné;Y21.–
+2;– po pádu;
+3;– – do;
+4;– – – bazénu;W68.–
+4;– – – lomu, zatopeného;W70.–
+4;– – – vany;W66.–
+4;– – – vody NJ;W74.–
+5;– – – – pøírodního (jezera) (otevøeného moøe) (øeky);W70.–
+3;– – pøes palubu NJ;V92.–
+4;– – – pøi nehodì lodi, èlunu, plavidla;V90.–
+2;– sebevraedné (pokus);X71.–
+2;– v (ve) (pøi);
+3;– – bazénu;W67.–
+4;– – – po pádu;W68.–
+3;– – kalicí nádri;W73.–
+3;– – nádri;W73.–
+3;– – pøírodní vodì (jezero) (otevøené moøe) (øeka) (tok);W69.–
+4;– – – po pádu;W70.–
+3;– – urèeném místì NJ;W73.–
+3;– – váleèné operaci;Y36.4
+3;– – vanì;W65.–
+4;– – – po pádu;W66.–
+3;– – zatopeném lomu;W69.–
+4;– – – po pádu;W70.–
+2;– vraedné (pokus);X92.–
+2;– zpùsobené;
+3;– – hurikánem, tornádem;X37.–
+3;– – katastrofou s;
+4;– – – bouøí;X37.–
+4;– – – pohybem zemského povrchu NJ;X36.–
+3;– – lavinou;X36.–
+3;– – monzunem;X37.–
+3;– – nehodou;
+4;– – – dopravní – viz Nehoda, dopravní;
+4;– – – stroje NJ (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – pádem pøes palubu NJ;V92.–
+4;– – – pøi nehodì lodi, èlunu, plavidla;V90.–
+3;– – povodnìmi;X38.–
+3;– – prudkım lijákem;X37.–
+3;– – prùtrí mraèen;X37.–
+3;– – pøílivovou vlnou NJ;X39.–
+4;– – – pøi bouøi;X37.–
+3;– – skokem do vody z lodi, èlunu, plavidla (hoøícího) (rozbitého) (pøi nehodì);V90.–
+4;– – – bez nehody plavidla;V92.–
+3;– – smrští;X37.–
+3;– – tajfunem;X37.–
+3;– – vysokou vodou;X38.–
+2;– zpùsobené vlastní osobou (neurèeno zda náhodnì èi úmyslnì);Y21.–
+3;– – zhodnoceno jako úmyslné, sebevraedné (pokus);X71.–
+1;Uzavøení do (náhodné) (viz té Udušení);
+2;– lednice;W81.–
+2;– plastikového vaku (viz té Udušení, v, plastikovém vaku);W83.–
+2;– v prostøedí s nízkım obsahem kyslíku;W81.–
+2;– vzduchotìsného prostoru, kromì plastikového vaku;W81.–
+1;Úeh (z oslunìní);X32.–
+1;Váleèné operace (zpùsobující) (poranìní) (v prùbìhu nepøátelství);Y36.9
+2;– bajonetem;Y36.4
+2;– biologickımi bojovımi prostøedky;Y36.6
+2;– bojové poranìní NJ;Y36.9
+2;– bomby (proti osobám) (minomet) (vıbuch) (støepiny);Y36.2
+3;– – po ukonèení nepøátelství;Y36.8
+2;– clonou kouøe;Y36.7
+2;– dušení z;
+3;– – chemickıch zbraní;Y36.7
+3;– – ohnì, vzplanutí (zpùsobeném pøístroji produkujícími oheò nebo konvenèními zbranìmi);Y36.3
+4;– – – pøi jaderném vıbuchu;Y36.5
+3;– – plyny nebo dımy;Y36.7
+2;– fosgénem;Y36.7
+2;– granátem (vıbuchem) (støepinami);Y36.2
+2;– hlubinnou náloí;Y36.0
+2;– hoøèiènım plynem – yperitem;Y36.7
+2;– hoøícím letadlem;Y36.1
+2;– chemickımi látkami;Y36.7
+2;– invalidita jako následek jeden rok a více po poranìní;Y89.1
+2;– konvenèním vedením války, urèenou formou NJ;Y36.4
+2;– kulkou, støelou(-ami) (z karabiny, kulometu, pistole, pušky, maloráky);Y36.4
+2;– laserem;Y36.7
+2;– letadlem hoøícím, znièenım, vybuchlım, sestøelenım;Y36.1
+2;– lewisitem;Y36.7
+2;– minometnım granátem (vıbuchem) (støepinami);Y36.2
+2;– minou;Y36.2
+3;– – na moøi;Y36.0
+3;– – námoøní;Y36.0
+3;– – po skonèení nepøátelství;Y36.8
+3;– – v pøístavu;Y36.0
+3;– – zemní (vıbuchem) (støepinami);Y36.2
+2;– nekonvenèními zbranìmi NJ;Y36.7
+3;– – biologickımi zbranìmi;Y36.6
+3;– – laserem;Y36.7
+3;– – nukleární zbraní;Y36.5
+3;– – plynem, dımy, chemickımi látkami;Y36.7
+3;– – urèené NJ;Y36.7
+2;– nervovım plynem;Y36.7
+2;– ohnìm nebo oheò produkujícími pøístroji;Y36.3
+2;– otravnımi (chemikáliemi) (dımy) (plyny);Y36.7
+2;– padajícím letadlem;Y36.1
+2;– plíce drádícími (chemikáliemi) (dımy) (plyny), dusivımi;Y36.7
+2;– plynem nebo dımem;Y36.7
+2;– po zastavení nepøátelství;Y36.8
+2;– podvodním vıbuchem;Y36.0
+2;– poranìní zpùsobené nepøátelskımi akcemi po ukonèení nepøátelství;Y36.8
+2;– potopením;Y36.4
+2;– pozdní úèinky po;Y89.1
+2;– raketou (vıbuchem) (støepinami);Y36.2
+2;– rozbitím letadla;Y36.1
+2;– rozdrcení padajícím letadlem;Y36.1
+2;– øízenou støelou, raketou (vıbuchem) (støepinami);Y36.2
+3;– – jadernou;Y36.5
+2;– spáleniny z;
+3;– – chemickıch látek;Y36.7
+3;– – ohnì, vzplanutí (z oheò produkujících pøístrojù nebo konvenèních zbraní);Y36.3
+4;– – – pøi jaderném vıbuchu;Y36.5
+3;– – plynem;Y36.7
+2;– støelou (øízenou) (vıbuchem) (støepinami);Y36.2
+3;– – jadernou;Y36.5
+3;– – námoøní;Y36.0
+2;– støelou (z letadla) (dìlostøelectva) (z kanónu) (vıbuchem) (støepinami);Y36.2
+3;– – z moøe;Y36.0
+2;– støepinami z dìlostøeleckého šrapnelu, bomby NJ, granátu, øízené støely, nášlapné miny, rakety, šrapnelu;Y36.2
+2;– støílením;Y36.4
+3;– – broky (z pušky) (maloráky);Y36.4
+3;– – kulkou(-ami);Y36.4
+3;– – po ukonèení nepøátelství;Y36.8
+2;– šavlí;Y36.4
+2;– šrapnelem;Y36.2
+2;– torpédem;Y36.0
+2;– úèinky (pøímé) (druhotné) jaderného vıbuchu;Y36.5
+2;– úèinky áru pøi jaderném vıbuchu;Y36.5
+2;– utopení;Y36.4
+2;– vıbuch (dìlostøeleckého granátu) (blok závìru) (blok dìla);Y36.2
+3;– – bomb, min, umístìnıch v prùbìhu války a po ukonèení nepøátelství;Y36.8
+3;– – bomby (protipìchotní) (modíøové);Y36.2
+4;– – – jaderné (atomové) (vodíkové);Y36.5
+3;– – granátu;Y36.2
+3;– – hlubinné náloe;Y36.0
+3;– – jaderné (zbranì);Y36.5
+3;– – letadla;Y36.1
+3;– – miny (zemní);Y36.2
+4;– – – na moøi nebo v pøístavu;Y36.0
+4;– – – námoøní;Y36.0
+3;– – munice (náhodnı) (uívanı za války) (sklad) (vırobní podnik);Y36.2
+3;– – námoøní zbranì;Y36.0
+3;– – s poranìním støepinami;Y36.2
+3;– – støely (vıbušné) NJ (viz té Váleèné operace, støelou);Y36.2
+3;– – šrapnelu, granátu z námoøních dìl;Y36.0
+3;– – torpéda;Y36.0
+3;– – zbranì (náhodnı) (vlastní);Y36.2
+3;– – zemní miny;Y36.2
+2;– vıbuchem (úèinky) (vzdušnımi);Y36.2
+3;– – jadernım;Y36.5
+3;– – podvodním;Y36.0
+2;– vystavení ionizujícímu záøení z jaderného vıbuchu;Y36.5
+2;– vzdušnım vıbuchem;Y36.2
+2;– záøením, ionizujícím z jaderného vıbuchu;Y36.5
+2;– zemní minou (vıbuchem) (støepinami);Y36.2
+3;– – po ukonèení nepøátelství;Y36.8
+2;– zpuchıøujícími (chemickımi látkami) (dımy) (plyny);Y36.7
+2;– árem pøi jaderném vıbuchu;Y36.5
+1;Vánice;X37.–
+1;Vbìhnutí, bìhání;
+2;– extrémní;X50.–
+2;– pøed vlak, vozidlo nebo jinı pohybující se pøedmìt (neurèeno zda náhodné nebo úmyslné);Y31.–
+3;– – stanoveno jako úmyslné, zámìrné, sebevraedné (pokus);X81.–
+1;Vdechnutí (aspirace);W80.–
+2;– cizího tìlesa (viz té Cizí tìleso, pøedmìt nebo látka, aspirované);W80.–
+2;– extrémnì chladné látky, umìle vytvoøené;W93.–
+2;– hlenu, ne u novorozence (s dušením, obstrukcí dıchacího traktu);W80.–
+2;– horkého vzduchu nebo plynù;X14.–
+2;– chrchle, ne u novorozence (s dušením, obstrukcí dıchacího traktu);W80.–
+2;– jedovatého plynu – viz Tabulka lékù a chemikálií;
+2;– kouøe NJ (viz té Expozice, ohni);X09
+2;– obsahu aludku (s dušením, obstrukcí dıchacích cest, udušením);W78.–
+2;– potravy (jakékoli) (do respiraèního traktu) (s asfyxií, obstrukcí dıchacích cest, dušením);W79.–
+2;– tekutého vzduchu, vodíku, dusíku;W93.–
+2;– zvratkù (s dušením, obstrukcí dıchacího traktu);W78.–
+1;Veslování, extrémní;X50.–
+1;Vichøice, tornádo (jakékoli poranìní);X37.–
+1;Vleèení dopravním prostøedkem NJ (viz té Nehoda, dopravní);V09.9
+1;Vlhkost vzduchu, jako pøíèina obtíí;X39.–
+1;Vniknutí cizího tìlesa nebo materiálu – viz Cizí tìleso, pøedmìt nebo materiál;
+1;Vozidlo na odtahování vrakù NJ (viz té Nehoda, dopravní);V89.9
+1;Vrada (pokus) (viz té Napadení);Y09.–
+1;Vrení, odhození (náhodné);
+2;– proti kterékoli èásti (nebo pøedmìtu) v dopravním prostøedku (v pohybu) NJ – viz Nehoda, dopravní;
+2;– z, ze;
+3;– – dopravního prostøedku NJ (viz té Nehoda, dopravní);V89.9
+3;– – stroje (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – vysokého místa, úmyslné, vraedné (pokus);Y01.–
+1;Vıbuch (náhodnı) (se sekundárním ohnìm);W40.–
+2;– acetylénu;W40.–
+2;– aerosolové nádobky;W36.–
+2;– anestetického plynu na operaèním sále;W40.–
+2;– benzinovıch par, benzinu v nádri (ne v pohybujícím se motorovém vozidle);W40.–
+2;– butanu;W40.–
+2;– dùlního plynu;W40.–
+2;– dynamitu;W40.–
+2;– granátu (dìlostøeleckého) NJ;W40.–
+2;– granátu NJ;W40.–
+2;– kamen, sporáku;W40.–
+2;– kotle (bojleru) (v mechanizmu), ne v dopravním prostøedku;W35.–
+2;– letadla (pøi letu) (motorového) NJ;V95.9
+2;– metanu;W40.–
+2;– munice (ve skladu) (v továrnì);W40.–
+2;– munièního skladu;W40.–
+2;– neurèeno zda náhodnı nebo zámìrnı;Y25.–
+2;– ohòostroje;W39.–
+2;– ohøívaèe vody, nádre (v mechanizmu);W35.–
+2;– páry nebo vodovodního potrubí (ve stroji);W37.–
+2;– plynového;W40.–
+3;– – válce nebo tlakového kotle (ve stroji);W36.–
+2;– pneumatiky vozidla NJ;W37.–
+2;– propanu;W40.–
+2;– pøi váleèné operaci (vzdušnı) (viz té Váleèné operace, vıbuch);Y36.2
+3;– – podvodní;Y36.0
+3;– – pøi jaderné explozi;Y36.5
+2;– rozbušky;W40.–
+2;– sebevraednı (pokus);X75.–
+2;– stroje, mechanizmu (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – tlakového potrubí (viz té Vıbuch, podle typu potrubí);W38.–
+2;– støely NJ;W40.–
+2;– tlakového(-é);
+3;– – hrnce;W38.–
+3;– – pneumatiky;W37.–
+3;– – potrubí (ve stroji);W38.–
+3;– – støíkaèky;W37.–
+3;– – trubky;W37.–
+3;– – zásobníku na plyn (mechanizmu);W36.–
+2;– továrny (zbrojní);W40.–
+2;– trhaviny (rozbušky);W40.–
+2;– uhelného plynu;W40.–
+2;– v dole;W40.–
+2;– v dole (dùlního plynu);W40.–
+2;– v obilném silu;W40.–
+2;– vlastním zavinìním (neurèeno zda náhodnı nebo úmyslnı);Y25.–
+3;– – zhodnocenı jako úmyslnı, zámìrnı, sebevraednı (pokus);X75.–
+2;– vraednı (pokus);X96.–
+2;– vıbušného (plynu) (materiálu) NJ;W40.–
+2;– vzduchového zásobníku (tlakového) (ve stroji, mechanizmu);W36.–
+2;– zpùsobenı cizí osobou, zhodnocenı jako;
+3;– – neurèeno zda náhodnı nebo úmyslnı;Y25.–
+3;– – úmyslná vrada (pokus);X96.–
+1;Vyèerpání;
+2;– extrémní námahou;X50.–
+2;– horkem (viz té ár);X30.–
+2;– chladem (viz té Expozice, chladu);X31.–
+1;Vyhození do povìtøí (viz té Vıbuch);W40.–
+1;Vykolejení (náhodné);
+2;– poulièní dráhy (bez pøedchozí sráky) NJ;V82.7
+3;– – s pøedchozí srákou NJ;V82.3
+2;– vlaku nebo kolejového vozidla (vagonu, kolejového dopravního prostøedku, vozu) (bez pøedchozí sráky) NJ;V81.7
+3;– – s pøedchozí srákou NJ;V81.3
+1;Vypití jedu (náhodné) (viz té Tabulka lékù a chemikálií);X49.–
+1;Vysoká(-ı);
+2;– hladina radioaktivity, úèinky – viz Záøení;
+2;– teplota, úèinky (viz té ár);X30.–
+2;– tlak (úèinky);W94.–
+2;– vıška (úèinky);W94.–
+1;Vıstøel (náhodnı) z, ze;
+2;– kulometu (viz té Vıstøel, ze støelné zbranì, vìtší);W33.–
+2;– maloráky (viz té Vıstøel, ze støelné zbranì, vìtší);W33.–
+2;– ohòostroj(-e);W39.–
+2;– pistole (viz téø, Vıstøel, z ruèní støelné zbranì);W32.–
+3;– – brokové (viz té Vıstøel, ze støelné zbranì);W34.–
+3;– – signální, raketové (viz té Vıstøel, ze støelné zbranì);W34.–
+3;– – svìtlicové, signální (viz té Vıstøel, ze støelné zbranì);W34.–
+2;– pušky, ruènice (armádní, vojenské) (lovecké) (viz té Vıstøel, ze støelné zbranì, vìtší);W33.–
+2;– revolveru (viz té Vıstøel, z ruèní støelné zbranì);W32.–
+2;– ruèní støelné zbranì;W32.–
+3;– – jako zákonnı zákrok;Y35.0
+3;– – neurèeno zda náhodnı nebo úmyslnı;Y22.–
+3;– – proti vlastní osobì (neurèeno zda náhodnı nebo úmyslnı);Y22.–
+3;– – sebevraednı (pokus);X72.–
+3;– – vraednı (pokus);X93.–
+2;– støelné zbranì NJ;W34.–
+2;– støelné zbranì NJ (viz té Vıstøel, ze støelné zbranì);W34.–
+3;– – brokové (viz té Vıstøel, ze støelné zbranì);W34.–
+3;– – jako zákonnı zákrok;Y35.0
+3;– – jednoruèní støelné zbranì (viz té Vıstøel, z ruèní støelné zbranì);W32.–
+3;– – jiné urèené (viz té Vıstøel, ze støelné zbranì);W34.–
+3;– – na sebe sama (neurèeno zda náhodnı nebo úmyslnı);Y24.–
+3;– – neurèeno zda náhodnı nebo úmyslnı;Y24.–
+3;– – ruèní (viz té Vıstøel, z ruèní støelné zbranì);W32.–
+3;– – sebevraednı (pokus);X74.–
+3;– – strojní (viz té Vıstøel, ze støelné zbranì, vìtší);W33.–
+3;– – vìtší;W33.–
+4;– – – jako zákonnı zákrok;Y35.0
+4;– – – na sebe sama (neurèeno zda náhodnı nebo úmyslnı);Y23.–
+4;– – – neurèeno zda náhodnı nebo úmyslnı;Y23.–
+4;– – – sebevraednı (pokus);X73.–
+4;– – – vraednı (pokus);X94.–
+3;– – vraednı (pokus);X95.–
+3;– – vzduchové, vzduchovky (viz té Vıstøel, ze støelné zbranì);W34.–
+1;Vıšková nemoc;W94.–
+1;Vzdušná (-ı);
+2;– nemoc (kinetóza);X51.–
+2;– vıbuch pøi váleèné operaci;Y36.2
+1;Vzplanutí (náhodné) (viz té Expozice, ohni);X09.–
+2;– anestetického plynu pøi vıkonu;W40.–
+2;– benzinu;X04.–
+2;– biuterie (plastikové);X06.–
+2;– loního prádla (prostìradla) (povlaky) (polštáøe) (matrace);X08.–
+2;– materiálu;
+3;– – vıbušného (viz té Vıbuch);W40.–
+3;– – vysoce hoølavého (s druhotnım vıbuchem);X04.–
+2;– noèního prádla;X05.–
+2;– obleèení NJ (z kontrolovaného ohnì);X06.–
+3;– – pøi nekontrolovaném ohni (v budovì nebo konstrukci);X00.–
+4;– – – mimo budovu nebo konstrukci;X01.–
+3;– – vysoce hoølavého materiálu;X04.–
+2;– odìvu NJ;X06.–
+3;– – z vysoce hoølavého materiálu;X04.–
+2;– parafinu;X04.–
+2;– petroleje;X04.–
+2;– vıbušného materiálu (viz té Vıbuch);W40.–
+1;Zabití (náhodné) NJ (viz té Poranìní);X59.9
+2;– èlovìka (úmyslné) (viz té Napadení);Y09.–
+2;– elektrickım proudem (náhodné) (viz té Expozice, elektrickému proudu);W87.–
+2;– kojence (viz té Napadení);Y09.–
+2;– sebe sama;
+3;– – zhodnoceno jako;
+4;– – – náhoda NJ;X59.9
+4;– – – neurèeno zda náhodné nebo úmyslné;Y34.–
+4;– – – sebevrada (viz té Sebevrada);X84.–
+2;– v, pøi;
+3;– – akci, èinnosti (viz té Váleèné operace);Y36.9
+3;– – hádce, boji, rvaèce (rukou) (pìstí) (nohou);Y04.–
+4;– – – zbraní (viz té Napadení);Y09.–
+5;– – – – øeznou, bodnou, seènou;X99.–
+5;– – – – støelnou (viz té Vıstøel, podle typu støelné zbranì, vraednı);X95.–
+1;Zachycení;
+2;– do;
+3;– – praèky, dímaèky;W23.–
+3;– – pøedmìtu NJ;W23.–
+3;– – stroje (jeho pohyblivé èásti) (viz té Kontakt, s, podle typu stroje);W31.–
+2;– dopravním obalem (klecí, košíkem) po uvolnìní uzávìru;W23.–
+2;– mezi;
+3;– – budovy (zøítivší se) pøi zemìtøesení;X34.0
+3;– – pøedmìty (v pohybu) (v klidu a v pohybu);W23.–
+4;– – – a stroj (viz té Kontakt, s, podle typu stroje);W31.–
+3;– – skládací pøedmìt;W23.–
+3;– – zasunovací, nebo lítací dveøe a dveøní rám;W23.–
+1;Zákonná(-ı);
+2;– poprava, jakımkoli zpùsobem;Y35.5
+2;– zákrok (èím, kım) (poranìní èím);Y35.7
+3;– – bajonetem;Y35.4
+3;– – bombou (jakoukoli);Y35.1
+3;– – dynamitem, vıbušninou;Y35.1
+3;– – granátem;Y35.1
+3;– – holí;Y35.3
+3;– – následky (èeho);Y89.0
+3;– – obuškem;Y35.3
+3;– – ostrım pøedmìtem;Y35.4
+3;– – plynem (dusivım) (jedovatım) (slznım);Y35.2
+3;– – poprava, jakoukoli metodou;Y35.5
+3;– – pozdní úèinky;Y89.0
+3;– – probodnutí;Y35.4
+3;– – ranou NJ;Y35.6
+3;– – ruèními chvaty;Y35.6
+3;– – øeznım nebo bodnım nástrojem;Y35.4
+3;– – slznım plynem;Y35.2
+3;– – støelnou zbraní (vıstøel) (jakıkoli);Y35.0
+3;– – tupım pøedmìtem;Y35.3
+3;– – urèenımi prostøedky NJ;Y35.6
+3;– – vıbušninou(-ami) (granátem);Y35.1
+1;Zákrok, zákonnı (viz té Zákonnı zákrok);Y35.7
+1;Zamotání do;
+2;– kola bicyklu;V19.8
+2;– loního prádla jako pøíèina dušení;W75.–
+1;Zanedbání (zloèinné) (vraednı pokus) (viz té Opuštìní);Y06.9
+1;Zapíchnutí ostnù z dikobraza;W55.–
+1;Záplava (jakékoli poranìní) (øeka) (vysoká voda);X38.–
+2;– zpùsobená (vzdálenou) bouøí;X38.–
+1;Zardoušení (garotou), vraedné (pokus);X91.–
+1;Záøení, ozáøení (expozice);W91.–
+2;– elektromagnetické, ionizující;W88.–
+2;– gama paprsky;W88.–
+2;– infraèervenımi paprsky (z topení a lampy);W90.–
+3;– – extrémním árem;W92.–
+2;– ionizujícím, ionizaèním záøením (umìle urychlenımi èásticemi);W88.–
+2;– izotopy radioaktivními (viz té Záøení, ozáøení, radioaktivními izotopy);W88.–
+2;– jako komplikace nebo abnormální reakce radioterapie;Y84.2
+2;– jako neádoucí pøíhoda pøi lékaøské nebo chirurgické péèi;Y63.2
+2;– laserem;W90.–
+3;– – neádoucí pøíhoda pøi lékaøské péèi;Y63.2
+3;– – pøi váleèné operaci;Y36.7
+2;– mikrovlnami;W90.–
+2;– obloukové lampy;W89.–
+2;– pacienta z nedbalosti (pøi testu nebo léèbì);Y63.3
+2;– pøedávkováním (pøi lékaøském nebo chirurgickém vıkonu);Y63.2
+2;– pøi;
+3;– – váleèné operaci (z nebo po jaderném vıbuchu) (pøímo) (druhotnì);Y36.5
+4;– – – laserem;Y36.7
+2;– pøi poruše atomové elektrárny NJ;W88.–
+2;– pøírodní NJ;X39.–
+2;– radaru;W90.–
+2;– radiem NJ;W88.–
+2;– radioaktivními izotopy (kterımikoli);W88.–
+3;– – jako neádoucí pøíhoda pøi lékaøské nebo chirurgické péèi;Y63.2
+3;– – z atomové elektrárny pøi poruše;W88.–
+2;– radiofrekvenèní;W90.–
+2;– rentgenovımi paprsky (tvrdımi) (mìkkımi);W88.–
+2;– slunce;X32.–
+2;– sváøecího oblouku, elektrody nebo svìtla;W89.–
+3;– – extrémnímu áru z;W92.–
+2;– svìtelného zdroje (viditelnı a ultrafialovı, umìlı);W89.–
+3;– – pøírodního;X32.–
+2;– ultrafialové (svìtlo) (umìlé);W89.–
+3;– – pøírodní;X32.–
+2;– umìlého viditelného svìtla;W89.–
+1;Zavalení, zasypání (jako pøíèina dušení, udušení (tlakem));W77.–
+2;– bez dušení nebo zadušení;W20.–
+2;– jako následek katastrofického pohybu povrchu zemì nebo vıbuchu sopky;X36.–
+1;Zbìhnutí (se zámìrem zranit nebo zabít) (viz té Opuštìní);Y06.9
+1;Zdvihání (tìkıch pøedmìtù) (závaí) extrémní;X50.–
+1;Zemìtøesení (jakékoli poranìní);X34.–
+2;– kataklyzmatické;X34.0
+2;– tsunami;X34.1
+2;– urèeného efektu NJ;X34.8
+1;Zkroucení osobou(-ami) (náhodné);W50.–
+1;Zlomenina;
+2;– okolnosti neznámé nebo neurèené;X59.0
+2;– v dùsledku vystavení urèenému faktoru, NJ;X58
+1;Zlomení (neúmyslné) (èásti);
+2;– lešení (jako pøíèina pádu);W12.–
+2;– ebøíku (jako pøíèina pádu);W11.–
+1;Zmìny tlaku vzduchu;W94.–
+2;– náhlé, v letadle (stoupajícím) (klesajícím);W94.–
+1;Zmrznutí (viz té Expozice, chladu);X31.–
+1;Znásilnìní (pokus);Y05.–
+1;Zneuití (dospìlého) (dítìte) (psychické) (fyzické) (sexuální) (viz Tırání);Y07.9
+1;Zranìní bajonetem;W26.0
+2;– pøi;
+3;– – váleèné operaci;Y36.4
+3;– – zákonném zákroku;Y35.4
+1;Zøícení;
+2;– budovy;W20.–
+3;– – hoøící (nekontrolovanı oheò);X00.–
+2;– konstrukce;W20.–
+3;– – hoøící (nekontrolovanı oheò);X00.–
+2;– mechanizmu (viz té Kontakt, s, podle typu zaøízemí);W31.–
+2;– pøehrady, hráze nebo stavby (zpùsobené pohybem zemì);X36.–
+1;Ztracen na moøi NJ;V92.–
+2;– pøi váleènıch operacích;Y36.4
+1;Ztráta kontroly (nad dopravním prostøedkem) NJ (viz té Nehoda, dopravní);V89.9
+1;Zvracení obsahu aludku, regurgitace potravy do dıchacích cest (s dušením, obstrukcí nebo udušením) (viz té Cizí tìleso, dıchacích cest);W78.–
+1;Zvukové vlny (jako pøíèina poranìní);W42.–
+1;ár, horko (úèinky) (extrémní);X30.–
+2;– nevhodné, pøi léèebné nebo chirurgické lokální aplikaci;Y63.5
+2;– z;
+3;– – elektrického topného zaøízení zpùsobujícího hoøení;X16.–
+3;– – jaderného vıbuchu pøi váleèné operaci;Y36.5
+2;– zpùsobenı;
+3;– – poèasím (podmínkami);X30.–
+3;– – podmínkami vytvoøenımi èlovìkem, vyjma na èlunu, lodi nebo plavidle;W92.–
+1;háøství (jako nehoda nebo napadení);X97.–
+1;ízeò (viz té Nedostatek, vody);X54.–

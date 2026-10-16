@@ -8,7 +8,7 @@ from functools import lru_cache
 
 from app.config import get_settings
 from app.models import Case, DiagnosisBasis, Extracted, FieldStatus, Laterality, MetastasisSite, ReviewState
-from app.validate import mkn10, rodne_cislo
+from app.validate import codefiles, mkn10, rodne_cislo
 from app.validate.normalize import DISEASE_EXTENT_NOR, GRADE_NOR, LATERALITY_LABEL, LATERALITY_NOR, SENTINEL_LABEL
 
 # Fields we treat as mandatory for "Úplné" (assumption, verify with FNO - PLAN.md §10.2)
@@ -108,13 +108,42 @@ def _options(labels: dict[str, str]) -> list[dict]:
     return [{"value": code, "label": label} for code, label in labels.items()]
 
 
+def _site_terms() -> dict[str, list[str]]:
+    """Organ / site names per code from the neoplasm index (07_…novotvary): lets 'jícen' or 'prs' find the code."""
+    terms: dict[str, list[str]] = {}
+    stack: list[str] = []
+    for row in codefiles.rows(codefiles.INDEX_NEOPLASMS)[1:]:
+        if len(row) < 3 or not row[0].isdigit():
+            continue
+        level = int(row[0])
+        name = re.split(r"\s+–\s+viz\b|\(viz\b", row[1])[0].strip(" –-*").strip()
+        stack = (stack + [""] * level)[: level - 1] + [name]  # the index starts at level 2 (level 1 = "Novotvar")
+        # primary malignant, in situ and uncertain behaviour are reportable to NOR (secondary / benign are not)
+        for col in (2, 4, 6):
+            code = row[col].strip() if len(row) > col else ""
+            if re.fullmatch(r"[CD]\d{2}(\.\d)?", code):
+                term = " ".join(p for p in stack if p)
+                if term not in terms.setdefault(code, []):
+                    terms[code].append(term)
+    return terms
+
+
+def _with_search(options: list[dict], terms: dict[str, list[str]]) -> list[dict]:
+    for o in options:
+        if found := terms.get(o["value"]):
+            o["search"] = " · ".join(found)[:600]
+    return options
+
+
 @lru_cache
 def codelists() -> dict:
-    """Options of the form's select boxes: `value` is what the report stores (models.py), `label` is what the form shows."""
+    """Options of the form's select boxes: `value` is what the report stores (models.py), `label` is what the form shows,
+    optional `search` holds extra words to find the option by (site names from the neoplasm index)."""
     onco = re.compile(r"^(C\d|D0\d|D3[7-9]|D4[0-8])")
     rows = mkn10._rows()
-    mkn = [{"value": c, "label": f"{c} - {r['Nazev']}"} for c, r in rows.items() if onco.match(c)]
-    topo = [{"value": c, "label": mkn10.topography_label(c)} for c in rows if re.match(r"^C[0-7]\d\.\d$|^C80\.\d$", c)]
+    sites = _site_terms()
+    mkn = _with_search([{"value": c, "label": f"{c} - {r['Nazev']}"} for c, r in rows.items() if onco.match(c)], sites)
+    topo = _with_search([{"value": c, "label": mkn10.topography_label(c)} for c in rows if re.match(r"^C[0-7]\d\.\d$|^C80\.\d$", c)], sites)
     morph: dict[str, str] = {}
     try:
         from app.retrieval.codes import load_morphology
@@ -123,7 +152,7 @@ def codelists() -> dict:
             if code not in morph or len(name) < len(morph[code]):  # shortest term = the base name of the code
                 morph[code] = name
     except (RuntimeError, OSError):
-        pass  # MKN10_CSV not configured: the form falls back to free text
+        pass  # code files not available: the form falls back to free text
     lat = {v.value: LATERALITY_LABEL[LATERALITY_NOR[v]] for v in Laterality if v != Laterality.midline}
     return {
         "laterality": sorted(_options(lat), key=lambda o: o["label"]),

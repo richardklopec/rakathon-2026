@@ -8,7 +8,7 @@ Missing fields are not reviewed; they make the report incomplete instead.
 from collections.abc import Iterator
 
 from app.config import get_settings
-from app.models import Extracted, FieldStatus, NorReport, ReviewState
+from app.models import AiConfidence, Extracted, FieldStatus, NorReport, ReviewState
 
 
 def iter_fields(report: NorReport) -> Iterator[tuple[str, Extracted]]:
@@ -41,6 +41,40 @@ def apply_review_policy(report: NorReport) -> NorReport:
         field.needs_review = conflict or low or not verified
         field.review.state = ReviewState.pending if field.needs_review else ReviewState.auto_accepted
     return report
+
+
+def overall(report: NorReport) -> AiConfidence:
+    """Overall AI confidence: weighted mean of the confidences of the NOR form fields whose value comes from AI.
+
+    Mandatory fields (export/uzis.REQUIRED) count double. Values edited or rejected by the clinician are not the AI's
+    and are left out; missing fields are completeness, reported separately (missing != uncertain).
+    """
+    from app.export.uzis import REQUIRED  # uzis imports models; keep this module light
+
+    out = AiConfidence()
+    total = weights = 0
+    for path, f in iter_fields(report):
+        if "[" in path:  # biomarkers / treatments are not on the NOR form
+            continue
+        required = path.split(".")[0] in REQUIRED
+        if f.status in (FieldStatus.missing, FieldStatus.not_applicable) or f.review.state == ReviewState.rejected:
+            out.missing_required += required
+            continue
+        if f.review.state == ReviewState.edited:
+            out.edited_by_human += 1
+            continue
+        if f.confidence is None:
+            continue
+        w = 2 if required else 1
+        total, weights = total + w * f.confidence, weights + w
+        out.fields_ai += 1
+        out.conflicts += f.status == FieldStatus.conflict
+        out.auto_accepted += f.review.state == ReviewState.auto_accepted
+        out.to_review += f.needs_review and f.review.state == ReviewState.pending
+    if weights:
+        out.score = round(total / weights)
+        out.level = "vysoká" if out.score >= get_settings().auto_accept_threshold else "střední" if out.score >= 60 else "nízká"
+    return out
 
 
 def review_queue(report: NorReport) -> list[tuple[str, Extracted]]:
