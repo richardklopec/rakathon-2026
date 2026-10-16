@@ -11,6 +11,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 from app import llm
+from app.extract import nodes
 from app.extract.evidence import locate
 from app.models import (
     TNM,
@@ -229,6 +230,56 @@ def _normalised(items, fn) -> list[_M]:
 _SITE_SENTENCE = re.compile(r"[^.\n]{0,80}(?:\b(?:kvadrant\w*|lalok\w*|lokalizac\w*|ulo[žz]en\w*|rozhran\w*)|(?-i:\b(?:[HD][ZVK]|[ZV][HDK])K\b))[^.\n]{0,80}", re.IGNORECASE)  # breast quadrant abbreviations (HZK, DKK…), not "dkk" = lower limbs
 
 
+_PAIR_ONLY = re.compile(r"\(?\s*\d{1,3}\s*/\s*\d{1,3}\s*\)?")
+
+
+def _is_fragment(doc: Document, ev: Evidence | None, quote: str) -> bool:
+    """A node count taken from a fragment of the PDF layout: the "(2/0)" alone on its line or with no node words around
+    (page markers "1/1", a pair placed next to an unrelated sentence)."""
+    if not re.search(r"\d\s*/\s*\d", quote):
+        return False
+    if _PAIR_ONLY.fullmatch(quote.strip()):
+        return True
+    if ev and ev.verified:
+        s, e = doc.text.rfind("\n", 0, ev.start) + 1, doc.text.find("\n", ev.end)
+        line = doc.text[s:e if e >= 0 else None]
+        return not re.search(r"(?i)uzlin(?!k)|\bLU\b|\bSLN\b|sentinel|\bN\d", line)
+    return False
+
+
+def _node_field(res: "nodes.NodeResult", which: str, warnings: list[str]) -> Extracted | None:
+    """pN vyš. / pN poz. from the specimen counts: histology base 70, −5 for a sum of several specimens, +10 for each
+    outpatient / MDT summary that agrees (max +20); a summary that disagrees makes it a conflict (review)."""
+    value = res.examined if which == "examined" else res.positive
+    if value is None:
+        return None
+    specs = res.specimens
+    score, reasons = 70, ["✓ citace ověřena", "zdroj: histologie, počet podle vzorků"]
+    if len(specs) > 1:
+        score -= 5
+        reasons.append("součet vzorků: " + " + ".join(c.label() for c in specs) + " (−5)")
+    sval = (lambda s: s.examined) if which == "examined" else (lambda s: s.positive)
+    agree = {s.doc.id: s for s in res.summaries if sval(s) == value}
+    if agree:
+        bonus = min(10 * len(agree), 20)
+        score += bonus
+        reasons.append(f"✓ souhrn souhlasí: {', '.join(s.doc.filename for s in agree.values())} (+{bonus})")
+    others = sorted({sval(s) for s in res.summaries if sval(s) != value and sval(s) is not None})
+    if others:
+        reasons.append(f"⚠ souhrn uvádí {', '.join(map(str, others))}")
+    field = Extracted[int](
+        value=value,
+        status=FieldStatus.conflict if others else FieldStatus.found,
+        confidence=min(score, 100),
+        confidence_reasons=reasons,
+        evidence=[c.evidence for c in specs] + [s.evidence for s in agree.values()],
+        alternatives=others,
+    )
+    if which == "examined" and (bad := [r for r in res.references if r.examined not in {c.examined for c in specs} | {value}]):
+        cap(field, 70, f"⚠ odkaz v jiné zprávě uvádí {', '.join(r.label() for r in bad)}")
+    return field
+
+
 def _codes_in_docs(mentions: list[_M]) -> list[str]:
     """Distinct MKN-10 codes written in the documents with their sources: ["C50.4 (AZ.pdf)", "C50.9 (H1.pdf – žádanka)"]."""
     by_code: dict[str, list[str]] = {}
@@ -421,10 +472,18 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
             if prefix == "p" and any(normalize.y_prefix(m.value) for _, _, m in items):
                 tnm.y_prefix = True
 
-    # --- lymph nodes, sentinel, stage, metastases, extent
-    nodes = _normalised(f["lymph_nodes"], normalize.lymph_nodes)
-    r.pn_examined = _field([_M(n.doc, n.ev, n.raw, n.value[0] if n.value else None) for n in nodes])
-    r.pn_positive = _field([_M(n.doc, n.ev, n.raw, n.value[1] if n.value else None) for n in nodes])
+    # --- lymph nodes: counted per specimen from the documents (extract/nodes.py); the LLM mentions only as a fallback
+    llm_nodes = _normalised(f["lymph_nodes"], normalize.lymph_nodes)
+    for n in llm_nodes:
+        if _is_fragment(n.doc, n.ev, n.raw.quote):
+            n.kind = "fragment"
+    node_res = nodes.count(docs)
+    r.pn_examined = _node_field(node_res, "examined", warnings) or _field(
+        [_M(n.doc, n.ev, n.raw, n.value[0] if n.value else None, n.kind) for n in llm_nodes])
+    r.pn_positive = _node_field(node_res, "positive", warnings) or _field(
+        [_M(n.doc, n.ev, n.raw, n.value[1] if n.value else None, n.kind) for n in llm_nodes])
+    for issue in nodes.check(node_res):
+        warnings.append(f"Počet uzlin: {issue}.")
     r.sentinel_node = _field(_normalised(f["sentinel_node"], normalize.sentinel))
     r.clinical_stage = _field(_normalised(f["clinical_stage"], lambda v: (m.group(1).upper() if (m := re.search(r"\b((?:IV|III|II|I)[ABC]?)\b", v)) else None)))
 
