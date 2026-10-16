@@ -1,7 +1,7 @@
 """Abbreviations whose meaning depends on the context (PLAN step "slovník zkratek").
 
 First entry: a stage group written as a Roman numeral. "IA" is stage IA next to "stadium" or a TNM string, but the
-aromatase inhibitor in "hormonoterapie IA"; a Roman numeral opening a line ("I. r. 1999 Ca …") numbers a list.
+aromatase inhibitor in "hormonoterapie IA"; a Roman numeral opening a line ("I. r. 2004 Ca …") numbers a list.
 Breast quadrant abbreviations (HZK, DKK…) and their limb meaning live in validate/site.py.
 """
 
@@ -25,6 +25,6 @@ def stage_in(text: str) -> str | None:
             continue  # "hormonoterapie IA": aromatase inhibitor
         line_start = text.rfind("\n", 0, m.start()) + 1
         if not text[line_start:m.start()].strip() and text[m.end():m.end() + 1] == ".":
-            continue  # "I. r. 1999 …": list numbering
+            continue  # "I. r. 2004 …": list numbering
         return m.group(1)
     return None
