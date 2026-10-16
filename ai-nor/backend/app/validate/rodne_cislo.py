@@ -20,7 +20,10 @@ Sex = Literal["M", "F"]
 _SHAPE = re.compile(r"(\d{6})\s?/?\s?(\d{3,4})")
 # slash form anywhere ("530101/123", "855201 / 1234"), plain digits only right after a label ("RČ: 8552011234")
 _WITH_SLASH = re.compile(r"(?<![\d/])(\d{6})\s?/\s?(\d{3,4})(?![\d/])")
-_LABELLED = re.compile(r"(?i)(?:\br\.\s?č\.?|\brč\b|rodné\s+číslo)\s*[:.]?\s*(\d{6})\s?/?\s?(\d{3,4})(?![\d/])")
+# identifier labels in Czech reports: "r. č.", "RČ", "rodné číslo", and in histology headers "Č. poj." (číslo pojištěnce,
+# which for Czech insurees is the birth number)
+_LABEL = r"(?:\br\.\s?č\.?|\brč\b|rodné\s+číslo|\bč\.\s?poj\.?|číslo\s+pojištěnce)"
+_LABELLED = re.compile(rf"(?i){_LABEL}\s*[:.]?\s*(\d{{6}})\s?/?\s?(\d{{3,4}})(?![\d/])")
 
 
 @dataclass
@@ -30,6 +33,7 @@ class RodneCislo:
     errors: list[str] = field(default_factory=list)
     birth_date: date | None = None
     sex: Sex | None = None
+    labelled: bool = False  # written after "r. č." / "Č. poj." etc. (set by find_in_text)
 
     @property
     def valid(self) -> bool:
@@ -92,8 +96,25 @@ def find_in_text(text: str) -> list[RodneCislo]:
     seen: dict[int, RodneCislo] = {}
     for pattern in (_WITH_SLASH, _LABELLED):
         for m in pattern.finditer(text):
-            seen.setdefault(m.start(1), check(f"{m.group(1)}/{m.group(2)}"))
+            rc = seen.setdefault(m.start(1), check(f"{m.group(1)}/{m.group(2)}"))
+            rc.labelled = rc.labelled or pattern is _LABELLED
     return [seen[k] for k in sorted(seen)]
+
+
+def identifiers(docs: list[Document]) -> dict[str, tuple[RodneCislo, list[str]]]:
+    """Patient identifiers per document: normalized number -> (check result, files).
+
+    A labelled number counts even when it fails the check (anonymised data, typos: the documents must still agree);
+    an unlabelled one only when it is a valid birth number (otherwise it may be any other number of that shape).
+    """
+    found: dict[str, tuple[RodneCislo, list[str]]] = {}
+    for doc in docs:
+        for rc in find_in_text(doc.text):
+            if rc.valid or rc.labelled:
+                files = found.setdefault(rc.normalized, (rc, []))[1]
+                if doc.filename not in files:
+                    files.append(doc.filename)
+    return found
 
 
 def case_checks(docs: list[Document], report: NorReport, patient_ref: str | None = None, llm_sex: str | None = None) -> list[str]:
@@ -102,25 +123,21 @@ def case_checks(docs: list[Document], report: NorReport, patient_ref: str | None
     Lowers the confidence of icd10 when the diagnosis is not allowed for the patient's sex (review policy runs after).
     """
     warnings: list[str] = []
-    valid: dict[str, tuple[RodneCislo, set[str]]] = {}
-    for doc in docs:
-        for rc in find_in_text(doc.text):
-            if rc.valid:
-                valid.setdefault(rc.normalized, (rc, set()))[1].add(doc.filename)
-            else:
-                msg = f"Neplatné rodné číslo {rc.normalized} ({doc.filename}): {'; '.join(rc.errors)}."
-                if msg not in warnings:
-                    warnings.append(msg)
+    ids = identifiers(docs)
+    valid = {k: v for k, v in ids.items() if v[0].valid}
 
-    if len(valid) > 1:
-        where = "; ".join(f"{k} v {', '.join(sorted(files))}" for k, (_, files) in sorted(valid.items()))
-        warnings.append(f"Nesoulad identity: v dokumentech jsou různá rodná čísla ({len(valid)}): {where}.")
+    if len(ids) > 1:  # most important first: the documents may belong to different patients
+        where = "; ".join(f"{k}{'' if rc.valid else ' (neplatné)'} v {', '.join(files)}" for k, (rc, files) in ids.items())
+        warnings.append(f"Nesoulad identity: dokumenty uvádějí různá rodná čísla / čísla pojištěnce ({len(ids)}): {where}.")
+    for k, (rc, files) in ids.items():  # one warning per number, not per document
+        if not rc.valid:
+            warnings.append(f"Neplatné rodné číslo {k} ({', '.join(files)}): {'; '.join(rc.errors)}.")
 
     if patient_ref and looks_like(patient_ref):
         p = check(patient_ref)
         if not p.valid:
             warnings.append(f"Rodné číslo pacienta {patient_ref} je neplatné: {'; '.join(p.errors)}.")
-        elif valid and p.normalized not in valid:
+        elif ids and p.normalized not in ids:
             warnings.append(f"Rodné číslo pacienta {p.normalized} se neshoduje s rodným číslem v dokumentech.")
 
     rc_sex = next(iter(valid.values()))[0].sex if len(valid) == 1 else None

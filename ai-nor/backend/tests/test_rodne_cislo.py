@@ -59,3 +59,20 @@ def test_case_checks():
 
     report = NorReport(diagnosis_date=Extracted[PartialDate](value=PartialDate(year=1989), status=FieldStatus.found))
     assert any("před datem narození" in w for w in rc.case_checks(same, report))
+
+
+def test_identity_compares_labelled_numbers_even_when_invalid():
+    # anonymised data: numbers fail the check, but the documents must still agree with each other
+    docs = [_doc("az.txt", "Pacient r.č. 991399/1111"), _doc("hist1.txt", "Bydliště: Č. poj.: 991399/1111"),
+            _doc("hist2.txt", "Č. poj.: 991399/2222"), _doc("hist3.txt", "číslo pojištěnce 991399/1111")]
+    w = rc.case_checks(docs, NorReport())
+    assert w[0].startswith("Nesoulad identity") and "991399/2222 (neplatné) v hist2.txt" in w[0]
+    invalid = [x for x in w if x.startswith("Neplatné rodné číslo")]
+    assert len(invalid) == 2  # one per number, not one per document
+    assert "991399/1111 (az.txt, hist1.txt, hist3.txt)" in invalid[0]
+
+
+def test_unlabelled_invalid_numbers_are_ignored():
+    # e.g. a lab sample number of the same shape: not an identifier unless labelled or a valid birth number
+    docs = [_doc("hist.txt", "vzorek 202604/1234, RČ: 905701/0006"), _doc("az.txt", "r. č. 905701/0006")]
+    assert rc.case_checks(docs, NorReport()) == []
