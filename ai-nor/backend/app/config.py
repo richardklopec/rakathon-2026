@@ -38,9 +38,12 @@ class Settings(BaseSettings):
     reporting_department: str = ""  # NOR "Oddělení" (číselník NOR), e.g. "20 - Chirurgie"
     auto_accept_threshold: int = 85  # fields at/above this score without conflict skip review
     data_dir: Path = REPO_ROOT / "backend" / "var"
+    llm_cache_dir: str = ""  # empty = data_dir/llm-cache; scripts.evaluate points it elsewhere for runs without cache
+    # gold (reference) values for scripts.evaluate; FNO patients are never in the repo (AGENTS.md)
+    eval_gold_dir: str = "../../Rakathon_DATA_NOR/gold"
 
 
-    @field_validator("mkn10_csv", "codelists_dir", "mkn10_rules_pdf", "data_dir", mode="after")
+    @field_validator("mkn10_csv", "codelists_dir", "mkn10_rules_pdf", "llm_cache_dir", "eval_gold_dir", "data_dir", mode="after")
     @classmethod
     def _relative_to_repo(cls, v):
         """Relative paths in .env work on any machine: resolve them against the ai-nor folder."""

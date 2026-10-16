@@ -38,6 +38,7 @@ cd frontend; npm install; npm run dev     # http://localhost:5173
 - Embeddingy běží **lokálně** (`paraphrase-multilingual-MiniLM-L12-v2`, 384 dim, model se stáhne do `backend/var/models`), text zpráv neopouští počítač.
 - FHIR: `http://localhost:52773/fhir/r4/metadata` (SuperUser / SYS — jen dev) · Management Portal: `http://localhost:52773/csp/sys/UtilHome.csp`
 - Testy: `cd backend; .\.venv\Scripts\pytest -q` · build: `cd frontend; npm run build`
+- Evaluace proti gold hodnotám: `cd backend; .\.venv\Scripts\python -m scripts.evaluate [--runs 2 --fresh-cache]` (gold JSON v `EVAL_GOLD_DIR` mimo repo, výsledky v `backend/var/eval/`; formát a srovnání dvou běhů viz `scripts/evaluate.py`).
 
 ## Struktura
 | Složka | Obsah | Vlastník |

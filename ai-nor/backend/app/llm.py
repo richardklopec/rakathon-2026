@@ -3,6 +3,7 @@
 import hashlib
 import json
 import time
+from pathlib import Path
 
 from openai import APIStatusError, OpenAI
 from pydantic import BaseModel
@@ -19,7 +20,8 @@ def _client() -> OpenAI:
 
 
 def _cache_path(key: str):
-    d = get_settings().data_dir / "llm-cache"
+    s = get_settings()
+    d = Path(s.llm_cache_dir) if s.llm_cache_dir else s.data_dir / "llm-cache"
     d.mkdir(parents=True, exist_ok=True)
     return d / f"{key}.json"
 
