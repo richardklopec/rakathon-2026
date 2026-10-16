@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from app import extract, ingest
 from app.fhir.mapping import build_bundle
 from app.main import app
-from app.models import Case, ReviewState
+from app.models import Case, FieldStatus, ReviewState
 
 DEMO = Path(__file__).resolve().parents[2] / "data" / "synthetic" / "demo_histologie.txt"
 
@@ -44,11 +44,18 @@ def test_review_policy_auto_accepts_only_confident_fields():
     assert r.morphology_code.review.state == ReviewState.auto_accepted and not r.morphology_code.needs_review
     # ICD-10 from histology scores 70 (80 with the MKN-10 table loaded) < 85 -> review
     assert r.icd10.needs_review and r.icd10.review.state == ReviewState.pending
-    assert not r.grade.needs_review  # missing fields are never queued
+    # a missing MANDATORY field is queued (fill it in or confirm it is not in the documentation), an optional one is not
+    assert r.grade.needs_review and r.grade.status == FieldStatus.missing
+    assert not r.clinical_stage.needs_review
     queue = review_queue(r)
-    assert {p for p, _ in queue} == {"icd10", "tnm_pathological.t", "tnm_pathological.n"}
-    scores = [f.confidence for _, f in queue]
-    assert scores == sorted(scores)  # lowest confidence first
+    found = [(p, f) for p, f in queue if f.status != FieldStatus.missing]
+    assert {p for p, _ in found} == {"icd10", "tnm_pathological.t", "tnm_pathological.n"}
+    assert {p for p, f in queue if f.status == FieldStatus.missing} == {
+        "diagnosis_date", "topography", "laterality", "diagnosis_basis", "morphology_type", "grade", "disease_extent"}
+    scores = [f.confidence or 0 for _, f in queue]
+    assert scores == sorted(scores)  # missing (no score) first, then lowest confidence
+    r.grade.review.state = ReviewState.confirmed  # "really not in the documentation"
+    assert "grade" not in {p for p, _ in review_queue(apply_review_policy(r))}
 
 
 def test_conflict_always_goes_to_review():

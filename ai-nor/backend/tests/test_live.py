@@ -208,3 +208,43 @@ def test_morphology_name_is_the_pathologists_wording(monkeypatch):
     assert r.morphology_code.value == "8211/3"
     assert live._clean_name("M85203 – karcinom lobulární infiltrující") == "karcinom lobulární infiltrující"
     assert live._clean_name("Invazivní lobulární karcinom; M85203") == "Invazivní lobulární karcinom"
+
+
+def test_missing_mandatory_fields_one_targeted_pass(monkeypatch):
+    hist = Document(id="h", filename="H.pdf", kind="histology",
+                    text="TOPOGRAFIE ODBĚRU: prs\nZávěr:\ninvazivní karcinom NST, G2\nM1: M85003 KARCINOM")
+    az = Document(id="a", filename="AZ.pdf", kind="AZ", text="Dg.: C504\nCa mammae l.sin., HZK")
+    calls = []
+
+    def llm(system, user, schema):
+        m = lambda doc, q, v: Mention(doc=doc, quote=q, value=v, explicit=True, hedged=False)  # noqa: E731
+        if schema is CodeChoice:
+            return CodeChoice(code="C50.4", rule_code="C50", rule_quote="C50.4 Horní zevní kvadrant prsu", reasoning="", certain=True)
+        if "DOHLEDÁNÍ" in system:  # the targeted pass
+            calls.append(system.split("povinná pole: ")[1].split(".")[0])
+            return LlmExtraction(primary_tumour="", other_tumours=[], patient_sex="F",
+                                 fields=[FieldMentions(field="laterality", mentions=[m(2, "Ca mammae l.sin.", "l.sin.")])])
+        return LlmExtraction(primary_tumour="karcinom prsu vlevo", other_tumours=[], patient_sex="F",
+                             fields=[FieldMentions(field="icd10", mentions=[m(2, "Dg.: C504", "C504")])])
+
+    monkeypatch.setattr(live.llm, "structured", llm)
+    r, _, _ = live.extract_live([hist, az])
+    assert len(calls) == 1 and "grade" not in calls[0] and "morphology" not in calls[0] and "laterality" in calls[0]
+    assert r.grade.value == "2" and r.morphology_code.value == "8500/3" and r.morphology_type.value == "Histologie"  # in code
+    assert r.laterality.value.value == "left"  # from the one LLM call
+    for f in (r.grade, r.morphology_code, r.morphology_type, r.laterality):
+        assert f.confidence <= live.TARGETED_CAP and any("cíleným dohledáním" in x for x in f.confidence_reasons)
+
+
+def test_no_targeted_pass_when_nothing_mandatory_is_missing(monkeypatch):
+    calls = []
+
+    def llm(system, user, schema):
+        calls.append("DOHLEDÁNÍ" in system)
+        return fake_llm(system, user, schema)
+
+    monkeypatch.setattr(live.llm, "structured", llm)
+    from app.extract import coder
+    monkeypatch.setattr(coder, "_default_candidates", lambda q, lit: ([C50_RULE], []))
+    live.extract_live([HIST, MDT])
+    assert sum(calls) <= 1  # at most one targeted call per case, never one per field

@@ -43,6 +43,7 @@ function show(path: string, v: unknown): string {
 }
 
 function badge(f: Extracted): string {
+  if (f.status === 'missing') return 'bg-red-100 text-red-800'
   if (f.status === 'conflict') return 'bg-purple-100 text-purple-800'
   const c = f.confidence ?? 0
   return c >= 85 ? 'bg-green-100 text-green-800' : c >= 60 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800'
@@ -193,7 +194,21 @@ export default function App() {
     )
   }
 
+  function openPreview() {
+    if (kase) run('Připravuji náhled…', () => api.uzisPreview(kase.id)).then((p) => p && setPreview(p))
+  }
+
   function FieldActions({ path, f }: { path: string; f: Extracted }) {
+    if (f.status === 'missing') {
+      // a missing mandatory field: fill it in (the form has the right controls) or confirm that it is not documented
+      return (
+        <span className="whitespace-nowrap">
+          <button className="mr-1 rounded bg-amber-600 px-2 text-xs text-white" onClick={openPreview}>✎ Doplnit v náhledu</button>
+          <button className="rounded border border-slate-300 px-2 text-xs hover:bg-slate-100"
+            onClick={() => update(path, (x) => { x.review.state = 'confirmed' })}>Potvrdit: v dokumentaci není</button>
+        </span>
+      )
+    }
     return (
       <span className="whitespace-nowrap">
         {f.status !== 'conflict' && f.alternatives.length > 0 && <span className="mr-1 text-xs text-slate-500">návrh:</span>}
@@ -264,8 +279,7 @@ export default function App() {
                 {kase.confirmed_at && <span className="text-green-700">✓ potvrdil {kase.confirmed_by}</span>}
                 <span className="flex-1" />
                 <button className="rounded border px-3 py-1" onClick={() => run('AI vytěžuje hlášení…', () => api.extract(kase.id)).then((c) => c && open(c))} disabled={!!busy}>Vytěžit znovu</button>
-                <button className="rounded bg-slate-900 px-3 py-1 text-white disabled:opacity-40" disabled={!!busy}
-                  onClick={() => run('Připravuji náhled…', () => api.uzisPreview(kase.id)).then((p) => p && setPreview(p))}>
+                <button className="rounded bg-slate-900 px-3 py-1 text-white disabled:opacity-40" disabled={!!busy} onClick={openPreview}>
                   Náhled a potvrzení →
                 </button>
               </div>
@@ -278,14 +292,16 @@ export default function App() {
 
               {queue.length > 0 && (
                 <section className="rounded-lg border-2 border-amber-300 bg-white p-3">
-                  <h2 className="mb-2 text-sm font-semibold">Ke kontrole ({queue.length}): rozpory a nejistá pole</h2>
+                  <h2 className="mb-2 text-sm font-semibold">Ke kontrole ({queue.length}): rozpory, nejistá a chybějící povinná pole</h2>
                   {queue.map(({ path, label, f }) => (
                     <div key={path} className="flex flex-wrap items-center gap-2 border-t py-1.5 text-sm first:border-0">
                       <span className={`rounded px-1.5 text-xs font-semibold ${badge(f)}`} title={f.confidence_reasons.join('\n')}>
-                        {f.status === 'conflict' ? '⚠ ' : ''}{f.confidence}
+                        {f.status === 'missing' ? 'chybí' : `${f.status === 'conflict' ? '⚠ ' : ''}${f.confidence}`}
                       </span>
                       <span className="w-48 text-slate-500">{label}</span>
-                      <b className="w-48">{show(path, f.value)}</b>
+                      {f.status === 'missing'
+                        ? <span className="w-48 text-red-700">nenalezeno v dokumentaci</span>
+                        : <b className="w-48">{show(path, f.value)}</b>}
                       {f.evidence.map((e, i) => (
                         <button key={i} className="text-xs text-blue-700 underline" onClick={() => setActive(e)}>citace {i + 1}</button>
                       ))}
@@ -330,12 +346,16 @@ export default function App() {
                       {fields.map(([path, label]) => {
                         const f = getField(kase.report, path)
                         const missing = f.status === 'missing'
+                        const todo = missing && needsHuman(f) // mandatory and not resolved yet: must not look finished
                         return (
-                          <div key={path} className="flex flex-wrap items-center gap-2 border-b py-1 last:border-0">
+                          <div key={path} className={`flex flex-wrap items-center gap-2 border-b py-1 last:border-0 ${todo ? 'bg-amber-50' : ''}`}>
                             <span className="w-48 text-slate-500">{label}</span>
-                            <span className={`flex-1 ${missing || f.review.state === 'rejected' ? 'text-slate-400' : 'font-medium'}`}>
-                              {missing ? 'chybí v dokumentaci' : f.review.state === 'rejected' ? 'zamítnuto' : show(path, f.value)}
+                            <span className={`flex-1 ${todo ? 'font-medium text-amber-800' : missing || f.review.state === 'rejected' ? 'text-slate-400' : 'font-medium'}`}>
+                              {todo ? 'chybí – doplňte, nebo potvrďte, že není'
+                                : missing && f.review.state === 'confirmed' ? 'v dokumentaci není (potvrzeno lékařem)'
+                                : missing ? 'chybí v dokumentaci' : f.review.state === 'rejected' ? 'zamítnuto' : show(path, f.value)}
                             </span>
+                            {todo && <span className={`rounded px-1.5 text-xs font-semibold ${badge(f)}`} title={f.confidence_reasons.join('\n')}>chybí</span>}
                             {!missing && (
                               <span className={`rounded px-1.5 text-xs font-semibold ${badge(f)}`} title={f.confidence_reasons.join('\n')}>{f.confidence}</span>
                             )}

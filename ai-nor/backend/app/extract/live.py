@@ -297,7 +297,94 @@ def _node_field(res: "nodes.NodeResult", which: str, warnings: list[str]) -> Ext
     return field
 
 
-_CODE_FOOTER = re.compile(r"\bM\d\s*:\s*M?-?\d{4}\s?/?\s?\d")  # "M1: M85203" in the histology footer
+_CODE_FOOTER = re.compile(r"\bM\d\s*:\s*M?-?(\d{4})\s?/?\s?(\d)")  # "M1: M85203" in the histology footer
+
+
+def _morphology_type(v: str) -> str | None:
+    return "Cytologie" if "cyto" in v.lower() else ("Histologie" if "histo" in v.lower() else None)
+
+
+# --- targeted search for missing mandatory fields (PLAN step 5) -----------------------------------------------------
+# mandatory NOR field -> field name of the LLM schema (topography follows icd10, diagnosis_basis is derived)
+TARGETED = {"diagnosis_date": "diagnosis_date", "icd10": "icd10", "laterality": "laterality",
+            "morphology_type": "morphology_type", "morphology_code": "morphology", "grade": "grade",
+            "disease_extent": "disease_extent"}
+TARGETED_CAP = 75  # whatever the targeted search finds goes to review: a search for one field is biased to find something
+_TARGETED_REASON = "nalezeno cíleným dohledáním chybějícího povinného pole (vždy ke kontrole)"
+TARGETED_SYSTEM = SYSTEM + """
+
+DOHLEDÁNÍ: v prvním průchodu se nenašla tato povinná pole: {fields}. Hledej v dokumentech POUZE tato pole.
+Vrať jen zmínky s doslovnou citací. Když údaj v dokumentaci opravdu není, pole vynech – chybějící údaj není negativní
+a nic neodvozuj ani nedoplňuj podle zvyklostí."""
+
+_HIST_GRADE = re.compile(r"(?i)\b(?:G\s?([1-4])\b|grade\s*([1-4])\b)")
+
+
+def _hit(doc: Document, start: int, end: int) -> Evidence:
+    return Evidence(doc_id=doc.id, quote=" ".join(doc.text[start:end].split()), start=start, end=end, verified=True)
+
+
+def _deterministic_fill(r: NorReport, docs: list[Document], missing: list[str]) -> list[str]:
+    """Fields a histology report states in a fixed form: the code footer, "G2", the report itself (Histologie)."""
+    filled = []
+    hist = [d for d in docs if d.kind == "histology" and _FINDINGS.search(d.text)]
+    for doc in hist:
+        findings = _FINDINGS.search(doc.text).start()
+        if "morphology_code" in missing and "morphology_code" not in filled and (m := _CODE_FOOTER.search(doc.text, findings)):
+            r.morphology_code = Extracted[str](value=f"{m.group(1)}/{m.group(2)}", status=FieldStatus.found, confidence=80,
+                                               confidence_reasons=["✓ citace ověřena", "kód z patičky histologie"],
+                                               evidence=[_hit(doc, m.start(), m.end())])
+            filled.append("morphology_code")
+        if "grade" in missing and "grade" not in filled and (m := _HIST_GRADE.search(doc.text, findings)):
+            if value := normalize.grade(m.group(0)):
+                r.grade = Extracted[str](value=value, status=FieldStatus.found, confidence=70,
+                                         confidence_reasons=["✓ citace ověřena", "zdroj: histologie"],
+                                         evidence=[_hit(doc, m.start(), m.end())])
+                filled.append("grade")
+    if "morphology_type" in missing and hist:
+        doc = hist[0]
+        m = _FINDINGS.search(doc.text)
+        r.morphology_type = Extracted[str](value="Histologie", status=FieldStatus.found, confidence=70,
+                                           confidence_reasons=["✓ citace ověřena", f"odvozeno: histologický nález ({doc.filename})"],
+                                           evidence=[_hit(doc, m.start(), m.end())])
+        filled.append("morphology_type")
+    for name in filled:
+        cap(getattr(r, name), TARGETED_CAP, _TARGETED_REASON)
+    return filled
+
+
+def _targeted_pass(r: NorReport, docs: list[Document]) -> None:
+    missing = [name for name in TARGETED if getattr(r, name).status == FieldStatus.missing]
+    if not missing:
+        return
+    missing = [m for m in missing if m not in _deterministic_fill(r, docs, missing)]
+    if not missing:
+        return
+    out = llm.structured(TARGETED_SYSTEM.format(fields=", ".join(TARGETED[m] for m in missing)), _prompt(docs), LlmExtraction)
+    f = _collect(out, docs)
+    process = {
+        "diagnosis_date": lambda it: _field(_normalised(it, normalize.partial_date),
+                                            to_display=lambda d: f"{d.year}-{d.month or 0:02d}-{d.day or 0:02d}"),
+        "laterality": lambda it: _field(_normalised(it, normalize.laterality), to_display=lambda v: v.value),
+        "morphology_type": lambda it: _field(_normalised(it, _morphology_type)),
+        "morphology_code": lambda it: _field([c for c in _normalised(it, normalize.morphology) if c.value], code_valid=True, code_path="literal"),
+        "grade": lambda it: _field(_normalised(it, lambda v: normalize.grade(v) or normalize.high_grade(v))),
+        "disease_extent": lambda it: _field(_normalised(it, normalize.disease_extent)),
+        # a code counts only when the quote contains it (as in the first pass)
+        "icd10": lambda it: _field([x for x in (_M(d, e, m, normalize.icd10(m.quote)) for d, e, m in it) if x.value],
+                                   code_valid=True, code_path="literal"),
+    }
+    for name in missing:
+        items = f[TARGETED[name]]
+        if not items:
+            continue
+        field = process[name](items)
+        if field.status == FieldStatus.missing:
+            continue
+        cap(field, TARGETED_CAP, _TARGETED_REASON)
+        setattr(r, name, field)
+        if name == "icd10" and re.match(r"C[0-7]\d", str(field.value)) and r.topography.status == FieldStatus.missing:
+            r.topography = field.model_copy(deep=True)
 
 
 def _clean_name(value: str) -> str | None:
@@ -573,7 +660,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     r.laterality = _field(_normalised(f["laterality"], normalize.laterality), to_display=lambda v: v.value)
 
     # --- morphology
-    r.morphology_type = _field(_normalised(f["morphology_type"], lambda v: "Cytologie" if "cyto" in v.lower() else ("Histologie" if "histo" in v.lower() else None)))
+    r.morphology_type = _field(_normalised(f["morphology_type"], _morphology_type))
     morph_items = f["morphology"]
     names = [_M(doc, ev, m, _clean_name(m.value), "code_label" if _CODE_FOOTER.search(m.quote) else None)
              for doc, ev, m in morph_items]
@@ -668,6 +755,9 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
             ],
             evidence=r.morphology_name.evidence[:1] or [Evidence(doc_id=hist.id, quote=hist.text[:40], start=0, end=min(40, len(hist.text)), verified=True)],
         )
+
+    # --- mandatory fields still missing: one combined targeted search (deterministic first, then one LLM call)
+    _targeted_pass(r, docs)
 
     # --- case-level warnings
     if out.other_tumours:

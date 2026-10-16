@@ -57,7 +57,7 @@ def test_outcomes():
     assert rows["morphology_name"]["outcome"] == "correct"
     assert rows["pn_examined"]["outcome"] == "wrong" and rows["pn_examined"]["flagged"] and rows["pn_examined"]["conflict"]
     assert rows["clinical_stage"]["outcome"] == "false_filled"
-    assert rows["grade"]["outcome"] == "false_missing" and not rows["grade"]["flagged"]
+    assert rows["grade"]["outcome"] == "false_missing" and rows["grade"]["flagged"]  # mandatory: in the review queue
     assert rows["tnm_pathological.m"]["outcome"] == "open"
     assert rows["tumour_order"]["outcome"] == "open"  # no gold entry = todo
 
@@ -66,7 +66,7 @@ def test_metrics():
     m = ev.metrics(ev.rows_for("syn", 1, _report(), GOLD))
     assert m["scored"] == 8 and m["correct"] == 4
     assert (m["wrong"], m["false_missing"], m["false_filled"]) == (2, 1, 1)
-    assert m["errors_flagged"] == 2  # pn_examined (conflict) + clinical_stage (70 < 85); icd10 and grade slip through
+    assert m["errors_flagged"] == 3  # pn_examined (conflict), clinical_stage (70 < 85), grade (missing mandatory); icd10 slips through
     assert m["auto"] == 3 and m["auto_correct"] == 2  # icd10 (wrong), laterality, diagnosis_basis
     bands = {b["band"]: b for b in m["bands"]}
     assert bands["85–100"]["n"] == 3 and bands["85–100"]["correct"] == 2

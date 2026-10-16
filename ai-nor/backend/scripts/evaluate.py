@@ -105,8 +105,8 @@ def judge(gold: dict, app) -> str:
 
 
 def flagged(f: Extracted | None) -> bool:
-    """Would the clinician see this field in the review queue? (missing fields are not reviewed today)"""
-    return bool(f and f.status != FieldStatus.missing and f.needs_review and f.review.state == ReviewState.pending)
+    """Would the clinician see this field in the review queue? (incl. missing mandatory fields, confidence.py)"""
+    return bool(f and f.needs_review and f.review.state == ReviewState.pending)
 
 
 def rows_for(patient: str, run: int, report: NorReport, gold_fields: dict) -> list[dict]:

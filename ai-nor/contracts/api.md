@@ -10,7 +10,7 @@ Pole hlášení: `Extracted` s `value`, `confidence` 0–100, `confidence_reason
 | POST | `/api/cases` | multipart `files[]` (PDF/TXT/MD/XLSX), query `patient_ref?` | `Case` | ingest → `Document.text` (offsety citací se vztahují k tomuto textu) |
 | GET | `/api/cases/{id}` | — | `Case` | |
 | POST | `/api/cases/{id}/extract` | — | `Case` | `LLM_MODE=live`: jeden LLM dotaz → ověřené citace → kódy NOR → rozpory → jistota. Pole ≥ `AUTO_ACCEPT_THRESHOLD` (85) bez rozporu = předvyplněná (`auto_accepted`), ostatní `needs_review`. Ruší potvrzení. |
-| GET | `/api/cases/{id}/review-queue` | — | `[{path, field}]` | jen rozpory a pole pod prahem; nejdřív rozpory, pak nejnižší jistota |
+| GET | `/api/cases/{id}/review-queue` | — | `[{path, field}]` | rozpory, pole pod prahem a chybějící povinná pole NOR (lékař je doplní, nebo potvrdí `review.state = confirmed`, že v dokumentaci nejsou); nejdřív rozpory, pak nejnižší jistota |
 | PUT | `/api/cases/{id}/report` | `NorReport` | `Case` | lékař řeší frontu (`review.state` = confirmed / edited / rejected). Ruší potvrzení. |
 | GET | `/api/cases/{id}/uzis-preview` | — | hlášení ve struktuře formuláře ÚZIS + `stav` Úplné / Neúplné + `chybi_povinne` + `pacient_rc` (kontrola RČ: `je_rc`, `platne`, `chyby`, `datum_narozeni`, `pohlavi`) | náhled, který lékař potvrzuje a v němž může pole upravit (ukládá se přes `PUT /report`) |
 | PUT | `/api/cases/{id}/patient` | `{patient_ref}` | `Case` | „Pacient RČ“ z náhledu. Hodnota ve tvaru RČ musí projít kontrolou (`app/validate/rodne_cislo.py`), jinak 422; ukládá se jako `RRMMDD/XXXX`. Ruší potvrzení. |

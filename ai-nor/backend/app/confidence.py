@@ -2,7 +2,8 @@
 
 Rule (PLAN.md §4): a field goes to review only when the documents conflict or the confidence is below
 AUTO_ACCEPT_THRESHOLD (default 85). Everything else with verified evidence is auto-accepted.
-Missing fields are not reviewed; they make the report incomplete instead.
+A missing MANDATORY field (export/uzis.REQUIRED) goes to review too: the clinician fills it in or confirms that the
+documentation really does not have it (missing != negative). Missing optional fields are not reviewed.
 
 Caps: when the documents disagree, the field's confidence is at most CONFLICT_CAP, whatever the winning value scored
 (several sources agreeing on one value does not make it certain while another source says something else).
@@ -56,17 +57,26 @@ def apply_violations(report: NorReport, violations) -> NorReport:
     return report
 
 
+MISSING_REQUIRED_REASON = "✗ povinné pole NOR chybí: doplňte, nebo potvrďte, že v dokumentaci opravdu není"
+
+
 def apply_review_policy(report: NorReport) -> NorReport:
+    from app.export.uzis import REQUIRED  # uzis imports models; keep this module light
+
     threshold = get_settings().auto_accept_threshold
     for path, field in iter_fields(report):
         if "[" in path:  # treatments / biomarkers / progression: context for checks, not on the NOR form, never reviewed
             field.needs_review = False
             continue
-        if field.status in (FieldStatus.missing, FieldStatus.not_applicable):
-            field.needs_review = False
-            continue
         if field.review.state in (ReviewState.confirmed, ReviewState.edited, ReviewState.rejected):
-            continue  # a human already decided; never override
+            continue  # a human already decided (incl. "really not in the documentation"); never override
+        if field.status in (FieldStatus.missing, FieldStatus.not_applicable):
+            field.needs_review = field.status == FieldStatus.missing and path.split(".")[0] in REQUIRED
+            if field.needs_review:
+                field.review.state = ReviewState.pending
+                if MISSING_REQUIRED_REASON not in field.confidence_reasons:
+                    field.confidence_reasons.append(MISSING_REQUIRED_REASON)
+            continue
         verified = any(e.verified for e in field.evidence)
         conflict = field.status == FieldStatus.conflict
         if conflict:
