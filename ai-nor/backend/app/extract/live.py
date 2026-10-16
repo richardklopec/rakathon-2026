@@ -266,7 +266,10 @@ def _apply_coder(r: NorReport, out: "LlmExtraction", f, docs_all: list[Document]
 
     if not f["icd10"] and not r.icd10.value:
         return
-    quotes = [m.quote for _, _, m in f["icd10"]] + [m.quote for _, _, m in f["morphology"]][:3]
+    # the sub-code depends on the described site: those lines go first, so the 12-quote limit never cuts them off
+    categories = {c[:3] for c in [r.icd10.value or "", *(x.split(" ")[0] for x in codes_in_docs)] if c}
+    quotes = list(dict.fromkeys(e.quote for c in sorted(categories) for e in site.descriptions(c, docs_all)))[:4]
+    quotes += [m.quote for _, _, m in f["icd10"]] + [m.quote for _, _, m in f["morphology"]][:3]
     quotes += [m.quote for _, _, m in f["laterality"]][:2]
     # the sub-code depends on the exact site (quadrant, lobe...), which the code quotes often leave out
     docs = list({id(d): d for items in f.values() for d, _, _ in items}.values())

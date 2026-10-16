@@ -31,3 +31,8 @@ def test_check_and_evidence():
     assert site.check("C50.4", [_d("x", "bez popisu")])[0] is None
     ev = site.evidence("C50.8", docs)
     assert len(ev) == 1 and ev[0].verified and "rozhraní DKK" in ev[0].quote and docs[0].text[ev[0].start:ev[0].end] == docs[0].text
+
+
+def test_descriptions_list_every_described_site():
+    docs = [_d("a", "Ca prsu vlevo v HZK\nkontrola za 3 měsíce"), _d("b", "ložisko na rozhraní DKK")]
+    assert [e.quote for e in site.descriptions("C50", docs)] == ["Ca prsu vlevo v HZK", "ložisko na rozhraní DKK"]

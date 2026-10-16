@@ -76,6 +76,16 @@ def subsites(category: str, docs: list[Document]) -> dict[str, list[str]]:
     return found
 
 
+def descriptions(category: str, docs: list[Document]) -> list[Evidence]:
+    """Every tumour-site description line of the category (whatever subsite it points to), first one per document."""
+    out, seen = [], set()
+    for _, doc, start, end in _matches(category, docs):
+        if (doc.id, start) not in seen:
+            seen.add((doc.id, start))
+            out.append(Evidence(doc_id=doc.id, quote=" ".join(doc.text[start:end].split()), start=start, end=end, verified=True))
+    return out
+
+
 def evidence(code: str, docs: list[Document]) -> list[Evidence]:
     """The description lines that support the code's subsite (first one per document), as verified citations."""
     category, _, sub = code.partition(".")

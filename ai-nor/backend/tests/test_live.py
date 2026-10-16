@@ -166,3 +166,23 @@ def test_code_guessed_by_the_model_is_not_a_written_code(monkeypatch):
     r, warnings = _coded(monkeypatch, choice, [AZ, mdt], [(1, "Dg.: C504", "C504"), (2, "Ca prsu vpravo", "C50.9")])
     assert not any(w.startswith("Rozpor kódů") for w in warnings)  # MDT has no code, only words
     assert r.icd10.value == "C50.4"
+
+
+def test_coder_gets_the_site_descriptions_first(monkeypatch):
+    from app.extract import coder
+
+    seen = {}
+
+    def llm(system, user, schema):
+        if schema is CodeChoice:
+            seen["user"] = user
+            return CodeChoice(code="C50.8", rule_code="C50", rule_quote="C50.8 Léze přesahující prs", reasoning="", certain=True)
+        many = [Mention(doc=1, quote="Dg.: C504", value="C504", explicit=True, hedged=False)] * 15
+        return LlmExtraction(primary_tumour="karcinom prsu vpravo", other_tumours=[], patient_sex="F",
+                             fields=[FieldMentions(field="icd10", mentions=many)])
+
+    monkeypatch.setattr(live.llm, "structured", llm)
+    monkeypatch.setattr(coder, "_default_candidates", lambda q, lit: ([C50_FULL], [NOTE]))
+    live.extract_live([AZ, MD])
+    quotes = seen["user"].split("Citace z dokumentace:\n")[1]
+    assert quotes.startswith("- drobné ložisko na rozhraní DKK")  # not cut off by the 12-quote limit
