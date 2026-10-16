@@ -292,6 +292,9 @@ export default function App() {
                       <span className="flex-1" />
                       <FieldActions path={path} f={f} />
                       <RuleCite f={f} />
+                      {f.confidence_reasons.filter((r) => r.startsWith('✗ nesoulad')).map((r) => (
+                        <div key={r} className="w-full pl-10 text-xs text-red-700">{r}</div>
+                      ))}
                     </div>
                   ))}
                 </section>

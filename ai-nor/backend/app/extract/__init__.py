@@ -6,10 +6,10 @@
 
 import re
 
-from app.confidence import apply_review_policy
+from app.confidence import apply_review_policy, apply_violations
 from app.config import get_settings
 from app.models import Coding, Document, Evidence, Extracted, FieldStatus, NorReport
-from app.validate import rodne_cislo
+from app.validate import consistency, rodne_cislo
 from app.validate.mkn10 import ICD10_SYSTEM, is_valid, lookup
 
 _ICD10 = re.compile(r"\bC\d{2}(?:\.?\d{1,2})?\b")
@@ -94,6 +94,9 @@ def extract(docs: list[Document], patient_ref: str | None = None) -> tuple[NorRe
 
         report, warnings, out = extract_live(docs)
         sex = out.patient_sex
-    # identity checks run in both modes, before the review policy (they may lower the icd10 confidence)
+    # identity and consistency checks run in both modes, before the review policy (they may lower confidences)
     warnings += rodne_cislo.case_checks(docs, report, patient_ref, sex)
+    violations = consistency.check(report)
+    apply_violations(report, violations)
+    warnings += consistency.warnings(violations)
     return apply_review_policy(report), warnings

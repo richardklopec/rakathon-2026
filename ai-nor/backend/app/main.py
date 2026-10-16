@@ -13,7 +13,7 @@ from app.fhir import client as fhir
 from app.fhir.mapping import build_bundle
 from app.models import Case, NorReport
 from app.retrieval import codes
-from app.validate import rodne_cislo
+from app.validate import consistency, rodne_cislo
 
 app = FastAPI(title="AI NOR")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173"], allow_methods=["*"], allow_headers=["*"])
@@ -86,6 +86,9 @@ def update_report(case_id: str, report: NorReport) -> Case:
     """Clinician resolves the review queue (review state lives on each field). Invalidates a previous confirmation."""
     case = _get(case_id)
     case.report = apply_review_policy(report)
+    # consistency warnings follow the clinician's edits (confidences of edited fields are the clinician's, left alone)
+    case.warnings = [w for w in case.warnings if not w.startswith(consistency.PREFIX)]
+    case.warnings += consistency.warnings(consistency.check(case.report))
     case.confirmed_by = case.confirmed_at = None
     case.updated_at = datetime.now(timezone.utc)
     return store.save(case)

@@ -15,6 +15,7 @@ from app.models import AiConfidence, Extracted, FieldStatus, NorReport, ReviewSt
 
 CONFLICT_CAP = 60
 _CONFLICT_REASON = f"⚠ dokumenty si odporují: jistota max. {CONFLICT_CAP}"
+CONSISTENCY_CAP = 50  # fields that contradict another field (app/validate/consistency.py)
 
 
 def cap(field: Extracted, limit: int, reason: str) -> None:
@@ -39,6 +40,20 @@ def iter_fields(report: NorReport) -> Iterator[tuple[str, Extracted]]:
                 for sub in type(item).model_fields:
                     if isinstance(field := getattr(item, sub), Extracted):
                         yield f"{name}[{i}].{sub}", field
+
+
+def apply_violations(report: NorReport, violations) -> NorReport:
+    """Cap the AI fields involved in a consistency violation (validate/consistency.py); review policy decides after."""
+    fields = dict(iter_fields(report))
+    for v in violations:
+        for path in v.fields:
+            f = fields.get(path)
+            if f is None or f.status == FieldStatus.missing:
+                continue
+            if f.review.state in (ReviewState.confirmed, ReviewState.edited, ReviewState.rejected):
+                continue  # a human already decided
+            cap(f, CONSISTENCY_CAP, f"✗ nesoulad: {v.message}")
+    return report
 
 
 def apply_review_policy(report: NorReport) -> NorReport:
