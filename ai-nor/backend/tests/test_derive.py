@@ -60,8 +60,8 @@ def _run(monkeypatch, docs, extra_fields=()):
 def test_derived_m_stage_extent_and_date(monkeypatch):
     r, _, _ = _run(monkeypatch, [AZ, MDT])
     cm = r.tnm_clinical.m
-    assert cm.value == "0" and cm.confidence == 60  # AZ 50 + staging 10; capped at CLINICAL_M_CAP, always for review
-    assert any("M0 výslovně v TNM (AZ.pdf)" in x for x in cm.confidence_reasons)
+    assert cm.value == "0" and cm.confidence == live.CLINICAL_M_CAP  # explicit M0 65 + staging 10 = 75, still for review
+    assert any("M0 výslovně v TNM (AZ.pdf, 65)" in x for x in cm.confidence_reasons)
     assert any("staging bez vzdálených metastáz" in x for x in cm.confidence_reasons)
     assert r.clinical_stage.value == "IA" and any("pT1c + pN0 + cM0 → IA" in x for x in r.clinical_stage.confidence_reasons)
     assert r.disease_extent.value == "1"  # from cM0, not from the MX in the MDT
@@ -81,8 +81,9 @@ def test_mx_alone_derives_nothing(monkeypatch):
 
 
 def test_stated_stage_checked_against_tnm(monkeypatch):
-    stated = FieldMentions(field="clinical_stage", mentions=[Mention(doc=1, quote="Dg.: C504", value="IIA", explicit=True, hedged=False)])
-    r, _, _ = _run(monkeypatch, [AZ, MDT], [stated])
+    az = AZ.model_copy(update={"text": AZ.text + "\nKlinické stádium IIA"})
+    stated = FieldMentions(field="clinical_stage", mentions=[Mention(doc=1, quote="Klinické stádium IIA", value="IIA", explicit=True, hedged=False)])
+    r, _, _ = _run(monkeypatch, [az, MDT], [stated])
     assert r.clinical_stage.value == "IIA" and r.clinical_stage.status == FieldStatus.conflict
     assert r.clinical_stage.alternatives == ["IA"]
 
@@ -93,3 +94,13 @@ def test_later_stated_date_gets_the_treatment_date_as_alternative(monkeypatch):
     assert r.diagnosis_date.value == PartialDate(year=2026, month=9, day=30)
     assert r.diagnosis_date.alternatives[0] == PartialDate(year=2026, month=5, day=7)
     assert "diagnosis_after_treatment" in {v.rule for v in consistency.check(r)}
+
+
+def test_aromatase_inhibitor_is_not_a_stage(monkeypatch):
+    az = AZ.model_copy(update={"text": AZ.text + "\nod 3/2026 hormonoterapie IA"})
+    misread = FieldMentions(field="clinical_stage", mentions=[Mention(doc=1, quote="od 3/2026 hormonoterapie IA", value="IA", explicit=True, hedged=False)])
+    r, _, _ = _run(monkeypatch, [az, MDT], [misread])
+    cs = r.clinical_stage
+    assert cs.value == "IA"  # still IA, but computed from TNM, not read from the therapy line
+    assert not any("hormonoterapie" in e.quote for e in cs.evidence)
+    assert any(x.startswith("odvozeno: pT1c + pN0 + cM0") for x in cs.confidence_reasons)

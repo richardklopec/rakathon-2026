@@ -29,7 +29,7 @@ from app.models import (
     TreatmentEvent,
 )
 from app.confidence import cap
-from app.validate import mkn10, normalize, site, staging
+from app.validate import abbreviations, mkn10, normalize, site, staging
 
 FieldName = Literal[
     "diagnosis_date", "icd10", "laterality", "morphology_type", "morphology", "grade",
@@ -458,6 +458,7 @@ def _clean_name(value: str) -> str | None:
 
 
 CLINICAL_M_CAP = 75  # a clinical M from the documents always goes to review (M0 is never accepted automatically)
+EXPLICIT_M_BASE = 65  # "pT1c N0 (0/3) M0": the category is written explicitly
 
 
 def _clinical_m(r: NorReport, docs: list[Document]) -> None:
@@ -472,8 +473,11 @@ def _clinical_m(r: NorReport, docs: list[Document]) -> None:
         value = "1" if "1" in values else "0"
         hits = [h for h in explicit if h.value == value]
         sources = {h.doc.id for h in hits}
-        score = max(SOURCE_RANK.get(h.doc.kind or "other", 45) for h in hits) + min(10 * (len(sources) - 1), 20)
-        reasons = ["✓ citace ověřena", f"M{value} výslovně v TNM ({', '.join(dict.fromkeys(h.doc.filename for h in hits))})"]
+        # an M category written in a TNM string is an explicit statement whatever the report type; the cap below still
+        # keeps it for review (step 4 rule), so this is how sure we are, not whether the clinician looks at it
+        base = max(EXPLICIT_M_BASE, *(SOURCE_RANK.get(h.doc.kind or "other", 45) for h in hits))
+        score = base + min(10 * (len(sources) - 1), 20)
+        reasons = ["✓ citace ověřena", f"M{value} výslovně v TNM ({', '.join(dict.fromkeys(h.doc.filename for h in hits))}, {base})"]
         evidence = [h.evidence for h in hits]
         if value == "0" and staging:
             score += 10
@@ -492,6 +496,21 @@ def _clinical_m(r: NorReport, docs: list[Document]) -> None:
         return
     cap(field, CLINICAL_M_CAP, "klinické M vždy ke kontrole")
     r.tnm_clinical.m = field
+
+
+def _stage_mentions(items) -> list[_M]:
+    """Stated stage groups, read in their context (validate/abbreviations.py): the line of the quote has to be about the
+    stage ("stadium IIB", "pT2 N1 M0, IIB"); "hormonoterapie IA" is the aromatase inhibitor, not stage IA."""
+    out = []
+    for doc, ev, m in items:
+        context = m.quote
+        if ev and ev.verified:
+            s, e = doc.text.rfind("\n", 0, ev.start) + 1, doc.text.find("\n", ev.end)
+            context = doc.text[s:e if e >= 0 else None]
+        value = abbreviations.stage_in(context)
+        if value and value.upper() in m.value.upper().replace(" ", ""):
+            out.append(_M(doc, ev, m, value.upper()))
+    return out
 
 
 def _derive_stage(r: NorReport) -> None:
@@ -519,9 +538,10 @@ def _derive_stage(r: NorReport) -> None:
             confidence_reasons=["✓ citace ověřena", f"odvozeno: {how}", "jistota = nejnižší jistota vstupů −5"],
             evidence=[x.evidence[0] for x in inputs if x.evidence],
         )
-    elif str(cs.value).upper() == value:
+    elif str(cs.value).upper() == value:  # a stage written in its context (abbreviations.stage_in) agrees with the TNM
         cs.confidence = max(cs.confidence or 0, derived_conf)
         cs.confidence_reasons.append(f"✓ odpovídá TNM: {how}")
+        cs.evidence += [x.evidence[0] for x in inputs if x.evidence and x.evidence[0] not in cs.evidence]
     else:
         cs.status = FieldStatus.conflict
         cs.alternatives = [value] + [a for a in cs.alternatives if a != value]
@@ -773,7 +793,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     for issue in nodes.check(node_res):
         warnings.append(f"Počet uzlin: {issue}.")
     r.sentinel_node = _field(_normalised(f["sentinel_node"], normalize.sentinel))
-    r.clinical_stage = _field(_normalised(f["clinical_stage"], lambda v: (m.group(1).upper() if (m := re.search(r"\b((?:IV|III|II|I)[ABC]?)\b", v)) else None)))
+    r.clinical_stage = _field(_stage_mentions(f["clinical_stage"]))
     _derive_stage(r)
 
     def sites(v: str):
