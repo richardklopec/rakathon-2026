@@ -11,7 +11,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 from app import llm
-from app.extract import nodes
+from app.extract import derive, nodes
 from app.extract.evidence import locate
 from app.models import (
     TNM,
@@ -25,9 +25,10 @@ from app.models import (
     MetastasisSite,
     NorReport,
     PartialDate,
+    TreatmentEvent,
 )
 from app.confidence import cap
-from app.validate import mkn10, normalize, site
+from app.validate import mkn10, normalize, site, staging
 
 FieldName = Literal[
     "diagnosis_date", "icd10", "laterality", "morphology_type", "morphology", "grade",
@@ -280,6 +281,110 @@ def _node_field(res: "nodes.NodeResult", which: str, warnings: list[str]) -> Ext
     return field
 
 
+CLINICAL_M_CAP = 75  # a clinical M from the documents always goes to review (M0 is never accepted automatically)
+
+
+def _clinical_m(r: NorReport, docs: list[Document]) -> None:
+    """cM from an explicit TNM string ("pT1c N0(0/3) M0") or, as derived, from negative staging; never from silence."""
+    cm = r.tnm_clinical.m
+    if cm.status != FieldStatus.missing and cm.value not in (None, "X"):
+        return  # the LLM found a clinical M; the consistency checks compare it with the rest
+    explicit = [h for h in derive.explicit_m(docs) if h.value in ("0", "1")]
+    staging = derive.negative_staging(docs)
+    if explicit:
+        values = sorted({h.value for h in explicit})
+        value = "1" if "1" in values else "0"
+        hits = [h for h in explicit if h.value == value]
+        sources = {h.doc.id for h in hits}
+        score = max(SOURCE_RANK.get(h.doc.kind or "other", 45) for h in hits) + min(10 * (len(sources) - 1), 20)
+        reasons = ["✓ citace ověřena", f"M{value} výslovně v TNM ({', '.join(dict.fromkeys(h.doc.filename for h in hits))})"]
+        evidence = [h.evidence for h in hits]
+        if value == "0" and staging:
+            score += 10
+            reasons.append(f"✓ staging bez vzdálených metastáz ({', '.join(dict.fromkeys(h.doc.filename for h in staging))}, +10)")
+            evidence += [h.evidence for h in staging[:2]]
+        others = [v for v in values if v != value] + (["X"] if cm.value == "X" else [])
+        field = Extracted[str](value=value, status=FieldStatus.conflict if others else FieldStatus.found,
+                               confidence=score, confidence_reasons=reasons, evidence=evidence, alternatives=others)
+    elif staging and cm.status == FieldStatus.missing:
+        field = Extracted[str](
+            value="0", status=FieldStatus.found, confidence=60, evidence=[h.evidence for h in staging[:2]],
+            confidence_reasons=["✓ citace ověřena", "odvozeno z negativního stagingu: "
+                                + "; ".join(h.evidence.quote for h in staging[:2]), "M0 není výslovně uvedeno"],
+        )
+    else:
+        return
+    cap(field, CLINICAL_M_CAP, "klinické M vždy ke kontrole")
+    r.tnm_clinical.m = field
+
+
+def _derive_stage(r: NorReport) -> None:
+    """Anatomic stage from TNM (validate/staging.py, UICC TNM 8): pT/pN before cT/cN, M from cM (or pM1)."""
+    if r.tnm_pathological.y_prefix:
+        return  # ypTNM after neoadjuvant therapy is not the stage at diagnosis
+    pick = lambda p, c: p if p.value and p.status != FieldStatus.missing else c  # noqa: E731
+    t = pick(r.tnm_pathological.t, r.tnm_clinical.t)
+    n = pick(r.tnm_pathological.n, r.tnm_clinical.n)
+    m = r.tnm_clinical.m if r.tnm_clinical.m.value else r.tnm_pathological.m
+    if m is r.tnm_pathological.m and not str(m.value or "").startswith("1"):
+        return  # only pM1 says something; pMX / pM0 are not stage inputs
+    value = staging.stage((r.icd10.value or "")[:3], t.value, n.value, m.value)
+    if not value:
+        return
+    inputs = [x for x in (t, n, m) if x.value is not None]
+    tp = "p" if t is r.tnm_pathological.t else "c"
+    np = "p" if n is r.tnm_pathological.n else "c"
+    how = f"{tp}T{t.value} + {np}N{n.value} + {'c' if m is r.tnm_clinical.m else 'p'}M{m.value} → {value} (UICC TNM 8)"
+    derived_conf = max(0, min(x.confidence or 0 for x in inputs) - 5)
+    cs = r.clinical_stage
+    if cs.value is None or cs.status == FieldStatus.missing:
+        r.clinical_stage = Extracted[str](
+            value=value, status=FieldStatus.found, confidence=derived_conf,
+            confidence_reasons=["✓ citace ověřena", f"odvozeno: {how}", "jistota = nejnižší jistota vstupů −5"],
+            evidence=[x.evidence[0] for x in inputs if x.evidence],
+        )
+    elif str(cs.value).upper() == value:
+        cs.confidence = max(cs.confidence or 0, derived_conf)
+        cs.confidence_reasons.append(f"✓ odpovídá TNM: {how}")
+    else:
+        cs.status = FieldStatus.conflict
+        cs.alternatives = [value] + [a for a in cs.alternatives if a != value]
+        cs.confidence_reasons.append(f"⚠ podle TNM vychází {value}: {how}")
+
+
+def _diagnosis_date_fallback(r: NorReport, docs: list[Document]) -> None:
+    """Form: "není-li známo, uvést datum vyšetření nebo zahájení léčby". Biopsy date first, then the start of treatment;
+    both derived and for review. The start of treatment also goes to report.treatments (consistency: dg ≤ treatment)."""
+    biopsy, treatment = derive.first_biopsy(docs), derive.first_treatment(docs)
+    if treatment:
+        r.treatments.append(TreatmentEvent(
+            kind=treatment.kind,
+            start=Extracted[PartialDate](value=treatment.value, status=FieldStatus.found, confidence=70,
+                                         confidence_reasons=["✓ citace ověřena", "datum u výkonu / léčby"],
+                                         evidence=[treatment.evidence]),
+        ))
+    fallback = biopsy or treatment
+    if not fallback:
+        return
+    label = "datum biopsie (histologické ověření)" if fallback is biopsy else f"datum zahájení léčby ({fallback.kind})"
+    dg = r.diagnosis_date
+    if dg.status == FieldStatus.missing:
+        r.diagnosis_date = Extracted[PartialDate](
+            value=fallback.value, status=FieldStatus.found, confidence=65 if fallback is biopsy else 60,
+            confidence_reasons=["✓ citace ověřena", f"odvozeno: {label} – datum stanovení dg. v dokumentaci není",
+                                "formulář NOR: není-li známo, datum vyšetření nebo zahájení léčby"],
+            evidence=[fallback.evidence],
+        )
+        return
+    # a stated date that is less precise (only the year) or later than the biopsy / treatment: offer the derived one
+    d, f = dg.value, fallback.value
+    vague = d.day is None and d.year == f.year and (d.month is None or d.month == f.month)
+    later = (d.year, d.month or 12, d.day or 31) > (f.year, f.month or 1, f.day or 1)
+    if (vague or later) and f not in dg.alternatives:
+        dg.alternatives = [f] + dg.alternatives
+        dg.confidence_reasons.append(f"návrh: {label} {f.day}. {f.month}. {f.year}")
+
+
 def _codes_in_docs(mentions: list[_M]) -> list[str]:
     """Distinct MKN-10 codes written in the documents with their sources: ["C50.4 (AZ.pdf)", "C50.9 (H1.pdf – žádanka)"]."""
     by_code: dict[str, list[str]] = {}
@@ -438,6 +543,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     # --- date, laterality
     r.diagnosis_date = _field(_normalised(f["diagnosis_date"], normalize.partial_date),
                               to_display=lambda d: f"{d.year}-{d.month or 0:02d}-{d.day or 0:02d}")
+    _diagnosis_date_fallback(r, docs)
     r.laterality = _field(_normalised(f["laterality"], normalize.laterality), to_display=lambda v: v.value)
 
     # --- morphology
@@ -471,6 +577,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
             setattr(tnm, part.lower(), _field(_normalised(items, lambda v, p=part: normalize.tnm(v, p))))
             if prefix == "p" and any(normalize.y_prefix(m.value) for _, _, m in items):
                 tnm.y_prefix = True
+    _clinical_m(r, docs)
 
     # --- lymph nodes: counted per specimen from the documents (extract/nodes.py); the LLM mentions only as a fallback
     llm_nodes = _normalised(f["lymph_nodes"], normalize.lymph_nodes)
@@ -486,6 +593,7 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
         warnings.append(f"Počet uzlin: {issue}.")
     r.sentinel_node = _field(_normalised(f["sentinel_node"], normalize.sentinel))
     r.clinical_stage = _field(_normalised(f["clinical_stage"], lambda v: (m.group(1).upper() if (m := re.search(r"\b((?:IV|III|II|I)[ABC]?)\b", v)) else None)))
+    _derive_stage(r)
 
     def sites(v: str):
         t = v.lower()
@@ -501,17 +609,18 @@ def extract_live(docs: list[Document]) -> tuple[NorReport, list[str], LlmExtract
     r.metastasis_sites = met
     r.disease_extent = _field(_normalised(f["disease_extent"], normalize.disease_extent))
     if r.disease_extent.status == FieldStatus.missing:
-        # derive from TNM (never auto: explicit=False keeps it below the threshold -> review)
-        m_values = [x.value for x in (r.tnm_pathological.m, r.tnm_clinical.m) if x.value]
-        src = r.tnm_pathological.m if r.tnm_pathological.m.value else r.tnm_clinical.m
-        if m_values and src.evidence:
-            extent = "2" if any(v.startswith("1") for v in m_values) or r.metastasis_sites.value else "1"
+        # derive from an explicit M0 / M1 (never auto: 60 keeps it below the threshold -> review). MX says nothing about
+        # metastases, so it never derives "lokalizované". The NOR rule for this field is an open question (M or stage).
+        m_fields = [x for x in (r.tnm_pathological.m, r.tnm_clinical.m) if x.value and str(x.value)[:1] in "01" and x.evidence]
+        if m_fields:
+            extent = "2" if any(str(x.value).startswith("1") for x in m_fields) or r.metastasis_sites.value else "1"
             r.disease_extent = Extracted[str](
                 value=extent,
                 status=FieldStatus.found,
                 confidence=60,
-                confidence_reasons=[f"odvozeno z M{m_values[0]}: {'pokročilé' if extent == '2' else 'lokalizované'} (−15)", "není výslovně v textu"],
-                evidence=src.evidence[:1],
+                confidence_reasons=[f"odvozeno z M{m_fields[0].value}: {'pokročilé' if extent == '2' else 'lokalizované'}",
+                                    "není výslovně v textu", "pravidlo NOR pro rozsah neověřeno"],
+                evidence=m_fields[0].evidence[:1],
             )
 
     # --- derived: K dg. vedla vyšetření

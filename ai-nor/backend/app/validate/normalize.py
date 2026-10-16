@@ -32,7 +32,8 @@ def partial_date(text: str) -> PartialDate | None:
     if m := re.search(r"\b(\d{4})-(\d{1,2})(?:-(\d{1,2}))?\b", t):  # ISO
         y, mo, d = m.groups()
         return PartialDate(year=int(y), month=int(mo), day=int(d) if d else None)
-    if m := re.search(r"\b(\d{1,2})\.\s?(\d{1,2})\.\s?(\d{2,4})\b", t):  # 2.4.2026 / 2,4,2026 handled below
+    # 7.5.2026, and 7,5,2026 (commas only with a 4-digit year, so decimals like "2,5" never match)
+    if m := re.search(r"\b(\d{1,2})\.\s?(\d{1,2})\.\s?(\d{2,4})\b", t) or re.search(r"\b(\d{1,2}),\s?(\d{1,2}),\s?(\d{4})\b", t):
         d, mo, y = m.groups()
         y = int(y) + 2000 if len(y) == 2 else int(y)
         if 1 <= int(mo) <= 12 and 1 <= int(d) <= 31:

@@ -58,7 +58,10 @@ def apply_violations(report: NorReport, violations) -> NorReport:
 
 def apply_review_policy(report: NorReport) -> NorReport:
     threshold = get_settings().auto_accept_threshold
-    for _, field in iter_fields(report):
+    for path, field in iter_fields(report):
+        if "[" in path:  # treatments / biomarkers / progression: context for checks, not on the NOR form, never reviewed
+            field.needs_review = False
+            continue
         if field.status in (FieldStatus.missing, FieldStatus.not_applicable):
             field.needs_review = False
             continue
