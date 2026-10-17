@@ -1,4 +1,4 @@
-# Build and start IRIS for Health, wait until ready, create the empty FHIR server + tables.
+# Build and start IRIS for Health, wait until ready, create the FHIR server, tables and the HL7v2 -> FHIR production.
 # Note: no $ErrorActionPreference = "Stop" - in Windows PowerShell 5.1 docker's progress output on
 # stderr would abort the script. Exit codes are checked explicitly instead.
 Set-Location $PSScriptRoot

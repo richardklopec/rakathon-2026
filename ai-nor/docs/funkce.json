@@ -89,9 +89,16 @@
         {
           "nazev": "Zprávy z NIS přes IRIS",
           "sluzba": "IRIS FHIR, DocumentReference s tagem urn:ai-nor:inbox|nis",
-          "k_cemu": "Nemocniční systém (nebo integrační produkce IRIS z HL7v2) uloží novou zprávu do IRIS FHIR, AI NOR ji ukáže v záložce Nový pacient a jedním kliknutím z ní založí hlášení. Bez tisku, skenování a nahrávání souborů.",
+          "k_cemu": "Nová zpráva z nemocničního systému se v IRIS FHIR objeví ve schránce AI NOR (záložka Nový pacient) a jedním kliknutím z ní vznikne hlášení. Bez tisku, skenování a nahrávání souborů. Načtené zprávy se poznají podle hlášení v IRIS.",
           "kde": "backend/app/nis.py, scripts/nis_demo_send.py, frontend/src/screens/NisInbox.tsx",
-          "stav": "castecne"
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Převod HL7v2 → FHIR v IRIS",
+          "sluzba": "IRIS Interoperability: produkce AINOR.Production (MLLP 2575, HS.Gateway.HL7.HL7ToSDA3, SDA3 → FHIR, HS.FHIRServer.Interop.Operation)",
+          "k_cemu": "NIS posílá zprávy jako HL7v2 MDM (text nebo PDF). IRIS je vestavěnými převody udělá FHIR DocumentReference pro schránku AI NOR: s pacientem, českým typem dokumentu a bez duplicit při opakovaném odeslání. Každá zpráva je dohledatelná v Management Portalu (Interoperability → Messages).",
+          "kde": "infra/iris/src (AINOR.Production, AINOR.HL7.ToSDA3, AINOR.FHIR.Transform), backend/scripts/setup_iris.py",
+          "stav": "hotovo"
         },
         {
           "nazev": "IRIS for Health v Dockeru",
@@ -103,8 +110,15 @@
         {
           "nazev": "FHIR R4 server",
           "sluzba": "IRIS FHIR Server, endpoint /fhir/r4 (namespace FHIRSERVER)",
-          "k_cemu": "Potvrzené hlášení se zapíše jako jedna FHIR transakce, připravené pro výměnu dat s NIS a EHDS.",
-          "kde": "backend/scripts/setup_iris.py, backend/app/fhir/client.py",
+          "k_cemu": "Každé hlášení má ve FHIR jeden záznam: hned po vytěžení rozpracovaný (Composition preliminary), po potvrzení lékařem stejný záznam konečný (final). Verze zůstávají v historii FHIR, připravené pro výměnu dat s NIS a EHDS.",
+          "kde": "backend/scripts/setup_iris.py, backend/app/fhir/client.py, backend/app/fhir/sync.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Hlášení uložená v IRIS",
+          "sluzba": "IRIS SQL, tabulka Nor.CaseRecord (namespace FHIRSERVER)",
+          "k_cemu": "Rozpracovaná i potvrzená hlášení (zprávy, vytěžená pole s citacemi, rozhodnutí lékaře) leží v IRIS, ne v souborech na serveru. Aplikace je po spuštění načte z IRIS; zaostalé záznamy ve FHIR dopíše.",
+          "kde": "backend/app/store, backend/app/main.py (startup)",
           "stav": "hotovo"
         },
         {
@@ -293,7 +307,7 @@
         {
           "nazev": "Potvrzení hlášení lékařem",
           "sluzba": "API /api/cases/{id}/confirm",
-          "k_cemu": "Nic se neodesílá automaticky. Bez potvrzení nejde export pro ÚZIS ani zápis do FHIR; každá další úprava potvrzení zruší.",
+          "k_cemu": "Bez potvrzení nejde export pro ÚZIS a záznam ve FHIR zůstává rozpracovaný (jen pole, která AI převzala s vysokou jistotou nebo vyřešil lékař). Potvrzení ho změní na konečný; každá další úprava potvrzení zruší.",
           "kde": "backend/app/main.py",
           "stav": "hotovo"
         },
@@ -333,9 +347,9 @@
           "stav": "hotovo"
         },
         {
-          "nazev": "Hromadný export a odeslání",
-          "sluzba": "CSV (Excel), JSON, IRIS FHIR",
-          "k_cemu": "V Seznamu hlášení lze zaškrtnout potvrzená hlášení a exportovat je nebo odeslat do IRIS FHIR. Ikonka ukazuje, že bylo exportováno (oranžová, když se hlášení po exportu změnilo) a že je uloženo v IRIS. Export se zapisuje do historie změn.",
+          "nazev": "Hromadný export",
+          "sluzba": "CSV (Excel), JSON",
+          "k_cemu": "V Seznamu hlášení lze zaškrtnout potvrzená hlášení a exportovat je. Ikonky ukazují, že bylo exportováno (oranžová, když se hlášení po exportu změnilo), a stav záznamu v IRIS FHIR (rozpracované / konečné). Export se zapisuje do historie změn.",
           "kde": "backend/app/export/batch.py, API /api/export, /api/exports, frontend/src/screens/CaseList.tsx",
           "stav": "hotovo"
         }
