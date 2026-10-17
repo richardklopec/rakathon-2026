@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { api, getField, type AiConfidence, type Case, type Codelists, type Evidence, type Extracted, type NorReport } from '../api'
 import NorFormPreview from '../NorFormPreview'
+import { getUser } from '../user'
+import AuditLog from './AuditLog'
 import { href } from '../router'
 import { Icon } from '../icons'
 import { Notice, PageHeader, StatusBadge } from '../ui'
@@ -86,7 +88,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [preview, setPreview] = useState<Record<string, unknown> | null>(null)
-  const [doctor, setDoctor] = useState('')
+  const [doctor, setDoctor] = useState(getUser) // the person who is working (header) confirms by default
   const [fhirResult, setFhirResult] = useState<string | null>(null)
   const previewRef = useRef<HTMLElement>(null)
   const previewOpen = preview != null
@@ -284,7 +286,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
             <PageHeader title={patientName(kase)}
               actions={<>
                 <button className={btn.secondary} onClick={() => run('AI vytěžuje hlášení… (obvykle 20–40 s)', () => api.extract(kase.id)).then((c) => { if (c) { open(c); onChanged() } })} disabled={!!busy}>Vytěžit znovu</button>
-                <button className={btn.primary} disabled={!!busy} onClick={openPreview}>
+                <button className={btn.primary} disabled={!!busy} onClick={openPreview} data-tour="preview">
                   Náhled a potvrzení <Icon.chevron width={16} height={16} />
                 </button>
               </>}>
@@ -302,7 +304,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
             )}
 
             {queue.length > 0 && (
-              <section className="rounded-lg border border-amber-300 bg-white p-4 shadow-[0_1px_3px_rgba(146,64,14,0.08)]">
+              <section data-tour="queue" className="rounded-lg border border-amber-300 bg-white p-4 shadow-[0_1px_3px_rgba(146,64,14,0.08)]">
                 <h2 className="mb-2 text-sm font-semibold text-amber-900">Ke kontrole ({queue.length}): rozpory, nejistá a chybějící povinná pole</h2>
                 {queue.map(({ path, label, f }) => (
                   <div key={path} className="flex flex-wrap items-center gap-2 border-t border-slate-100 py-2 text-sm first:border-0">
@@ -327,7 +329,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
               </section>
             )}
 
-            <div className="grid gap-4 xl:grid-cols-2">
+            <div className="grid gap-4 xl:grid-cols-2" data-tour="evidence">
               <section className={`${panel} p-3`}>
                 <div className="mb-2 flex flex-wrap gap-1">
                   {kase.documents.map((d) => (
@@ -382,6 +384,8 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
                 ))}
               </section>
             </div>
+
+            <AuditLog caseId={kase.id} stamp={`${kase.updated_at}|${kase.confirmed_at}|${fhirResult}`} />
 
             {preview && (
               <section ref={previewRef} className="scroll-mt-4 rounded-lg border-2 border-fno-800 bg-white p-4 text-sm">

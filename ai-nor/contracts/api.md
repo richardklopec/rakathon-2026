@@ -21,8 +21,15 @@ Pole hlášení: `Extracted` s `value`, `confidence` 0–100, `confidence_reason
 | GET | `/api/cases/{id}/uzis-export` | — | JSON hlášení pro ÚZIS | 409 bez potvrzení |
 | GET | `/api/cases/{id}/fhir-bundle` | — | FHIR `Bundle` (transaction) | náhled |
 | POST | `/api/cases/{id}/submit` | — | FHIR `transaction-response` | zápis do IRIS FHIR; 409 bez potvrzení |
+| GET | `/api/cases/{id}/audit` | — | `{iris, entries[]}` | historie změn (kdo, kdy, pole, `old` → `new`, `kind`, `storage` iris/local), nejstarší první; IRIS tabulka `Nor.Audit`, při výpadku IRIS lokální záloha `backend/var/audit/` přesunutá do IRIS po připojení (`app/audit.py`) |
+| POST | `/api/export` | `{case_ids[], format: csv|json}` | soubor (příloha) | hromadný export jen potvrzených hlášení (jinak 409), zapíše `exported` do historie změn |
+| GET | `/api/exports` | — | `{case_id: {at, actor, detail}}` | poslední export každého hlášení (z historie změn) |
+| GET | `/api/nis/inbox` | — | `{iris, patients: [{patient, documents[]}]}` | nové zprávy z NIS v IRIS FHIR (DocumentReference s tagem `urn:ai-nor:inbox|nis`), dosud nenačtené |
+| POST | `/api/nis/import` | `{patient, ids[]}` | `Case` | založí případ ze zpráv NIS (pak `/extract`), zapíše `nis_imported` |
 | POST | `/api/cases/{id}/index` | — | `{chunks}` | dokumenty → lokální embeddingy → IRIS `Nor.Chunk` |
 | GET | `/api/cases/{id}/search?q=&k=` | — | úseky s offsety a skóre | IRIS Vector Search nad dokumenty případu |
 | GET | `/api/codes/search?q=&system=&k=` | — | kandidáti kódů | `system` = `mkn10` / `icdo3-morph`; přesná shoda názvu, jinak hybrid vektor + slova (IRIS `Nor.Code`) |
 
 TODO: `POST /api/cases/{id}/events` (čas a opravy z UI), CSV dávka přes FHIR SQL Builder, `GET /api/eval`.
+
+Změnové požadavky (`POST /api/cases`, `/extract`, `PUT /report`, `PUT /patient`, `/confirm`, `/submit`) mohou nést hlavičku `X-Actor` se jménem uživatele (URL-encoded kvůli diakritice); zapíše se do historie změn.

@@ -9,7 +9,7 @@ import sys
 
 import iris
 
-from app import iris_db
+from app import audit, iris_db
 from app.config import get_settings
 
 ENDPOINT = "/fhir/r4"
@@ -68,6 +68,9 @@ def create_tables(reset: bool = False) -> None:
                 cur.execute(f"DROP TABLE IF EXISTS {table}")
             cur.execute(f"CREATE TABLE IF NOT EXISTS {table} ({cols}, Embedding VECTOR(DOUBLE, {dim}))")
             print(f"table {table} ready (VECTOR {dim})")
+        # audit log of the clinicians' changes (app/audit.py); kept on --reset, it is a record, not derived data
+        cur.execute(f"CREATE TABLE IF NOT EXISTS {audit.TABLE} ({audit.COLUMNS})")
+        print(f"table {audit.TABLE} ready")
 
 
 if __name__ == "__main__":

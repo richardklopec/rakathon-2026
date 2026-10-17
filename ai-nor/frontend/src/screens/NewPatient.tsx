@@ -5,8 +5,10 @@ import { go } from '../router'
 import { Icon } from '../icons'
 import { Notice, PageHeader } from '../ui'
 import { btn, input, panel } from '../lib'
+import NisInbox from './NisInbox'
 
-const ACCEPT = ['.pdf', '.txt', '.md', '.xlsx']
+// same list as backend ingest/formats.SUPPORTED; scans and photos are read by OCR
+const ACCEPT = ['.pdf', '.docx', '.eml', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.bmp', '.txt', '.md', '.xlsx']
 
 // same rules as backend ingest.guess_kind (only a hint for the user, the backend decides)
 const KINDS: [RegExp, string][] = [
@@ -18,7 +20,10 @@ const KINDS: [RegExp, string][] = [
 ]
 const guessKind = (name: string) => {
   const n = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
-  return n.endsWith('.xlsx') ? 'Export z NIS (více zpráv)' : KINDS.find(([re]) => re.test(n))?.[1] ?? 'Jiná zpráva'
+  if (n.endsWith('.xlsx')) return 'Export z NIS (více zpráv)'
+  if (n.endsWith('.eml')) return 'E-mail, přílohy se načtou také'
+  if (/\.(jpe?g|png|tiff?|bmp)$/.test(n)) return 'Sken nebo fotografie, přečte se OCR'
+  return KINDS.find(([re]) => re.test(n))?.[1] ?? (n.endsWith('.docx') ? 'Dokument Word' : 'Jiná zpráva')
 }
 const size = (b: number) => (b < 1024 * 1024 ? `${Math.max(1, Math.round(b / 1024))} kB` : `${(b / 1024 / 1024).toFixed(1)} MB`)
 
@@ -37,7 +42,7 @@ export default function NewPatient({ onCreated }: { onCreated: () => void }) {
     if (!list) return
     const ok = [...list].filter((f) => ACCEPT.some((ext) => f.name.toLowerCase().endsWith(ext)))
     const skipped = list.length - ok.length
-    setError(skipped ? `${skipped} ${skipped === 1 ? 'soubor nemá' : 'soubory nemají'} podporovaný formát (PDF, TXT, XLSX), vynechávám.` : null)
+    setError(skipped ? `${skipped} ${skipped === 1 ? 'soubor nemá' : 'soubory nemají'} podporovaný formát (PDF, Word, e-mail, obrázek, TXT, XLSX), vynechávám.` : null)
     setFiles((prev) => [...prev, ...ok.filter((f) => !prev.some((p) => p.name === f.name && p.size === f.size))])
   }
 
@@ -76,11 +81,11 @@ export default function NewPatient({ onCreated }: { onCreated: () => void }) {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div className="space-y-4">
-          <div onDragOver={(e) => { e.preventDefault(); setDrag(true) }} onDragLeave={() => setDrag(false)} onDrop={onDrop}
+          <div data-tour="dropzone" onDragOver={(e) => { e.preventDefault(); setDrag(true) }} onDragLeave={() => setDrag(false)} onDrop={onDrop}
             className={`flex flex-col items-center rounded-lg border-2 border-dashed px-6 py-10 text-center transition-colors duration-150 ${drag ? 'border-fno-sky bg-fno-sky-soft' : 'border-slate-300 bg-white'}`}>
             <Icon.upload width={28} height={28} className="text-fno-700" />
             <p className="mt-3 text-sm font-medium text-slate-900">Přetáhněte zprávy sem</p>
-            <p className="mt-1 text-xs text-slate-600">PDF, TXT nebo XLSX export z NIS (jeden řádek = jedna zpráva)</p>
+            <p className="mt-1 max-w-md text-xs text-slate-600">PDF i naskenované (přečtou se OCR), fotografie a skeny JPG, PNG, TIFF, Word, e-mail .eml s přílohami, TXT a XLSX export z NIS</p>
             <button type="button" className={`${btn.secondary} mt-4`} onClick={() => picker.current?.click()} disabled={busy}>Vybrat soubory</button>
             <input ref={picker} type="file" multiple accept={ACCEPT.join(',')} className="hidden"
               onChange={(e) => { add(e.target.files); e.target.value = '' }} />
@@ -105,6 +110,8 @@ export default function NewPatient({ onCreated }: { onCreated: () => void }) {
           )}
 
           {error && <Notice tone="error">{error}</Notice>}
+
+          <NisInbox extract={extract} onCreated={onCreated} disabled={busy} />
         </div>
 
         <aside className={`${panel} h-fit space-y-4 p-4`}>

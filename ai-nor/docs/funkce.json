@@ -87,6 +87,13 @@
       "nazev": "InterSystems IRIS for Health",
       "polozky": [
         {
+          "nazev": "Zprávy z NIS přes IRIS",
+          "sluzba": "IRIS FHIR, DocumentReference s tagem urn:ai-nor:inbox|nis",
+          "k_cemu": "Nemocniční systém (nebo integrační produkce IRIS z HL7v2) uloží novou zprávu do IRIS FHIR, AI NOR ji ukáže v záložce Nový pacient a jedním kliknutím z ní založí hlášení. Bez tisku, skenování a nahrávání souborů.",
+          "kde": "backend/app/nis.py, scripts/nis_demo_send.py, frontend/src/screens/NisInbox.tsx",
+          "stav": "castecne"
+        },
+        {
           "nazev": "IRIS for Health v Dockeru",
           "sluzba": "InterSystems IRIS for Health Community",
           "k_cemu": "Jedna platforma pro FHIR server, SQL tabulky i vektorové hledání. Stejnou platformu FN Ostrava používá pro integrace.",
@@ -112,6 +119,13 @@
           "sluzba": "tabulka Nor.Code (MKN-10 a morfologie MKN-O-3)",
           "k_cemu": "Volný text („karcinom NST“) → top kandidáti kódů z oficiálního číselníku. AI smí vybrat jen z nich, kód nikdy nevymýšlí.",
           "kde": "backend/app/retrieval/codes.py, backend/scripts/index_codes.py, API /api/codes/search",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Historie změn hlášení v IRIS",
+          "sluzba": "IRIS SQL, tabulka Nor.Audit (namespace FHIRSERVER)",
+          "k_cemu": "Každá změna formuláře se zapíše: kdo, kdy, které pole, původní a nová hodnota (doplnění, přepsání, potvrzení, zamítnutí, vyřešení rozporu, relaps). Když IRIS neběží, záznamy počkají v lokální záloze a přesunou se do IRIS.",
+          "kde": "backend/app/audit.py, API /api/cases/{id}/audit, frontend/src/screens/AuditLog.tsx",
           "stav": "hotovo"
         },
         {
@@ -222,9 +236,16 @@
       "polozky": [
         {
           "nazev": "Načtení dokumentů z NIS",
-          "sluzba": "PyMuPDF (PDF), openpyxl (XLSX export z NIS), TXT",
+          "sluzba": "PyMuPDF (PDF), openpyxl (XLSX z NIS), Word DOCX, e-mail EML s přílohami, TXT",
           "k_cemu": "Převod zpráv na text s pozicemi, rozpoznání typu zprávy (ambulantní, propouštěcí, histologie, MDT, operační protokol).",
           "kde": "backend/app/ingest/__init__.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "OCR skenů a fotografií",
+          "sluzba": "Tesseract (čeština) vestavěný v PyMuPDF, běží lokálně",
+          "k_cemu": "Naskenované PDF a obrázky JPG, PNG, TIFF se přečtou OCR. Text dostane upozornění, že citace je třeba ověřit proti originálu.",
+          "kde": "backend/app/ingest/formats.py, scripts/get_tessdata.py",
           "stav": "hotovo"
         },
         {
@@ -303,6 +324,20 @@
           "k_cemu": "Přesnost předvyplněných polí, kalibrace jistoty, počet oprav a čas na záznam pro porotu.",
           "kde": "PLAN.md §3 krok 11",
           "stav": "plan"
+        },
+        {
+          "nazev": "Prohlídka systému",
+          "sluzba": "React, vlastní průvodce bez knihovny",
+          "k_cemu": "Tlačítko Prohlídka v hlavičce spustí 10 kroků přes všechny záložky: zvýrazní část obrazovky a vysvětlí ji. Uživatel nic nevyplňuje, lze spouštět opakovaně.",
+          "kde": "frontend/src/Tour.tsx",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Hromadný export a odeslání",
+          "sluzba": "CSV (Excel), JSON, IRIS FHIR",
+          "k_cemu": "V Seznamu hlášení lze zaškrtnout potvrzená hlášení a exportovat je nebo odeslat do IRIS FHIR. Ikonka ukazuje, že bylo exportováno (oranžová, když se hlášení po exportu změnilo) a že je uloženo v IRIS. Export se zapisuje do historie změn.",
+          "kde": "backend/app/export/batch.py, API /api/export, /api/exports, frontend/src/screens/CaseList.tsx",
+          "stav": "hotovo"
         }
       ]
     },

@@ -28,6 +28,12 @@ export const Icon = {
   check: (p: IconProps) => svg(p, <><path d="m4.5 12.5 5 5 10-11" /></>),
   alert: (p: IconProps) => svg(p, <><path d="M10.3 4 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z" /><path d="M12 9.5v4M12 17h.01" /></>),
   plus: (p: IconProps) => svg(p, <><path d="M12 5v14M5 12h14" /></>),
+  user: (p: IconProps) => svg(p, <><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></>),
+  play: (p: IconProps) => svg(p, <path d="M7.5 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.7 4.1a.8.8 0 0 0-1.2.7z" fill="currentColor" />),
+  history: (p: IconProps) => svg(p, <><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1" /><path d="M3.5 3.5V9H9" /><path d="M12 7.5V12l3 2" /></>),
+  database: (p: IconProps) => svg(p, <><ellipse cx="12" cy="5.5" rx="7.5" ry="2.5" /><path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13" /><path d="M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5" /></>),
+  download: (p: IconProps) => svg(p, <><path d="M12 3.5V15M7 10l5 5 5-5" /><path d="M4 15v3.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V15" /></>),
+  send: (p: IconProps) => svg(p, <><path d="M21 3 10.5 13.5" /><path d="M21 3l-6.5 18-4-7.5L3 9.5z" /></>),
   trash: (p: IconProps) => svg(p, <><path d="M4 7h16M10 11v6M14 11v6" /><path d="M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7" /></>),
 }
 

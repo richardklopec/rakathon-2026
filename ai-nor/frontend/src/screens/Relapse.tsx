@@ -4,6 +4,7 @@
 import { useMemo, useState } from 'react'
 import { api, type Case, type Codelists, type Extracted, type PartialDate } from '../api'
 import { href } from '../router'
+import { getUser } from '../user'
 import { Icon } from '../icons'
 import { Notice, PageHeader } from '../ui'
 import { btn, diagnosis, formatDate, input, optionName, panel, patientName } from '../lib'
@@ -39,7 +40,7 @@ export default function Relapse({ caseId, cases, lists, onChanged }: {
   const [kind, setKind] = useState('recurrence')
   const [date, setDate] = useState('')
   const [sites, setSites] = useState<number[]>([])
-  const [doctor, setDoctor] = useState(kase?.confirmed_by ?? '') // App remounts this screen per patient (key)
+  const [doctor, setDoctor] = useState(getUser() || kase?.confirmed_by || '') // App remounts this screen per patient (key)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [saved, setSaved] = useState<string | null>(null)
@@ -88,7 +89,7 @@ export default function Relapse({ caseId, cases, lists, onChanged }: {
       </PageHeader>
 
       <div className="grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)]">
-        <nav aria-label="Pacienti" className={`${panel} h-fit p-2`}>
+        <nav aria-label="Pacienti" className={`${panel} h-fit p-2`} data-tour="relapse">
           <h2 className="px-2 pb-1 pt-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Potvrzená hlášení</h2>
           {confirmed.length === 0 && <p className="px-2 pb-2 text-sm text-slate-600">Žádné. Relaps lze zapsat až k potvrzenému hlášení incidence.</p>}
           {confirmed.map((c) => {

@@ -22,7 +22,7 @@ export default function Home({ cases, lists, health }: {
         Hlášení incidence zhoubného novotvaru do NOR. AI připraví hlášení ze zpráv pacienta, vy řešíte jen rozpory a nejistá pole.
       </PageHeader>
 
-      <nav aria-label="Stav hlášení" className={`${panel} mb-6 grid grid-cols-2 overflow-hidden sm:grid-cols-5`}>
+      <nav aria-label="Stav hlášení" data-tour="pipeline" className={`${panel} mb-6 grid grid-cols-2 overflow-hidden sm:grid-cols-5`}>
         {STATUS_ORDER.map((s, i) => (
           <a key={s} href={href('hlaseni', null, { stav: s })} title={STATUS[s].hint}
             className={`group relative flex flex-col gap-1 border-slate-200 px-4 py-3 transition-colors duration-150 hover:bg-fno-50 ${i > 0 ? 'sm:border-l' : ''} ${i % 2 ? 'border-l' : ''} ${i > 1 ? 'border-t sm:border-t-0' : ''}`}>

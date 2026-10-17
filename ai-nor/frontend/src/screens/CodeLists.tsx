@@ -71,7 +71,7 @@ export default function CodeLists({ lists, active }: { lists: Codelists | null; 
         </nav>
 
         <section className="min-w-0">
-          <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+          <div className="mb-3 flex flex-wrap items-end justify-between gap-3" data-tour="codelists">
             <div>
               <h2 className="text-base font-semibold text-fno-950">{current.name}</h2>
               <p className="text-xs text-slate-600">Zdroj: {current.source}</p>

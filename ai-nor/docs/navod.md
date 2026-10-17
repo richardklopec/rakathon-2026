@@ -7,7 +7,8 @@ AI NOR připraví hlášení **Incidence zhoubného novotvaru** do Národního o
 ## Co budete potřebovat
 
 - Zprávy jednoho pacienta: ambulantní a propouštěcí zprávy, histologie, zápis z MDT, operační protokol.
-- Formát **PDF**, **TXT** nebo **XLSX** (export z NIS, jeden řádek = jedna zpráva).
+- Formát **PDF** (i naskenované, přečtou se OCR), **fotografie a skeny** JPG, PNG, TIFF, **Word** DOCX, **e-mail** EML i s přílohami, **TXT** nebo **XLSX** (export z NIS, jeden řádek = jedna zpráva).
+- Nebo nic: zprávy, které pro AI NOR pošle nemocniční systém (NIS) přes IRIS, najdete v záložce Nový pacient.
 - Webový prohlížeč s adresou aplikace (při lokálním spuštění `http://localhost:5173`).
 
 ## Záložky aplikace
@@ -19,6 +20,8 @@ AI NOR připraví hlášení **Incidence zhoubného novotvaru** do Národního o
 - **Číselníky**: MKN-10, topografie, morfologie a další číselníky formuláře NOR s hledáním.
 - **Vytěžování**: kontrola hlášení jednoho pacienta, náhled formuláře a potvrzení.
 - **Dokumentace** (vpravo nahoře): tento návod a přehled použitých technologií.
+- **Prohlídka** (vpravo nahoře): průvodce aplikací v 10 krocích. Stačí klikat na Další, spustit ho můžete kdykoli znovu.
+- **Jméno uživatele** (ikona postavy vpravo nahoře): zadejte své jméno, zapisuje se ke každé změně v historii.
 
 Hlášení prochází stavy **Nevytěženo → Ke kontrole → K potvrzení → Potvrzeno → Uloženo ve FHIR**. Číslo u záložky Seznam hlášení ukazuje, kolik hlášení čeká na kontrolu.
 
@@ -30,6 +33,10 @@ Hlášení prochází stavy **Nevytěženo → Ke kontrole → K potvrzení → 
 2. Přetáhněte zprávy do vyznačeného pole, nebo klikněte na **Vybrat soubory**. Vyberte všechny zprávy jednoho pacienta najednou. U každého souboru uvidíte odhad typu zprávy, chybně vybraný soubor odeberete křížkem.
 3. Rodné číslo vyplňovat nemusíte, AI ho vezme ze zpráv. Když ho vyplníte, aplikace ho porovná se zprávami.
 4. Klikněte na **Nahrát a vytěžit**. Vytěžení obvykle trvá 20–40 sekund, pak se hlášení samo otevře ve Vytěžování.
+
+**Zprávy z NIS.** Pod polem pro soubory je seznam **Zprávy z NIS přes InterSystems IRIS**: pacienti, pro které nemocniční systém poslal nové zprávy. Tlačítko **Načíst a vytěžit** z nich založí hlášení stejně jako nahrání souborů.
+
+**Skeny.** U textu ze skenu nebo fotografie je nahoře upozornění, že text vznikl OCR. Citace pak porovnejte s papírovým originálem, OCR se může splést (např. 0 a O).
 
 ### 2. Podívejte se na souhrn
 
@@ -82,6 +89,20 @@ Po potvrzení se zobrazí:
 - **Uložit do IRIS FHIR**: zapíše hlášení do nemocničního FHIR úložiště (InterSystems IRIS) včetně záznamu, kdo hlášení potvrdil a které údaje opravil.
 
 > Jakákoli další úprava hlášení potvrzení zruší. Hlášení pak musíte potvrdit znovu.
+
+## Historie změn
+
+Pod formulářem ve Vytěžování je **Historie změn**. Zapisuje se do ní každá změna hlášení: doplnění údaje, přepsání hodnoty, potvrzení, zamítnutí, vyřešení rozporu, změna pacienta, vytěžení AI, potvrzení hlášení i zápis do FHIR. U každého záznamu je čas, jméno uživatele, pole a původní a nová hodnota.
+
+Historie se ukládá do databáze **InterSystems IRIS** (tabulka Nor.Audit). Když IRIS neběží, záznamy se uloží do zálohy na serveru, u záznamu je „čeká na IRIS“ a do IRIS se přesunou samy, jakmile se připojí.
+
+## Hromadný export
+
+1. V **Seznamu hlášení** zaškrtněte hlášení. Zaškrtnout jde jen potvrzená, políčko v hlavičce vybere všechna potvrzená.
+2. V liště nad tabulkou zvolte **Export CSV** (otevře se v Excelu, jeden řádek = jedno hlášení), **Export JSON**, nebo **Odeslat do IRIS FHIR**.
+3. Ve sloupci **Export** se objeví ikonka: zelená šipka = exportováno, oranžová = hlášení se po exportu změnilo a je potřeba ho exportovat znovu, ikona databáze = uloženo v IRIS FHIR. Po najetí myší uvidíte kdy, v jakém formátu a kdo.
+
+Každý export se zapíše i do historie změn hlášení.
 
 ## Hlášení relapsu
 

@@ -73,13 +73,21 @@ def xlsx_to_documents(data: bytes, filename: str) -> list[Document]:
 
 
 def to_documents(filename: str, data: bytes) -> list[Document]:
+    from app.ingest import formats  # scans (OCR), Word, e-mail
+
     suffix = filename.lower().rsplit(".", 1)[-1]
     if suffix == "xlsx":
         return xlsx_to_documents(data, filename)
+    if suffix == "eml":
+        return formats.eml_to_documents(data, filename)
     if suffix == "pdf":
-        text = pdf_to_text(data)
+        text = formats.pdf_or_image_to_text(data)  # text layer, OCR for scanned pages
+    elif suffix in formats.IMAGE_TYPES:
+        text = formats.pdf_or_image_to_text(data, formats.IMAGE_TYPES[suffix])
+    elif suffix == "docx":
+        text = formats.docx_to_text(data)
     elif suffix in ("txt", "md"):
         text = data.decode("utf-8")
     else:
-        raise ValueError(f"Unsupported file type: {filename}")
+        raise ValueError(f"Nepodporovaný typ souboru: {filename} (podporováno: {', '.join(formats.SUPPORTED)})")
     return [Document(id=str(uuid.uuid4()), filename=filename, kind=guess_kind(filename), text=_normalise(text))]

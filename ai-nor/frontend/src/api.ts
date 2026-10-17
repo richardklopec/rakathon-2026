@@ -93,6 +93,38 @@ export interface Case {
   ai_confidence: AiConfidence
 }
 
+// one entry of the change log (backend app/audit.py, IRIS table Nor.Audit)
+export interface AuditEntry {
+  id: string
+  case_id: string
+  at: string // ISO 8601 UTC
+  actor: string
+  kind: string // filled | changed | resolved | confirmed | confirmed_missing | rejected | removed | case_created | extracted | patient_changed | report_confirmed | fhir_submitted
+  path: string | null
+  label: string | null
+  old: string | null
+  new: string | null
+  storage: 'iris' | 'local'
+}
+
+// reports waiting in IRIS FHIR from the hospital system (GET /api/nis/inbox)
+export interface NisPatient {
+  patient: string
+  documents: { id: string; title: string; kind: string | null; date: string | null }[]
+}
+
+// last bulk export of a report (GET /api/exports, from the audit log)
+export interface ExportInfo {
+  at: string
+  actor: string
+  detail: string | null // e.g. "CSV, 3 hlášení v dávce"
+}
+
+// who is working: sent with every change as X-Actor (URL-encoded, HTTP headers can't carry diacritics) for the change log
+let actor = ''
+export const setActor = (name: string) => { actor = name.trim() }
+const actorHeader = (): Record<string, string> => (actor ? { 'X-Actor': encodeURIComponent(actor) } : {})
+
 async function json<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const body = await res.text()
@@ -110,7 +142,7 @@ async function json<T>(res: Response): Promise<T> {
 const post = (url: string, body?: unknown) =>
   fetch(url, {
     method: 'POST',
-    headers: body ? { 'Content-Type': 'application/json' } : undefined,
+    headers: { ...(body ? { 'Content-Type': 'application/json' } : {}), ...actorHeader() },
     body: body ? JSON.stringify(body) : undefined,
   })
 
@@ -122,19 +154,19 @@ export const api = {
     const form = new FormData()
     files.forEach((f) => form.append('files', f))
     const q = patientRef ? `?patient_ref=${encodeURIComponent(patientRef)}` : ''
-    return fetch(`/api/cases${q}`, { method: 'POST', body: form }).then(json<Case>)
+    return fetch(`/api/cases${q}`, { method: 'POST', body: form, headers: actorHeader() }).then(json<Case>)
   },
   extract: (id: string) => post(`/api/cases/${id}/extract`).then(json<Case>),
   saveReport: (id: string, report: NorReport) =>
     fetch(`/api/cases/${id}/report`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...actorHeader() },
       body: JSON.stringify(report),
     }).then(json<Case>),
   updatePatient: (id: string, patientRef: string | null) =>
     fetch(`/api/cases/${id}/patient`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...actorHeader() },
       body: JSON.stringify({ patient_ref: patientRef }),
     }).then(json<Case>),
   codelists: () => fetch('/api/codelists').then(json<Codelists>),
@@ -142,4 +174,23 @@ export const api = {
   confirm: (id: string, by: string) => post(`/api/cases/${id}/confirm`, { by }).then(json<Case>),
   uzisExportUrl: (id: string) => `/api/cases/${id}/uzis-export`,
   submit: (id: string) => post(`/api/cases/${id}/submit`).then(json<{ entry?: unknown[] }>),
+  nisInbox: () => fetch('/api/nis/inbox').then(json<{ iris: boolean; patients: NisPatient[] }>),
+  nisImport: (patient: string, ids: string[]) => post('/api/nis/import', { patient, ids }).then(json<Case>),
+  exportStatus: () => fetch('/api/exports').then(json<Record<string, ExportInfo>>),
+  /** Bulk export of confirmed reports; downloads the file and returns its name. */
+  exportReports: async (caseIds: string[], format: 'csv' | 'json') => {
+    const res = await fetch('/api/export', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...actorHeader() },
+      body: JSON.stringify({ case_ids: caseIds, format }),
+    })
+    if (!res.ok) await json(res) // throws with the backend's message
+    const name = /filename="([^"]+)"/.exec(res.headers.get('Content-Disposition') ?? '')?.[1] ?? `nor-hlaseni.${format}`
+    const url = URL.createObjectURL(await res.blob())
+    const a = Object.assign(document.createElement('a'), { href: url, download: name })
+    a.click()
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
+    return name
+  },
+  audit: (id: string) => fetch(`/api/cases/${id}/audit`).then(json<{ iris: boolean; entries: AuditEntry[] }>),
 }
