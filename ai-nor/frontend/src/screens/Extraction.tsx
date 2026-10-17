@@ -2,7 +2,7 @@
 // The case's FHIR record follows by itself: a draft right after the extraction, final after the confirmation.
 // Moved here from App.tsx when the app got tabs; the review logic is unchanged.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { api, getField, type AiConfidence, type Case, type Codelists, type Evidence, type Extracted, type FormFields, type NorReport } from '../api'
+import { api, getField, type AiConfidence, type Case, type Codelists, type DocumentT, type Evidence, type Extracted, type FormFields, type NorReport } from '../api'
 import NorFormPreview from '../NorFormPreview'
 import { getUser } from '../user'
 import AuditLog from './AuditLog'
@@ -76,6 +76,44 @@ function AiScore({ c }: { c: AiConfidence | undefined }) {
 }
 
 const small = 'inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs font-medium transition-colors duration-150'
+
+/** "zdroj": one citation opens the document at it; several (e.g. a stage computed from pT, pN and M read in more
+ * reports) open a list of every place the value was read from. */
+function Sources({ f, docs, onPick }: { f: Extracted; docs: DocumentT[]; onPick: (e: Evidence) => void }) {
+  const [open, setOpen] = useState(false)
+  const box = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    if (!open) return
+    const away = (e: MouseEvent) => { if (!box.current?.contains(e.target as Node)) setOpen(false) }
+    const esc = (e: globalThis.KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    document.addEventListener('mousedown', away)
+    document.addEventListener('keydown', esc)
+    return () => { document.removeEventListener('mousedown', away); document.removeEventListener('keydown', esc) }
+  }, [open])
+  const link = 'text-xs text-fno-700 underline underline-offset-2 hover:text-fno-900'
+  if (!f.evidence.length) return null
+  if (f.evidence.length === 1) return <button className={link} onClick={() => onPick(f.evidence[0])}>zdroj</button>
+  const name = (id: string) => docs.find((d) => d.id === id)?.filename.replace(/^Rakathon_2026_/, '') ?? id
+  return (
+    <span ref={box} className="relative">
+      <button className={`${link} inline-flex items-center gap-0.5`} aria-expanded={open} onClick={() => setOpen(!open)}>
+        zdroje ({f.evidence.length})
+        <Icon.chevron width={12} height={12} className={`transition-transform duration-150 ${open ? '-rotate-90' : 'rotate-90'}`} />
+      </button>
+      {open && (
+        <span role="menu" className="absolute right-0 top-full z-30 mt-1 block max-h-80 w-96 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1 shadow-[0_8px_24px_rgba(1,28,62,0.16)]">
+          {f.evidence.map((e, i) => (
+            <button key={`${e.doc_id}:${e.start}:${i}`} role="menuitem" onClick={() => { onPick(e); setOpen(false) }}
+              className="block w-full rounded px-2 py-1.5 text-left text-xs hover:bg-fno-50">
+              <span className="font-medium text-fno-900">{name(e.doc_id)}</span>
+              <span className="block text-slate-700">„{e.quote.length > 120 ? `${e.quote.slice(0, 120)}…` : e.quote}“</span>
+            </button>
+          ))}
+        </span>
+      )}
+    </span>
+  )
+}
 
 /** Case-level warnings (identity, other tumour, biopsy numbers...): one line with the topics, the texts on click. */
 function Warnings({ items }: { items: string[] }) {
@@ -428,7 +466,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
                           <span className="w-20 text-xs text-slate-500">
                             {f.review.state === 'auto_accepted' ? 'předvyplněno' : f.review.state === 'confirmed' ? 'potvrzeno' : f.review.state === 'edited' ? 'opraveno' : needsHuman(f) ? 'ke kontrole' : ''}
                           </span>
-                          {f.evidence[0] && <button className="text-xs text-fno-700 underline underline-offset-2 hover:text-fno-900" onClick={() => setActive(f.evidence[0])}>zdroj</button>}
+                          <Sources f={f} docs={kase.documents} onPick={setActive} />
                           <RuleCite f={f} />
                         </div>
                       )

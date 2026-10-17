@@ -551,18 +551,20 @@ def _derive_stage(r: NorReport, docs: list[Document]) -> None:
     how = (f"pro {staging.SITE.get(code[:3], code[:3])} ({code}, tabulka UICC TNM 8): {tp}T{t.value} ({reports(t)}) + "
            f"{np}N{n.value} ({reports(n)}) + {mp}M{m.value} ({sources(m)}) → {value}")
     derived_conf = max(0, min(x.confidence or 0 for x in inputs) - 5)
+    # every place the inputs were read from (all reports, not just the first): the clinician sees what the stage rests on
+    all_sources = list({(e.doc_id, e.start, e.end): e for x in inputs for e in x.evidence}.values())
     cs = r.clinical_stage
     if cs.value is None or cs.status == FieldStatus.missing:
         r.clinical_stage = Extracted[str](
             value=value, status=FieldStatus.found, confidence=derived_conf,
             confidence_reasons=[f"odvozeno {how}", "✓ vstupy ověřeny citacemi, výsledek je výpočet (stádium v dokumentaci není)",
                                 "jistota = nejnižší jistota vstupů −5"],
-            evidence=[x.evidence[0] for x in inputs if x.evidence],
+            evidence=all_sources,
         )
     elif str(cs.value).upper() == value:  # a stage written in its context (abbreviations.stage_in) agrees with the TNM
         cs.confidence = max(cs.confidence or 0, derived_conf)
         cs.confidence_reasons.append(f"✓ odpovídá TNM: {how}")
-        cs.evidence += [x.evidence[0] for x in inputs if x.evidence and x.evidence[0] not in cs.evidence]
+        cs.evidence += [e for e in all_sources if e not in cs.evidence]
     else:
         cs.status = FieldStatus.conflict
         cs.alternatives = [value] + [a for a in cs.alternatives if a != value]
