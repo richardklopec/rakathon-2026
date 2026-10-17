@@ -1,16 +1,29 @@
-// Home: statistics for the current month, quarter or year, each compared with the previous period of the same length.
+// Home: statistics for the current month, quarter, year or a custom date range, each compared with the period of the
+// same length right before it.
 // Computed from the cases (created_at, confirmed_at, FHIR state, AI confidence) and the export log (GET /api/exports).
 import { useEffect, useState } from 'react'
 import { api, type Case, type ExportInfo } from '../api'
 import { caseStatus, panel } from '../lib'
 
-type Period = 'month' | 'quarter' | 'year'
-const PERIODS: [Period, string][] = [['month', 'Měsíc'], ['quarter', 'Kvartál'], ['year', 'Rok']]
-const PREVIOUS: Record<Period, string> = { month: 'minulý měsíc', quarter: 'minulé čtvrtletí', year: 'minulý rok' }
+type Period = 'month' | 'quarter' | 'year' | 'custom'
+const PERIODS: [Period, string][] = [['month', 'Měsíc'], ['quarter', 'Kvartál'], ['year', 'Rok'], ['custom', 'Vlastní datum']]
+const PREVIOUS: Record<Exclude<Period, 'custom'>, string> = { month: 'minulý měsíc', quarter: 'minulé čtvrtletí', year: 'minulý rok' }
+const DAY = 864e5
 const MONTHS = ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec']
 
+const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+const day = (s: string) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d) }
+const czech = (d: Date) => `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`
+
+/** Custom range: [from 00:00, day after `to` 00:00); `back` = the same number of days right before it. */
+function customRange(from: string, to: string, back = 0): [Date, Date] {
+  const a = day(from), b = new Date(day(to).getTime() + DAY)
+  const len = b.getTime() - a.getTime()
+  return [new Date(a.getTime() - back * len), new Date(b.getTime() - back * len)]
+}
+
 /** [start, end) of the period containing `now`, shifted by `back` periods. */
-function range(period: Period, now: Date, back = 0): [Date, Date] {
+function range(period: Exclude<Period, 'custom'>, now: Date, back = 0): [Date, Date] {
   const y = now.getFullYear()
   if (period === 'year') return [new Date(y - back, 0, 1), new Date(y - back + 1, 0, 1)]
   const len = period === 'month' ? 1 : 3
@@ -18,7 +31,8 @@ function range(period: Period, now: Date, back = 0): [Date, Date] {
   return [new Date(y, first, 1), new Date(y, first + len, 1)]
 }
 
-function title(period: Period, [start]: [Date, Date]): string {
+function title(period: Period, [start, end]: [Date, Date]): string {
+  if (period === 'custom') return `${czech(start)} – ${czech(new Date(end.getTime() - DAY))}`
   if (period === 'month') return `${MONTHS[start.getMonth()]} ${start.getFullYear()}`
   if (period === 'quarter') return `${Math.floor(start.getMonth() / 3) + 1}. čtvrtletí ${start.getFullYear()}`
   return `rok ${start.getFullYear()}`
@@ -62,9 +76,15 @@ export default function TimeStats({ cases }: { cases: Case[] }) {
   useEffect(() => { api.exportStatus().then(setExports).catch(() => {}) }, [])
 
   const [now] = useState(() => new Date()) // fixed for the page visit; periods are months, not seconds
-  const current = range(period, now)
+  const [from, setFrom] = useState(() => iso(new Date(now.getFullYear(), now.getMonth(), 1)))
+  const [to, setTo] = useState(() => iso(now))
+  const customOk = period !== 'custom' || (!!from && !!to && from <= to)
+  const current = period === 'custom' ? (customOk ? customRange(from, to) : customRange(iso(now), iso(now))) : range(period, now)
   const cur = compute(cases, exports, current)
-  const prev = compute(cases, exports, range(period, now, 1))
+  const prev = compute(cases, exports, period === 'custom' ? (customOk ? customRange(from, to, 1) : current) : range(period, now, 1))
+  const days = Math.round((current[1].getTime() - current[0].getTime()) / DAY)
+  const previous = period !== 'custom' ? PREVIOUS[period]
+    : days === 1 ? 'předchozí den' : days < 5 ? `předchozí ${days} dny` : `předchozích ${days} dní`
 
   const tiles: { label: string; value: string; delta: number | null; hint: string; better?: 'up' | 'down' }[] = [
     { label: 'Nová hlášení', value: String(cur.created), delta: cur.created - prev.created, hint: 'Případy založené nahráním zpráv nebo ze zpráv z NIS.', better: 'up' },
@@ -83,8 +103,21 @@ export default function TimeStats({ cases }: { cases: Case[] }) {
     <section className="mb-6" aria-labelledby="stats-title" data-tour="stats">
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
         <h2 id="stats-title" className="text-base font-semibold text-fno-950">
-          Statistika <span className="font-normal text-slate-600">· {title(period, current)}</span>
+          Statistika <span className="font-normal text-slate-600">· {customOk ? title(period, current) : 'zvolte platné období'}</span>
         </h2>
+        <span className="flex-1" />
+        {period === 'custom' && (
+          <span className="flex flex-wrap items-center gap-2 text-sm text-slate-700">
+            <label className="flex items-center gap-1.5">od
+              <input type="date" value={from} max={to || undefined} onChange={(e) => setFrom(e.target.value)} aria-invalid={!customOk}
+                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-sm focus:border-fno-sky focus:outline-none focus:ring-2 focus:ring-fno-sky/25" />
+            </label>
+            <label className="flex items-center gap-1.5">do
+              <input type="date" value={to} min={from || undefined} onChange={(e) => setTo(e.target.value)} aria-invalid={!customOk}
+                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-sm focus:border-fno-sky focus:outline-none focus:ring-2 focus:ring-fno-sky/25" />
+            </label>
+          </span>
+        )}
         <div role="group" aria-label="Období" className="inline-flex rounded-md border border-slate-300 bg-white p-0.5">
           {PERIODS.map(([p, label]) => (
             <button key={p} onClick={() => setPeriod(p)} aria-pressed={period === p}
@@ -99,7 +132,7 @@ export default function TimeStats({ cases }: { cases: Case[] }) {
           <div key={t.label} title={t.hint} className={`px-4 py-3 ${i % 2 ? 'border-l border-slate-200 sm:border-l-0' : ''} ${i >= 2 ? 'border-t border-slate-200 sm:border-t-0' : ''} ${i >= 3 ? 'sm:border-t lg:border-t-0' : ''} ${i % 3 ? 'sm:border-l lg:border-l-0' : ''}`}>
             <dt className="text-xs font-medium text-slate-600">{t.label}</dt>
             <dd className="mt-1 text-xl font-semibold tabular-nums text-fno-950">{t.value}</dd>
-            <dd className="mt-0.5 text-xs text-slate-500"><Delta value={t.delta} better={t.better} format={i === 4 ? duration : undefined} />{` vs. ${PREVIOUS[period]}`}</dd>
+            <dd className="mt-0.5 text-xs text-slate-500"><Delta value={t.delta} better={t.better} format={i === 4 ? duration : undefined} />{` vs. ${previous}`}</dd>
           </div>
         ))}
       </dl>
