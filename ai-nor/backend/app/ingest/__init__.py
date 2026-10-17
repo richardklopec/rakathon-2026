@@ -6,7 +6,6 @@ import uuid
 from datetime import datetime, timedelta
 
 import openpyxl
-import pymupdf
 
 from app.models import Document
 
@@ -30,11 +29,6 @@ def guess_kind(filename: str) -> str:
 def _normalise(text: str) -> str:
     text = text.replace("\r\n", "\n").replace(" ", " ")
     return re.sub(r"\n{3,}", "\n\n", text).strip()
-
-
-def pdf_to_text(data: bytes) -> str:
-    with pymupdf.open(stream=data, filetype="pdf") as doc:
-        return "\n\n".join(page.get_text("text") for page in doc)
 
 
 def _excel_date(v):

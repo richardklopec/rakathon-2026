@@ -82,3 +82,17 @@ def test_pdf_with_text_layer_skips_ocr():
     pdf.new_page().insert_text((50, 72), "Ambulantni zprava, Dg.: C50.4, klinicky cT1c cN0 cM0")
     (doc,) = ingest.to_documents("az.pdf", pdf.tobytes())
     assert not doc.text.startswith(formats.OCR_NOTE)
+
+
+def test_pdf_is_read_in_reading_order_not_storage_order():
+    # blocks written bottom first and the value before its label, as report generators often store them
+    pdf = pymupdf.open()
+    page = pdf.new_page()
+    page.insert_text((300, 200), "Zaver: invazivni karcinom NST")
+    page.insert_text((200, 100), "106")
+    page.insert_text((50, 100), "Hmotnost [kg]:")
+    page.insert_text((50, 150), "Nalez:")
+    (doc,) = ingest.to_documents("az.pdf", pdf.tobytes())
+    lines = doc.text.splitlines()
+    assert lines[0] == "Hmotnost [kg]:  106"  # the label and its value on one line, column padding reduced
+    assert doc.text.index("Nalez:") < doc.text.index("Zaver:")  # a heading before what follows it

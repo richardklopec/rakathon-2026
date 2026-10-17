@@ -29,12 +29,20 @@ def tessdata_dir():
     return get_settings().data_dir / "tessdata"
 
 
+def page_text(page: pymupdf.Page, textpage=None) -> str:
+    """Text of a page in reading order (top to bottom, left to right), not in the order the PDF stores its blocks:
+    otherwise a value drifts away from its label ("Hmotnost [kg]:" … "106") and a heading lands after its content.
+    Spaces that only aligned the columns are reduced to two, so a label and its value stay on one readable line."""
+    text = page.get_text("text", sort=True, textpage=textpage)
+    return "\n".join(re.sub(r"[ \t]{2,}", "  ", line.strip()) for line in text.splitlines())
+
+
 def _ocr(page: pymupdf.Page) -> str:
     folder = tessdata_dir()
     if not (folder / "ces.traineddata").exists():
         raise ValueError("Sken bez textové vrstvy nelze přečíst: chybí data pro OCR (python -m scripts.get_tessdata).")
     textpage = page.get_textpage_ocr(language="ces", dpi=300, full=True, tessdata=str(folder))
-    return page.get_text("text", textpage=textpage)
+    return page_text(page, textpage)
 
 
 def pdf_or_image_to_text(data: bytes, filetype: str = "pdf") -> str:
@@ -45,7 +53,7 @@ def pdf_or_image_to_text(data: bytes, filetype: str = "pdf") -> str:
     pages, ocr = [], False
     with doc:
         for page in doc:
-            text = page.get_text("text")
+            text = page_text(page)
             if len(text.strip()) < _MIN_TEXT and (filetype != "pdf" or page.get_images()):
                 text, ocr = _ocr(page), True
             pages.append(text)
