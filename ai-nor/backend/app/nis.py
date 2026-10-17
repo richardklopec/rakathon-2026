@@ -3,14 +3,13 @@
 The NIS (or an IRIS interoperability production translating its HL7v2 MDM / ORU messages) stores each new report as a
 FHIR DocumentReference in the IRIS FHIR server, tagged for AI NOR (INBOX_TAG). Here we list those not imported yet,
 grouped by patient, and turn the chosen ones into a case. scripts/nis_demo_send.py plays the NIS for the demo.
-Which reports were imported is kept in backend/var/nis/imported.json (the NIS data in IRIS stay untouched).
+Which reports were imported is read from the cases in IRIS (Case.nis_ids); the NIS data in IRIS stay untouched.
 """
 
 import base64
-import json
 from collections import defaultdict
 
-from app.config import get_settings
+from app import store
 from app.fhir import client as fhir
 
 INBOX_SYSTEM, INBOX_CODE = "urn:ai-nor:inbox", "nis"
@@ -20,19 +19,9 @@ _EXT = {"text/plain": "txt", "application/pdf": "pdf", "image/jpeg": "jpg", "ima
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx", "message/rfc822": "eml"}
 
 
-def _state_path():
-    d = get_settings().data_dir / "nis"
-    d.mkdir(parents=True, exist_ok=True)
-    return d / "imported.json"
-
-
 def imported() -> set[str]:
-    p = _state_path()
-    return set(json.loads(p.read_text(encoding="utf-8"))) if p.exists() else set()
-
-
-def mark_imported(ids: list[str]) -> None:
-    _state_path().write_text(json.dumps(sorted(imported() | set(ids))), encoding="utf-8")
+    """NIS reports some case was already made from."""
+    return {i for case in store.list_cases() for i in case.nis_ids}
 
 
 def patient_key(doc: dict) -> str:

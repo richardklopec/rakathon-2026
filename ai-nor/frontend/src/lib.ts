@@ -7,10 +7,10 @@ export type CaseStatus = 'nevytezeno' | 'kontrola' | 'potvrzeni' | 'potvrzeno' |
 
 export const STATUS: Record<CaseStatus, { label: string; hint: string; cls: string; dot: string }> = {
   nevytezeno: { label: 'Nevytěženo', hint: 'Dokumenty jsou nahrané, AI je ještě nezpracovala.', cls: 'bg-slate-100 text-slate-700', dot: 'bg-slate-400' },
-  kontrola: { label: 'Ke kontrole', hint: 'Rozpory nebo nejistá pole čekají na lékaře.', cls: 'bg-amber-50 text-amber-800', dot: 'bg-amber-500' },
+  kontrola: { label: 'Ke kontrole', hint: 'Rozpory nebo nejistá pole čekají na lékaře. V IRIS FHIR je hlášení zatím jako rozpracované.', cls: 'bg-amber-50 text-amber-800', dot: 'bg-amber-500' },
   potvrzeni: { label: 'K potvrzení', hint: 'Kontrola hotová, chybí potvrzení celého hlášení.', cls: 'bg-fno-sky-soft text-fno-800', dot: 'bg-fno-sky' },
-  potvrzeno: { label: 'Potvrzeno', hint: 'Lékař hlášení potvrdil, lze exportovat pro ÚZIS.', cls: 'bg-emerald-50 text-emerald-800', dot: 'bg-emerald-500' },
-  fhir: { label: 'Uloženo ve FHIR', hint: 'Potvrzené hlášení je zapsané v IRIS FHIR.', cls: 'bg-fno-800 text-white', dot: 'bg-white' },
+  potvrzeno: { label: 'Potvrzeno', hint: 'Lékař hlášení potvrdil, ale do IRIS FHIR se ho zatím nepodařilo zapsat.', cls: 'bg-emerald-50 text-emerald-800', dot: 'bg-emerald-500' },
+  fhir: { label: 'Uloženo ve FHIR', hint: 'Potvrzené hlášení je v IRIS FHIR jako konečné (final).', cls: 'bg-fno-800 text-white', dot: 'bg-white' },
 }
 export const STATUS_ORDER: CaseStatus[] = ['nevytezeno', 'kontrola', 'potvrzeni', 'potvrzeno', 'fhir']
 
@@ -27,15 +27,27 @@ export function pendingCount(c: Case): number {
 }
 
 export function caseStatus(c: Case): CaseStatus {
-  if (c.confirmed_at) return c.fhir_bundle_id ? 'fhir' : 'potvrzeno'
+  if (c.confirmed_at) return c.fhir?.status === 'final' && !c.fhir.error ? 'fhir' : 'potvrzeno'
   const a = c.ai_confidence
   if (!a || (a.fields_ai === 0 && a.edited_by_human === 0)) return 'nevytezeno'
   return pendingCount(c) > 0 ? 'kontrola' : 'potvrzeni'
 }
 
+/** Where the case stands in IRIS FHIR, in words: one record per case, a draft until the clinician confirms it. */
+export function fhirState(c: Case): { tone: 'none' | 'draft' | 'final' | 'error'; text: string } {
+  const f = c.fhir
+  if (f?.error) return { tone: 'error', text: f.status ? 'Poslední změna se do IRIS FHIR nezapsala' : 'Do IRIS FHIR se hlášení nezapsalo' }
+  if (f?.status === 'final') return { tone: 'final', text: `V IRIS FHIR jako konečné hlášení, verze ${f.version ?? '?'}` }
+  if (f?.status === 'preliminary') return { tone: 'draft', text: `V IRIS FHIR jako rozpracované hlášení, verze ${f.version ?? '?'}` }
+  return { tone: 'none', text: 'V IRIS FHIR zatím není (zapíše se po vytěžení)' }
+}
+
 // ---------- formatters ----------
 
-export const patientName = (c: Case) => c.patient_ref ?? c.documents[0]?.filename ?? `Případ ${c.id.slice(0, 8)}`
+/** The patient by birth number: the one the clinician confirmed in the preview, else the one in the documents. */
+export const patientName = (c: Case) =>
+  (c.patient_ref && /^[\d\s/]+$/.test(c.patient_ref) ? c.patient_ref : null)
+  ?? c.document_rc ?? c.patient_ref ?? c.documents[0]?.filename ?? `Případ ${c.id.slice(0, 8)}`
 
 export function diagnosis(c: Case, lists: Codelists | null): { code: string | null; name: string | null } {
   const code = (c.report.icd10 as { value?: string | null } | undefined)?.value ?? null

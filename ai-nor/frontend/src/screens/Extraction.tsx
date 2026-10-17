@@ -1,14 +1,15 @@
 // Tab "Vytěžování": review of one case (PLAN.md §6): AI extraction -> review queue -> preview -> confirm -> ÚZIS / FHIR.
+// The case's FHIR record follows by itself: a draft right after the extraction, final after the confirmation.
 // Moved here from App.tsx when the app got tabs; the review logic is unchanged.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { api, getField, type AiConfidence, type Case, type Codelists, type Evidence, type Extracted, type NorReport } from '../api'
+import { api, getField, type AiConfidence, type Case, type Codelists, type Evidence, type Extracted, type FormFields, type NorReport } from '../api'
 import NorFormPreview from '../NorFormPreview'
 import { getUser } from '../user'
 import AuditLog from './AuditLog'
 import { href } from '../router'
 import { Icon } from '../icons'
 import { Notice, PageHeader, StatusBadge } from '../ui'
-import { btn, panel, patientName, pendingCount } from '../lib'
+import { btn, fhirState, panel, patientName, pendingCount } from '../lib'
 
 const SECTIONS: [string, [string, string][]][] = [
   ['Diagnóza', [
@@ -76,6 +77,42 @@ function AiScore({ c }: { c: AiConfidence | undefined }) {
 
 const small = 'inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs font-medium transition-colors duration-150'
 
+/** Case-level warnings (identity, other tumour, biopsy numbers...): one line with the topics, the texts on click. */
+function Warnings({ items }: { items: string[] }) {
+  // topic = the start of the warning up to ':' without brackets, at most 4 words
+  const topics = [...new Set(items.map((w) => w.split(':')[0].replace(/\([^)]*\)/g, '').split(/\s+/).filter(Boolean).slice(0, 4).join(' ').replace(/[,;.]$/, '')))]
+  return (
+    <details className="group rounded-lg border border-amber-200 bg-amber-50 text-sm text-amber-900">
+      <summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-2 [&::-webkit-details-marker]:hidden">
+        <Icon.chevron width={16} height={16} className="shrink-0 transition-transform duration-150 group-open:rotate-90" />
+        <Icon.alert width={16} height={16} className="shrink-0" />
+        <b className="shrink-0 font-semibold">{items.length} upozornění</b>
+        <span className="truncate">{topics.join(' · ')}</span>
+      </summary>
+      <ul className="list-disc space-y-1 border-t border-amber-200 py-2 pl-9 pr-3">
+        {items.map((w) => <li key={w}>{w}</li>)}
+      </ul>
+    </details>
+  )
+}
+
+/** The case's record in IRIS FHIR (one per case, updated in place); a write that failed can be repeated. */
+function FhirLine({ c, fhirUp, busy, onRetry }: { c: Case; fhirUp: boolean; busy: boolean; onRetry: () => void }) {
+  const s = fhirState(c)
+  const color = { none: 'text-slate-500', draft: 'text-fno-700', final: 'text-fno-800', error: 'text-amber-800' }[s.tone]
+  const detail = c.fhir?.error ?? (c.fhir?.composition ? `${c.fhir.composition} · zdrojů ${c.fhir.resources.length}` : undefined)
+  return (
+    <span className={`inline-flex items-center gap-1.5 ${color}`} title={detail}>
+      <Icon.database width={15} height={15} className="shrink-0" />
+      {s.text}
+      {s.tone === 'error' && (
+        <button className={`${small} text-fno-800 underline underline-offset-2 hover:bg-fno-50 disabled:opacity-50`} disabled={!fhirUp || busy} onClick={onRetry}
+          title={fhirUp ? 'Zapíše hlášení do IRIS FHIR znovu' : 'IRIS FHIR není připojený'}>Zapsat znovu</button>
+      )}
+    </span>
+  )
+}
+
 export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: {
   caseId: string | null
   cases: Case[]
@@ -89,7 +126,6 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
   const [error, setError] = useState<string | null>(null)
   const [preview, setPreview] = useState<Record<string, unknown> | null>(null)
   const [doctor, setDoctor] = useState(getUser) // the person who is working (header) confirms by default
-  const [fhirResult, setFhirResult] = useState<string | null>(null)
   const previewRef = useRef<HTMLElement>(null)
   const previewOpen = preview != null
   const latest = useRef<Case | null>(null)
@@ -117,8 +153,9 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
     setCase(c)
     setActive(null)
     setPreview(null)
-    setFhirResult(null)
   }
+
+  const retryFhir = () => kase && run('Zapisuji do IRIS FHIR…', () => api.fhirSync(kase.id)).then((c) => { if (c) { setCase(c); onChanged() } })
 
   useEffect(() => {
     if (!caseId) return
@@ -148,6 +185,23 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
       const report = structuredClone(c.report)
       change(report)
       const saved = await run('Ukládám…', () => api.saveReport(c.id, report))
+      if (saved) {
+        latest.current = saved
+        setCase(saved)
+        onChanged()
+        setPreview(await api.uzisPreview(saved.id))
+      }
+    })
+    saving.current = job.catch(() => {})
+    await job
+  }
+
+  // fields of the form the documents do not give (Case.form); queued like the other preview edits
+  async function saveForm(patch: Partial<FormFields>) {
+    const job = saving.current.then(async () => {
+      const c = latest.current
+      if (!c) return
+      const saved = await run('Ukládám…', () => api.updateForm(c.id, { ...c.form, ...patch }))
       if (saved) {
         latest.current = saved
         setCase(saved)
@@ -296,12 +350,11 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
                 <span>ke kontrole: <b className="tabular-nums">{queue.length}</b></span>
                 <AiScore c={kase.ai_confidence} />
                 {kase.confirmed_at && <span className="text-emerald-800">potvrdil {kase.confirmed_by}</span>}
+                <FhirLine c={kase} fhirUp={fhirUp} busy={!!busy} onRetry={retryFhir} />
               </span>
             </PageHeader>
 
-            {kase.warnings.length > 0 && (
-              <Notice tone="warn">{kase.warnings.map((w) => <div key={w}>{w}</div>)}</Notice>
-            )}
+            {kase.warnings.length > 0 && <Warnings items={kase.warnings} />}
 
             {queue.length > 0 && (
               <section data-tour="queue" className="rounded-lg border border-amber-300 bg-white p-4 shadow-[0_1px_3px_rgba(146,64,14,0.08)]">
@@ -385,7 +438,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
               </section>
             </div>
 
-            <AuditLog caseId={kase.id} stamp={`${kase.updated_at}|${kase.confirmed_at}|${fhirResult}`} />
+            <AuditLog caseId={kase.id} stamp={`${kase.updated_at}|${kase.confirmed_at}|${kase.fhir?.version}|${kase.fhir?.error}`} />
 
             {preview && (
               <section ref={previewRef} className="scroll-mt-4 rounded-lg border-2 border-fno-800 bg-white p-4 text-sm">
@@ -397,7 +450,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
                   <p className="mb-2 text-amber-800">Chybí povinná pole: {(preview.chybi_povinne as string[]).join(', ')}</p>
                 )}
                 <NorFormPreview data={preview} report={kase.report} lists={lists} editable={!kase.confirmed_at}
-                  onEdit={editInPreview} onPatient={savePatient} />
+                  onEdit={editInPreview} onPatient={savePatient} onForm={saveForm} />
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   {!kase.confirmed_at ? (
                     <>
@@ -413,17 +466,13 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
                       {queue.length > 0 ? (
                         <span className="text-xs text-amber-800">Před potvrzením vyřešte {queue.length} polí ke kontrole (nahoře).</span>
                       ) : (
-                        <span className="text-xs text-slate-600">Bez potvrzení se nic neexportuje do ÚZIS ani nezapíše do FHIR.</span>
+                        <span className="text-xs text-slate-600">V IRIS FHIR je hlášení zatím jako rozpracované (jen pole přijatá automaticky nebo vyřešená lékařem). Potvrzením se stejný záznam změní na konečný.</span>
                       )}
                     </>
                   ) : (
                     <>
                       <a className={btn.secondary} href={api.uzisExportUrl(kase.id)} target="_blank" rel="noreferrer">Export pro ÚZIS (JSON)</a>
-                      <button className={btn.primary} disabled={!fhirUp || !!busy}
-                        onClick={() => run('Zapisuji do IRIS FHIR…', () => api.submit(kase.id)).then((r) => { if (r) { setFhirResult(`Zapsáno do FHIR: ${r.entry?.length ?? 0} zdrojů`); onChanged() } })}>
-                        Uložit do IRIS FHIR
-                      </button>
-                      {fhirResult && <span className="text-emerald-800">{fhirResult}</span>}
+                      <FhirLine c={kase} fhirUp={fhirUp} busy={!!busy} onRetry={retryFhir} />
                     </>
                   )}
                 </div>

@@ -86,9 +86,11 @@ Tlačítko je neaktivní, dokud ve frontě **Ke kontrole** zbývá nějaké pole
 Po potvrzení se zobrazí:
 
 - **Export pro ÚZIS (JSON)**: hlášení ve struktuře formuláře NOR ke stažení,
-- **Uložit do IRIS FHIR**: zapíše hlášení do nemocničního FHIR úložiště (InterSystems IRIS) včetně záznamu, kdo hlášení potvrdil a které údaje opravil.
+- stav záznamu v nemocničním FHIR úložišti (InterSystems IRIS), například „V IRIS FHIR jako konečné hlášení, verze 4“.
 
-> Jakákoli další úprava hlášení potvrzení zruší. Hlášení pak musíte potvrdit znovu.
+Do FHIR se nic neodesílá tlačítkem. Hned po vytěžení je hlášení v IRIS FHIR jako **rozpracované**: obsahuje jen údaje, které AI převzala s vysokou jistotou nebo které jste už vyřešili. Každá vaše úprava ho doplní. Potvrzením se **stejný záznam** změní na **konečný** a zapíše se k němu, kdo hlášení potvrdil a které údaje opravil. Starší verze zůstávají v historii FHIR.
+
+> Jakákoli další úprava hlášení potvrzení zruší. Záznam ve FHIR se vrátí na rozpracovaný a hlášení musíte potvrdit znovu.
 
 ## Historie změn
 
@@ -99,8 +101,8 @@ Historie se ukládá do databáze **InterSystems IRIS** (tabulka Nor.Audit). Kdy
 ## Hromadný export
 
 1. V **Seznamu hlášení** zaškrtněte hlášení. Zaškrtnout jde jen potvrzená, políčko v hlavičce vybere všechna potvrzená.
-2. V liště nad tabulkou zvolte **Export CSV** (otevře se v Excelu, jeden řádek = jedno hlášení), **Export JSON**, nebo **Odeslat do IRIS FHIR**.
-3. Ve sloupci **Export** se objeví ikonka: zelená šipka = exportováno, oranžová = hlášení se po exportu změnilo a je potřeba ho exportovat znovu, ikona databáze = uloženo v IRIS FHIR. Po najetí myší uvidíte kdy, v jakém formátu a kdo.
+2. V liště nad tabulkou zvolte **Export CSV** (otevře se v Excelu, jeden řádek = jedno hlášení) nebo **Export JSON**.
+3. Ve sloupci **Export · FHIR** se objeví ikonka: zelená šipka = exportováno, oranžová = hlášení se po exportu změnilo a je potřeba ho exportovat znovu. Ikona databáze ukazuje záznam v IRIS FHIR: světle modrá = rozpracované, tmavě modrá = konečné, oranžová = poslední změna se do FHIR nezapsala. Po najetí myší uvidíte podrobnosti.
 
 Každý export se zapíše i do historie změn hlášení.
 
@@ -133,7 +135,11 @@ Spustí vytěžení znovu ze stejných zpráv. Použijte ho po změně nastaven�
 
 **Nahoře svítí „IRIS FHIR: offline“.**
 
-Úložiště IRIS neběží. Hlášení můžete vytěžit, zkontrolovat, potvrdit i exportovat pro ÚZIS, jen tlačítko „Uložit do IRIS FHIR“ je neaktivní. Kontaktujte správce.
+Úložiště IRIS neběží. Hlášení jsou uložená v IRIS, takže je aplikace teď nenačte ani neuloží (nahoře se ukáže „Hlášení se nepodařilo načíst z IRIS“). Kontaktujte správce. Jakmile IRIS poběží, stačí kliknout na **Načíst znovu**.
+
+**U hlášení svítí „Poslední změna se do IRIS FHIR nezapsala“.**
+
+Změna je uložená, jen záznam ve FHIR zaostal. Klikněte na **Zapsat znovu** vedle této hlášky. Při příštím spuštění aplikace se zaostalé záznamy dopíší i samy.
 
 **Nahoře svítí „AI: zkušební režim“.**
 

@@ -1,4 +1,5 @@
 // App shell: header with the NOR logo, tab navigation and the shared data (cases, code lists, system status).
+// The cases are loaded from IRIS (backend table Nor.CaseRecord) when the app opens and after every change.
 // Screens live in src/screens; routing is the URL hash (src/router.ts).
 import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactElement, type SVGProps } from 'react'
 import { api, type Case, type Codelists } from './api'
@@ -15,6 +16,7 @@ import Tour from './Tour'
 import { setUser, useUser } from './user'
 import { Icon } from './icons'
 import { caseStatus } from './lib'
+import { Notice } from './ui'
 
 const TABS: { id: TabId; label: string; icon: (p: SVGProps<SVGSVGElement>) => ReactElement }[] = [
   { id: 'domu', label: 'Domů', icon: Icon.home },
@@ -30,10 +32,15 @@ export default function App() {
   // undefined = still asking (the FHIR probe can take a few seconds), null = backend not reachable
   const [health, setHealth] = useState<{ llm_mode: string; fhir: boolean } | null | undefined>(undefined)
   const [cases, setCases] = useState<Case[]>([])
+  const [casesError, setCasesError] = useState<string | null>(null) // IRIS (or the backend) not reachable
   const [lists, setLists] = useState<Codelists | null>(null)
   const [touring, setTouring] = useState(false)
 
-  const refresh = useCallback(() => { api.cases().then(setCases).catch(() => {}) }, [])
+  const refresh = useCallback(() => {
+    api.cases()
+      .then((c) => { setCases(c); setCasesError(null) })
+      .catch((e) => setCasesError(String(e instanceof Error ? e.message.replace(/^\d+: /, '') : e)))
+  }, [])
   useEffect(() => {
     api.health().then(setHealth).catch(() => setHealth(null))
     api.codelists().then(setLists).catch(() => setLists(null))
@@ -92,8 +99,16 @@ export default function App() {
       </header>
 
       <main className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6">
+        {casesError && (
+          <div className="mb-4">
+            <Notice tone="error">
+              Hlášení se nepodařilo načíst z IRIS: {casesError}{' '}
+              <button className="font-medium underline underline-offset-2" onClick={refresh}>Načíst znovu</button>
+            </Notice>
+          </div>
+        )}
         {route.tab === 'domu' && <Home cases={cases} lists={lists} health={health} />}
-        {route.tab === 'hlaseni' && <CaseList cases={cases} lists={lists} status={route.query.get('stav')} fhirUp={!!health?.fhir} onChanged={refresh} />}
+        {route.tab === 'hlaseni' && <CaseList cases={cases} lists={lists} status={route.query.get('stav')} />}
         {route.tab === 'relaps' && <Relapse key={route.id ?? ''} caseId={route.id} cases={cases} lists={lists} onChanged={refresh} />}
         {route.tab === 'novy' && <NewPatient onCreated={refresh} />}
         {route.tab === 'ciselniky' && <CodeLists lists={lists} active={route.id} />}

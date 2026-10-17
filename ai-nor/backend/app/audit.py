@@ -30,6 +30,7 @@ COLUMNS = (
 )
 _COLS = "EntryId, CaseId, AtUtc, Actor, Kind, FieldPath, FieldLabel, OldValue, NewValue"
 UNKNOWN_ACTOR = "neuvedený uživatel"
+SYSTEM_ACTOR = "AI NOR (při spuštění)"  # catching up FHIR records at startup
 
 # Kind of entry (the frontend shows Czech labels)
 FILLED = "filled"  # empty / missing field got a value
@@ -39,8 +40,8 @@ CONFIRMED = "confirmed"  # value confirmed as it is
 CONFIRMED_MISSING = "confirmed_missing"  # mandatory field confirmed as not documented
 REJECTED = "rejected"  # value rejected
 REMOVED = "removed"  # value or list item (e.g. a relapse) removed
-CASE_CREATED, EXTRACTED, PATIENT, REPORT_CONFIRMED, FHIR_SUBMITTED, EXPORTED, NIS_IMPORTED = (
-    "case_created", "extracted", "patient_changed", "report_confirmed", "fhir_submitted", "exported", "nis_imported")
+CASE_CREATED, EXTRACTED, PATIENT, REPORT_CONFIRMED, FHIR_SUBMITTED, FHIR_FAILED, EXPORTED, NIS_IMPORTED = (
+    "case_created", "extracted", "patient_changed", "report_confirmed", "fhir_submitted", "fhir_failed", "exported", "nis_imported")
 
 LABELS = {
     "diagnosis_date": "Datum stanovení diagnózy", "diagnosis_basis": "K dg. vedla vyšetření", "laterality": "Lateralita",
@@ -49,6 +50,10 @@ LABELS = {
     "tnm_clinical.m": "M", "tnm_pathological.t": "pT", "tnm_pathological.n": "pN", "tnm_pathological.m": "pM",
     "pn_examined": "pN vyš.", "pn_positive": "pN poz.", "sentinel_node": "sn", "metastasis_sites": "Lokalizace vzdálených metastáz",
     "clinical_stage": "Klinické stádium", "disease_extent": "Onemocnění", "patient_ref": "Pacient RČ",
+    "form.zarizeni": "Zařízení (pracoviště)", "form.oddeleni": "Oddělení", "form.neznamo": "Neznámo (bezdomovec, neudaný pobyt)",
+    "form.cizinec": "Cizinec", "form.zeme_puvodu": "Země původu", "form.identifikace_specifickych_dg": "Identifikace specifických diagnóz",
+    "form.skupina": "Skupina", "form.rizikova_kategorie": "Riziková kategorie", "form.serove_markery": "Sérové nádorové markery",
+    "form.p16": "p16 pozitivní", "form.pracoviste_hlasici_novotvar": "Pracoviště hlásící novotvar",
 }
 _SUB = {"status": "událost", "date": "datum", "sites": "lokalizace", "result": "výsledek", "description": "popis",
         "start": "začátek", "end": "konec", "intent": "záměr"}

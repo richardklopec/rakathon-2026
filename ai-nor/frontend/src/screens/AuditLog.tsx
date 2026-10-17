@@ -17,6 +17,7 @@ const KIND: Record<string, [string, string]> = {
   patient_changed: ['Změna pacienta', 'bg-fno-sky'],
   report_confirmed: ['Potvrzení hlášení', 'bg-emerald-600'],
   fhir_submitted: ['Zápis do IRIS FHIR', 'bg-fno-800'],
+  fhir_failed: ['Zápis do IRIS FHIR se nepovedl', 'bg-amber-500'],
 }
 const SHOWN = 8
 

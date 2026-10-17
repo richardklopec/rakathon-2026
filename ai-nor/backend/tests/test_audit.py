@@ -97,5 +97,8 @@ def test_report_edit_through_the_api_is_logged_with_the_user(no_iris):
 
     log = client.get("/api/cases/audit-demo/audit").json()
     assert log["iris"] is False
-    (e,) = log["entries"]
+    e, written = log["entries"]
     assert (e["actor"], e["kind"], e["label"], e["new"]) == ("MUDr. Nováková", audit.FILLED if e["old"] is None else audit.CHANGED, "Grading", "3")
+    # the saved case went to IRIS FHIR as a draft (it had not been written yet)
+    assert (written["actor"], written["kind"]) == ("MUDr. Nováková", audit.FHIR_SUBMITTED)
+    assert written["new"].startswith("rozpracované hlášení (preliminary), Composition/audit-demo")

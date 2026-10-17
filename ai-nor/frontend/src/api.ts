@@ -80,6 +80,31 @@ export interface DocumentT {
   text: string
 }
 
+// NOR form fields the documents do not give, typed in the preview (backend models.FormFields; null = default)
+export interface FormFields {
+  zarizeni: string | null
+  oddeleni: string | null
+  neznamo: boolean
+  cizinec: boolean
+  zeme_puvodu: string | null
+  identifikace_specifickych_dg: string | null
+  skupina: string | null
+  rizikova_kategorie: string | null
+  serove_markery: string | null
+  p16: string | null
+  pracoviste_hlasici_novotvar: number | null // bits: 1 stanovilo diagnózu, 2 léčí pacienta
+}
+
+// the case in the IRIS FHIR server (backend app/fhir/sync.py): written after the AI extraction, then updated in place
+export interface FhirRecord {
+  status: 'preliminary' | 'final' | null // preliminary = rozpracované (čeká na lékaře), final = potvrzené lékařem
+  composition: string | null // "Composition/<case id>": the report as a whole
+  version: string | null // FHIR versionId after the last write
+  resources: string[]
+  synced_at: string | null
+  error: string | null // the last write failed; the case itself is saved in IRIS (Nor.CaseRecord)
+}
+
 export interface Case {
   id: string
   patient_ref: string | null
@@ -88,9 +113,12 @@ export interface Case {
   warnings: string[]
   confirmed_by: string | null
   confirmed_at: string | null
-  fhir_bundle_id: string | null
+  form: FormFields
+  fhir: FhirRecord
+  nis_ids: string[] // NIS reports the case was made from
   updated_at: string
   ai_confidence: AiConfidence
+  document_rc: string | null // birth number the documents give (most of them), valid or not
 }
 
 // one entry of the change log (backend app/audit.py, IRIS table Nor.Audit)
@@ -99,7 +127,7 @@ export interface AuditEntry {
   case_id: string
   at: string // ISO 8601 UTC
   actor: string
-  kind: string // filled | changed | resolved | confirmed | confirmed_missing | rejected | removed | case_created | extracted | patient_changed | report_confirmed | fhir_submitted
+  kind: string // filled | changed | resolved | confirmed | confirmed_missing | rejected | removed | case_created | extracted | patient_changed | report_confirmed | fhir_submitted | fhir_failed
   path: string | null
   label: string | null
   old: string | null
@@ -169,11 +197,18 @@ export const api = {
       headers: { 'Content-Type': 'application/json', ...actorHeader() },
       body: JSON.stringify({ patient_ref: patientRef }),
     }).then(json<Case>),
+  updateForm: (id: string, form: FormFields) =>
+    fetch(`/api/cases/${id}/form`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...actorHeader() },
+      body: JSON.stringify(form),
+    }).then(json<Case>),
   codelists: () => fetch('/api/codelists').then(json<Codelists>),
   uzisPreview: (id: string) => fetch(`/api/cases/${id}/uzis-preview`).then(json<Record<string, unknown>>),
   confirm: (id: string, by: string) => post(`/api/cases/${id}/confirm`, { by }).then(json<Case>),
   uzisExportUrl: (id: string) => `/api/cases/${id}/uzis-export`,
-  submit: (id: string) => post(`/api/cases/${id}/submit`).then(json<{ entry?: unknown[] }>),
+  /** Write the FHIR record again (after IRIS was down); every change of the case does it by itself. */
+  fhirSync: (id: string) => post(`/api/cases/${id}/fhir-sync`).then(json<Case>),
   nisInbox: () => fetch('/api/nis/inbox').then(json<{ iris: boolean; patients: NisPatient[] }>),
   nisImport: (patient: string, ids: string[]) => post('/api/nis/import', { patient, ids }).then(json<Case>),
   exportStatus: () => fetch('/api/exports').then(json<Record<string, ExportInfo>>),

@@ -1,11 +1,12 @@
 // Tab "Seznam hlášení": all cases with their status, searchable and filterable; a row opens the case in Vytěžování.
-// Confirmed reports can be selected for a bulk export (CSV / JSON) or sent to IRIS FHIR; an icon column shows the result.
+// The cases come from IRIS (Nor.CaseRecord); each one is also kept in IRIS FHIR (draft, then final), shown by an icon.
+// Confirmed reports can be selected for a bulk export (CSV / JSON).
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { api, type Case, type Codelists, type ExportInfo } from '../api'
 import { go, href } from '../router'
 import { Icon } from '../icons'
 import { Notice, PageHeader, ScoreBadge, StatusBadge } from '../ui'
-import { STATUS, STATUS_ORDER, btn, caseStatus, pendingCount, diagnosis, fold, formatDate, input, panel, patientName, type CaseStatus } from '../lib'
+import { STATUS, STATUS_ORDER, btn, caseStatus, fhirState, pendingCount, diagnosis, fold, formatDate, input, panel, patientName, type CaseStatus } from '../lib'
 
 type SortKey = 'updated' | 'patient' | 'score' | 'review'
 
@@ -17,12 +18,10 @@ function exportState(c: Case, info: ExportInfo | undefined): 'none' | 'ok' | 'st
   return c.confirmed_at && new Date(info.at) >= new Date(c.confirmed_at) ? 'ok' : 'stale'
 }
 
-export default function CaseList({ cases, lists, status, fhirUp, onChanged }: {
+export default function CaseList({ cases, lists, status }: {
   cases: Case[]
   lists: Codelists | null
   status: string | null
-  fhirUp: boolean
-  onChanged: () => void
 }) {
   const [q, setQ] = useState('')
   const [sort, setSort] = useState<SortKey>('updated')
@@ -55,6 +54,7 @@ export default function CaseList({ cases, lists, status, fhirUp, onChanged }: {
 
   // only confirmed reports can be exported; one un-confirmed meanwhile drops out of the selection
   const chosen = cases.filter((c) => selected.has(c.id) && c.confirmed_at)
+  const confirmed = cases.filter((c) => c.confirmed_at)
   const selectable = rows.filter((r) => r.c.confirmed_at).map((r) => r.c.id)
   const allOn = selectable.length > 0 && selectable.every((id) => selected.has(id))
   const toggle = (id: string) => setSelected((s) => {
@@ -64,12 +64,12 @@ export default function CaseList({ cases, lists, status, fhirUp, onChanged }: {
     return n
   })
 
-  async function exportAs(format: 'csv' | 'json') {
+  async function exportAs(format: 'csv' | 'json', which: Case[] = chosen) {
     setBusy('Exportuji…')
     setResult(null)
     try {
-      const name = await api.exportReports(chosen.map((c) => c.id), format)
-      setResult({ tone: 'ok', text: `Exportováno ${chosen.length} hlášení do souboru ${name}.` })
+      const name = await api.exportReports(which.map((c) => c.id), format)
+      setResult({ tone: 'ok', text: `Exportováno ${which.length} hlášení do souboru ${name}.` })
       setSelected(new Set())
       loadExports()
     } catch (e) {
@@ -79,31 +79,18 @@ export default function CaseList({ cases, lists, status, fhirUp, onChanged }: {
     }
   }
 
-  async function sendToFhir() {
-    setResult(null)
-    const failed: string[] = []
-    for (const [n, c] of chosen.entries()) {
-      setBusy(`Odesílám do IRIS FHIR ${n + 1}/${chosen.length}…`)
-      try {
-        await api.submit(c.id)
-      } catch (e) {
-        failed.push(`${patientName(c)}: ${errorText(e)}`)
-      }
-    }
-    setBusy(null)
-    const ok = chosen.length - failed.length
-    setResult(failed.length
-      ? { tone: ok ? 'warn' : 'error', text: `Do IRIS FHIR uloženo ${ok} z ${chosen.length}. ${failed.join('; ')}` }
-      : { tone: 'ok', text: `Do IRIS FHIR uloženo ${ok} hlášení.` })
-    setSelected(new Set())
-    onChanged()
-  }
-
   return (
     <>
       <PageHeader title="Seznam hlášení"
-        actions={<a href={href('novy')} className={btn.primary}><Icon.userPlus width={16} height={16} />Nový pacient</a>}>
-        Všechna hlášení incidence. Klikněte na řádek a otevře se kontrola hlášení. Potvrzená hlášení zaškrtněte pro export nebo odeslání do IRIS.
+        actions={<>
+          <button className={btn.secondary} disabled={!confirmed.length || !!busy} onClick={() => exportAs('json', confirmed)}
+            title={confirmed.length ? `Stáhne všech ${confirmed.length} potvrzených hlášení ve struktuře formuláře ÚZIS (JSON)` : 'Zatím žádné potvrzené hlášení'}>
+            <Icon.download width={16} height={16} />Export pro ÚZIS ({confirmed.length})
+          </button>
+          <a href={href('novy')} className={btn.primary}><Icon.userPlus width={16} height={16} />Nový pacient</a>
+        </>}>
+        Všechna hlášení incidence uložená v IRIS. Klikněte na řádek a otevře se kontrola hlášení. Potvrzená hlášení zaškrtněte pro export.
+        Do IRIS FHIR se každé hlášení zapisuje samo: po vytěžení jako rozpracované, po potvrzení jako konečné.
       </PageHeader>
 
       <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -128,10 +115,6 @@ export default function CaseList({ cases, lists, status, fhirUp, onChanged }: {
           <span className="mr-1 text-sm font-medium text-fno-950">Vybráno {chosen.length}</span>
           <button className={btn.primary} disabled={!!busy} onClick={() => exportAs('csv')}><Icon.download width={16} height={16} />Export CSV</button>
           <button className={btn.secondary} disabled={!!busy} onClick={() => exportAs('json')}><Icon.download width={16} height={16} />Export JSON</button>
-          <button className={btn.secondary} disabled={!!busy || !fhirUp} onClick={sendToFhir}
-            title={fhirUp ? 'Zapíše vybraná hlášení do IRIS FHIR' : 'IRIS FHIR není připojený'}>
-            <Icon.send width={16} height={16} />Odeslat do IRIS FHIR
-          </button>
           <span className="flex-1" />
           {busy && <span className="text-sm text-fno-900" aria-live="polite">{busy}</span>}
           <button className={btn.ghost} onClick={() => setSelected(new Set())}>Zrušit výběr</button>
@@ -155,7 +138,7 @@ export default function CaseList({ cases, lists, status, fhirUp, onChanged }: {
               <Th sortKey="review" sort={sort} setSort={setSort} right>Ke kontrole</Th>
               <th className="px-4 py-2.5 font-medium">Stav</th>
               <Th sortKey="updated" sort={sort} setSort={setSort}>Upraveno</Th>
-              <th className="w-16 px-2 py-2.5 text-center font-medium">Export</th>
+              <th className="w-20 px-2 py-2.5 text-center font-medium">Export · FHIR</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -195,9 +178,13 @@ export default function CaseList({ cases, lists, status, fhirUp, onChanged }: {
   )
 }
 
-/** Only icons, to keep the list narrow: exported (green; amber when the report changed since) and stored in IRIS FHIR. */
+const FHIR_ICON = { draft: 'text-fno-sky', final: 'text-fno-800', error: 'text-amber-600' }
+
+/** Only icons, to keep the list narrow: exported (green; amber when the report changed since) and the IRIS FHIR record
+ * (light blue = draft, navy = final, amber = the last write failed). */
 function ExportIcons({ c, info }: { c: Case; info: ExportInfo | undefined }) {
   const state = exportState(c, info)
+  const fhir = fhirState(c)
   return (
     <span className="flex items-center justify-center gap-1.5">
       {info && state !== 'none' && (
@@ -207,12 +194,12 @@ function ExportIcons({ c, info }: { c: Case; info: ExportInfo | undefined }) {
           <Icon.download width={17} height={17} />
         </span>
       )}
-      {c.fhir_bundle_id && (
-        <span role="img" className="text-fno-800" aria-label="Uloženo v IRIS FHIR" title={`Uloženo v IRIS FHIR (bundle ${c.fhir_bundle_id})`}>
+      {fhir.tone !== 'none' && (
+        <span role="img" className={FHIR_ICON[fhir.tone]} aria-label={fhir.text} title={c.fhir.error ?? fhir.text}>
           <Icon.database width={17} height={17} />
         </span>
       )}
-      {state === 'none' && !c.fhir_bundle_id && <span className="text-slate-300" aria-label="Neexportováno" title="Neexportováno">–</span>}
+      {state === 'none' && fhir.tone === 'none' && <span className="text-slate-300" aria-label="Neexportováno" title="Neexportováno">–</span>}
     </span>
   )
 }

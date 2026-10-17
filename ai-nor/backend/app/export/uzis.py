@@ -33,7 +33,7 @@ def _bits(values) -> int | None:
 
 
 def build(case: Case) -> dict:
-    r, s = case.report, get_settings()
+    r, s, f = case.report, get_settings(), case.form
     icd = _v(r.icd10)
     lat = _v(r.laterality)
     grade = _v(r.grade)
@@ -43,17 +43,20 @@ def build(case: Case) -> dict:
 
     form = {
         "diagnosticka_cast": {
-            "zarizeni": s.reporting_facility,
-            "oddeleni": s.reporting_department or None,
-            "zeme_puvodu": "203 - Česko",
+            "zarizeni": f.zarizeni or s.reporting_facility,
+            "oddeleni": f.oddeleni or s.reporting_department or None,
+            "zeme_puvodu": f.zeme_puvodu or "203 - Česko",
         },
         "diagnoza": {
+            "neznamo": f.neznamo,
+            "cizinec": f.cizinec,
             "datum_stanoveni_diagnozy": _date(r.diagnosis_date),
             "k_dg_vedla_vysetreni": _bits(_v(r.diagnosis_basis)),
             "lateralita": LATERALITY_LABEL[LATERALITY_NOR[lat]] if lat else None,
             "dg_mkn": icd,
             "dg_slovne": mkn10.lookup(icd) if icd else None,
             "topografie": (mkn10.topography_label(_v(r.topography)) or _v(r.topography)) if _v(r.topography) else None,
+            "identifikace_specifickych_dg": f.identifikace_specifickych_dg,
         },
         "morfologie": {
             "typ_morfologie": _v(r.morphology_type),
@@ -62,6 +65,7 @@ def build(case: Case) -> dict:
             "nazev_morfologie": _v(r.morphology_name),
         },
         "tnm": {
+            "skupina": f.skupina,
             "T": _v(r.tnm_clinical.t), "N": _v(r.tnm_clinical.n), "M": _v(r.tnm_clinical.m),
             "y": y,
             "pT": _v(r.tnm_pathological.t), "pN": _v(r.tnm_pathological.n),
@@ -69,12 +73,16 @@ def build(case: Case) -> dict:
             "sn": SENTINEL_LABEL.get(_v(r.sentinel_node)) if _v(r.sentinel_node) else None, "pM": _v(r.tnm_pathological.m),
             "lokalizace_vzdalenych_metastaz": _bits(_v(r.metastasis_sites)),
             "klinicke_stadium": STAGE_NOR.get(stage, stage) if stage else None,
+            "rizikova_kategorie": f.rizikova_kategorie,
+            "serove_markery": f.serove_markery,
+            "p16": f.p16,
         },
         "ostatni": {"onemocneni": DISEASE_EXTENT_NOR.get(extent, extent) if extent else None},
         "hlaseni": {
             "datum_hlaseni": case.confirmed_at.date().isoformat() if case.confirmed_at else None,
             "jmeno_hlasiciho_lekare": case.confirmed_by,
-            "pracoviste_hlasici_novotvar": 3,  # 1 stanovilo dg. + 2 léčí (default for FNO oncology)
+            # 1 stanovilo dg. + 2 léčí (default 3 for FNO oncology)
+            "pracoviste_hlasici_novotvar": 3 if f.pracoviste_hlasici_novotvar is None else f.pracoviste_hlasici_novotvar,
         },
     }
     missing = [name for name in REQUIRED if _v(getattr(case.report, name)) in (None, [], "")]

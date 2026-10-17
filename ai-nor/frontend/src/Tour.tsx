@@ -42,7 +42,7 @@ const STEPS: Step[] = [
   },
   {
     tab: 'vytezovani', withCase: true, targets: ['audit'], title: 'Historie změn v InterSystems IRIS',
-    text: 'Každá změna se zapíše: kdo, kdy, které pole, původní a nová hodnota. Záznamy se ukládají do databáze InterSystems IRIS (tabulka Nor.Audit), vedle FHIR serveru, kam jde potvrzené hlášení.',
+    text: 'Každá změna se zapíše: kdo, kdy, které pole, původní a nová hodnota. Záznamy se ukládají do databáze InterSystems IRIS (tabulka Nor.Audit), vedle hlášení samotných a jejich záznamu ve FHIR serveru.',
   },
   {
     tab: 'hlaseni', targets: ['cases'], title: 'Seznam hlášení',

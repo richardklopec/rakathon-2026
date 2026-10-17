@@ -715,6 +715,82 @@
       "title": "Extracted[str]",
       "type": "object"
     },
+    "FhirRecord": {
+      "description": "The case in the IRIS FHIR server (app/fhir/sync.py): written after the AI extraction, then updated in place.",
+      "properties": {
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "composition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Composition"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        },
+        "resources": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Resources",
+          "type": "array"
+        },
+        "synced_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Synced At"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        }
+      },
+      "title": "FhirRecord",
+      "type": "object"
+    },
     "FieldStatus": {
       "enum": [
         "found",
@@ -724,6 +800,131 @@
       ],
       "title": "FieldStatus",
       "type": "string"
+    },
+    "FormFields": {
+      "description": "NOR form fields the documents do not give: typed in the preview by hand. None = the default (settings / form).",
+      "properties": {
+        "zarizeni": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Zarizeni"
+        },
+        "oddeleni": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Oddeleni"
+        },
+        "neznamo": {
+          "default": false,
+          "title": "Neznamo",
+          "type": "boolean"
+        },
+        "cizinec": {
+          "default": false,
+          "title": "Cizinec",
+          "type": "boolean"
+        },
+        "zeme_puvodu": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Zeme Puvodu"
+        },
+        "identifikace_specifickych_dg": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Identifikace Specifickych Dg"
+        },
+        "skupina": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skupina"
+        },
+        "rizikova_kategorie": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rizikova Kategorie"
+        },
+        "serove_markery": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Serove Markery"
+        },
+        "p16": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "P16"
+        },
+        "pracoviste_hlasici_novotvar": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pracoviste Hlasici Novotvar"
+        }
+      },
+      "title": "FormFields",
+      "type": "object"
     },
     "Laterality": {
       "enum": [
@@ -1998,17 +2199,40 @@
       "default": null,
       "title": "Confirmed At"
     },
-    "fhir_bundle_id": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Fhir Bundle Id"
+    "form": {
+      "$ref": "#/$defs/FormFields",
+      "default": {
+        "zarizeni": null,
+        "oddeleni": null,
+        "neznamo": false,
+        "cizinec": false,
+        "zeme_puvodu": null,
+        "identifikace_specifickych_dg": null,
+        "skupina": null,
+        "rizikova_kategorie": null,
+        "serove_markery": null,
+        "p16": null,
+        "pracoviste_hlasici_novotvar": null
+      }
+    },
+    "fhir": {
+      "$ref": "#/$defs/FhirRecord",
+      "default": {
+        "status": null,
+        "composition": null,
+        "version": null,
+        "resources": [],
+        "synced_at": null,
+        "error": null
+      }
+    },
+    "nis_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Nis Ids",
+      "type": "array"
     },
     "created_at": {
       "format": "date-time",

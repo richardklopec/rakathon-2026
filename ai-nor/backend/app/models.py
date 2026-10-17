@@ -190,6 +190,33 @@ class Document(BaseModel):
     text: str
 
 
+class FormFields(BaseModel):
+    """NOR form fields the documents do not give: typed in the preview by hand. None = the default (settings / form)."""
+
+    zarizeni: str | None = None  # Zařízení (pracoviště); default REPORTING_FACILITY
+    oddeleni: str | None = None  # Oddělení; default REPORTING_DEPARTMENT
+    neznamo: bool = False  # Neznámo (bezdomovec, neudaný pobyt)
+    cizinec: bool = False
+    zeme_puvodu: str | None = None  # default "203 - Česko"
+    identifikace_specifickych_dg: str | None = None
+    skupina: str | None = None  # TNM skupina
+    rizikova_kategorie: str | None = None
+    serove_markery: str | None = None
+    p16: str | None = None
+    pracoviste_hlasici_novotvar: int | None = None  # bits: 1 stanovilo diagnózu, 2 léčí pacienta; default 3
+
+
+class FhirRecord(BaseModel):
+    """The case in the IRIS FHIR server (app/fhir/sync.py): written after the AI extraction, then updated in place."""
+
+    status: str | None = None  # preliminary = draft, not confirmed yet | final = confirmed by a clinician
+    composition: str | None = None  # "Composition/<case id>": the report as a whole
+    version: str | None = None  # versionId of the Composition after the last write
+    resources: list[str] = []  # "Type/id" written by the last sync; resources that drop out later are deleted
+    synced_at: datetime | None = None
+    error: str | None = None  # the last write failed (FHIR down): the case is safe in Nor.CaseRecord, FHIR is behind
+
+
 class Case(BaseModel):
     id: str
     patient_ref: str | None = None  # anonymised id from the source system
@@ -198,7 +225,9 @@ class Case(BaseModel):
     warnings: list[str] = []  # case-level validation (identity mismatch, sex vs. diagnosis, ...)
     confirmed_by: str | None = None  # clinician who confirmed the whole report preview
     confirmed_at: datetime | None = None
-    fhir_bundle_id: str | None = None
+    form: FormFields = FormFields()
+    fhir: FhirRecord = FhirRecord()
+    nis_ids: list[str] = []  # NIS reports (IRIS FHIR DocumentReference ids) the case was made from
     created_at: datetime
     updated_at: datetime
 
@@ -208,3 +237,12 @@ class Case(BaseModel):
         from app.confidence import overall  # confidence.py imports this module
 
         return overall(self.report)
+
+    @computed_field
+    @property
+    def document_rc(self) -> str | None:
+        """Birth number written in the documents (the one most documents agree on), RRMMDD/XXXX, valid or not."""
+        from app.validate.rodne_cislo import identifiers  # rodne_cislo imports this module
+
+        found = identifiers(self.documents)
+        return max(found, key=lambda rc: len(found[rc][1])) if found else None

@@ -2,7 +2,7 @@
 // Display values come from GET /api/cases/{id}/uzis-preview; the editable controls read and write the NorReport itself
 // (select options from GET /api/codelists), so an edit here is the same as a clinician's edit in the review queue.
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
-import { getField, type Codelists, type NorReport, type Option, type PartialDate, type TNM } from './api'
+import { getField, type Codelists, type NorReport, type Option, type PartialDate, type TNM, type FormFields } from './api'
 
 type Rec = Record<string, unknown>
 
@@ -216,13 +216,14 @@ function Fieldset({ legend, children }: { legend: ReactNode; children: ReactNode
   )
 }
 
-export default function NorFormPreview({ data, report, lists, editable, onEdit, onPatient }: {
+export default function NorFormPreview({ data, report, lists, editable, onEdit, onPatient, onForm }: {
   data: Rec
   report: NorReport
   lists: Codelists | null
   editable: boolean
   onEdit: (change: (r: NorReport) => void) => void
   onPatient: (ref: string | null) => Promise<string | null> // error message or null
+  onForm: (patch: Partial<FormFields>) => void // fields not in the documents (Case.form)
 }) {
   const dc = (data.diagnosticka_cast ?? {}) as Rec
   const dg = (data.diagnoza ?? {}) as Rec
@@ -249,6 +250,10 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
       f.review = { ...f.review, state: 'edited' }
     })
   const opts = (name: string) => lists?.[name] ?? []
+  // free text the documents do not give (facility, country, TNM group...): shown from the preview data, saved in Case.form
+  const free = (key: keyof FormFields, shown: unknown, className = '') => (
+    <TextInput key={txt(shown)} value={shown} disabled={off} className={className} onCommit={(v) => onForm({ [key]: v.trim() || null })} />
+  )
 
   // fixed list -> native select; long list -> searchable code select; no code lists loaded -> free text
   const sel = (path: string, list: string, className = '') =>
@@ -311,20 +316,23 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
 
         <h3 className="mt-6 text-[18px] text-[#3c4a6e]">Diagnostická část</h3>
         <div className="mt-2 grid grid-cols-[2fr_1fr] gap-4 rounded-md border border-slate-300 p-3">
-          <div><Label>Zařízení (pracoviště):</Label><Box value={dc.zarizeni} /></div>
-          <div><Label>Oddělení:</Label><Box value={dc.oddeleni} /></div>
+          <div><Label>Zařízení (pracoviště):</Label>{free('zarizeni', dc.zarizeni)}</div>
+          <div><Label>Oddělení:</Label>{free('oddeleni', dc.oddeleni)}</div>
         </div>
 
         <Fieldset legend="Diagnóza">
           <div className="grid grid-cols-[1fr_1fr] gap-4">
             <div className="space-y-2">
-              <div className="flex gap-4"><Check checked={false} label="Neznámo (bezdomovec, neudaný pobyt)" /><Check checked={false} label="Cizinec" /></div>
+              <div className="flex gap-4">
+                <Check checked={dg.neznamo === true} label="Neznámo (bezdomovec, neudaný pobyt)" disabled={off} onToggle={() => onForm({ neznamo: dg.neznamo !== true })} />
+                <Check checked={dg.cizinec === true} label="Cizinec" disabled={off} onToggle={() => onForm({ cizinec: dg.cizinec !== true })} />
+              </div>
               <Label>Datum stanovení diagnózy (není-li známo, uvést datum vyšetření nebo zahájení léčby):</Label>
               <TextInput key={txt(dg.datum_stanoveni_diagnozy)} value={dg.datum_stanoveni_diagnozy} disabled={off} className="w-44"
                 placeholder="d.m.rrrr" validate={(v) => (parseDate(v) === 'invalid' ? 'datum d.m.rrrr, m.rrrr nebo rrrr, ne v budoucnosti' : null)}
                 onCommit={(v) => set('diagnosis_date', parseDate(v))} />
             </div>
-            <div><Label>Země původu:</Label><Box value={dc.zeme_puvodu} className="w-56" /></div>
+            <div><Label>Země původu:</Label>{free('zeme_puvodu', dc.zeme_puvodu, 'w-56')}</div>
           </div>
 
           <div className="mt-4 grid grid-cols-[1fr_2fr] gap-4">
@@ -338,7 +346,7 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
           <div className="mt-4 grid grid-cols-[1.3fr_1fr_1fr] gap-3">
             <div><Label>Dg. MKN:</Label>{code('icd10', 'icd10')}</div>
             <div><Label>Dg. slovně:</Label><Box value={dg.dg_slovne} /></div>
-            <div><Label>Identifikace specifických diagnóz:</Label><Box value="" /></div>
+            <div><Label>Identifikace specifických diagnóz:</Label>{free('identifikace_specifickych_dg', dg.identifikace_specifickych_dg)}</div>
           </div>
           <div className="mt-3 grid grid-cols-[2fr_1fr] items-end gap-3">
             <div><Label>Topografie:</Label>{code('topography', 'topography')}</div>
@@ -357,7 +365,7 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
         </Fieldset>
 
         <Fieldset legend={<>TNM <span className="inline-block h-3.5 w-3.5 rounded-full bg-blue-600" /></>}>
-          <div className="flex items-center gap-2"><span className="text-[13px] italic">Skupina:</span><Box value="" className="w-56" /></div>
+          <div className="flex items-center gap-2"><span className="text-[13px] italic">Skupina:</span>{free('skupina', t.skupina, 'w-56')}</div>
           <div className="mt-2 flex items-start gap-3 pl-8 text-[13px] italic">
             <span className="pt-1.5 underline">T</span>{tnm('tnm_clinical.t', 't')}
             <span className="pt-1.5 underline">N</span>{tnm('tnm_clinical.n', 'n')}
@@ -382,10 +390,10 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
           <div className="mt-4 flex items-center gap-2"><span className="text-[13px]">Lokalizace vzdálených metastáz:</span><Box value={t.lokalizace_vzdalenych_metastaz} className="w-14" /></div>
           <div className="mt-2 grid grid-flow-col grid-rows-3 gap-y-2">{bits('metastasis_sites', 'metastasis_sites', t.lokalizace_vzdalenych_metastaz)}</div>
 
-          <div className="mt-4 grid grid-cols-3 gap-3 opacity-60">
-            <div><Label>Riziková kategorie:</Label><Box value="" /></div>
-            <div><Label>Sérové nádorové markery:</Label><Box value="" /></div>
-            <div><Label>p16 pozitivní</Label><Box value="" /></div>
+          <div className="mt-4 grid grid-cols-3 gap-3">
+            <div><Label>Riziková kategorie:</Label>{free('rizikova_kategorie', t.rizikova_kategorie)}</div>
+            <div><Label>Sérové nádorové markery:</Label>{free('serove_markery', t.serove_markery)}</div>
+            <div><Label>p16 pozitivní</Label>{free('p16', t.p16)}</div>
           </div>
           <div className="mt-2 flex items-end gap-3">
             <div className="w-56"><Label>Klinické stádium:</Label>{sel('clinical_stage', 'clinical_stage')}</div>
@@ -404,8 +412,8 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
           </div>
           <div className="mt-3 flex items-center gap-2 text-[13px]">Pracoviště hlásící novotvar: <Box value={String(reporting).padStart(2, '0')} className="w-12" /></div>
           <div className="mt-2 flex gap-4">
-            <Check checked={(reporting & 1) === 1} label="stanovilo diagnózu novotvaru" />
-            <Check checked={(reporting & 2) === 2} label="léčí pacienta s novotvarem" />
+            <Check checked={(reporting & 1) === 1} label="stanovilo diagnózu novotvaru" disabled={off} onToggle={() => onForm({ pracoviste_hlasici_novotvar: reporting ^ 1 })} />
+            <Check checked={(reporting & 2) === 2} label="léčí pacienta s novotvarem" disabled={off} onToggle={() => onForm({ pracoviste_hlasici_novotvar: reporting ^ 2 })} />
           </div>
         </div>
       </div>
