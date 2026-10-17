@@ -66,10 +66,10 @@ def test_metrics():
     m = ev.metrics(ev.rows_for("syn", 1, _report(), GOLD))
     assert m["scored"] == 8 and m["correct"] == 4
     assert (m["wrong"], m["false_missing"], m["false_filled"]) == (2, 1, 1)
-    assert m["errors_flagged"] == 3  # pn_examined (conflict), clinical_stage (70 < 85), grade (missing mandatory); icd10 slips through
+    assert m["errors_flagged"] == 3  # pn_examined (conflict), clinical_stage (70 < 80), grade (missing mandatory); icd10 slips through
     assert m["auto"] == 3 and m["auto_correct"] == 2  # icd10 (wrong), laterality, diagnosis_basis
     bands = {b["band"]: b for b in m["bands"]}
-    assert bands["85–100"]["n"] == 3 and bands["85–100"]["correct"] == 2
+    assert bands["80–100"]["n"] == 3 and bands["80–100"]["correct"] == 2
 
 
 def test_warnings_and_variance():

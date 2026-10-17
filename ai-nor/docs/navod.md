@@ -52,7 +52,7 @@ V záhlaví hlášení ve Vytěžování uvidíte:
 Oranžově orámovaný blok **Ke kontrole** obsahuje jen dvě situace:
 
 - **Rozpor**: dvě zprávy uvádějí pro stejné pole různou hodnotu. Klikněte na **citace 1**, **citace 2** a porovnejte zdroje. Pak klikněte na tlačítko se správnou hodnotou.
-- **Nízká jistota**: AI si hodnotou není jistá (skóre pod 85). Ověřte ji v citaci a zvolte:
+- **Nízká jistota**: AI si hodnotou není jistá (skóre pod 80). Ověřte ji v citaci a zvolte:
   - **Potvrdit**: hodnota je správně,
   - **návrh**: vybrat jinou hodnotu, kterou AI našla v dokumentaci,
   - **Upravit**: zadat vlastní hodnotu,
@@ -64,7 +64,7 @@ Pole se seřadí tak, že rozpory jsou nahoře a pak pole od nejnižší jistoty
 
 Pod blokem ke kontrole je vlevo text zprávy a vpravo celý formulář rozdělený na **Diagnóza**, **Morfologie**, **TNM** a **Ostatní**. U každého pole:
 
-- **číslo** je jistota AI (zelená 85–100, oranžová 60–84, červená pod 60, fialová rozpor); po najetí myší vidíte důvody,
+- **číslo** je jistota AI (zelená 80–100, oranžová 60–79, červená pod 60, fialová rozpor); po najetí myší vidíte důvody,
 - **předvyplněno** = převzato od AI automaticky, **potvrzeno** = potvrdili jste, **opraveno** = změnili jste hodnotu,
 - **zdroj** otevře zprávu vlevo a žlutě zvýrazní přesné místo, odkud údaj pochází,
 - „chybí v dokumentaci“ znamená, že údaj ve zprávách není. AI ho nedomýšlí.
@@ -125,8 +125,8 @@ Spustí vytěžení znovu ze stejných zpráv. Použijte ho po změně nastaven�
 
 ## Barvy a značky
 
-- **Zelená 85–100**: předvyplněno, citace ověřena, žádný rozpor.
-- **Oranžová 60–84**: ke kontrole.
+- **Zelená 80–100**: předvyplněno, citace ověřena, žádný rozpor.
+- **Oranžová 60–79**: ke kontrole.
 - **Červená 0–59**: ke kontrole, ověřte zvlášť pečlivě.
 - **Fialová, rozpor**: zprávy si odporují, vyberte správnou hodnotu.
 - **Chybí v dokumentaci**: údaj ve zprávách není.

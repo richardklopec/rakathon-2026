@@ -34,7 +34,7 @@ const STEPS: Step[] = [
   },
   {
     tab: 'vytezovani', withCase: true, targets: ['evidence'], title: 'Citace a jistota AI',
-    text: 'Vlevo je zpráva, vpravo pole formuláře NOR. Číslo u pole je jistota AI 0–100 a odkaz Zdroj zvýrazní přesné místo ve zprávě. Pole s jistotou 85 a víc bez rozporu jsou předvyplněná.',
+    text: 'Vlevo je zpráva, vpravo pole formuláře NOR. Číslo u pole je jistota AI 0–100 a odkaz Zdroj zvýrazní přesné místo ve zprávě. Pole s jistotou 80 a víc bez rozporu jsou předvyplněná.',
   },
   {
     tab: 'vytezovani', withCase: true, targets: ['queue', 'evidence'], title: 'Lékař řeší jen to podstatné',

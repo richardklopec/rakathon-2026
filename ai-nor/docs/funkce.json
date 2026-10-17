@@ -48,8 +48,8 @@
         },
         {
           "nazev": "Automatické předvyplnění a fronta ke kontrole",
-          "sluzba": "práh AUTO_ACCEPT_THRESHOLD (výchozí 85)",
-          "k_cemu": "Pole s jistotou ≥ 85 bez rozporu a s ověřenou citací se předvyplní. Lékař řeší jen rozpory a nejistá pole.",
+          "sluzba": "práh AUTO_ACCEPT_THRESHOLD (výchozí 80)",
+          "k_cemu": "Pole s jistotou ≥ 80 bez rozporu a s ověřenou citací se předvyplní. Lékař řeší jen rozpory a nejistá pole.",
           "kde": "backend/app/confidence.py (apply_review_policy)",
           "stav": "hotovo"
         },

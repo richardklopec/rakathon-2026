@@ -9,7 +9,7 @@ import AuditLog from './AuditLog'
 import { href } from '../router'
 import { Icon } from '../icons'
 import { Notice, PageHeader, StatusBadge } from '../ui'
-import { btn, fhirState, panel, patientName, pendingCount } from '../lib'
+import { AUTO_ACCEPT, btn, fhirState, panel, patientName, pendingCount } from '../lib'
 
 const SECTIONS: [string, [string, string][]][] = [
   ['Diagnóza', [
@@ -53,7 +53,7 @@ function badge(f: Extracted): string {
   if (f.status === 'missing') return 'bg-red-50 text-red-800'
   if (f.status === 'conflict') return 'bg-violet-100 text-violet-800'
   const c = f.confidence ?? 0
-  return c >= 85 ? 'bg-emerald-50 text-emerald-800' : c >= 60 ? 'bg-amber-50 text-amber-800' : 'bg-red-50 text-red-800'
+  return c >= AUTO_ACCEPT ? 'bg-emerald-50 text-emerald-800' : c >= 60 ? 'bg-amber-50 text-amber-800' : 'bg-red-50 text-red-800'
 }
 
 const needsHuman = (f: Extracted) => f.needs_review && f.review.state === 'pending'
@@ -61,7 +61,7 @@ const needsHuman = (f: Extracted) => f.needs_review && f.review.state === 'pendi
 /** Overall AI confidence of the report (backend confidence.overall), with the breakdown in the tooltip. */
 function AiScore({ c }: { c: AiConfidence | undefined }) {
   if (!c || c.score == null) return <span className="text-slate-500">Jistota AI: —</span>
-  const color = c.score >= 85 ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+  const color = c.score >= AUTO_ACCEPT ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
     : c.score >= 60 ? 'bg-amber-50 text-amber-800 border-amber-200' : 'bg-red-50 text-red-800 border-red-200'
   const detail = [
     `Vážený průměr jistoty ${c.fields_ai} polí vyplněných AI (povinná pole NOR se počítají dvakrát).`,

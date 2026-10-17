@@ -1,6 +1,9 @@
 // Helpers shared by the tabs: case status, formatters, class names.
 import type { Case, Codelists, Extracted, Option } from './api'
 
+/** Fields at or above this AI confidence without a conflict are prefilled (backend AUTO_ACCEPT_THRESHOLD, keep equal). */
+export const AUTO_ACCEPT = 80
+
 // ---------- case status (derived from the case, the backend has no status field) ----------
 
 export type CaseStatus = 'nevytezeno' | 'kontrola' | 'potvrzeni' | 'potvrzeno' | 'fhir'

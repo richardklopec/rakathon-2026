@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     mkn10_rules_pdf: str = "../../Rakathon_DATA_NOR/Rakathon_DATA_NOR/mkn-tabelarni-cast_1-4-2014_2.pdf"
     reporting_facility: str = "00843989000000 - Fakultní nemocnice Ostrava"  # NOR "Zařízení (pracoviště)"
     reporting_department: str = ""  # NOR "Oddělení" (číselník NOR), e.g. "20 - Chirurgie"
-    auto_accept_threshold: int = 85  # fields at/above this score without conflict skip review
+    auto_accept_threshold: int = 80  # fields at/above this score without conflict skip review
     data_dir: Path = REPO_ROOT / "backend" / "var"
     llm_cache_dir: str = ""  # empty = data_dir/llm-cache; scripts.evaluate points it elsewhere for runs without cache
     # gold (reference) values for scripts.evaluate; FNO patients are never in the repo (AGENTS.md)

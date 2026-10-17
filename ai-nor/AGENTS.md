@@ -2,7 +2,7 @@
 
 ## Cíl
 Z české onkologické dokumentace (ambulantní/propouštěcí zprávy, histologie, MDT, operační protokoly) vytěžit
-pole hlášení do **Národního onkologického registru (NOR)** s **citací zdroje**. Pole s jistotou ≥ 85 (0–100) bez rozporu se přijmou automaticky; lékař kontroluje jen rozpory mezi dokumenty a nejistá pole.
+pole hlášení do **Národního onkologického registru (NOR)** s **citací zdroje**. Pole s jistotou ≥ 80 (0–100) bez rozporu se přijmou automaticky; lékař kontroluje jen rozpory mezi dokumenty a nejistá pole.
 Hlášení se ukládají do **InterSystems IRIS for Health** (výzva AI NOR + výzva InterSystems): pracovní stav v SQL tabulce
 `Nor.CaseRecord`, klinický záznam jako **FHIR R4** (po vytěžení rozpracovaný, po potvrzení lékařem konečný). Zprávy z NIS
 přicházejí jako HL7v2 a na FHIR je převádí produkce v IRIS (`infra/iris/src`).

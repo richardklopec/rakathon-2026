@@ -35,9 +35,30 @@ def test_mock_extraction_has_evidence_pointing_into_the_document():
         assert doc.text[ev.start : ev.end] == ev.quote
 
 
-def test_review_policy_auto_accepts_only_confident_fields():
+def _threshold(monkeypatch, value: int) -> None:
+    """Tests of the review mechanism pin the threshold: the demo ICD-10 scores 70, or 80 with the MKN-10 table loaded."""
+    from app.config import get_settings
+
+    monkeypatch.setattr(get_settings(), "auto_accept_threshold", value)
+
+
+def test_default_threshold_is_80_and_a_field_at_it_is_accepted():
+    from app.confidence import apply_review_policy
+    from app.config import Settings
+
+    assert Settings.model_fields["auto_accept_threshold"].default == 80
+    case = _demo_case()
+    case.report.icd10.confidence = 80
+    r = apply_review_policy(case.report)
+    assert r.icd10.review.state == ReviewState.auto_accepted and not r.icd10.needs_review
+    case.report.icd10.confidence, case.report.icd10.review.state = 79, ReviewState.pending
+    assert apply_review_policy(case.report).icd10.needs_review
+
+
+def test_review_policy_auto_accepts_only_confident_fields(monkeypatch):
     from app.confidence import apply_review_policy, review_queue
 
+    _threshold(monkeypatch, 85)
     case = _demo_case()
     r = apply_review_policy(case.report)
     assert r.morphology_code.confidence == 95
@@ -68,9 +89,10 @@ def test_conflict_always_goes_to_review():
     assert r.morphology_code.needs_review  # even with confidence 95
 
 
-def test_bundle_writes_auto_accepted_and_human_confirmed_fields():
+def test_bundle_writes_auto_accepted_and_human_confirmed_fields(monkeypatch):
     from app.confidence import apply_review_policy
 
+    _threshold(monkeypatch, 85)
     case = _demo_case()
     apply_review_policy(case.report)
     bundle = build_bundle(case)

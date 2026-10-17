@@ -1,7 +1,7 @@
 """Review policy: which fields are accepted automatically and which go to the review queue.
 
 Rule (PLAN.md §4): a field goes to review only when the documents conflict or the confidence is below
-AUTO_ACCEPT_THRESHOLD (default 85). Everything else with verified evidence is auto-accepted.
+AUTO_ACCEPT_THRESHOLD (default 80). Everything else with verified evidence is auto-accepted.
 A missing MANDATORY field (export/uzis.REQUIRED) goes to review too: the clinician fills it in or confirms that the
 documentation really does not have it (missing != negative). Missing optional fields are not reviewed.
 

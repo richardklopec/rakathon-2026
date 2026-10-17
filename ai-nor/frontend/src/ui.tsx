@@ -2,7 +2,7 @@
 import type { ReactNode } from 'react'
 import type { Case } from './api'
 import { Icon } from './icons'
-import { STATUS, caseStatus } from './lib'
+import { AUTO_ACCEPT, STATUS, caseStatus } from './lib'
 
 export function StatusBadge({ c }: { c: Case }) {
   const s = STATUS[caseStatus(c)]
@@ -16,7 +16,7 @@ export function StatusBadge({ c }: { c: Case }) {
 
 export function ScoreBadge({ score }: { score: number | null | undefined }) {
   if (score == null) return <span className="text-slate-400">—</span>
-  const cls = score >= 85 ? 'bg-emerald-50 text-emerald-800' : score >= 60 ? 'bg-amber-50 text-amber-800' : 'bg-red-50 text-red-800'
+  const cls = score >= AUTO_ACCEPT ? 'bg-emerald-50 text-emerald-800' : score >= 60 ? 'bg-amber-50 text-amber-800' : 'bg-red-50 text-red-800'
   return <span className={`inline-block min-w-9 rounded px-1.5 py-0.5 text-center text-xs font-semibold tabular-nums ${cls}`}>{score}</span>
 }
 

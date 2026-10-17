@@ -13,9 +13,9 @@ tak, aby ho zdravotník nemusel ručně přepisovat ani kontrolovat pole po poli
 U každého údaje aplikace ukáže **odkud ho vzala** (citace v dokumentu) a **jistotu 0–100**.
 **Samostatně řešit musí lékař jen dvě situace:**
 1. **Rozpor:** dokumenty v systému uvádějí pro stejné pole různé hodnoty.
-2. **Nízká jistota:** AI si hodnotou není jistá (skóre pod prahem, výchozí 85).
+2. **Nízká jistota:** AI si hodnotou není jistá (skóre pod prahem, výchozí 80).
 
-Ostatní pole (bez rozporu, jistota ≥ 85) jsou **předvyplněná**: lékař je nemusí potvrzovat jednotlivě.
+Ostatní pole (bez rozporu, jistota ≥ 80) jsou **předvyplněná**: lékař je nemusí potvrzovat jednotlivě.
 **Nic se ale neodesílá automaticky.** Lékař si na konci zkontroluje **náhled celého hlášení** (všechna pole s citací a jistotou)
 a odešle ho tlačítkem **„Potvrdit hlášení“**. Teprve potom jde export do ÚZIS a zápis do FHIR.
 
@@ -28,7 +28,7 @@ a odešle ho tlačítkem **„Potvrdit hlášení“**. Teprve potom jde export 
 | Méně oprav | počet úprav uživatelem na jedno hlášení (měří UI) | Počet oprav |
 | Méně kontroly | podíl předvyplněných polí, která lékař nemusel řešit jednotlivě (cíl ≥ 70 %), a jejich přesnost (cíl ≥ 97 %) | Čas na záznam |
 | Rychlost | čas od otevření případu po odeslání proti ručnímu postupu (měří UI) | Čas na záznam |
-| Důvěra v AI | indikátor jistoty je kalibrovaný: pole s jistotou ≥ 85 jsou opravdu správná | (něco navíc) |
+| Důvěra v AI | indikátor jistoty je kalibrovaný: pole s jistotou ≥ 80 jsou opravdu správná | (něco navíc) |
 
 **Výstupy:**
 1. **Hlášení pro ÚZIS/NOR** ve struktuře a číselnících formuláře „Incidence zhoubného novotvaru“ (viz §5).
@@ -74,7 +74,7 @@ Kód: `backend/app/`. Moduly a stav (✅ hotovo v kostře, 🔨 udělat):
 | 6 | **Normalizace na číselníky** | `validate/codes.py` | Hodnotu z textu namapovat na položku číselníku, **nikdy nevymýšlet kód** (viz §3.1): kód v textu → přesná shoda s rejstříkem → sémantický výběr z top 5 kandidátů v IRIS. MKN-10 → kód + „Dg. slovně“, MKN-O-3 morfologie a topografie, pevné číselníky formuláře (lateralita 1/2/3/4/9, grading 1–9, „Onemocnění“ 1/2/9) a **bitové součty** („K dg. vedla vyšetření“, „Lokalizace metastáz“, „Pracoviště hlásící“). | ✅ MKN-10 lookup, 🔨 zbytek |
 | 7 | **Validace** | `validate/rules.py` | Platný kód MKN-10 z kapitoly ZN. **Vztah Diagnóza / Topografie / Morfologie** (stejná kontrola jako ve formuláři ÚZIS): C50 ↔ topografie C50.x, chování /3. TNM ↔ stádium. Pořadí dat (dg ≤ operace ≤ adjuvance). Onkoduplicita. Povinná pole → stav **Úplné / Neúplné**. | 🔨 |
 | 8 | **Skóre jistoty 0–100** | `confidence.py` | Skóre z ověřitelných signálů, detekce rozporů mezi dokumenty, rozhodnutí „předvyplněno / ke kontrole“. Viz §4. | 🔨 |
-| 9 | **Kontrola, potvrzení + audit** | `main.py`, `store/` | Pole s jistotou ≥ 85 bez rozporu jsou předvyplněná. Rozpory a pole pod prahem jdou do fronty, kde je lékař potvrdí / upraví / zamítne. Dokud fronta není prázdná, nejde hlášení potvrdit. **Potvrzení celého hlášení** (`POST /api/cases/{id}/confirm`: kdo, kdy) je jediná cesta k exportu ÚZIS a zápisu do FHIR. Každá změna se loguje (kdo, kdy, před → po) a z logu se počítá počet oprav a čas. | ✅ PUT report, 🔨 potvrzení hlášení, audit, metriky |
+| 9 | **Kontrola, potvrzení + audit** | `main.py`, `store/` | Pole s jistotou ≥ 80 bez rozporu jsou předvyplněná. Rozpory a pole pod prahem jdou do fronty, kde je lékař potvrdí / upraví / zamítne. Dokud fronta není prázdná, nejde hlášení potvrdit. **Potvrzení celého hlášení** (`POST /api/cases/{id}/confirm`: kdo, kdy) je jediná cesta k exportu ÚZIS a zápisu do FHIR. Každá změna se loguje (kdo, kdy, před → po) a z logu se počítá počet oprav a čas. | ✅ PUT report, 🔨 potvrzení hlášení, audit, metriky |
 | 10a | **Export ÚZIS** | `export/uzis.py` | Viz §5. | 🔨 |
 | 10b | **FHIR → IRIS** | `fhir/` | Transaction Bundle (Patient, DocumentReference, Condition, Observation TNM a grading, Provenance). Ověřeno proti běžícímu IRIS. | ✅ základ, 🔨 metastázy, markery, léčba |
 | 11 | **Evaluace** | `eval/` | Gold JSON pro syntetických 10 pacientů (XLSX) + pacienty FNO (gold připraví klinik týmu, **mimo repo**). Metriky po polích, kalibrace jistoty, report + graf do pitche. | 🔨 |
@@ -146,13 +146,13 @@ protože bývá špatně kalibrované.
 ### Pravidlo kontroly
 | Situace | Co se stane |
 |---|---|
-| Jistota **≥ 85**, žádný rozpor, citace ověřena | **Předvyplněno.** Pole je vidět s jistotou a citací a jde opravit. Lékař ho nemusí potvrzovat jednotlivě, ale vidí ho v náhledu, který potvrzuje jako celek. |
+| Jistota **≥ 80**, žádný rozpor, citace ověřena | **Předvyplněno.** Pole je vidět s jistotou a citací a jde opravit. Lékař ho nemusí potvrzovat jednotlivě, ale vidí ho v náhledu, který potvrzuje jako celek. |
 | **Rozpor** mezi dokumenty v systému (jiná hodnota stejného pole) | **Ke kontrole** vždy, bez ohledu na skóre. UI ukáže všechny verze s citacemi, uživatel vybere jednu nebo zadá vlastní. |
-| Jistota **< 85** | **Ke kontrole.** Uživatel potvrdí, opraví nebo zamítne. |
+| Jistota **< 80** | **Ke kontrole.** Uživatel potvrdí, opraví nebo zamítne. |
 | Údaj v dokumentaci **chybí** | Nejde do fronty kontroly. Zobrazí se v přehledu „Chybí v dokumentaci“. Pokud je pole povinné, hlášení je „Neúplné“ a uživatel ho může doplnit. |
 | **Celé hlášení** | Až je fronta prázdná, lékař otevře **náhled hlášení** a klikne **„Potvrdit hlášení“**. Bez toho se nic neexportuje do ÚZIS ani nezapíše do FHIR. |
 
-Práh 85 je nastavitelný (`AUTO_ACCEPT_THRESHOLD`) a doladí se kalibrací na gold datech (viz níže).
+Práh 80 (původně 85) je nastavitelný (`AUTO_ACCEPT_THRESHOLD`) a doladí se kalibrací na gold datech (viz níže).
 
 ### Výpočet skóre (výchozí body, doladit na gold datech)
 | Signál | Body |
@@ -172,13 +172,13 @@ Práh 85 je nastavitelný (`AUTO_ACCEPT_THRESHOLD`) a doladí se kalibrací na g
 Výsledek se ořízne na 0–100.
 
 ### Zobrazení
-- U každého pole **číslo 0–100** a barva: 🟢 85–100 (předvyplněno) · 🟠 60–84 · 🔴 0–59 · ⚠️ rozpor · ⚪ chybí.
+- U každého pole **číslo 0–100** a barva: 🟢 80–100 (předvyplněno) · 🟠 60–79 · 🔴 0–59 · ⚠️ rozpor · ⚪ chybí.
 - Po najetí myší se zobrazí **důvody**, např. „✓ citace ověřena · ✓ 2 zdroje se shodují · ✓ kód platný v MKN-10 · −15 odvozeno z TNM“.
 - **Na úrovni hlášení:** úplnost povinných polí (např. 14/17), počet polí ke kontrole, počet předvyplněných, stav „připraveno k potvrzení“ / „potvrzeno“.
 - Fronta „Ke kontrole“ obsahuje jen rozpory a pole pod prahem: nejdřív rozpory, pak podle skóre od nejnižšího.
 
 ### Kalibrace (tohle porotu přesvědčí)
-Na gold datech změřit **přesnost podle pásma skóre** (např. „85–100: 97 % správně, 60–84: 80 %, 0–59: 45 %“).
+Na gold datech změřit **přesnost podle pásma skóre** (např. „80–100: 97 % správně, 60–79: 80 %, 0–59: 45 %“).
 Hlavně **přesnost předvyplněných polí**, protože ta lékař jednotlivě neřeší a vidí je jen v náhledu. Pokud vyjde pod 97 %, práh zvednout.
 Výsledek ukázat v dashboardu jako graf spolehlivosti spolu s podílem polí, která šla ke kontrole.
 
@@ -298,7 +298,7 @@ Kontrakt (`contracts/`) se mění jen po domluvě. Merge na `main` každé 1–2
 1. **Formát výstupu do ÚZIS**: import XML dávkou (které datové rozhraní / verze)? Nebo stačí strukturovaný výstup pro ruční vložení?
 2. Která pole formuláře jsou **povinná** pro stav „Úplné“?
 3. Číselníky NOR: lateralita, grading, „Onemocnění“, oddělení (kódy a verze), edice TNM (UICC 8?).
-4. Stačí FNO, že lékař jednotlivě řeší jen rozpory a pole pod 85 a zbytek potvrdí v náhledu celého hlášení? Má chybějící povinné pole jít také ke kontrole?
+4. Stačí FNO, že lékař jednotlivě řeší jen rozpory a pole pod 80 a zbytek potvrdí v náhledu celého hlášení? Má chybějící povinné pole jít také ke kontrole?
 5. Kolik minut dnes trvá jedno hlášení a kolik jich FNO ročně podává (číslo do pitche)?
 6. Celé číselníky: **MKN-O-3** (morfologie a topografie), **oddělení** (87 položek), **sn**, **klinické stádium**, **TNM skupina**. Jde je vyexportovat z menu „Číselníky“ v aplikaci NOR? Co dělá menu **„Vytěžování“** v aplikaci NOR? Máme řešit i **Hlášení relapsu**?
 

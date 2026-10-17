@@ -40,6 +40,7 @@ def _resolve_all(report: dict) -> dict:
 
 def test_extraction_writes_a_draft_and_confirmation_updates_the_same_record(monkeypatch, tmp_path, fhir):
     client = _client(monkeypatch, tmp_path)
+    monkeypatch.setattr(get_settings(), "auto_accept_threshold", 85)  # the demo ICD-10 (70-80) must wait for review
     case = _extracted(client)
     cid = case["id"]
 

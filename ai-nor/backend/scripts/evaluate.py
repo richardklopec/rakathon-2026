@@ -48,7 +48,7 @@ FIELDS = [
 LABELS = dict(FIELDS)
 NOT_SCORED = {"open", "todo"}
 ERRORS = ("wrong", "false_missing", "false_filled")
-BANDS = [(85, 100, "85–100"), (60, 84, "60–84"), (0, 59, "0–59")]
+BANDS = [(80, 100, "80–100"), (60, 79, "60–79"), (0, 59, "0–59")]  # 80 = AUTO_ACCEPT_THRESHOLD
 
 
 # --- comparing one field ---------------------------------------------------------------------------------------------
