@@ -49,6 +49,25 @@ cd frontend; npm install; npm run dev     # http://localhost:5173
 - Testy: `cd backend; .\.venv\Scripts\pytest -q` · build: `cd frontend; npm run build`
 - Evaluace proti gold hodnotám: `cd backend; .\.venv\Scripts\python -m scripts.evaluate [--runs 2 --fresh-cache]` (gold JSON v `EVAL_GOLD_DIR` mimo repo, výsledky v `backend/var/eval/`; formát a srovnání dvou běhů viz `scripts/evaluate.py`).
 
+## Lokální model nemocnice místo cloudu
+
+AI se volá jen z `backend/app/llm.py` přes API kompatibilní s OpenAI. Přepnutí na model na serverech nemocnice
+(vLLM, Ollama, llama.cpp, TGI) je jen změna `.env`, zbytek aplikace (citace, číselníky, výpočet stádia, kontroly,
+fronta ke kontrole, IRIS, FHIR) zůstává stejný. Embeddingy a IRIS už běží lokálně, model je jediná cloudová část.
+
+```
+LLM_BASE_URL=http://llm.nemocnice.local:8000/v1/   # adresa serveru modelu
+LLM_MODEL=<název modelu podle /v1/models>
+LLM_AUTH=bearer          # api-key | bearer | none
+LLM_OUTPUT=schema        # json, když server neumí striktní JSON schéma (odpověď se pak ověří tady)
+LLM_REASONING_EFFORT=    # prázdné: lokální servery parametr většinou neznají
+LLM_TEMPERATURE=0
+```
+
+Před ostrým provozem: model musí mít kontext na celý případ (všechny zprávy pacienta v jednom dotazu, desítky tisíc
+tokenů) a jeho přesnost je potřeba přeměřit na referenčních pacientech (`python -m scripts.evaluate --runs 2 --fresh-cache`),
+protože prahy jistoty jsou laděné na Lunu. Odpovědi se cachují podle názvu modelu, odpovědi Luny se tedy nepoužijí.
+
 ## Struktura
 | Složka | Obsah | Vlastník |
 |---|---|---|

@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -15,6 +16,14 @@ class Settings(BaseSettings):
     llm_model: str = "gpt-6-luna-dz-eu"  # ~2x faster than gpt-6-1-sol-dz-eu with the same results on synthetic data
     llm_mode: str = "mock"  # mock | live
     llm_reasoning_effort: str = "low"  # low | medium | high | "" (model default); low keeps extraction fast
+    # Switching to the hospital's own model server (vLLM, Ollama, llama.cpp, TGI: OpenAI-compatible /v1) needs only
+    # LLM_BASE_URL, LLM_MODEL and the three settings below; nothing else in the app changes (README: Lokální model).
+    llm_auth: Literal["api-key", "bearer", "none"] = "api-key"  # api-key header (Rakathon APIM) | Authorization: Bearer | no key
+    # schema = strict JSON schema (structured outputs, vLLM / Ollama / llama.cpp support it);
+    # json = JSON mode + the schema in the prompt, validated here (servers without guided decoding)
+    llm_output: Literal["schema", "json"] = "schema"
+    llm_timeout: float = 600  # seconds per call (the OpenAI client default); a whole case is one prompt
+    llm_temperature: float | None = None  # None = server default (reasoning models reject it); 0 = repeatable answers
     # Embeddings run locally (no embedding deployment on the gateway; clinical text stays on the machine).
     embedding_backend: str = "local"  # local | gateway
     local_embedding_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
