@@ -3,7 +3,7 @@
 // Moved here from App.tsx when the app got tabs; the review logic is unchanged.
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { api, getField, type AiConfidence, type Case, type Codelists, type DocumentT, type Evidence, type Extracted, type FormFields, type NorReport } from '../api'
-import NorFormPreview from '../NorFormPreview'
+import NorFormPreview, { FieldEditor } from '../NorFormPreview'
 import { getUser } from '../user'
 import AuditLog from './AuditLog'
 import { href } from '../router'
@@ -91,19 +91,21 @@ function Sources({ f, docs, onPick }: { f: Extracted; docs: DocumentT[]; onPick:
     return () => { document.removeEventListener('mousedown', away); document.removeEventListener('keydown', esc) }
   }, [open])
   const link = 'text-xs text-fno-700 underline underline-offset-2 hover:text-fno-900'
-  if (!f.evidence.length) return null
-  if (f.evidence.length === 1) return <button className={link} onClick={() => onPick(f.evidence[0])}>zdroj</button>
+  // the same place cited for several inputs (pT, pN and M from one TNM string) is listed once
+  const sources = [...new Map(f.evidence.map((e) => [`${e.doc_id}:${e.start}:${e.end}`, e])).values()]
+  if (!sources.length) return null
+  if (sources.length === 1) return <button className={link} onClick={() => onPick(sources[0])}>zdroj</button>
   const name = (id: string) => docs.find((d) => d.id === id)?.filename.replace(/^Rakathon_2026_/, '') ?? id
   return (
     <span ref={box} className="relative">
       <button className={`${link} inline-flex items-center gap-0.5`} aria-expanded={open} onClick={() => setOpen(!open)}>
-        zdroje ({f.evidence.length})
+        zdroje ({sources.length})
         <Icon.chevron width={12} height={12} className={`transition-transform duration-150 ${open ? '-rotate-90' : 'rotate-90'}`} />
       </button>
       {open && (
         <span role="menu" className="absolute right-0 top-full z-30 mt-1 block max-h-80 w-96 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1 shadow-[0_8px_24px_rgba(1,28,62,0.16)]">
-          {f.evidence.map((e, i) => (
-            <button key={`${e.doc_id}:${e.start}:${i}`} role="menuitem" onClick={() => { onPick(e); setOpen(false) }}
+          {sources.map((e) => (
+            <button key={`${e.doc_id}:${e.start}:${e.end}`} role="menuitem" onClick={() => { onPick(e); setOpen(false) }}
               className="block w-full rounded px-2 py-1.5 text-left text-xs hover:bg-fno-50">
               <span className="font-medium text-fno-900">{name(e.doc_id)}</span>
               <span className="block text-slate-700">„{e.quote.length > 120 ? `${e.quote.slice(0, 120)}…` : e.quote}“</span>
@@ -164,6 +166,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
   const [error, setError] = useState<string | null>(null)
   const [preview, setPreview] = useState<Record<string, unknown> | null>(null)
   const [doctor, setDoctor] = useState(getUser) // the person who is working (header) confirms by default
+  const [editing, setEditing] = useState<string | null>(null) // review queue field open in the inline editor
   const previewRef = useRef<HTMLElement>(null)
   const previewOpen = preview != null
   const latest = useRef<Case | null>(null)
@@ -298,6 +301,17 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
   }
 
   function FieldActions({ path, f }: { path: string; f: Extracted }) {
+    if (editing === path) {
+      // same controls and checks as the form preview (code lists, dates, TNM, bit sums); saved like an edit there
+      return (
+        <FieldEditor path={path} value={f.value} lists={lists} onCancel={() => setEditing(null)}
+          onSave={(v) => {
+            setEditing(null)
+            const empty = v == null || v === '' || (Array.isArray(v) && v.length === 0)
+            update(path, (x) => { x.value = empty ? null : v; x.status = empty ? 'missing' : 'found'; x.alternatives = []; x.review.state = 'edited' })
+          }} />
+      )
+    }
     if (f.status === 'missing') {
       // a missing mandatory field: fill it in (the form has the right controls) or confirm that it is not documented
       return (
@@ -330,11 +344,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
             <Icon.check width={14} height={14} />Potvrdit
           </button>
         )}
-        <button className={`${small} bg-slate-100 text-slate-800 hover:bg-slate-200`}
-          onClick={() => {
-            const v = window.prompt('Nová hodnota', typeof f.value === 'string' || typeof f.value === 'number' ? String(f.value) : '')
-            if (v != null) update(path, (x) => { x.value = typeof f.value === 'number' ? Number(v) : v; x.status = 'found'; x.review.state = 'edited' })
-          }}>Upravit</button>
+        <button className={`${small} bg-slate-100 text-slate-800 hover:bg-slate-200`} onClick={() => setEditing(path)}>Upravit</button>
         <button className={`${small} bg-slate-100 text-slate-800 hover:bg-slate-200`} onClick={() => update(path, (x) => { x.review.state = 'rejected' })}>Zamítnout</button>
       </span>
     )

@@ -207,6 +207,66 @@ function Check({ checked, label, onToggle, disabled }: { checked: boolean; label
   )
 }
 
+// code list behind each field (GET /api/codelists), as the form uses them
+const FIELD_LIST: Record<string, string> = {
+  laterality: 'laterality', icd10: 'icd10', topography: 'topography', morphology_type: 'morphology_type',
+  morphology_code: 'morphology_code', grade: 'grade', sentinel_node: 'sentinel_node', clinical_stage: 'clinical_stage',
+  disease_extent: 'disease_extent', diagnosis_basis: 'diagnosis_basis', metastasis_sites: 'metastasis_sites',
+}
+const BIT_FIELDS = new Set(['diagnosis_basis', 'metastasis_sites'])
+const LONG_LISTS = new Set(['icd10', 'topography', 'morphology_code'])
+const showDate = (v: unknown) => {
+  const d = v as PartialDate | null
+  return d?.year ? [d.day, d.month, d.year].filter(Boolean).join('.') : ''
+}
+
+/** One field edited outside the form (review queue "Upravit"): the same controls and checks as in the form.
+ *  onSave gets the value the report stores (code from the list, PartialDate, number, list of bits) or null. */
+export function FieldEditor({ path, value, lists, onSave, onCancel }: {
+  path: string; value: unknown; lists: Codelists | null; onSave: (v: unknown) => void; onCancel: () => void
+}) {
+  const [bits, setBits] = useState<number[]>(Array.isArray(value) ? (value as number[]) : [])
+  const options = lists?.[FIELD_LIST[path]] ?? []
+  const part = path.startsWith('tnm_') ? path.slice(-1) : null
+  let control: ReactNode
+  if (BIT_FIELDS.has(path)) {
+    control = (
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        {options.filter((o) => Number(o.value) !== 0).map((o) => {
+          const bit = Number(o.value)
+          return <Check key={bit} label={o.label} checked={bits.includes(bit)}
+            onToggle={() => setBits(bits.includes(bit) ? bits.filter((b) => b !== bit) : [...bits, bit].sort((a, b) => a - b))} />
+        })}
+        <button type="button" className="rounded bg-fno-800 px-2 py-0.5 text-xs font-medium text-white hover:bg-fno-700" onClick={() => onSave(bits)}>Uložit</button>
+      </div>
+    )
+  } else if (options.length) {
+    control = LONG_LISTS.has(path)
+      ? <CodeSelect value={value} options={options} onChange={onSave} className="w-80" />
+      : <Select value={value} options={options} onChange={onSave} className="w-56" />
+  } else if (part) {
+    control = <TextInput value={value} className="w-24" placeholder={part.toUpperCase()}
+      validate={(v) => (v && !TNM_PATTERN[part].test(v) ? `neplatná hodnota ${part.toUpperCase()}` : null)}
+      onCommit={(v) => onSave(v ? v.replace(/^x$/i, 'X') : null)} />
+  } else if (path === 'diagnosis_date') {
+    control = <TextInput value={showDate(value)} className="w-36" placeholder="d.m.rrrr"
+      validate={(v) => (parseDate(v) === 'invalid' ? 'datum d.m.rrrr, m.rrrr nebo rrrr, ne v budoucnosti' : null)}
+      onCommit={(v) => onSave(parseDate(v))} />
+  } else if (path === 'pn_examined' || path === 'pn_positive') {
+    control = <TextInput type="number" value={value} className="w-20"
+      validate={(v) => (v && !/^\d{1,3}$/.test(v) ? 'celé číslo ≥ 0' : null)} onCommit={(v) => onSave(v === '' ? null : Number(v))} />
+  } else {
+    control = <TextInput value={value} className="w-72" onCommit={(v) => onSave(v || null)} />
+  }
+  return (
+    <span className="flex flex-wrap items-start gap-2 font-[Arial,Helvetica,sans-serif]">
+      {control}
+      <button type="button" className="h-8 rounded px-2 text-xs text-slate-600 hover:bg-slate-100"
+        onMouseDown={(e) => e.preventDefault()} onClick={onCancel}>Zrušit</button>
+    </span>
+  )
+}
+
 function Fieldset({ legend, children }: { legend: ReactNode; children: ReactNode }) {
   return (
     <div className="relative mt-5 rounded-md border border-slate-300 px-3 pb-4 pt-6">
