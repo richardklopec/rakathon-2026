@@ -105,3 +105,15 @@ def test_api_create_and_extract(tmp_path, monkeypatch):
     case_id = res.json()["id"]
     res = client.post(f"/api/cases/{case_id}/extract")
     assert res.json()["report"]["icd10"]["value"] == "C50.4"
+
+
+def test_one_place_in_a_document_is_cited_once(monkeypatch):
+    from app.config import get_settings
+
+    monkeypatch.setattr(get_settings(), "llm_mode", "mock")
+    docs = ingest.to_documents(DEMO.name, DEMO.read_bytes())
+    report = extract.extract_mock(docs)
+    report.icd10.evidence = report.icd10.evidence * 3  # the same span found by several inputs
+    monkeypatch.setattr(extract, "extract_mock", lambda _: report)
+    out, _ = extract.extract(docs)
+    assert len(out.icd10.evidence) == 1

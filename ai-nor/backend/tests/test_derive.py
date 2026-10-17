@@ -73,6 +73,7 @@ def test_derived_m_stage_extent_and_date(monkeypatch):
     # the stage cites every place its inputs were read from, not just the first of each
     inputs = {(e.doc_id, e.start, e.end) for f in (r.tnm_pathological.t, r.tnm_pathological.n, cm) for e in f.evidence}
     assert {(e.doc_id, e.start, e.end) for e in r.clinical_stage.evidence} == inputs and len(inputs) > 3
+    assert len(r.clinical_stage.evidence) == len(inputs)  # one TNM string read for pT, pN and M is one source
     assert r.disease_extent.value == "1"  # from cM0, not from the MX in the MDT
     assert r.diagnosis_date.value == PartialDate(year=2026, month=5, day=7)
     assert r.diagnosis_date.confidence == 60 and any("zahájení léčby" in x for x in r.diagnosis_date.confidence_reasons)

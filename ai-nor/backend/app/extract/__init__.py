@@ -6,7 +6,7 @@
 
 import re
 
-from app.confidence import apply_review_policy, apply_violations
+from app.confidence import apply_review_policy, apply_violations, iter_fields
 from app.config import get_settings
 from app.models import Coding, Document, Evidence, Extracted, FieldStatus, NorReport
 from app.validate import consistency, references, rodne_cislo
@@ -100,4 +100,6 @@ def extract(docs: list[Document], patient_ref: str | None = None) -> tuple[NorRe
     violations = consistency.check(report)
     apply_violations(report, violations)
     warnings += consistency.warnings(violations)
+    for _, field in iter_fields(report):  # one place in a document is one source, however many inputs read it
+        field.evidence = list({(e.doc_id, e.start, e.end): e for e in field.evidence}.values())
     return apply_review_policy(report), warnings
