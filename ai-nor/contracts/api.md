@@ -1,4 +1,4 @@
-# API kontrakt (backend FastAPI, `http://localhost:8000`)
+# API kontrakt (backend FastAPI, `http://localhost:8001`)
 
 Typy = `nor_record.schema.json` (generuje `backend/scripts/export_schema.py` z `backend/app/models.py`).
 Pole hlášení: `Extracted` s `value`, `confidence` 0–100, `confidence_reasons`, `needs_review`, `evidence` (citace + offsety), `alternatives`, `rules` (citace pravidel MKN-10: `code`, `page`, `quote`, `verified`; zatím jen u `icd10`), `review.state`.

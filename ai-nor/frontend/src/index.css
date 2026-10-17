@@ -1,7 +1,40 @@
 @import "tailwindcss";
 
+/* FN Ostrava / NOR palette, taken from the NOR logo (src/assets/logo-nor.png) */
+@theme {
+  --color-fno-950: #011c3e;
+  --color-fno-900: #012a5c;
+  --color-fno-800: #014088; /* logo navy: header band, primary actions */
+  --color-fno-700: #0b4f9c;
+  --color-fno-600: #1863b4;
+  --color-fno-200: #c4daf2;
+  --color-fno-100: #dfeaf7;
+  --color-fno-50: #f2f7fc;
+  --color-fno-sky: #1b98e0; /* logo light blue: active tab, focus, highlights */
+  --color-fno-sky-soft: #e4f3fc;
+  --color-fno-red: #e3171e; /* logo red: errors only */
+  --color-canvas: #f3f6fa; /* page background, a cool second neutral under white panels */
+}
+
 /* Tailwind v4 preflight resets buttons to cursor: default; show the hand on everything clickable */
 @layer base {
+  html {
+    background: var(--color-canvas);
+    scrollbar-color: var(--color-fno-200) transparent;
+    accent-color: var(--color-fno-800);
+  }
+
+  ::selection {
+    background: var(--color-fno-100);
+    color: var(--color-fno-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-fno-sky);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   input[type="file"]:not(:disabled),

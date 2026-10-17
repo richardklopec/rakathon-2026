@@ -27,7 +27,7 @@ cd backend; python -m venv .venv; .\.venv\Scripts\pip install -e ".[dev]"; cd ..
 .\start-iris.ps1                # IRIS + prázdný FHIR server /fhir/r4 + tabulky Nor.Chunk, Nor.Code, Nor.Rule
 cd backend; .\.venv\Scripts\python -m scripts.index_codes     # číselníky MKN-10 + morfologie do IRIS (~1,5 min)
 .\.venv\Scripts\python -m scripts.index_rules     # pravidla MKN-10 z PDF Tabelární část do IRIS (Nor.Rule, ~4 min)
-.\.venv\Scripts\uvicorn app.main:app --port 8000
+.\.venv\Scripts\uvicorn app.main:app --port 8001     # 8001: na 8000 běží starý projekt Rakathon2026
 cd frontend; npm install; npm run dev     # http://localhost:5173
 ```
 

@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    proxy: { '/api': 'http://localhost:8000' },
+    proxy: { '/api': 'http://localhost:8001' },
+    fs: { allow: ['.', '../docs'] }, // docs page reads ai-nor/docs
   },
 })

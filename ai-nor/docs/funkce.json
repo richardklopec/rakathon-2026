@@ -1,0 +1,343 @@
+{
+  "_popis": "Přehled použitých funkcí, služeb a technologií. Zobrazuje se v aplikaci (Dokumentace → Využité funkce). stav: hotovo | castecne | plan",
+  "kategorie": [
+    {
+      "nazev": "Umělá inteligence a zpracování textu",
+      "polozky": [
+        {
+          "nazev": "Jazykový model GPT-6 Luna (EU Data Zone)",
+          "sluzba": "Rakathon APIM gateway (Azure OpenAI, deployment gpt-6-luna-dz-eu)",
+          "k_cemu": "Jedním voláním na případ vypíše všechny zmínky polí hlášení NOR z dokumentace pacienta, každou s doslovnou citací a číslem dokumentu.",
+          "kde": "backend/app/llm.py, backend/app/extract/live.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Strukturovaný výstup modelu",
+          "sluzba": "OpenAI SDK chat.completions.parse + Pydantic schéma",
+          "k_cemu": "Model musí odpovědět přesně ve tvaru JSON schématu (pole, citace, hodnota, explicitní / odvozené, zajišťovací výraz). Žádné volné texty k parsování.",
+          "kde": "backend/app/extract/live.py (LlmExtraction)",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Cache odpovědí modelu",
+          "sluzba": "SHA-256 vstupu → JSON soubor",
+          "k_cemu": "Opakované vytěžení stejných zpráv nevolá model znovu: rychlé demo a úspora rozpočtu.",
+          "kde": "backend/app/llm.py, backend/var/llm-cache",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Ověření citací",
+          "sluzba": "vlastní algoritmus (normalizace mezer, diakritiky, překlepů)",
+          "k_cemu": "Každou citaci od AI dohledá v textu dokumentu a uloží přesné pozice. Nenalezená citace = pole nikdy není předvyplněné.",
+          "kde": "backend/app/extract/evidence.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Detekce rozporů mezi dokumenty",
+          "sluzba": "vlastní logika nad normalizovanými hodnotami",
+          "k_cemu": "Když dvě zprávy uvádějí pro stejné pole jinou hodnotu, pole jde vždy ke kontrole a lékař vidí obě verze s citacemi.",
+          "kde": "backend/app/extract/live.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Skóre jistoty 0–100 s důvody",
+          "sluzba": "vlastní skóre z ověřitelných signálů",
+          "k_cemu": "Jistota není „pocit modelu“: typ zdroje, ověřená citace, shoda více zpráv, platnost kódu, odvození, zajišťovací výrazy („susp.“). U každého pole je vidět proč.",
+          "kde": "backend/app/extract/live.py, backend/app/confidence.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Automatické předvyplnění a fronta ke kontrole",
+          "sluzba": "práh AUTO_ACCEPT_THRESHOLD (výchozí 85)",
+          "k_cemu": "Pole s jistotou ≥ 85 bez rozporu a s ověřenou citací se předvyplní. Lékař řeší jen rozpory a nejistá pole.",
+          "kde": "backend/app/confidence.py (apply_review_policy)",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Celková jistota AI hlášení",
+          "sluzba": "vážený průměr (povinná pole NOR mají dvojnásobnou váhu)",
+          "k_cemu": "Jedno číslo pro celé hlášení. Opravy lékaře se nepočítají, chybějící pole se hlásí zvlášť jako úplnost.",
+          "kde": "backend/app/confidence.py (overall)",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Rozlišení onkoduplicity",
+          "sluzba": "pokyn v promptu + pole other_tumours",
+          "k_cemu": "Starší nebo jiný nádor v dokumentaci se nehlásí s aktuálním, aplikace na něj jen upozorní.",
+          "kde": "backend/app/extract/live.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Režim mock (bez AI)",
+          "sluzba": "deterministické regulární výrazy",
+          "k_cemu": "Běží bez klíče k modelu: MKN-10 kód, morfologie z patičky histologie, pTNM. Pro vývoj, testy a nouzové demo.",
+          "kde": "backend/app/extract/__init__.py, LLM_MODE=mock",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Lokální embeddingy (vícejazyčný model)",
+          "sluzba": "fastembed + paraphrase-multilingual-MiniLM-L12-v2 (ONNX, 384 dimenzí, CPU)",
+          "k_cemu": "Převod textu zpráv a názvů číselníků na vektory pro sémantické hledání. Běží na našem počítači, text zpráv ho neopouští.",
+          "kde": "backend/app/retrieval/embeddings.py",
+          "stav": "hotovo"
+        }
+      ]
+    },
+    {
+      "nazev": "InterSystems IRIS for Health",
+      "polozky": [
+        {
+          "nazev": "IRIS for Health v Dockeru",
+          "sluzba": "InterSystems IRIS for Health Community",
+          "k_cemu": "Jedna platforma pro FHIR server, SQL tabulky i vektorové hledání. Stejnou platformu FN Ostrava používá pro integrace.",
+          "kde": "infra/iris, docker-compose.yml, start-iris.ps1",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "FHIR R4 server",
+          "sluzba": "IRIS FHIR Server, endpoint /fhir/r4 (namespace FHIRSERVER)",
+          "k_cemu": "Potvrzené hlášení se zapíše jako jedna FHIR transakce, připravené pro výměnu dat s NIS a EHDS.",
+          "kde": "backend/scripts/setup_iris.py, backend/app/fhir/client.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "IRIS Vector Search nad zprávami",
+          "sluzba": "tabulka Nor.Chunk, funkce VECTOR_COSINE",
+          "k_cemu": "Zprávy pacienta rozdělené na úseky s pozicemi; dotaz najde nejpodobnější pasáže a vrátí je jako citace.",
+          "kde": "backend/app/retrieval/__init__.py, API /api/cases/{id}/search",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "IRIS Vector Search nad číselníky",
+          "sluzba": "tabulka Nor.Code (MKN-10 a morfologie MKN-O-3)",
+          "k_cemu": "Volný text („karcinom NST“) → top kandidáti kódů z oficiálního číselníku. AI smí vybrat jen z nich, kód nikdy nevymýšlí.",
+          "kde": "backend/app/retrieval/codes.py, backend/scripts/index_codes.py, API /api/codes/search",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "IRIS SQL z Pythonu",
+          "sluzba": "intersystems-irispython (DB-API)",
+          "k_cemu": "Zakládání tabulek, ukládání vektorů a dotazy přímo z backendu.",
+          "kde": "backend/app/iris_db.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "FHIR SQL Builder (export dávek)",
+          "sluzba": "IRIS FHIR SQL Builder",
+          "k_cemu": "Hromadný export potvrzených hlášení (1 řádek = 1 hlášení) z FHIR úložiště.",
+          "kde": "—",
+          "stav": "plan"
+        }
+      ]
+    },
+    {
+      "nazev": "Zdravotnické standardy a interoperabilita",
+      "polozky": [
+        {
+          "nazev": "FHIR R4 transaction Bundle",
+          "sluzba": "HL7 FHIR R4",
+          "k_cemu": "Patient, DocumentReference (zdrojové zprávy), Condition (diagnóza, topografie, lateralita, morfologie), Observation (grading, cTNM, pTNM), Provenance.",
+          "kde": "backend/app/fhir/mapping.py, contracts/fhir_mapping.md",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Profily mCODE, EU Cancer Model, HL7 CZ Core",
+          "sluzba": "mCODE STU4, HL7 EU Common Cancer Model, HL7 CZ Core",
+          "k_cemu": "Struktura onkologických zdrojů podle mezinárodního standardu, české identifikátory a MKN-10.",
+          "kde": "backend/app/fhir/mapping.py",
+          "stav": "castecne"
+        },
+        {
+          "nazev": "Provenance a stav kontroly",
+          "sluzba": "FHIR Provenance + meta.tag urn:ai-nor:review",
+          "k_cemu": "U každého zapsaného údaje je vidět, zda ho AI předvyplnila, nebo ho lékař potvrdil či opravil, kdo hlášení potvrdil a z jaké zprávy údaj pochází.",
+          "kde": "backend/app/fhir/mapping.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Terminologie SNOMED CT, ICD-O-3, NCIt",
+          "sluzba": "kódy z value setů mCODE",
+          "k_cemu": "Lateralita, kategorie TNM a grading kódované mezinárodními terminologiemi.",
+          "kde": "backend/app/fhir/mapping.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Metastázy, biomarkery, léčba ve FHIR",
+          "sluzba": "mCODE secondary-cancer-condition, tumor-marker-test, Procedure",
+          "k_cemu": "Rozšíření zápisu o další části onkologického záznamu.",
+          "kde": "contracts/fhir_mapping.md (TODO)",
+          "stav": "plan"
+        }
+      ]
+    },
+    {
+      "nazev": "Číselníky a validace (ÚZIS / NOR)",
+      "polozky": [
+        {
+          "nazev": "MKN-10-CZ 2026 od ÚZIS",
+          "sluzba": "oficiální CSV balíček ÚZIS (UTF-8 i Windows-1250)",
+          "k_cemu": "Dg. MKN a Dg. slovně, kontrola platnosti kódu, kapitola novotvarů C00–C97 a D00–D48.",
+          "kde": "uploads/, backend/app/validate/codefiles.py, backend/app/validate/mkn10.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Morfologie MKN-O-3",
+          "sluzba": "rejstřík MKN-10 (702 kódů) + hematologické kódy vytažené z PDF tabelární části",
+          "k_cemu": "Kód morfologie a jeho název, včetně opravy překlepů v rejstříku ÚZIS.",
+          "kde": "backend/app/retrieval/codes.py, backend/scripts/extract_pdf_morphology.py",
+          "stav": "castecne"
+        },
+        {
+          "nazev": "Normalizace na číselníky formuláře NOR",
+          "sluzba": "vlastní mapování",
+          "k_cemu": "Lateralita, grading, onemocnění a bitové součty („K dg. vedla vyšetření“, „Lokalizace vzdálených metastáz“) přesně podle formuláře ÚZIS.",
+          "kde": "backend/app/validate/normalize.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Kontrola rodného čísla a identity",
+          "sluzba": "pravidla zákona č. 133/2000 Sb.",
+          "k_cemu": "Platnost RČ (délka, datum, dělitelnost 11), pohlaví z RČ, různá RČ v dokumentech jednoho případu, diagnóza před datem narození.",
+          "kde": "backend/app/validate/rodne_cislo.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Kontrola diagnózy podle pohlaví",
+          "sluzba": "sloupec NepripustnePohlavi v MKN-10 ÚZIS",
+          "k_cemu": "Upozorní například na C61 (prostata) u ženy nebo C53 (děložní hrdlo) u muže.",
+          "kde": "backend/app/validate/mkn10.py, backend/app/validate/rodne_cislo.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Úplnost hlášení",
+          "sluzba": "seznam povinných polí",
+          "k_cemu": "Stav hlášení Úplné / Neúplné a výpis chybějících povinných polí v náhledu.",
+          "kde": "backend/app/export/uzis.py (REQUIRED)",
+          "stav": "hotovo"
+        }
+      ]
+    },
+    {
+      "nazev": "Aplikace a uživatelské rozhraní",
+      "polozky": [
+        {
+          "nazev": "Načtení dokumentů z NIS",
+          "sluzba": "PyMuPDF (PDF), openpyxl (XLSX export z NIS), TXT",
+          "k_cemu": "Převod zpráv na text s pozicemi, rozpoznání typu zprávy (ambulantní, propouštěcí, histologie, MDT, operační protokol).",
+          "kde": "backend/app/ingest/__init__.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Přehled a seznam hlášení",
+          "sluzba": "React, stav odvozený z případu",
+          "k_cemu": "Záložky Domů a Seznam hlášení: kolik hlášení je v jakém stavu (nevytěženo, ke kontrole, k potvrzení, potvrzeno, ve FHIR), co čeká na lékaře, hledání, filtr a řazení.",
+          "kde": "frontend/src/screens/Home.tsx, frontend/src/screens/CaseList.tsx",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Nový pacient přetažením zpráv",
+          "sluzba": "React, API /api/cases",
+          "k_cemu": "Nahrání všech zpráv pacienta najednou, odhad typu zprávy, volitelné RČ a hned spuštěné vytěžování.",
+          "kde": "frontend/src/screens/NewPatient.tsx",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Hlášení relapsu",
+          "sluzba": "NorReport.progression + znovupotvrzení hlášení",
+          "k_cemu": "Lékař zapíše recidivu nebo progresi s datem a lokalizacemi metastáz (bitový součet NOR) k potvrzenému hlášení. Zatím se nepropisuje do exportu ÚZIS ani do FHIR.",
+          "kde": "frontend/src/screens/Relapse.tsx",
+          "stav": "castecne"
+        },
+        {
+          "nazev": "Prohlížeč číselníků",
+          "sluzba": "API /api/codelists",
+          "k_cemu": "Hledání v MKN-10, topografii, morfologii a číselnících formuláře NOR podle kódu, názvu i orgánu, bez ohledu na diakritiku.",
+          "kde": "frontend/src/screens/CodeLists.tsx",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Citace zvýrazněná v dokumentu",
+          "sluzba": "React",
+          "k_cemu": "Klik na „zdroj“ nebo „citace“ zobrazí zprávu a zvýrazní přesné místo, odkud údaj pochází.",
+          "kde": "frontend/src/App.tsx",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Náhled ve tvaru formuláře ÚZIS",
+          "sluzba": "React + číselníky z backendu",
+          "k_cemu": "Hlášení vypadá jako formulář „Incidence zhoubného novotvaru“; pole jdou upravit přímo v náhledu, kódy se vybírají z rozbalovacího seznamu s hledáním.",
+          "kde": "frontend/src/NorFormPreview.tsx, API /api/codelists",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Potvrzení hlášení lékařem",
+          "sluzba": "API /api/cases/{id}/confirm",
+          "k_cemu": "Nic se neodesílá automaticky. Bez potvrzení nejde export pro ÚZIS ani zápis do FHIR; každá další úprava potvrzení zruší.",
+          "kde": "backend/app/main.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Export pro ÚZIS",
+          "sluzba": "JSON 1:1 podle polí formuláře",
+          "k_cemu": "Strukturované hlášení připravené k importu do NOR. Přesný importní formát ÚZIS ověřujeme.",
+          "kde": "backend/app/export/uzis.py, API /api/cases/{id}/uzis-export",
+          "stav": "castecne"
+        },
+        {
+          "nazev": "Frontend",
+          "sluzba": "React 19, TypeScript, Vite 8, Tailwind CSS 4",
+          "k_cemu": "Rychlé a jednoduché rozhraní pro kontrolu hlášení v prohlížeči.",
+          "kde": "frontend/",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Backend a REST API",
+          "sluzba": "Python 3.12, FastAPI, Pydantic v2, Uvicorn",
+          "k_cemu": "Zpracování dokumentů, vytěžení, kontrola, export. Datový kontrakt je generovaný z modelů.",
+          "kde": "backend/app/main.py, contracts/",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Metriky kvality (přesnost, opravy, čas)",
+          "sluzba": "evaluace na gold datech + měření v UI",
+          "k_cemu": "Přesnost předvyplněných polí, kalibrace jistoty, počet oprav a čas na záznam pro porotu.",
+          "kde": "PLAN.md §3 krok 11",
+          "stav": "plan"
+        }
+      ]
+    },
+    {
+      "nazev": "Bezpečnost a ochrana dat",
+      "polozky": [
+        {
+          "nazev": "Model jen v EU Data Zone",
+          "sluzba": "deploymenty -dz-eu",
+          "k_cemu": "Klinický text se zpracovává jen v datových centrech EU.",
+          "kde": ".env (LLM_MODEL), AGENTS.md",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Klíče jen na serveru",
+          "sluzba": ".env mimo git",
+          "k_cemu": "Klíč k modelu nikdy není ve frontendu ani v repozitáři.",
+          "kde": ".gitignore, backend/app/config.py",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Data pacientů mimo repozitář",
+          "sluzba": "pravidla repozitáře",
+          "k_cemu": "Data FN Ostrava leží mimo git, v repozitáři jsou jen syntetičtí pacienti.",
+          "kde": ".gitignore, data/synthetic/",
+          "stav": "hotovo"
+        },
+        {
+          "nazev": "Testy",
+          "sluzba": "pytest",
+          "k_cemu": "Rodné číslo, číselníky, normalizace, skóre jistoty, celý průchod pipeline.",
+          "kde": "backend/tests/",
+          "stav": "hotovo"
+        }
+      ]
+    }
+  ]
+}
