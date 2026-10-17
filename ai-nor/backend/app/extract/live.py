@@ -465,7 +465,9 @@ def _clinical_m(r: NorReport, docs: list[Document]) -> None:
     """cM from an explicit TNM string ("pT1c N0(0/3) M0") or, as derived, from negative staging; never from silence."""
     cm = r.tnm_clinical.m
     if cm.status != FieldStatus.missing and cm.value not in (None, "X"):
-        return  # the LLM found a clinical M; the consistency checks compare it with the rest
+        # the LLM found a clinical M (the consistency checks compare it with the rest); it goes to review all the same
+        cap(cm, CLINICAL_M_CAP, "klinické M vždy ke kontrole")
+        return
     explicit = [h for h in derive.explicit_m(docs) if h.value in ("0", "1")]
     # a TNM string with another T belongs to another tumour (e.g. an earlier cancer in the history: "2004 … pT3N0M1")
     reported_t = staging.t_category(r.tnm_pathological.t.value or r.tnm_clinical.t.value)

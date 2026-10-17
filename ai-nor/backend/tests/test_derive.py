@@ -122,3 +122,13 @@ def test_tnm_of_an_earlier_tumour_is_not_the_m_of_this_one(monkeypatch):
     cm = r.tnm_clinical.m
     assert cm.value == "0" and cm.status == FieldStatus.found  # the M1 of the earlier pT3 tumour is not a conflict
     assert all("pT3" not in e.quote for e in cm.evidence)
+
+
+def test_clinical_m_read_by_the_llm_also_goes_to_review(monkeypatch):
+    # cM written in two reports: high confidence, but M0 is never accepted automatically (cap 75 < threshold 80)
+    read = FieldMentions(field="cM", mentions=[Mention(doc=1, quote="pT1c N0( 0/3)M0", value="M0", explicit=True, hedged=False),
+                                               Mention(doc=2, quote="TNM: pT1c N0 /3/0/ Mx", value="M0", explicit=True, hedged=False)])
+    r, _, _ = _run(monkeypatch, [AZ, MDT], [read])
+    cm = apply_review_policy(r).tnm_clinical.m
+    assert cm.value == "0" and cm.confidence <= live.CLINICAL_M_CAP
+    assert "klinické M vždy ke kontrole" in cm.confidence_reasons and cm.needs_review
