@@ -168,15 +168,42 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
   const [doctor, setDoctor] = useState(getUser) // the person who is working (header) confirms by default
   const [editing, setEditing] = useState<string | null>(null) // review queue field open in the inline editor
   const previewRef = useRef<HTMLElement>(null)
+  const docRef = useRef<HTMLPreElement>(null)
+  const markRef = useRef<HTMLElement>(null)
   const previewOpen = preview != null
   const latest = useRef<Case | null>(null)
   const saving = useRef<Promise<unknown>>(Promise.resolve())
   useEffect(() => { latest.current = kase }, [kase])
 
-  // the preview renders below the document, so bring it into view when it opens (not on every edit inside it)
+  // "Doplnit v náhledu" / "Náhled a potvrzení": bring the preview, or the one field in it, into view on EVERY click
+  // (a new `jump` each time, so a second click on an already open preview scrolls too); not on edits inside it
+  const [jump, setJump] = useState<{ path: string | null; n: number } | null>(null)
   useEffect(() => {
-    if (previewOpen) previewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [previewOpen])
+    if (!jump || !previewOpen) return
+    const root = previewRef.current
+    const top = jump.path?.split('.')[0]
+    const anchor = jump.path == null ? null
+      : root?.querySelector<HTMLElement>(`[data-field="${jump.path}"]`)
+        ?? root?.querySelector<HTMLElement>(`[data-field="${['pn_examined', 'pn_positive', 'sentinel_node'].includes(top!) ? 'tnm_pathological' : top}"]`)
+    const target = anchor ?? root
+    if (!target) return
+    target.scrollIntoView({ behavior: 'smooth', block: anchor ? 'center' : 'start' })
+    if (!anchor) return
+    anchor.classList.add('ring-2', 'ring-amber-400', 'ring-offset-2', 'rounded')
+    anchor.querySelector<HTMLElement>('input:not([disabled]), select:not([disabled]), button:not([disabled])')?.focus({ preventScroll: true })
+    const t = setTimeout(() => anchor.classList.remove('ring-2', 'ring-amber-400', 'ring-offset-2', 'rounded'), 2200)
+    return () => clearTimeout(t)
+  }, [jump, previewOpen])
+
+  // a clicked citation: center it inside the document box, and bring the box into view only if it is off screen.
+  // Runs when the citation changes, not on every save (a save re-renders the page and must not move it).
+  useEffect(() => {
+    const box = docRef.current, mark = markRef.current
+    if (!box || !mark) return
+    box.scrollTop += mark.getBoundingClientRect().top - box.getBoundingClientRect().top - box.clientHeight / 2
+    const r = box.getBoundingClientRect()
+    if (r.bottom < 0 || r.top > window.innerHeight) box.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+  }, [active])
 
   async function run<T>(label: string, fn: () => Promise<T>): Promise<T | undefined> {
     setBusy(label)
@@ -296,8 +323,13 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
     )
   }
 
-  function openPreview() {
-    if (kase) run('Připravuji náhled…', () => api.uzisPreview(kase.id)).then((p) => p && setPreview(p))
+  function openPreview(path: string | null = null) {
+    if (!kase) return
+    run('Připravuji náhled…', () => api.uzisPreview(kase.id)).then((p) => {
+      if (!p) return
+      setPreview(p)
+      setJump({ path, n: Date.now() })
+    })
   }
 
   function FieldActions({ path, f }: { path: string; f: Extracted }) {
@@ -316,7 +348,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
       // a missing mandatory field: fill it in (the form has the right controls) or confirm that it is not documented
       return (
         <span className="flex flex-wrap items-center gap-1">
-          <button className={`${small} bg-amber-600 text-white hover:bg-amber-700`} onClick={openPreview}>Doplnit v náhledu</button>
+          <button className={`${small} bg-amber-600 text-white hover:bg-amber-700`} onClick={() => openPreview(path)}>Doplnit v náhledu</button>
           <button className={`${small} border border-slate-300 text-slate-800 hover:bg-slate-100`}
             onClick={() => update(path, (x) => { x.review.state = 'confirmed' })}>Potvrdit: v dokumentaci není</button>
         </span>
@@ -370,7 +402,12 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
       </aside>
 
       <div className="min-w-0 space-y-4">
-        {busy && <Notice tone="info">{busy}</Notice>}
+        {/* progress as a floating toast: an inline bar would push the page down and back on every save */}
+        {busy && (
+          <div role="status" className="fixed bottom-4 right-4 z-40 flex items-center gap-2 rounded-lg border border-fno-200 bg-white px-4 py-2.5 text-sm text-fno-900 shadow-[0_8px_24px_rgba(1,28,62,0.16)]">
+            <span className="size-3.5 animate-spin rounded-full border-2 border-fno-200 border-t-fno-800" />{busy}
+          </div>
+        )}
         {error && <Notice tone="error">{error}</Notice>}
         {!caseId && (
           <div className={`${panel} px-6 py-10 text-center`}>
@@ -388,7 +425,7 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
             <PageHeader title={patientName(kase)}
               actions={<>
                 <button className={btn.secondary} onClick={() => run('AI vytěžuje hlášení… (obvykle 20–40 s)', () => api.extract(kase.id)).then((c) => { if (c) { open(c); onChanged() } })} disabled={!!busy}>Vytěžit znovu</button>
-                <button className={btn.primary} disabled={!!busy} onClick={openPreview} data-tour="preview">
+                <button className={btn.primary} disabled={!!busy} onClick={() => openPreview()} data-tour="preview">
                   Náhled a potvrzení <Icon.chevron width={16} height={16} />
                 </button>
               </>}>
@@ -441,11 +478,11 @@ export default function Extraction({ caseId, cases, lists, fhirUp, onChanged }: 
                   ))}
                 </div>
                 {doc && (
-                  <pre className="max-h-[65vh] overflow-auto whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-slate-800">
+                  <pre ref={docRef} className="max-h-[65vh] overflow-auto whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-slate-800">
                     {active && active.doc_id === doc.id && active.end > active.start ? (
                       <>
                         {doc.text.slice(0, active.start)}
-                        <mark className="rounded-sm bg-amber-200 px-0.5" ref={(el) => el?.scrollIntoView({ block: 'center' })}>{doc.text.slice(active.start, active.end)}</mark>
+                        <mark className="rounded-sm bg-amber-200 px-0.5" ref={markRef}>{doc.text.slice(active.start, active.end)}</mark>
                         {doc.text.slice(active.end)}
                       </>
                     ) : doc.text}

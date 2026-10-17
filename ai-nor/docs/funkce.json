@@ -340,9 +340,9 @@
           "stav": "plan"
         },
         {
-          "nazev": "Prohlídka systému",
+          "nazev": "Prezentace systému",
           "sluzba": "React, vlastní průvodce bez knihovny",
-          "k_cemu": "Tlačítko Prohlídka v hlavičce spustí 10 kroků přes všechny záložky: zvýrazní část obrazovky a vysvětlí ji. Uživatel nic nevyplňuje, lze spouštět opakovaně.",
+          "k_cemu": "Tlačítko Prezentace v hlavičce spustí 10 kroků přes všechny záložky: zvýrazní část obrazovky a vysvětlí ji. Uživatel nic nevyplňuje, lze spouštět opakovaně.",
           "kde": "frontend/src/Tour.tsx",
           "stav": "hotovo"
         },

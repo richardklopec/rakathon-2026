@@ -387,51 +387,53 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
                 <Check checked={dg.neznamo === true} label="Neznámo (bezdomovec, neudaný pobyt)" disabled={off} onToggle={() => onForm({ neznamo: dg.neznamo !== true })} />
                 <Check checked={dg.cizinec === true} label="Cizinec" disabled={off} onToggle={() => onForm({ cizinec: dg.cizinec !== true })} />
               </div>
-              <Label>Datum stanovení diagnózy (není-li známo, uvést datum vyšetření nebo zahájení léčby):</Label>
-              <TextInput key={txt(dg.datum_stanoveni_diagnozy)} value={dg.datum_stanoveni_diagnozy} disabled={off} className="w-44"
-                placeholder="d.m.rrrr" validate={(v) => (parseDate(v) === 'invalid' ? 'datum d.m.rrrr, m.rrrr nebo rrrr, ne v budoucnosti' : null)}
-                onCommit={(v) => set('diagnosis_date', parseDate(v))} />
+              <div data-field="diagnosis_date">
+                <Label>Datum stanovení diagnózy (není-li známo, uvést datum vyšetření nebo zahájení léčby):</Label>
+                <TextInput key={txt(dg.datum_stanoveni_diagnozy)} value={dg.datum_stanoveni_diagnozy} disabled={off} className="w-44"
+                  placeholder="d.m.rrrr" validate={(v) => (parseDate(v) === 'invalid' ? 'datum d.m.rrrr, m.rrrr nebo rrrr, ne v budoucnosti' : null)}
+                  onCommit={(v) => set('diagnosis_date', parseDate(v))} />
+              </div>
             </div>
             <div><Label>Země původu:</Label>{free('zeme_puvodu', dc.zeme_puvodu, 'w-56')}</div>
           </div>
 
           <div className="mt-4 grid grid-cols-[1fr_2fr] gap-4">
-            <div className="pt-8"><Label>Lateralita:</Label>{sel('laterality', 'laterality')}</div>
-            <div>
+            <div className="pt-8" data-field="laterality"><Label>Lateralita:</Label>{sel('laterality', 'laterality')}</div>
+            <div data-field="diagnosis_basis">
               <div className="mb-2 flex items-center gap-2"><Label>K dg. vedla tato vyšetření:</Label><Box value={dg.k_dg_vedla_vysetreni} className="w-12" /></div>
               <div className="grid grid-flow-col grid-rows-3 gap-y-2">{bits('diagnosis_basis', 'diagnosis_basis', dg.k_dg_vedla_vysetreni)}</div>
             </div>
           </div>
 
           <div className="mt-4 grid grid-cols-[1.3fr_1fr_1fr] gap-3">
-            <div><Label>Dg. MKN:</Label>{code('icd10', 'icd10')}</div>
+            <div data-field="icd10"><Label>Dg. MKN:</Label>{code('icd10', 'icd10')}</div>
             <div><Label>Dg. slovně:</Label><Box value={dg.dg_slovne} /></div>
             <div><Label>Identifikace specifických diagnóz:</Label>{free('identifikace_specifickych_dg', dg.identifikace_specifickych_dg)}</div>
           </div>
           <div className="mt-3 grid grid-cols-[2fr_1fr] items-end gap-3">
-            <div><Label>Topografie:</Label>{code('topography', 'topography')}</div>
+            <div data-field="topography"><Label>Topografie:</Label>{code('topography', 'topography')}</div>
             <div className="rounded-md border border-slate-300 px-2 py-1 text-center text-[13px] text-slate-700 shadow-[1px_2px_3px_rgba(0,0,0,0.2)]">Vztah Diagnóza / Topografie / Morfologie</div>
           </div>
 
           <div className="mt-4 text-[13px] font-bold">Morfologie</div>
           <div className="mt-1 grid grid-cols-[1fr_1.6fr_1.2fr] gap-3">
-            <div><Label>Typ morfologie:</Label>{sel('morphology_type', 'morphology_type')}</div>
-            <div><Label>Kód morfologie:</Label>{code('morphology_code', 'morphology_code')}</div>
-            <div><Label>Grading:</Label>{sel('grade', 'grade')}</div>
+            <div data-field="morphology_type"><Label>Typ morfologie:</Label>{sel('morphology_type', 'morphology_type')}</div>
+            <div data-field="morphology_code"><Label>Kód morfologie:</Label>{code('morphology_code', 'morphology_code')}</div>
+            <div data-field="grade"><Label>Grading:</Label>{sel('grade', 'grade')}</div>
           </div>
-          <div className="mt-2"><Label>Název morfologie:</Label>
+          <div className="mt-2" data-field="morphology_name"><Label>Název morfologie:</Label>
             <TextInput key={txt(val('morphology_name'))} value={val('morphology_name')} disabled={off} onCommit={(v) => set('morphology_name', v || null)} />
           </div>
         </Fieldset>
 
         <Fieldset legend={<>TNM <span className="inline-block h-3.5 w-3.5 rounded-full bg-blue-600" /></>}>
           <div className="flex items-center gap-2"><span className="text-[13px] italic">Skupina:</span>{free('skupina', t.skupina, 'w-56')}</div>
-          <div className="mt-2 flex items-start gap-3 pl-8 text-[13px] italic">
+          <div className="mt-2 flex items-start gap-3 pl-8 text-[13px] italic" data-field="tnm_clinical">
             <span className="pt-1.5 underline">T</span>{tnm('tnm_clinical.t', 't')}
             <span className="pt-1.5 underline">N</span>{tnm('tnm_clinical.n', 'n')}
             <span className="pt-1.5 underline">M</span>{tnm('tnm_clinical.m', 'm', 'w-20')}
           </div>
-          <div className="mt-3 flex flex-wrap items-start gap-1.5 text-[13px] italic">
+          <div className="mt-3 flex flex-wrap items-start gap-1.5 text-[13px] italic" data-field="tnm_pathological">
             <span className="pt-1.5 underline">y</span>
             <span className="pt-2"><Check checked={yPrefix} label="" disabled={off}
               onToggle={() => onEdit((r) => { (r.tnm_pathological as TNM).y_prefix = !yPrefix })} /></span>
@@ -447,8 +449,10 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
             <span className="pt-1.5 underline">pM</span>{tnm('tnm_pathological.m', 'm', 'w-14')}
           </div>
 
-          <div className="mt-4 flex items-center gap-2"><span className="text-[13px]">Lokalizace vzdálených metastáz:</span><Box value={t.lokalizace_vzdalenych_metastaz} className="w-14" /></div>
-          <div className="mt-2 grid grid-flow-col grid-rows-3 gap-y-2">{bits('metastasis_sites', 'metastasis_sites', t.lokalizace_vzdalenych_metastaz)}</div>
+          <div data-field="metastasis_sites">
+            <div className="mt-4 flex items-center gap-2"><span className="text-[13px]">Lokalizace vzdálených metastáz:</span><Box value={t.lokalizace_vzdalenych_metastaz} className="w-14" /></div>
+            <div className="mt-2 grid grid-flow-col grid-rows-3 gap-y-2">{bits('metastasis_sites', 'metastasis_sites', t.lokalizace_vzdalenych_metastaz)}</div>
+          </div>
 
           <div className="mt-4 grid grid-cols-3 gap-3">
             <div><Label>Riziková kategorie:</Label>{free('rizikova_kategorie', t.rizikova_kategorie)}</div>
@@ -456,13 +460,15 @@ export default function NorFormPreview({ data, report, lists, editable, onEdit, 
             <div><Label>p16 pozitivní</Label>{free('p16', t.p16)}</div>
           </div>
           <div className="mt-2 flex items-end gap-3">
-            <div className="w-56"><Label>Klinické stádium:</Label>{sel('clinical_stage', 'clinical_stage')}</div>
+            <div className="w-56" data-field="clinical_stage"><Label>Klinické stádium:</Label>{sel('clinical_stage', 'clinical_stage')}</div>
           </div>
         </Fieldset>
 
         <Fieldset legend="Ostatní">
-          <Label>Onemocnění:</Label>
-          {sel('disease_extent', 'disease_extent', 'max-w-xs')}
+          <div data-field="disease_extent">
+            <Label>Onemocnění:</Label>
+            {sel('disease_extent', 'disease_extent', 'max-w-xs')}
+          </div>
         </Fieldset>
 
         <div className="mt-4 rounded-md border border-slate-300 p-3">

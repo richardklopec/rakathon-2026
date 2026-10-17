@@ -67,9 +67,9 @@ export default function App() {
             <Status ok={health === undefined ? undefined : !!health?.fhir} label={`IRIS FHIR: ${health === undefined ? 'zjišťuji…' : health?.fhir ? 'připojeno' : 'offline'}`} />
           </div>
           <UserChip />
-          <button onClick={() => setTouring(true)} title="Prohlídka systému v 10 krocích"
+          <button onClick={() => setTouring(true)} title="Prezentace systému v 10 krocích"
             className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-fno-900 transition-colors duration-150 hover:border-fno-600 hover:bg-fno-50">
-            <Icon.play width={14} height={14} className="text-fno-800" /><span className="hidden sm:inline">Prohlídka</span><span className="sr-only sm:hidden">Spustit prohlídku systému</span>
+            <Icon.play width={14} height={14} className="text-fno-800" /><span className="hidden sm:inline">Prezentace</span><span className="sr-only sm:hidden">Spustit prezentaci systému</span>
           </button>
           <a href={href('dokumentace')} aria-current={route.tab === 'dokumentace' ? 'page' : undefined}
             className={`inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition-colors duration-150 ${route.tab === 'dokumentace' ? 'border-fno-800 bg-fno-800 text-white' : 'border-slate-300 text-fno-900 hover:border-fno-600 hover:bg-fno-50'}`}>
@@ -107,7 +107,7 @@ export default function App() {
             </Notice>
           </div>
         )}
-        {route.tab === 'domu' && <Home cases={cases} lists={lists} health={health} />}
+        {route.tab === 'domu' && <Home cases={cases} lists={lists} />}
         {route.tab === 'hlaseni' && <CaseList cases={cases} lists={lists} status={route.query.get('stav')} />}
         {route.tab === 'relaps' && <Relapse key={route.id ?? ''} caseId={route.id} cases={cases} lists={lists} onChanged={refresh} />}
         {route.tab === 'novy' && <NewPatient onCreated={refresh} />}

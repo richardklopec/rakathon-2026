@@ -1,4 +1,4 @@
-// Product tour (button with the Play icon in the header): 10 steps across the tabs, each highlights one part of the
+// Product tour "Prezentace" (button with the Play icon in the header): 10 steps across the tabs, each highlights one part of the
 // screen with a short text and a "Další" button. The visitor fills in or uploads nothing; it can be replayed any time.
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
@@ -25,12 +25,12 @@ const STEPS: Step[] = [
     text: 'Šest záložek pokrývá celý postup: přehled, seznam hlášení, hlášení relapsu, nový pacient, číselníky a vytěžování. Číslo u Seznamu hlášení ukazuje, kolik hlášení čeká na kontrolu.',
   },
   {
-    tab: 'domu', targets: ['pipeline'], title: 'Kde jsou hlášení',
-    text: 'Hlášení prochází stavy Nevytěženo, Ke kontrole, K potvrzení, Potvrzeno a Uloženo ve FHIR. Kliknutím na stav se otevře seznam hlášení, která v něm právě jsou.',
+    tab: 'domu', targets: ['pipeline', 'stats'], title: 'Aktuální stav a statistika',
+    text: 'Nahoře je aktuální stav hlášení od Nevytěženo po Uloženo ve FHIR, kliknutím se otevře jejich seznam. Pod ním statistika za měsíc, kvartál nebo rok: nová a potvrzená hlášení, hlášení v IRIS FHIR, exporty, průměrná doba do potvrzení a jistota AI, vždy ve srovnání s minulým obdobím.',
   },
   {
     tab: 'novy', targets: ['dropzone'], title: 'Nový pacient',
-    text: 'Sem se přetáhnou všechny zprávy jednoho pacienta: ambulantní a propouštěcí zprávy, histologie, zápis z MDT. AI z nich za 20–40 sekund vytěží pole hlášení a u každého uvede doslovnou citaci.',
+    text: 'Sem se přetáhnou zprávy jednoho pacienta: PDF i naskenované (přečte je OCR), fotografie, Word nebo e-mail s přílohami. Zprávy z nemocničního systému chodí přes InterSystems IRIS samy a načtou se jedním kliknutím. AI z nich vytěží pole hlášení a u každého uvede doslovnou citaci.',
   },
   {
     tab: 'vytezovani', withCase: true, targets: ['evidence'], title: 'Citace a jistota AI',
@@ -46,7 +46,7 @@ const STEPS: Step[] = [
   },
   {
     tab: 'hlaseni', targets: ['cases'], title: 'Seznam hlášení',
-    text: 'Všechna hlášení v jedné tabulce. Hledání podle pacienta nebo diagnózy, filtr podle stavu a řazení podle jistoty AI nebo počtu polí ke kontrole.',
+    text: 'Všechna hlášení v jedné tabulce s hledáním, filtrem podle stavu a řazením. Potvrzená hlášení zaškrtnete a hromadně exportujete do CSV nebo JSON, nebo odešlete do IRIS FHIR. Ikonka ve sloupci Export ukazuje, co už odešlo.',
   },
   {
     tab: 'relaps', targets: ['relapse'], title: 'Hlášení relapsu',
@@ -54,7 +54,7 @@ const STEPS: Step[] = [
   },
   {
     tab: 'ciselniky', targets: ['codelists'], title: 'Číselníky a nápověda',
-    text: 'Číselníky MKN-10, topografie a morfologie od ÚZIS: AI smí vybrat jen kód, který v nich je. Návod pro obsluhu najdete pod tlačítkem Dokumentace a prohlídku spustíte znovu tlačítkem Prohlídka.',
+    text: 'Číselníky MKN-10, topografie a morfologie od ÚZIS: AI smí vybrat jen kód, který v nich je. Návod pro obsluhu najdete pod tlačítkem Dokumentace a tuto prezentaci spustíte znovu tlačítkem Prezentace.',
   },
 ]
 
@@ -172,7 +172,7 @@ export default function Tour({ cases, onClose }: { cases: Case[]; onClose: () =>
       >
         <div className="flex items-center justify-between gap-3">
           <span className="text-xs font-semibold tabular-nums text-fno-700" aria-label={`Krok ${i + 1} z ${STEPS.length}`}>{i + 1}/{STEPS.length}</span>
-          <button onClick={close} className="-mr-1 rounded p-1 text-slate-500 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-800" aria-label="Ukončit prohlídku">
+          <button onClick={close} className="-mr-1 rounded p-1 text-slate-500 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-800" aria-label="Ukončit prezentaci">
             <Icon.x width={16} height={16} />
           </button>
         </div>

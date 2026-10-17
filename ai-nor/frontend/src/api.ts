@@ -116,6 +116,7 @@ export interface Case {
   form: FormFields
   fhir: FhirRecord
   nis_ids: string[] // NIS reports the case was made from
+  created_at: string
   updated_at: string
   ai_confidence: AiConfidence
   document_rc: string | null // birth number the documents give (most of them), valid or not

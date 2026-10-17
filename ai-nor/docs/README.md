@@ -1,14 +1,10 @@
 # Dokumentace AI NOR
 
-Obsah, který aplikace zobrazuje po kliknutí na **Dokumentace** v pravém horním rohu.
-Upravujte ho tady, frontend ho načítá přímo z této složky (po uložení se stránka v `npm run dev` sama obnoví).
+| Soubor | K čemu |
+|---|---|
+| [navod.md](navod.md) | Návod pro obsluhu. Aplikace ho zobrazuje po kliknutí na **Dokumentace** v pravém horním rohu. |
+| [vyuzite-funkce.pdf](vyuzite-funkce.pdf) | Využité funkce, služby a technologie pro porotu (tabulka, A4 na šířku). |
+| [funkce.json](funkce.json) | Zdroj tabulky využitých funkcí: kategorie → položky (`nazev`, `sluzba`, `k_cemu`, `kde`, `stav`: `hotovo` / `castecne` / `plan`). |
+| [make_pdf.py](make_pdf.py) | Z `funkce.json` vytvoří `vyuzite-funkce.pdf` (tisk přes Microsoft Edge): `python make_pdf.py` |
 
-| Soubor | Záložka v aplikaci | Pro koho |
-|---|---|---|
-| [funkce.json](funkce.json) | Využité funkce | porota, prezentace: tabulka použitých služeb, technologií a funkcí |
-| [navod.md](navod.md) | Návod pro obsluhu | zdravotníci, kteří aplikaci používají |
-
-## Jak upravovat
-
-- **funkce.json**: kategorie → položky. Každá položka má `nazev`, `sluzba` (technologie nebo služba), `k_cemu`, `kde` (soubor v repu) a `stav`: `hotovo`, `castecne` nebo `plan`.
-- **navod.md**: běžný Markdown. Aplikace umí nadpisy `#`/`##`/`###`, odstavce, odrážky `-`, číslované seznamy `1.`, poznámky `>`, **tučné** a `kód`.
+`navod.md` je běžný Markdown. Aplikace umí nadpisy `#`/`##`/`###`, odstavce, odrážky `-`, číslované seznamy `1.`, poznámky `>`, **tučné** a `kód`.

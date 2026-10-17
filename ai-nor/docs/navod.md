@@ -13,14 +13,14 @@ AI NOR připraví hlášení **Incidence zhoubného novotvaru** do Národního o
 
 ## Záložky aplikace
 
-- **Domů**: kolik hlášení je v jakém stavu, co čeká na vaši kontrolu a stav systému (jazykový model, IRIS FHIR, číselníky).
+- **Domů**: statistika za měsíc, kvartál nebo rok (nová a potvrzená hlášení, hlášení v IRIS FHIR, exporty, průměrná doba do potvrzení a jistota AI, vše ve srovnání s minulým obdobím), počty hlášení podle stavu a co čeká na vaši kontrolu.
 - **Seznam hlášení**: všechna hlášení v tabulce. Hledání podle pacienta nebo diagnózy, filtr podle stavu, řazení podle sloupců. Klik na řádek otevře hlášení ve Vytěžování.
 - **Hlášení relapsu**: zápis recidivy nebo progrese k pacientovi s potvrzeným hlášením.
 - **Nový pacient**: nahrání zpráv a spuštění vytěžování.
 - **Číselníky**: MKN-10, topografie, morfologie a další číselníky formuláře NOR s hledáním.
 - **Vytěžování**: kontrola hlášení jednoho pacienta, náhled formuláře a potvrzení.
-- **Dokumentace** (vpravo nahoře): tento návod a přehled použitých technologií.
-- **Prohlídka** (vpravo nahoře): průvodce aplikací v 10 krocích. Stačí klikat na Další, spustit ho můžete kdykoli znovu.
+- **Dokumentace** (vpravo nahoře): tento návod pro obsluhu.
+- **Prezentace** (vpravo nahoře): průvodce aplikací v 10 krocích. Stačí klikat na Další, spustit ho můžete kdykoli znovu.
 - **Jméno uživatele** (ikona postavy vpravo nahoře): zadejte své jméno, zapisuje se ke každé změně v historii.
 
 Hlášení prochází stavy **Nevytěženo → Ke kontrole → K potvrzení → Potvrzeno → Uloženo ve FHIR**. Číslo u záložky Seznam hlášení ukazuje, kolik hlášení čeká na kontrolu.
