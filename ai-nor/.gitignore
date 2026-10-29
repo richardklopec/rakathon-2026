@@ -27,5 +27,7 @@ Thumbs.db
 # uploads: only the ÚZIS CSV code lists are tracked (xlsx / pdf / docx are reference copies)
 uploads/*.xlsx
 uploads/*.pdf
+# MKN-10 Tabelární část (ÚZIS) is MKN10_RULES_PDF, tracked
+!uploads/mkn-tabelarni-cast_1-4-2014_2.pdf
 uploads/*.docx
 uploads/~$*

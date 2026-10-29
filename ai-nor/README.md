@@ -39,7 +39,7 @@ cd frontend; npm install; npm run dev     # http://localhost:5173
 
 - Syntetičtí pacienti k nahrání: `data/synthetic/PAC001` … `PAC010` (vytvoří `python -m scripts.export_synthetic <složka s XLSX>`).
 - Číselníky formuláře (MKN-10, topografie, morfologie): balíček MKN-10 od ÚZIS ve složce `uploads/` (CSV v UTF-8 i Windows-1250, `CODELISTS_DIR`), jinak složka `MKN10_CSV`.
-- Pravidla MKN-10: PDF `mkn-tabelarni-cast_1-4-2014_2.pdf` z `Rakathon_DATA_NOR` (`MKN10_RULES_PDF`). Druhý krok LLM podle nich volí kód Dg. MKN a cituje pravidlo (PLAN.md §3.1 krok 6).
+- Pravidla MKN-10: PDF `uploads/mkn-tabelarni-cast_1-4-2014_2.pdf` (Tabelární část MKN-10 od ÚZIS, `MKN10_RULES_PDF`). Druhý krok LLM podle nich volí kód Dg. MKN a cituje pravidlo (PLAN.md §3.1 krok 6).
 - Vstupy: PDF (skeny přes OCR), JPG/PNG/TIFF (OCR), DOCX, EML s přílohami, TXT, XLSX z NIS. Zprávy z NIS přes IRIS: demo odesílatel `python -m scripts.nis_demo_send` pošle fiktivní zprávy jako HL7v2 MDM^T02 přes MLLP na port 2575, produkce `AINOR.Production` je v IRIS převede na FHIR DocumentReference (`--fhir` je zapíše rovnou do FHIR).
 - Hlášení se ukládají do IRIS (`Nor.CaseRecord`) a při startu backendu se odtud načtou; staré JSON soubory z `backend/var/cases` se při prvním startu přesunou do IRIS (složka zůstane jako `cases-presunuto-do-iris`). Případ, jehož FHIR záznam zaostal (IRIS neběželo), se při startu dopíše.
 - Produkce HL7v2 → FHIR: Management Portal → Interoperability → Production (`AINOR.Production`), zprávy v Interoperability → Messages, převodní tabulka typů dokumentů `AINOR.DocumentType`. Po změně tříd v `infra/iris/src` stačí znovu `python -m scripts.setup_iris`.

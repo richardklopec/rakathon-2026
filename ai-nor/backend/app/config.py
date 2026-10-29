@@ -42,7 +42,7 @@ class Settings(BaseSettings):
     # ÚZIS MKN-10 package (CSV in UTF-8 or Windows-1250) for the form's code lists; searched before the MKN10_CSV folder
     codelists_dir: str = "uploads"
     # MKN-10 Tabelární část (PDF, ÚZIS 2014): coding rules for the second LLM step (app/retrieval/rules.py)
-    mkn10_rules_pdf: str = "../../Rakathon_DATA_NOR/Rakathon_DATA_NOR/mkn-tabelarni-cast_1-4-2014_2.pdf"
+    mkn10_rules_pdf: str = "uploads/mkn-tabelarni-cast_1-4-2014_2.pdf"
     reporting_facility: str = "00843989000000 - Fakultní nemocnice Ostrava"  # NOR "Zařízení (pracoviště)"
     reporting_department: str = ""  # NOR "Oddělení" (číselník NOR), e.g. "20 - Chirurgie"
     auto_accept_threshold: int = 80  # fields at/above this score without conflict skip review
